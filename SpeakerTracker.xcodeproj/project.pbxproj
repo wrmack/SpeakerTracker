@@ -1,0 +1,526 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		5F782E391D4B152F00144EA9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F782E381D4B152F00144EA9 /* AppDelegate.swift */; };
+		5F782E3B1D4B152F00144EA9 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F782E3A1D4B152F00144EA9 /* ViewController.swift */; };
+		5F782E3E1D4B152F00144EA9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5F782E3C1D4B152F00144EA9 /* Main.storyboard */; };
+		5F782E401D4B152F00144EA9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5F782E3F1D4B152F00144EA9 /* Assets.xcassets */; };
+		5F782E431D4B152F00144EA9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5F782E411D4B152F00144EA9 /* LaunchScreen.storyboard */; };
+		5F782E4E1D4B153000144EA9 /* SpeakerTrackerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F782E4D1D4B153000144EA9 /* SpeakerTrackerTests.swift */; };
+		5F782E591D4B153000144EA9 /* SpeakerTrackerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F782E581D4B153000144EA9 /* SpeakerTrackerUITests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		5F782E4A1D4B153000144EA9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5F782E2D1D4B152F00144EA9 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5F782E341D4B152F00144EA9;
+			remoteInfo = SpeakerTracker;
+		};
+		5F782E551D4B153000144EA9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5F782E2D1D4B152F00144EA9 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5F782E341D4B152F00144EA9;
+			remoteInfo = SpeakerTracker;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		5F782E351D4B152F00144EA9 /* SpeakerTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SpeakerTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		5F782E381D4B152F00144EA9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		5F782E3A1D4B152F00144EA9 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		5F782E3D1D4B152F00144EA9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		5F782E3F1D4B152F00144EA9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		5F782E421D4B152F00144EA9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		5F782E441D4B152F00144EA9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5F782E491D4B153000144EA9 /* SpeakerTrackerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SpeakerTrackerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		5F782E4D1D4B153000144EA9 /* SpeakerTrackerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeakerTrackerTests.swift; sourceTree = "<group>"; };
+		5F782E4F1D4B153000144EA9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5F782E541D4B153000144EA9 /* SpeakerTrackerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SpeakerTrackerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		5F782E581D4B153000144EA9 /* SpeakerTrackerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeakerTrackerUITests.swift; sourceTree = "<group>"; };
+		5F782E5A1D4B153000144EA9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		5F782E321D4B152F00144EA9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5F782E461D4B153000144EA9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5F782E511D4B153000144EA9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		5F782E2C1D4B152F00144EA9 = {
+			isa = PBXGroup;
+			children = (
+				5F782E371D4B152F00144EA9 /* SpeakerTracker */,
+				5F782E4C1D4B153000144EA9 /* SpeakerTrackerTests */,
+				5F782E571D4B153000144EA9 /* SpeakerTrackerUITests */,
+				5F782E361D4B152F00144EA9 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		5F782E361D4B152F00144EA9 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				5F782E351D4B152F00144EA9 /* SpeakerTracker.app */,
+				5F782E491D4B153000144EA9 /* SpeakerTrackerTests.xctest */,
+				5F782E541D4B153000144EA9 /* SpeakerTrackerUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		5F782E371D4B152F00144EA9 /* SpeakerTracker */ = {
+			isa = PBXGroup;
+			children = (
+				5F782E381D4B152F00144EA9 /* AppDelegate.swift */,
+				5F782E3A1D4B152F00144EA9 /* ViewController.swift */,
+				5F782E3C1D4B152F00144EA9 /* Main.storyboard */,
+				5F782E3F1D4B152F00144EA9 /* Assets.xcassets */,
+				5F782E411D4B152F00144EA9 /* LaunchScreen.storyboard */,
+				5F782E441D4B152F00144EA9 /* Info.plist */,
+			);
+			path = SpeakerTracker;
+			sourceTree = "<group>";
+		};
+		5F782E4C1D4B153000144EA9 /* SpeakerTrackerTests */ = {
+			isa = PBXGroup;
+			children = (
+				5F782E4D1D4B153000144EA9 /* SpeakerTrackerTests.swift */,
+				5F782E4F1D4B153000144EA9 /* Info.plist */,
+			);
+			path = SpeakerTrackerTests;
+			sourceTree = "<group>";
+		};
+		5F782E571D4B153000144EA9 /* SpeakerTrackerUITests */ = {
+			isa = PBXGroup;
+			children = (
+				5F782E581D4B153000144EA9 /* SpeakerTrackerUITests.swift */,
+				5F782E5A1D4B153000144EA9 /* Info.plist */,
+			);
+			path = SpeakerTrackerUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		5F782E341D4B152F00144EA9 /* SpeakerTracker */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5F782E5D1D4B153000144EA9 /* Build configuration list for PBXNativeTarget "SpeakerTracker" */;
+			buildPhases = (
+				5F782E311D4B152F00144EA9 /* Sources */,
+				5F782E321D4B152F00144EA9 /* Frameworks */,
+				5F782E331D4B152F00144EA9 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SpeakerTracker;
+			productName = SpeakerTracker;
+			productReference = 5F782E351D4B152F00144EA9 /* SpeakerTracker.app */;
+			productType = "com.apple.product-type.application";
+		};
+		5F782E481D4B153000144EA9 /* SpeakerTrackerTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5F782E601D4B153000144EA9 /* Build configuration list for PBXNativeTarget "SpeakerTrackerTests" */;
+			buildPhases = (
+				5F782E451D4B153000144EA9 /* Sources */,
+				5F782E461D4B153000144EA9 /* Frameworks */,
+				5F782E471D4B153000144EA9 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				5F782E4B1D4B153000144EA9 /* PBXTargetDependency */,
+			);
+			name = SpeakerTrackerTests;
+			productName = SpeakerTrackerTests;
+			productReference = 5F782E491D4B153000144EA9 /* SpeakerTrackerTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		5F782E531D4B153000144EA9 /* SpeakerTrackerUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5F782E631D4B153000144EA9 /* Build configuration list for PBXNativeTarget "SpeakerTrackerUITests" */;
+			buildPhases = (
+				5F782E501D4B153000144EA9 /* Sources */,
+				5F782E511D4B153000144EA9 /* Frameworks */,
+				5F782E521D4B153000144EA9 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				5F782E561D4B153000144EA9 /* PBXTargetDependency */,
+			);
+			name = SpeakerTrackerUITests;
+			productName = SpeakerTrackerUITests;
+			productReference = 5F782E541D4B153000144EA9 /* SpeakerTrackerUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		5F782E2D1D4B152F00144EA9 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0800;
+				LastUpgradeCheck = 0800;
+				ORGANIZATIONNAME = "Warwick McNaughton";
+				TargetAttributes = {
+					5F782E341D4B152F00144EA9 = {
+						CreatedOnToolsVersion = 8.0;
+						DevelopmentTeam = C4XR3G25JL;
+						DevelopmentTeamName = "W McNaughton";
+						ProvisioningStyle = Automatic;
+					};
+					5F782E481D4B153000144EA9 = {
+						CreatedOnToolsVersion = 8.0;
+						DevelopmentTeam = C4XR3G25JL;
+						DevelopmentTeamName = "W McNaughton";
+						ProvisioningStyle = Automatic;
+						TestTargetID = 5F782E341D4B152F00144EA9;
+					};
+					5F782E531D4B153000144EA9 = {
+						CreatedOnToolsVersion = 8.0;
+						DevelopmentTeam = C4XR3G25JL;
+						DevelopmentTeamName = "W McNaughton";
+						ProvisioningStyle = Automatic;
+						TestTargetID = 5F782E341D4B152F00144EA9;
+					};
+				};
+			};
+			buildConfigurationList = 5F782E301D4B152F00144EA9 /* Build configuration list for PBXProject "SpeakerTracker" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 5F782E2C1D4B152F00144EA9;
+			productRefGroup = 5F782E361D4B152F00144EA9 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				5F782E341D4B152F00144EA9 /* SpeakerTracker */,
+				5F782E481D4B153000144EA9 /* SpeakerTrackerTests */,
+				5F782E531D4B153000144EA9 /* SpeakerTrackerUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		5F782E331D4B152F00144EA9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5F782E431D4B152F00144EA9 /* LaunchScreen.storyboard in Resources */,
+				5F782E401D4B152F00144EA9 /* Assets.xcassets in Resources */,
+				5F782E3E1D4B152F00144EA9 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5F782E471D4B153000144EA9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5F782E521D4B153000144EA9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		5F782E311D4B152F00144EA9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5F782E3B1D4B152F00144EA9 /* ViewController.swift in Sources */,
+				5F782E391D4B152F00144EA9 /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5F782E451D4B153000144EA9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5F782E4E1D4B153000144EA9 /* SpeakerTrackerTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5F782E501D4B153000144EA9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5F782E591D4B153000144EA9 /* SpeakerTrackerUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		5F782E4B1D4B153000144EA9 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5F782E341D4B152F00144EA9 /* SpeakerTracker */;
+			targetProxy = 5F782E4A1D4B153000144EA9 /* PBXContainerItemProxy */;
+		};
+		5F782E561D4B153000144EA9 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5F782E341D4B152F00144EA9 /* SpeakerTracker */;
+			targetProxy = 5F782E551D4B153000144EA9 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		5F782E3C1D4B152F00144EA9 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				5F782E3D1D4B152F00144EA9 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		5F782E411D4B152F00144EA9 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				5F782E421D4B152F00144EA9 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		5F782E5B1D4B153000144EA9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		5F782E5C1D4B153000144EA9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		5F782E5E1D4B153000144EA9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = SpeakerTracker/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.wm.SpeakerTracker;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Debug;
+		};
+		5F782E5F1D4B153000144EA9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = SpeakerTracker/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.wm.SpeakerTracker;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Release;
+		};
+		5F782E611D4B153000144EA9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = SpeakerTrackerTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.wm.SpeakerTrackerTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SpeakerTracker.app/SpeakerTracker";
+			};
+			name = Debug;
+		};
+		5F782E621D4B153000144EA9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = SpeakerTrackerTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.wm.SpeakerTrackerTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SpeakerTracker.app/SpeakerTracker";
+			};
+			name = Release;
+		};
+		5F782E641D4B153000144EA9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = SpeakerTrackerUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.wm.SpeakerTrackerUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_TARGET_NAME = SpeakerTracker;
+			};
+			name = Debug;
+		};
+		5F782E651D4B153000144EA9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = SpeakerTrackerUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.wm.SpeakerTrackerUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_TARGET_NAME = SpeakerTracker;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		5F782E301D4B152F00144EA9 /* Build configuration list for PBXProject "SpeakerTracker" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5F782E5B1D4B153000144EA9 /* Debug */,
+				5F782E5C1D4B153000144EA9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		5F782E5D1D4B153000144EA9 /* Build configuration list for PBXNativeTarget "SpeakerTracker" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5F782E5E1D4B153000144EA9 /* Debug */,
+				5F782E5F1D4B153000144EA9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		5F782E601D4B153000144EA9 /* Build configuration list for PBXNativeTarget "SpeakerTrackerTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5F782E611D4B153000144EA9 /* Debug */,
+				5F782E621D4B153000144EA9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		5F782E631D4B153000144EA9 /* Build configuration list for PBXNativeTarget "SpeakerTrackerUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5F782E641D4B153000144EA9 /* Debug */,
+				5F782E651D4B153000144EA9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 5F782E2D1D4B152F00144EA9 /* Project object */;
+}
