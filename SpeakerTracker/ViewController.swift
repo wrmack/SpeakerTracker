@@ -33,6 +33,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     @IBOutlet weak var speakerLabel: UILabel!
     @IBOutlet weak var doneLabel: UILabel!
     @IBOutlet weak var showTimerButton: UIButton!
+    @IBOutlet weak var memberTextConstraintLeading: NSLayoutConstraint!
 
 
     
@@ -71,7 +72,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         }
         
         // Get current position for undo stack
-        let (_, speakerNames) = tableCollection[1]
+        var (_, speakerNames) = tableCollection[1]
         var counter = 0
         var pos1 = 0
         for item in speakerNames {
@@ -81,6 +82,11 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 counter += 1
             }
         }
+        
+        // Remove it from speaker list
+        speakerNames.remove(at: pos1)
+        tableCollection[1] = (speakerList, speakerNames)
+        
         
         // The selected name needs to be added back into member list in the baseList table
         // Compare the intial full member list with the current member list to get correct position
@@ -133,6 +139,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     @IBAction func resetAll(_ sender: UIButton) {
         tableCollection = [(baseList, baseNames), (speakerList, [String]()), (doneList, [String]())]
         
+        undoStack = [(Int, Int, Int, Int, String)]()
+        
         // Reload tables
         baseList.reloadData()
         speakerList.reloadData()
@@ -178,8 +186,11 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             dimmerView.isHidden = false
             timerLabel.isHidden = false
             startButton.isHidden = false
+            startButton.isEnabled = true
             pauseButton.isHidden = false
+            pauseButton.isEnabled = true
             stopButton.isHidden = false
+            stopButton.isEnabled = true
             timerVisible = true
             view.bringSubview(toFront: dimmerView)
             view.bringSubview(toFront: timerLabel)
@@ -193,9 +204,13 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             dimmerView.isHidden = true
             timerLabel.isHidden = true
             startButton.isHidden = true
+            startButton.isEnabled = false
             pauseButton.isHidden = true
+            pauseButton.isEnabled = false
             stopButton.isHidden = true
+            stopButton.isEnabled = false
             timerVisible = false
+            view.sendSubview(toBack:stackView)
             showTimerButton.setTitle("Show timer", for: .normal)
         }
     }
@@ -260,6 +275,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             for cell in speakerList.visibleCells {
                 (cell as! WMTableViewCell).leftButton?.isHidden = true
                 (cell as! WMTableViewCell).rightButton?.isHidden = true
+                (cell as! WMTableViewCell).setNeedsUpdateConstraints()
             }
         } else {
             speakerList.isEditing = false
@@ -267,6 +283,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             for cell in speakerList.visibleCells {
                 (cell as! WMTableViewCell).leftButton?.isHidden = false
                 (cell as! WMTableViewCell).rightButton?.isHidden = false
+                (cell as! WMTableViewCell).setNeedsUpdateConstraints()
             }
         }
     }
@@ -337,12 +354,13 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         speakerList.delegate = self
         
         
-        // At start up, hide timer views
+        // At start up, hide timer views and ensure stackview is at back so does not intercept touches
         dimmerView.isHidden = true
         timerLabel.isHidden = true
         startButton.isHidden = true
         pauseButton.isHidden = true
         stopButton.isHidden = true
+        view.sendSubview(toBack:stackView)
         
         
         // If iPad Pro 12.9" make adjustments to row height
@@ -429,7 +447,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             if nameArray.count > 0  {
                 name = nameArray[indexPath.row]
             }
-            //tableView.register(WMTableViewCell(), forCellReuseIdentifier: "MyReuseIdentifier2")
             tvCell = (tableView.dequeueReusableCell(withIdentifier: "wmcell", for: indexPath) as? WMTableViewCell)!
             tvCell.memberText!.text = name
             if self.view.frame.size.width > 1300 {tvCell.memberText?.font = UIFont(name: "Arial", size: 28)} // if iPad Pro 12"
