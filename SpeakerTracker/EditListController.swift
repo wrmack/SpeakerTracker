@@ -29,7 +29,7 @@ class EditListController: UIViewController {
         let text = memberList.text
         let textCharacterArray = Array(text!.characters)
         
-        // Iterate through array of characters, saving a name to nameArray at each new line character
+        // Iterate through array of characters, saving a name to nameArray at each new-line character
         var tmpString = ""
         for char in textCharacterArray {
             if char != "\n" {
@@ -43,6 +43,11 @@ class EditListController: UIViewController {
         // If tmpString not empty then have reached end of file without appending last name
         if tmpString.isEmpty == false {
             nameArray.append(tmpString)
+        }
+        
+        // If final item in name array is empty then remove it
+        if nameArray.last == nil {
+            nameArray.removeLast()
         }
         
         // Get current meeting names

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11185.3" systemVersion="16A270f" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11191" systemVersion="16A286a" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11151.4"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11156"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -71,10 +71,10 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell autoresizesSubviews="NO" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" shouldIndentWhileEditing="NO" reuseIdentifier="wmcell" id="Fxd-A4-An6" customClass="WMTableViewCell" customModule="SpeakerTracker" customModuleProvider="target">
-                                        <rect key="frame" x="-1" y="28" width="330" height="43"/>
+                                        <rect key="frame" x="-1" y="19" width="332" height="44"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" autoresizesSubviews="NO" opaque="NO" clearsContextBeforeDrawing="NO" multipleTouchEnabled="YES" contentMode="redraw" tableViewCell="Fxd-A4-An6" id="nQv-yo-bdh">
-                                            <frame key="frameInset" width="330" height="43"/>
+                                            <frame key="frameInset" width="330" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1np-e8-S82">
@@ -127,10 +127,10 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell autoresizesSubviews="NO" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" selectionStyle="none" showsReorderControl="YES" indentationWidth="10" shouldIndentWhileEditing="NO" reuseIdentifier="wmcell" id="qjF-9v-Nkg" customClass="WMTableViewCell" customModule="SpeakerTracker" customModuleProvider="target">
-                                        <frame key="frameInset" minY="28" width="329" height="44"/>
+                                        <rect key="frame" x="0.0" y="28" width="330" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clearsContextBeforeDrawing="NO" multipleTouchEnabled="YES" contentMode="center" tableViewCell="qjF-9v-Nkg" id="CB0-BK-GuM">
-                                            <frame key="frameInset" width="329" height="44"/>
+                                            <frame key="frameInset" width="330" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JqL-gH-ZQo">
@@ -189,10 +189,10 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="wmcell" id="LNF-H2-fl6" customClass="WMTableViewCell" customModule="SpeakerTracker" customModuleProvider="target">
-                                        <frame key="frameInset" minY="28" width="330" height="44"/>
+                                        <rect key="frame" x="0.0" y="28" width="330" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="LNF-H2-fl6" id="dfs-fp-pgV">
-                                            <frame key="frameInset" width="330" height="44"/>
+                                            <frame key="frameInset" width="330" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mE4-66-Icj">
@@ -200,9 +200,12 @@
                                                         <constraint firstAttribute="width" constant="40" id="ed1-mF-224"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="40"/>
-                                                    <state key="normal">
+                                                    <state key="normal" title="&lt;">
                                                         <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
+                                                    <connections>
+                                                        <action selector="doneLeftButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="7pf-IY-YI0"/>
+                                                    </connections>
                                                 </button>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uzM-B8-HTa">
                                                     <constraints>
@@ -300,7 +303,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <state key="normal" title="Edit names"/>
                                 <connections>
-                                    <segue destination="Z5e-AL-Gjp" kind="modal" identifier="Main.storyboard" id="bN0-bS-OuW"/>
+                                    <segue destination="Z5e-AL-Gjp" kind="presentation" identifier="Main.storyboard" id="bN0-bS-OuW"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qSs-UO-gMQ">
@@ -390,7 +393,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="82" y="-1"/>
+            <point key="canvasLocation" x="64.0625" y="-0.58593750000000011"/>
         </scene>
         <!--Edit List Controller-->
         <scene sceneID="s05-yf-BL0">
@@ -464,15 +467,10 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XHJ-dh-kb4" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="FmO-Xv-niC" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="1123.8399999999999" y="90.453333333333333"/>
+            <point key="canvasLocation" x="877.99999999999989" y="53"/>
         </scene>
     </scenes>
     <resources>
         <image name="reorder" width="44" height="44"/>
     </resources>
-    <simulatedMetricsContainer key="defaultSimulatedMetrics">
-        <simulatedStatusBarMetrics key="statusBar"/>
-        <simulatedOrientationMetrics key="orientation" orientation="landscapeRight"/>
-        <simulatedScreenMetrics key="destination" type="ipad12_9.fullscreen"/>
-    </simulatedMetricsContainer>
 </document>

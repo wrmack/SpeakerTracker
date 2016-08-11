@@ -136,6 +136,53 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
 
     
+    @IBAction func doneLeftButtonPressed(_ sender: UIButton) {
+        
+        // Find the cell's text by iterating through the sender's superview's (ie the contentView) subviews
+        // until we find the UILabel
+        var nameText: String?
+        let siblingViews = sender.superview!.subviews
+        for view in siblingViews {
+            if view is UILabel {
+                nameText = (view as! UILabel).text
+            }
+        }
+        
+        // Get current position for undo stack
+        var (_, doneNames) = tableCollection[2]
+        var counter = 0
+        var pos1 = 0
+        for item in doneNames {
+            if item == nameText {
+                pos1 = counter
+            } else {
+                counter += 1
+            }
+        }
+        
+        // Remove it from done list
+        doneNames.remove(at: pos1)
+        tableCollection[2] = (speakerList, doneNames)
+        
+        
+        // The selected name needs to be appended to the speaker list table
+        var (_, currentSpeakerNameList) = tableCollection[1]
+        currentSpeakerNameList.append(nameText!)
+        tableCollection[1] = (speakerList, currentSpeakerNameList)
+        
+        // Update undo stack
+        undoStack.append((2, pos1, 1, currentSpeakerNameList.count - 1, nameText!))
+        
+        
+        // Reload tables
+        speakerList.reloadData()
+        doneList.reloadData()
+
+
+    }
+    
+    
+    
     @IBAction func resetAll(_ sender: UIButton) {
         tableCollection = [(baseList, baseNames), (speakerList, [String]()), (doneList, [String]())]
         
@@ -272,6 +319,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         if reorderOn == false {
             speakerList.isEditing = true
             reorderOn = true
+            baseList.isUserInteractionEnabled = false
+            doneList.isUserInteractionEnabled = false
             for cell in speakerList.visibleCells {
                 (cell as! WMTableViewCell).leftButton?.isHidden = true
                 (cell as! WMTableViewCell).rightButton?.isHidden = true
@@ -280,6 +329,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         } else {
             speakerList.isEditing = false
             reorderOn = false
+            baseList.isUserInteractionEnabled = true
+            doneList.isUserInteractionEnabled = true
             for cell in speakerList.visibleCells {
                 (cell as! WMTableViewCell).leftButton?.isHidden = false
                 (cell as! WMTableViewCell).rightButton?.isHidden = false
@@ -305,7 +356,12 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             meetingName.text = currentMeeting as? String
         }
         tableCollection = [(baseList, baseNames), (speakerList, [String]()), (doneList, [String]())]
+        
         baseList.reloadData()
+        speakerList.reloadData()
+        doneList.reloadData()
+        
+        undoStack = [(Int, Int, Int, Int, String)]()
         
     }
     
