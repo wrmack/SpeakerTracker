@@ -634,9 +634,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     // MARK: - Present edit list
     
-    override func prepare(for segue: UIStoryboardSegue, sender: AnyObject?) {
-        
-    }
+//    override func prepare(for segue: UIStoryboardSegue, sender: AnyObject?) {
+//        
+//    }
     
     
     // MARK: - Helper methods
