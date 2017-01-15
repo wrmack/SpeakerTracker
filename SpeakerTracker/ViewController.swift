@@ -5,17 +5,25 @@
 //  Created by Warwick on 29/07/16.
 //  Copyright © 2016 Warwick McNaughton. All rights reserved.
 //
-//  Abstract:
-//  Manages display of the three speaking lists and timer.  Calls EditListController for editing the member list for current meeting.
-//  User defaults include:
-//      Key: "MeetingNames"; Value: an array of names of all meeting names.
-//      Key: use one of the meeting name; Value: an array of the member names for that meeting.
-//      Key: "CurrentMeeting"; Value: Name of current meeting
+
+
+/* Abstract
+ *
+ * Manages display of the three speaking lists and timer.  Calls EditListController for editing the member list for current meeting.
+ *
+ * User defaults include:
+ *      Key: "MeetingNames"; Value: an array of names of all meeting names.
+ *      Key: a meeting name; Value: an array of the member names for that meeting.
+ *      Key: "CurrentMeeting"; Value: name of current meeting
+ *
+ *
+ */
+
 
 
 import UIKit
 
-class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource  {
+class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, MeetingChooserViewControllerDelegate  {
 
     // MARK: - Storyboard references
     
@@ -24,21 +32,44 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     @IBOutlet weak var speakerList: UITableView!
     @IBOutlet weak var doneList: UITableView!
     @IBOutlet weak var dimmerView: UIView!
-    @IBOutlet weak var timerLabel: UILabel!
-    @IBOutlet weak var startButton: UIButton!
-    @IBOutlet weak var pauseButton: UIButton!
-    @IBOutlet weak var stopButton: UIButton!
     @IBOutlet weak var stackView: UIStackView!
     @IBOutlet weak var remainingLabel: UILabel!
     @IBOutlet weak var speakerLabel: UILabel!
     @IBOutlet weak var doneLabel: UILabel!
-    @IBOutlet weak var showTimerButton: UIButton!
+    @IBOutlet weak var meetingButton: UIButton!
+    @IBOutlet weak var editButton: UIButton!
+    @IBOutlet weak var undoButton: UIButton!
+    @IBOutlet weak var resetButton: UIButton!
+    @IBOutlet weak var showTimerButton: UIButton!    
     @IBOutlet weak var memberTextConstraintLeading: NSLayoutConstraint!
-
+    @IBOutlet weak var timerLabel: UILabel!
+    @IBOutlet weak var startButton: UIButton!
+    @IBOutlet weak var pauseButton: UIButton!
+    @IBOutlet weak var stopButton: UIButton!
+    @IBOutlet weak var smTimerLabel: UILabel!
+    @IBOutlet weak var smStartButton: UIButton!
+    @IBOutlet weak var smPauseButton: UIButton!
+    @IBOutlet weak var smStopButton: UIButton!
+    @IBOutlet weak var smTimerBackground: UIView!
 
     
     
     // MARK: Storyboard actions
+    
+    @IBAction func meetingChooserPressed(_ sender: UIButton) {
+        
+        // Create instance of MeetingChooserViewController as a popover
+        meetingChooser = MeetingChooserViewController()
+        meetingChooser?.delegate = self
+        meetingChooser?.modalPresentationStyle = UIModalPresentationStyle.popover
+        present(meetingChooser!, animated: true, completion: nil)
+        
+        let meetingChooserPopoverController = meetingChooser?.popoverPresentationController
+        meetingChooserPopoverController!.sourceView = sender
+        meetingChooserPopoverController!.sourceRect = CGRect(x: 0, y: sender.frame.size.height, width: sender.frame.size.width, height: 1)
+        meetingChooserPopoverController!.permittedArrowDirections = .up
+
+    }
     
     
     @IBAction func baseRightButtonPressed(_ sender: UIButton) {
@@ -265,11 +296,22 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     
     @IBAction func startTimer(_ sender: UIButton) {
+        handleStartTimer()
+    }
+    
+    
+    @IBAction func startSmTimer(_ sender: UIButton) {
+        handleStartTimer()
+    }
+    
+    
+    func handleStartTimer() {
         
         if pausePressed != true {
             startTime = Date()
             timerLabel.text = "00:00"
-        
+            smTimerLabel.text = "00:00"
+            
         } else {
             
             // Reset pause toggle
@@ -279,15 +321,29 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             startTime = Date() - TimeInterval(secondsElapsedWhenTimerPaused)
         }
         
-        sender.isEnabled = false
+        startButton.isEnabled = false
         stopButton.isEnabled = true
         pauseButton.isEnabled = true
+        smStartButton.isEnabled = false
+        smStopButton.isEnabled = true
+        smPauseButton.isEnabled = true
         
         timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(timerFireMethod(_: )), userInfo: nil, repeats: true )
+    
     }
     
     
     @IBAction func pauseTimer(_ sender: UIButton) {
+        handlePauseTimer()
+    }
+    
+    
+    @IBAction func pauseSmTimer(_ sender: UIButton) {
+        handlePauseTimer()
+    }
+    
+    
+    func handlePauseTimer() {
         
         // Set pause toggle
         pausePressed = true
@@ -302,15 +358,31 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         startButton.isEnabled = true
         pauseButton.isEnabled = false
         stopButton.isEnabled = true
+        smStartButton.isEnabled = true
+        smPauseButton.isEnabled = false
+        smStopButton.isEnabled = true
     }
     
     
     
     @IBAction func stopTimer(_ sender: UIButton) {
+        handleStopTimer()
+    }
+    
+    
+    @IBAction func stopSmTimer(_ sender: UIButton) {
+        handleStopTimer()
+    }
+    
+    
+    func handleStopTimer() {
         timer?.invalidate()
         startButton.isEnabled = true
         pauseButton.isEnabled = false
-        sender.isEnabled = false
+        stopButton.isEnabled = false
+        smStartButton.isEnabled = true
+        smPauseButton.isEnabled = false
+        smStopButton.isEnabled = false
     }
     
     
@@ -397,12 +469,25 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     /// The undo stack is an array of tuples.  Each tuple holds the 'from' table index, the position of the name, the 'to' table index, position in table and name of member.
     var undoStack = [(Int, Int, Int, Int, String)]()
     
+    /// A view controller to display the meeting chooser popover
+    var meetingChooser: MeetingChooserViewController?
+    
+    
     
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        // Appearance tweaks
+        smTimerBackground.layer.cornerRadius = 10
+        meetingButton.layer.cornerRadius = 5
+        editButton.layer.cornerRadius = 5
+        undoButton.layer.cornerRadius = 5
+        resetButton.layer.cornerRadius = 5
+        showTimerButton.layer.cornerRadius = 5
+        
+        
         // Set self to supply datasources for table views
         baseList.dataSource = self
         speakerList.dataSource = self
@@ -434,8 +519,11 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         // Get any saved defaults
         let defaults = UserDefaults.standard
+        var baseNames = [String]()
         if let currentMeeting = defaults.object(forKey: "CurrentMeeting") {
-            baseNames = defaults.array(forKey: currentMeeting as! String) as! [String]
+            if let namesArray = (defaults.array(forKey: currentMeeting as! String)) {
+                baseNames = namesArray as! [String]
+            }
             meetingName.text = currentMeeting as? String
         }
         
@@ -550,6 +638,36 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     
+    // MARK: - MeetingChooserViewController delegate methods
+    
+     func didSelectMeeting(_ meetingName: String) {
+        
+        // Dismiss popover controller
+        meetingChooser?.dismiss(animated: true, completion: nil)
+        
+        // Display name of meeting
+        self.meetingName.text = meetingName
+        
+        // Update defaults for current meeting
+        let defaults = UserDefaults.standard
+        defaults.set(meetingName, forKey: "CurrentMeeting")
+        
+        // Reinitialise baseNames
+        var baseNames = [String]()
+        
+        // Get the members for this meeting (if members have been added to defaults)
+        if let namesArray = (defaults.array(forKey: meetingName)) {
+            baseNames = namesArray as! [String]
+        }
+        
+        // Initialise table collection
+        tableCollection = [(baseList, baseNames), (speakerList, [String]()), (doneList, [String]())]
+        baseList.reloadData()
+        speakerList.reloadData()
+        doneList.reloadData()
+    }
+
+    
     
     // MARK: - Handle swipe gestures
     
@@ -629,6 +747,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         }
         //print("\(minutesString) : \(secondsString)")
         timerLabel.text = "\(minutesString):\(secondsString)"
+        smTimerLabel.text = "\(minutesString):\(secondsString)"
     }
     
     

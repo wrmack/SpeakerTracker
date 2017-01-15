@@ -6,6 +6,16 @@
 //  Copyright © 2016 Warwick McNaughton. All rights reserved.
 //
 
+
+/* Abstract
+ *
+ * Custom table cell to allow autolayout constraints to be customised when reodering speakers waiting to speak.
+ *
+ * Because the left button gets hidden when the user presses the reorder button, the leading anchor constraint for the member label needs to be reset.
+ * setNeedsUpdateConstraints is called when the 'speakers waiting' table is being reordered.
+ * 
+ */
+
 import UIKit
 
 class WMTableViewCell: UITableViewCell {
@@ -14,13 +24,10 @@ class WMTableViewCell: UITableViewCell {
     @IBOutlet var leftButton: UIButton?
     @IBOutlet var rightButton: UIButton?
     @IBOutlet var memberText: UILabel?
-    //@IBOutlet var memberTextLeadingAnchor: NSLayoutConstraint?
     @IBOutlet weak var memberTextLeadingAnchor: NSLayoutConstraint!
 
     
-    // setNeedsUpdateConstraints is called when the Speaker table is being reordered.  The left button is hidden and this sets the leading anchor
-    // of the label to a reasonable constraint.
-    
+
     override func updateConstraints() {
         super.updateConstraints()
         
