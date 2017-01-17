@@ -9,7 +9,10 @@
 
 /* Abstract
  *
- * Manages display of the three speaking lists and timer.  Calls EditListController for editing the member list for current meeting.
+ * Manages display of the three speaking lists and timer.  
+ * Presents EditMembersController for editing the member list for current meeting.
+ * Presents MeetingChooserViewController for selecting the meeting to display.
+ * An undo stack is maintained such that whenever a name is moved from one table to another the undo stack is updated.
  *
  * User defaults include:
  *      Key: "MeetingNames"; Value: an array of names of all meeting names.
@@ -58,20 +61,26 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     @IBAction func meetingChooserPressed(_ sender: UIButton) {
         
-        // Create instance of MeetingChooserViewController as a popover
+        // Create instance of MeetingChooserViewController and set its presentation style to be a popover
         meetingChooser = MeetingChooserViewController()
         meetingChooser?.delegate = self
         meetingChooser?.modalPresentationStyle = UIModalPresentationStyle.popover
         present(meetingChooser!, animated: true, completion: nil)
         
+        // Get the associated popover presentation controller and set its source
         let meetingChooserPopoverController = meetingChooser?.popoverPresentationController
         meetingChooserPopoverController!.sourceView = sender
         meetingChooserPopoverController!.sourceRect = CGRect(x: 0, y: sender.frame.size.height, width: sender.frame.size.width, height: 1)
         meetingChooserPopoverController!.permittedArrowDirections = .up
 
     }
+
     
-    
+/**
+     A storyboard button action.  The right button on a base-list table row was pressed.
+     The name is removed from the base-list and appended to the speaker's list.
+     
+ */
     @IBAction func baseRightButtonPressed(_ sender: UIButton) {
         
         // Find the cell's text by iterating through the sender's superview's (ie the contentView) subviews
@@ -85,10 +94,15 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         }
         
         // Call function to remove name from this table and append to table on right
-        moveName(nameText!, fromTableWithIndex: 0)
+        moveNameRight(nameText!, fromTableWithIndex: 0)
     }
 
     
+    /**
+     * A storyboard button action.  The left button on a speaker-list table row was pressed.
+     * The name is removed from the speaker-list table and inserted into the base-list table in its
+     * proper position.
+     */
     
     @IBAction func speakerLeftButtonPressed(_ sender: UIButton) {
         
@@ -148,6 +162,11 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     
     
+    /**
+     * A storyboard button action.  The right button on a speaker-list table row was pressed.
+     * The name is removed from the speaker-list and appended to the done-list table.
+     */
+    
     @IBAction func speakerRightButtonPressed(_ sender: UIButton) {
         
         // Find the cell's text by iterating through the sender's superview's (ie the contentView) subviews
@@ -162,10 +181,14 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         
         // Call function to remove name from this table and append to table on right
-        moveName(nameText!, fromTableWithIndex: 1)
+        moveNameRight(nameText!, fromTableWithIndex: 1)
     }
     
 
+    /**
+     * A storyboard button action.  The left button on a done-list table row was pressed.
+     * The name is removed from the done-list and appended to the speaker-list.
+     */
     
     @IBAction func doneLeftButtonPressed(_ sender: UIButton) {
         
@@ -211,8 +234,11 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 
 
     }
+
     
-    
+/**
+     Resets all lists and the undo stack.
+ */
     
     @IBAction func resetAll(_ sender: UIButton) {
         tableCollection = [(baseList, baseNames), (speakerList, [String]()), (doneList, [String]())]
@@ -224,7 +250,15 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         speakerList.reloadData()
         doneList.reloadData()
     }
+ 
     
+/**
+ * A storyboard button action.  The undo button was pressed.  The undo stack comprises an array of tuples.
+ * Each tuple corresponds to an action of a name being moved. The tuple stores the name's position in the source table
+ * and the name's position in the destination table.
+ *
+ * When the undo button is pressed, the last tuple in the array is popped off the array and the action reversed.
+ */
     
     @IBAction func undoPressed(_ sender: UIButton) {
         
@@ -257,7 +291,10 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     }
     
-    
+/**
+ * A storyboard button action.  The button to show the large timer was pressed.
+ * The large timer is displayed (or, if already displayed, is hidden - the button is a toggle)
+ */
     
     @IBAction func showTimer(_ sender: UIButton) {
         if timerVisible == false {
@@ -292,18 +329,31 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             showTimerButton.setTitle("Show timer", for: .normal)
         }
     }
+  
     
-    
+/**
+ * A storyboard button action.  The large timer's start button was pressed.
+ */
     
     @IBAction func startTimer(_ sender: UIButton) {
         handleStartTimer()
     }
+   
     
+/**
+ * A storyboard button action.  The small timer's start button was pressed.
+ */
     
     @IBAction func startSmTimer(_ sender: UIButton) {
         handleStartTimer()
     }
+
     
+/**
+ * A helper function.  Called when a timer's start button is pressed.
+ * It resets the timer display and creates a new instance of a Timer class to fire at 1 second intervals.
+ * On each fire, timerFireMethod(_: ) is called.
+ */
     
     func handleStartTimer() {
         
@@ -341,7 +391,11 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     @IBAction func pauseSmTimer(_ sender: UIButton) {
         handlePauseTimer()
     }
+ 
     
+/**
+ * Called when either pause button is pressed
+ */
     
     func handlePauseTimer() {
         
@@ -374,7 +428,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         handleStopTimer()
     }
     
-    
+    /// Called when either stop button is pressed
     func handleStopTimer() {
         timer?.invalidate()
         startButton.isEnabled = true
@@ -442,7 +496,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     // MARK: - Properties
     
-    /// Tables are stored as an array of tuples.  Each tuple contains the table reference and list of members.
+    /// Tables are stored as an array of 3 tuples.  Each tuple contains the UITableView reference and an array of members.
     var tableCollection = [(UITableView, [String])]()
     
     /// Stores the total list of members as presented initially in first table.  The default names are overwritten if user has saved a list to user defaults.
@@ -519,7 +573,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         // Get any saved defaults
         let defaults = UserDefaults.standard
-        var baseNames = [String]()
+        baseNames = [String]()
         if let currentMeeting = defaults.object(forKey: "CurrentMeeting") {
             if let namesArray = (defaults.array(forKey: currentMeeting as! String)) {
                 baseNames = namesArray as! [String]
@@ -543,6 +597,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
+        // Get the name array of the tableview.  The number of rows is equal to the number of names in the array.
+        
         let tag = tableView.tag
         var (_, nameArray): (UITableView, [String])
         var numRows: Int?
@@ -568,8 +625,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
-        var tvCell = WMTableViewCell()
+        // For the passed in table view, get the name array.  The name is found by using the passed-in index path row as the index for the array.
         
+        var tvCell = WMTableViewCell()
         let tag = tableView.tag
         
         switch tag {
@@ -624,21 +682,25 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         // Update undo stack
         undoStack.append((1, sourceIndexPath.row, 1, destinationIndexPath.row, speakerNames[destinationIndexPath.row]))
-        
-        print("here")
     }
     
     
     // MARK: - UITableView delegate methods
     
     func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
-
-            return .none
+        
+        // Don't want a delete or insert accessory
+        return .none
         
     }
     
     
     // MARK: - MeetingChooserViewController delegate methods
+
+/**
+     MeetingChooserViewController delegate method, which is called when user selects a meeting using the meeting chooser.
+     - parameter meetingName: The selected meeting name.
+ */
     
      func didSelectMeeting(_ meetingName: String) {
         
@@ -653,7 +715,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         defaults.set(meetingName, forKey: "CurrentMeeting")
         
         // Reinitialise baseNames
-        var baseNames = [String]()
+        baseNames = [String]()
         
         // Get the members for this meeting (if members have been added to defaults)
         if let namesArray = (defaults.array(forKey: meetingName)) {
@@ -731,7 +793,11 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     // MARK: - Handle timer fires
     
-    /// This method is called every time the timer fires
+/**
+ * Called every time the timer fires (every second).  
+ * Updates the timer displays.
+ */
+    
     func timerFireMethod(_ timer: Timer) {
        
         let secondsSinceStart: Int = abs(Int(startTime!.timeIntervalSinceNow))
@@ -751,16 +817,17 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     
-    // MARK: - Present edit list
-    
-//    override func prepare(for segue: UIStoryboardSegue, sender: AnyObject?) {
-//        
-//    }
-    
     
     // MARK: - Helper methods
     
-    func moveName(_ name: String, fromTableWithIndex index: Int) {
+/**
+     Moves a name from the passed-in table and appends it to the next table on the right.
+     - parameters:
+       - name: the name to move
+       - index: the index of the table from which the name is moving
+ */
+    
+    func moveNameRight(_ name: String, fromTableWithIndex index: Int) {
         
         // Current names
         let (currentTable, currentNames) = tableCollection[index]
@@ -778,7 +845,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             }
         }
         
-        // Set table array to temporary array
+        // Set current table's member names array to temporary array
         tableCollection[index] = (currentTable, tmpArray)
         
         // Append passed in name to table on right
