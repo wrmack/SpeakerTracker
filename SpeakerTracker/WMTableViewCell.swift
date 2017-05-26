@@ -26,7 +26,16 @@ class WMTableViewCell: UITableViewCell {
     @IBOutlet var memberText: UILabel?
     @IBOutlet weak var memberTextLeadingAnchor: NSLayoutConstraint!
 
-    
+//   override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+//      super.init(style: style, reuseIdentifier: reuseIdentifier)
+//      let swipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(ViewController.handleSwipeGesture(_:)))
+//      self.addGestureRecognizer(swipeGesture)
+//   }
+//   
+//   required init?(coder aDecoder: NSCoder) {
+//      super.init(coder: aDecoder)
+//      //fatalError("init(coder:) has not been implemented")
+//   }
 
     override func updateConstraints() {
         super.updateConstraints()

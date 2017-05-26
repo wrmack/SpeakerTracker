@@ -528,7 +528,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     
     
-    // MARK: - Lifecycle
+    // MARK: - View lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -583,6 +583,12 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         // Initialise table collection
         tableCollection = [(baseList, baseNames), (speakerList, [String]()), (doneList, [String]())]
+      
+      let swipeGesture1 = UISwipeGestureRecognizer(target: self, action: #selector(ViewController.handleSwipeGesture(_:)))
+      self.baseList.addGestureRecognizer(swipeGesture1)
+      let swipeGesture2 = UISwipeGestureRecognizer(target: self, action: #selector(ViewController.handleSwipeGesture(_:)))
+      self.speakerList.addGestureRecognizer(swipeGesture2)
+
         
     }
 
@@ -623,11 +629,15 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
-        // For the passed in table view, get the name array.  The name is found by using the passed-in index path row as the index for the array.
-        
-        var tvCell = WMTableViewCell()
+      // For the passed in table view, get the name array.  The name is found by using the passed-in index path row as the index for the array.
+      
+      var tvCell = tableView.dequeueReusableCell(withIdentifier: "wmcell", for: indexPath) as? WMTableViewCell
+      if tvCell == nil {
+         tvCell = WMTableViewCell(style: .default, reuseIdentifier: "wmcell")
+      }
+      
         let tag = tableView.tag
         
         switch tag {
@@ -637,11 +647,11 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             if nameArray.count > 0  {
                 name = nameArray[indexPath.row]
             }
-            tvCell = tableView.dequeueReusableCell(withIdentifier: "wmcell", for: indexPath) as! WMTableViewCell
-            tvCell.memberText?.text = name
-            if self.view.frame.size.width > 1300 {tvCell.memberText?.font = UIFont(name: "Arial", size: 28)} // if iPad Pro 12"
-            let swipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipeGesture(_:)))
-            tvCell.addGestureRecognizer(swipeGesture)
+            //let tvCell = tableView.dequeueReusableCell(withIdentifier: "wmcell", for: indexPath) as! WMTableViewCell
+            tvCell?.memberText?.text = name
+            if self.view.frame.size.width > 1300 {tvCell?.memberText?.font = UIFont(name: "Arial", size: 28)} // if iPad Pro 12"
+//            let swipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipeGesture(_:)))
+//            tvCell.addGestureRecognizer(swipeGesture)
         
         case 2:
             var name = " "
@@ -649,27 +659,27 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             if nameArray.count > 0  {
                 name = nameArray[indexPath.row]
             }
-            tvCell = (tableView.dequeueReusableCell(withIdentifier: "wmcell", for: indexPath) as? WMTableViewCell)!
-            tvCell.memberText!.text = name
-            if self.view.frame.size.width > 1300 {tvCell.memberText?.font = UIFont(name: "Arial", size: 28)} // if iPad Pro 12"
-            let swipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipeGesture(_:)))
-            tvCell.addGestureRecognizer(swipeGesture)
-            
+            //let tvCell = (tableView.dequeueReusableCell(withIdentifier: "wmcell", for: indexPath) as? WMTableViewCell)!
+            tvCell?.memberText!.text = name
+            if self.view.frame.size.width > 1300 {tvCell?.memberText?.font = UIFont(name: "Arial", size: 28)} // if iPad Pro 12"
+//            let swipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipeGesture(_:)))
+//            tvCell.addGestureRecognizer(swipeGesture)
+         
         case 3:
             var name = " "
             var (_,nameArray) = tableCollection[2]
             if nameArray.count > 0  {
                 name = nameArray[indexPath.row]
             }
-            tvCell = (tableView.dequeueReusableCell(withIdentifier: "wmcell", for: indexPath) as? WMTableViewCell)!
-            tvCell.memberText!.text = name
-            if self.view.frame.size.width > 1300 {tvCell.memberText?.font = UIFont(name: "Arial", size: 28)} // if iPad Pro 12"
-            
+            //let tvCell = (tableView.dequeueReusableCell(withIdentifier: "wmcell", for: indexPath) as? WMTableViewCell)!
+            tvCell?.memberText!.text = name
+            if self.view.frame.size.width > 1300 {tvCell?.memberText?.font = UIFont(name: "Arial", size: 28)} // if iPad Pro 12"
+         
         default:
             break
         }
         
-        return tvCell
+        return tvCell!
     }
     
     
@@ -731,60 +741,67 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 
     
     
-    // MARK: - Handle swipe gestures
-    
-    /// When cell is swiped, we get the member's name, remove it from current table and add it to next table
-    func handleSwipeGesture(_ recognizer: UISwipeGestureRecognizer) {
-        
-        // Get reference to table cell
-        let cell = recognizer.view! as! WMTableViewCell
-        
-        // Get reference to table and name list
-        var currentTable: UITableView?
-        var currentNames: [String]?
-        var runningIndex = 0
-        var foundIndex = 0
-        for (table, list) in tableCollection {
-            if cell.isDescendant(of: table) {
-                currentTable = table
-                currentNames = list
-                foundIndex = runningIndex
-            }
-            runningIndex += 1
-        }
-        
-        
-        // Get member's name
-        if let nameText = cell.memberText!.text {
-        
-            // Create temporary new array omitting member's name
-            var tmpArray = [String]()
-            var position = 0
-            var counter = 0
-            for item in currentNames! {
-                if item != nameText {
-                    tmpArray.append(item)
-                    counter += 1
-                } else {
-                    position = counter
-                }
-            }
-            
-            // Set master array to new array
-            tableCollection[foundIndex] = (currentTable!, tmpArray)
-            var (nextTable, nextNameList) = tableCollection[foundIndex + 1]
-            nextNameList.append(nameText)
-            tableCollection[foundIndex + 1] = (nextTable, nextNameList)
-            
-            // Update undo stack
-            undoStack.append((foundIndex, position,  foundIndex + 1, nextNameList.count - 1,nameText))
+   // MARK: - Handle swipe gestures
 
-            
-            // Reload tables
-            baseList.reloadData()
-            speakerList.reloadData()
-            doneList.reloadData()
-        }
+   /// When cell is swiped, we get the member's name, remove it from current table and add it to next table
+   func handleSwipeGesture(_ recognizer: UISwipeGestureRecognizer) {
+      guard recognizer.state == .ended else { return }
+      guard recognizer.view is UITableView else { return }
+      var currentTable: UITableView?
+      var tableIndex = 0
+      
+      switch recognizer.view!.tag {
+      case 1:
+         currentTable = baseList
+         tableIndex = 0
+         
+      case 2:
+         currentTable = speakerList
+         tableIndex = 1
+      default:
+         currentTable = nil
+      }
+      
+      let swipeLocation = recognizer.location(in: currentTable)
+      var swipedCell: WMTableViewCell
+      guard let swipedIndexPath = currentTable?.indexPathForRow(at: swipeLocation)  else { return }
+      guard let cell = currentTable?.cellForRow(at: swipedIndexPath) else { return }
+
+      swipedCell = cell as! WMTableViewCell
+      
+      let (_, currentNames) = tableCollection[tableIndex]
+      
+      // Get member's name
+      if let nameText = swipedCell.memberText!.text {
+
+         // Create temporary new array omitting member's name
+         var tmpArray = [String]()
+         var position = 0
+         var counter = 0
+         for item in currentNames {
+             if item != nameText {
+                 tmpArray.append(item)
+                 counter += 1
+             } else {
+                 position = counter
+             }
+         }
+         
+         // Set master array to new array
+         tableCollection[tableIndex] = (currentTable!, tmpArray)
+         var (nextTable, nextNameList) = tableCollection[tableIndex + 1]
+         nextNameList.append(nameText)
+         tableCollection[tableIndex + 1] = (nextTable, nextNameList)
+         
+         // Update undo stack
+         undoStack.append((tableIndex, position,  tableIndex + 1, nextNameList.count - 1,nameText))
+
+         
+         // Reload tables
+         baseList.reloadData()
+         speakerList.reloadData()
+         doneList.reloadData()
+      }
     }
     
     
