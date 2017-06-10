@@ -78,8 +78,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
 /**
      A storyboard button action.  The right button on a base-list table row was pressed.
-     The name is removed from the base-list and appended to the speaker's list.
-     
+     Gets name of member and passes this to helper function which moves name to table on right.
  */
     @IBAction func baseRightButtonPressed(_ sender: UIButton) {
         
@@ -92,22 +91,16 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 nameText = (view as! UILabel).text
             }
         }
-        
-        // Call function to remove name from this table and append to table on right
         moveNameRight(nameText!, fromTableWithIndex: 0)
     }
 
     
-    /**
-     * A storyboard button action.  The left button on a speaker-list table row was pressed.
-     * The name is removed from the speaker-list table and inserted into the base-list table in its
-     * proper position.
-     */
-    
+   /**
+   * A storyboard button action.  The left button on a speaker-list table row was pressed.
+   * Gets name of member and passes this to helper function which moves name to table on left.
+   */
+   
     @IBAction func speakerLeftButtonPressed(_ sender: UIButton) {
-        
-        // Find the cell's text by iterating through the sender's superview's (ie the contentView) subviews
-        // until we find the UILabel
         var nameText: String?
         let siblingViews = sender.superview!.subviews
         for view in siblingViews {
@@ -115,62 +108,17 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 nameText = (view as! UILabel).text
             }
         }
-        
-        // Get current position for undo stack
-        var (_, speakerNames) = tableCollection[1]
-        var counter = 0
-        var pos1 = 0
-        for item in speakerNames {
-            if item == nameText {
-            pos1 = counter
-            } else {
-                counter += 1
-            }
-        }
-        
-        // Remove it from speaker list
-        speakerNames.remove(at: pos1)
-        tableCollection[1] = (speakerList, speakerNames)
-        
-        
-        // The selected name needs to be added back into member list in the baseList table
-        // Compare the intial full member list with the current member list to get correct position
-        // Check each original name against remaining names until get to selected name.
-        var (_, currentBaseNameList) = tableCollection[0]
-        counter = 0
-        var pos2 = 0
-        for item in baseNames {
-            if item == nameText{
-                pos2 = counter
-            }
-            if currentBaseNameList.contains(item) {
-                counter += 1
-            }
-        }
-        currentBaseNameList.insert(nameText!, at: pos2)
-        tableCollection[0] = (baseList, currentBaseNameList)
-        
-        // Update undo stack
-        undoStack.append((1, pos1, 0, pos2, nameText!))
-        
-        
-        // Reload tables
-        baseList.reloadData()
-        speakerList.reloadData()
-        
+      moveNameLeft(nameText!, fromTableWithIndex: 1)
     }
-    
-    
-    
-    /**
-     * A storyboard button action.  The right button on a speaker-list table row was pressed.
-     * The name is removed from the speaker-list and appended to the done-list table.
-     */
-    
+
+   
+   
+   /**
+   * A storyboard button action.  The right button on a speaker-list table row was pressed.
+   * Gets name of member and passes this to helper function which moves name to table on right.
+   */
+   
     @IBAction func speakerRightButtonPressed(_ sender: UIButton) {
-        
-        // Find the cell's text by iterating through the sender's superview's (ie the contentView) subviews
-        // until we find the UILabel
         var nameText: String?
         let siblingViews = sender.superview!.subviews
         for view in siblingViews {
@@ -178,22 +126,16 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 nameText = (view as! UILabel).text
             }
         }
-        
-        
-        // Call function to remove name from this table and append to table on right
         moveNameRight(nameText!, fromTableWithIndex: 1)
     }
     
 
     /**
      * A storyboard button action.  The left button on a done-list table row was pressed.
-     * The name is removed from the done-list and appended to the speaker-list.
+     * Gets name of member and passes this to helper function which moves name to table on left.
      */
     
     @IBAction func doneLeftButtonPressed(_ sender: UIButton) {
-        
-        // Find the cell's text by iterating through the sender's superview's (ie the contentView) subviews
-        // until we find the UILabel
         var nameText: String?
         let siblingViews = sender.superview!.subviews
         for view in siblingViews {
@@ -201,38 +143,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 nameText = (view as! UILabel).text
             }
         }
-        
-        // Get current position for undo stack
-        var (_, doneNames) = tableCollection[2]
-        var counter = 0
-        var pos1 = 0
-        for item in doneNames {
-            if item == nameText {
-                pos1 = counter
-            } else {
-                counter += 1
-            }
-        }
-        
-        // Remove it from done list
-        doneNames.remove(at: pos1)
-        tableCollection[2] = (speakerList, doneNames)
-        
-        
-        // The selected name needs to be appended to the speaker list table
-        var (_, currentSpeakerNameList) = tableCollection[1]
-        currentSpeakerNameList.append(nameText!)
-        tableCollection[1] = (speakerList, currentSpeakerNameList)
-        
-        // Update undo stack
-        undoStack.append((2, pos1, 1, currentSpeakerNameList.count - 1, nameText!))
-        
-        
-        // Reload tables
-        speakerList.reloadData()
-        doneList.reloadData()
-
-
+      moveNameLeft(nameText!, fromTableWithIndex: 2)
     }
 
     
@@ -440,9 +351,11 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     
-    @IBAction func reorderButton(_ sender: UIButton) {
-        
-        if reorderOn == false {
+   @IBAction func reorderButton(_ sender: UIButton) {
+      
+      if reorderOn == false {
+         let (_, speakerArray) = tableCollection[1]
+         if speakerArray.count > 1 {
             speakerList.isEditing = true
             reorderOn = true
             baseList.isUserInteractionEnabled = false
@@ -452,47 +365,42 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 (cell as! WMTableViewCell).rightButton?.isHidden = true
                 (cell as! WMTableViewCell).setNeedsUpdateConstraints()
             }
-        } else {
-            speakerList.isEditing = false
-            reorderOn = false
-            baseList.isUserInteractionEnabled = true
-            doneList.isUserInteractionEnabled = true
-            for cell in speakerList.visibleCells {
-                (cell as! WMTableViewCell).leftButton?.isHidden = false
-                (cell as! WMTableViewCell).rightButton?.isHidden = false
-                (cell as! WMTableViewCell).setNeedsUpdateConstraints()
-            }
-        }
-    }
+         }
+      } else {
+         speakerList.isEditing = false
+         reorderOn = false
+         baseList.isUserInteractionEnabled = true
+         doneList.isUserInteractionEnabled = true
+         for cell in speakerList.visibleCells {
+             (cell as! WMTableViewCell).leftButton?.isHidden = false
+             (cell as! WMTableViewCell).rightButton?.isHidden = false
+             (cell as! WMTableViewCell).setNeedsUpdateConstraints()
+         }
+      }
+   }
+   
     
+   @IBAction func cancelUnwindAction(unwindSegue: UIStoryboardSegue) {
+     
+   }
+   
     
-    
-    @IBAction func cancelUnwindAction(unwindSegue: UIStoryboardSegue) {
-        
-    }
-    
-    
-    
-    @IBAction func saveUnwindAction(unwindSegue: UIStoryboardSegue) {
-        
-        // Get any saved defaults
-        let defaults = UserDefaults.standard
-        if let currentMeeting = defaults.object(forKey: "CurrentMeeting") {
-            baseNames = defaults.array(forKey: currentMeeting as! String) as! [String]
-            meetingName.text = currentMeeting as? String
-        }
-        tableCollection = [(baseList, baseNames), (speakerList, [String]()), (doneList, [String]())]
-        
-        baseList.reloadData()
-        speakerList.reloadData()
-        doneList.reloadData()
-        
-        undoStack = [(Int, Int, Int, Int, String)]()
-        
-    }
-    
-    
-    
+   @IBAction func saveUnwindAction(unwindSegue: UIStoryboardSegue) {
+     
+      let defaults = UserDefaults.standard
+      if let currentMeeting = defaults.object(forKey: "CurrentMeeting") {
+         baseNames = defaults.array(forKey: currentMeeting as! String) as! [String]
+         meetingName.text = currentMeeting as? String
+      }
+      tableCollection = [(baseList, baseNames), (speakerList, [String]()), (doneList, [String]())]
+
+      baseList.reloadData()
+      speakerList.reloadData()
+      doneList.reloadData()
+
+      undoStack = [(Int, Int, Int, Int, String)]()
+   }
+   
     
     // MARK: - Properties
     
@@ -531,65 +439,71 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     // MARK: - View lifecycle
     
     override func viewDidLoad() {
-        super.viewDidLoad()
+      super.viewDidLoad()
 
-        // Appearance tweaks
-        smTimerBackground.layer.cornerRadius = 10
-        meetingButton.layer.cornerRadius = 5
-        editButton.layer.cornerRadius = 5
-        undoButton.layer.cornerRadius = 5
-        resetButton.layer.cornerRadius = 5
-        showTimerButton.layer.cornerRadius = 5
-        
-        
-        // Set self to supply datasources for table views
-        baseList.dataSource = self
-        speakerList.dataSource = self
-        doneList.dataSource = self
-        speakerList.delegate = self
-        
-        
-        // At start up, hide timer views and ensure stackview is at back so does not intercept touches
-        dimmerView.isHidden = true
-        timerLabel.isHidden = true
-        startButton.isHidden = true
-        pauseButton.isHidden = true
-        stopButton.isHidden = true
-        view.sendSubview(toBack:stackView)
-        
-        
-        // If iPad Pro 12.9" make adjustments to row height
-        let iPadScreenWidth = self.view.frame.size.width
-        if iPadScreenWidth > 1300 {
-            baseList.rowHeight = UITableViewAutomaticDimension
-            baseList.rowHeight = 60
-            remainingLabel.font = UIFont(name: "Arial", size: 20)
-            speakerList.rowHeight = 60
-            speakerLabel.font = UIFont(name: "Arial", size: 20)
-            doneList.rowHeight = 60
-            doneLabel.font = UIFont(name: "Arial", size: 20)
-        }
-        
-        
-        // Get any saved defaults
-        let defaults = UserDefaults.standard
-        baseNames = [String]()
-        if let currentMeeting = defaults.object(forKey: "CurrentMeeting") {
-            if let namesArray = (defaults.array(forKey: currentMeeting as! String)) {
-                baseNames = namesArray as! [String]
-            }
-            meetingName.text = currentMeeting as? String
-        }
-        
-        // Initialise table collection
-        tableCollection = [(baseList, baseNames), (speakerList, [String]()), (doneList, [String]())]
+      // Appearance tweaks
+      smTimerBackground.layer.cornerRadius = 10
+      meetingButton.layer.cornerRadius = 2
+      editButton.layer.cornerRadius = 2
+      undoButton.layer.cornerRadius = 2
+      resetButton.layer.cornerRadius = 2
+      showTimerButton.layer.cornerRadius = 2
+
+      // Set datasource and delegate for table views
+      baseList.dataSource = self
+      speakerList.dataSource = self
+      doneList.dataSource = self
+      speakerList.delegate = self
+
+
+      // At start up, hide timer views and ensure stackview is at back so does not intercept touches
+      dimmerView.isHidden = true
+      timerLabel.isHidden = true
+      startButton.isHidden = true
+      pauseButton.isHidden = true
+      stopButton.isHidden = true
+      view.sendSubview(toBack:stackView)
+
+
+      // If iPad Pro 12.9" make adjustments to row height
+      let iPadScreenWidth = self.view.frame.size.width
+      if iPadScreenWidth > 1300 {
+         baseList.rowHeight = UITableViewAutomaticDimension
+         baseList.rowHeight = 60
+         remainingLabel.font = UIFont(name: "Arial", size: 20)
+         speakerList.rowHeight = 60
+         speakerLabel.font = UIFont(name: "Arial", size: 20)
+         doneList.rowHeight = 60
+         doneLabel.font = UIFont(name: "Arial", size: 20)
+      }
+
+
+      let defaults = UserDefaults.standard
+      baseNames = [String]()
+      if let currentMeeting = defaults.object(forKey: "CurrentMeeting") {
+         if let namesArray = (defaults.array(forKey: currentMeeting as! String)) {
+             baseNames = namesArray as! [String]
+         }
+         meetingName.text = currentMeeting as? String
+      }
+      
+      tableCollection = [(baseList, baseNames), (speakerList, [String]()), (doneList, [String]())]
       
       let swipeGesture1 = UISwipeGestureRecognizer(target: self, action: #selector(ViewController.handleSwipeGesture(_:)))
+      swipeGesture1.direction = .right
       self.baseList.addGestureRecognizer(swipeGesture1)
-      let swipeGesture2 = UISwipeGestureRecognizer(target: self, action: #selector(ViewController.handleSwipeGesture(_:)))
-      self.speakerList.addGestureRecognizer(swipeGesture2)
 
-        
+      let swipeGesture2a = UISwipeGestureRecognizer(target: self, action: #selector(ViewController.handleSwipeGesture(_:)))
+      swipeGesture2a.direction = .left
+      let swipeGesture2b = UISwipeGestureRecognizer(target: self, action: #selector(ViewController.handleSwipeGesture(_:)))
+      swipeGesture2b.direction = .right
+      self.speakerList.addGestureRecognizer(swipeGesture2a)
+      self.speakerList.addGestureRecognizer(swipeGesture2b)
+
+      let swipeGesture3 = UISwipeGestureRecognizer(target: self, action: #selector(ViewController.handleSwipeGesture(_:)))
+      swipeGesture3.direction = .left
+      self.doneList.addGestureRecognizer(swipeGesture3)
+      
     }
 
     
@@ -631,67 +545,61 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
-      // For the passed in table view, get the name array.  The name is found by using the passed-in index path row as the index for the array.
-      
       var tvCell = tableView.dequeueReusableCell(withIdentifier: "wmcell", for: indexPath) as? WMTableViewCell
       if tvCell == nil {
          tvCell = WMTableViewCell(style: .default, reuseIdentifier: "wmcell")
       }
       
-        let tag = tableView.tag
-        
-        switch tag {
-        case 1:
-            var name = " "
-            var (_,nameArray) = tableCollection[0]
-            if nameArray.count > 0  {
-                name = nameArray[indexPath.row]
-            }
-            //let tvCell = tableView.dequeueReusableCell(withIdentifier: "wmcell", for: indexPath) as! WMTableViewCell
-            tvCell?.memberText?.text = name
-            if self.view.frame.size.width > 1300 {tvCell?.memberText?.font = UIFont(name: "Arial", size: 28)} // if iPad Pro 12"
-//            let swipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipeGesture(_:)))
-//            tvCell.addGestureRecognizer(swipeGesture)
-        
-        case 2:
-            var name = " "
-            var (_,nameArray) = tableCollection[1]
-            if nameArray.count > 0  {
-                name = nameArray[indexPath.row]
-            }
-            //let tvCell = (tableView.dequeueReusableCell(withIdentifier: "wmcell", for: indexPath) as? WMTableViewCell)!
-            tvCell?.memberText!.text = name
-            if self.view.frame.size.width > 1300 {tvCell?.memberText?.font = UIFont(name: "Arial", size: 28)} // if iPad Pro 12"
-//            let swipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipeGesture(_:)))
-//            tvCell.addGestureRecognizer(swipeGesture)
-         
-        case 3:
-            var name = " "
-            var (_,nameArray) = tableCollection[2]
-            if nameArray.count > 0  {
-                name = nameArray[indexPath.row]
-            }
-            //let tvCell = (tableView.dequeueReusableCell(withIdentifier: "wmcell", for: indexPath) as? WMTableViewCell)!
-            tvCell?.memberText!.text = name
-            if self.view.frame.size.width > 1300 {tvCell?.memberText?.font = UIFont(name: "Arial", size: 28)} // if iPad Pro 12"
-         
-        default:
-            break
-        }
-        
-        return tvCell!
+      let tag = tableView.tag
+
+      switch tag {
+      case 1:
+         var name = " "
+         var (_,nameArray) = tableCollection[0]
+         if nameArray.count > 0  {
+             name = nameArray[indexPath.row]
+         }
+         tvCell?.memberText?.text = name
+         if self.view.frame.size.width > 1300 {tvCell?.memberText?.font = UIFont(name: "Arial", size: 28)} // if iPad Pro 12"
+
+      case 2:
+         var name = " "
+         var (_,nameArray) = tableCollection[1]
+         if nameArray.count > 0  {
+             name = nameArray[indexPath.row]
+         }
+        tvCell?.memberText!.text = name
+         if self.view.frame.size.width > 1300 {tvCell?.memberText?.font = UIFont(name: "Arial", size: 28)} // if iPad Pro 12"
+
+      case 3:
+         var name = " "
+         var (_,nameArray) = tableCollection[2]
+         if nameArray.count > 0  {
+             name = nameArray[indexPath.row]
+         }
+         tvCell?.memberText!.text = name
+         if self.view.frame.size.width > 1300 {tvCell?.memberText?.font = UIFont(name: "Arial", size: 28)} // if iPad Pro 12"
+
+      default:
+         break
+      }
+      
+      return tvCell!
     }
     
     
     func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
         
-        var (_, speakerNames) = tableCollection[1]
-        let nameToMove = speakerNames.remove(at: sourceIndexPath.row)
-        speakerNames.insert(nameToMove, at: destinationIndexPath.row)
-        tableCollection[1] = (speakerList, speakerNames)
-        
-        // Update undo stack
-        undoStack.append((1, sourceIndexPath.row, 1, destinationIndexPath.row, speakerNames[destinationIndexPath.row]))
+      var (_, speakerNames) = tableCollection[1]
+      let nameToMove = speakerNames.remove(at: sourceIndexPath.row)
+      speakerNames.insert(nameToMove, at: destinationIndexPath.row)
+      tableCollection[1] = (speakerList, speakerNames)
+
+      undoStack.append((1, sourceIndexPath.row, 1, destinationIndexPath.row, speakerNames[destinationIndexPath.row]))
+      if undoStack.count > 10 {
+         let newStack = Array(undoStack.dropFirst())
+      undoStack = newStack
+      }
     }
     
     
@@ -714,25 +622,19 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
      func didSelectMeeting(_ meetingName: String) {
         
-        // Dismiss popover controller
         meetingChooser?.dismiss(animated: true, completion: nil)
         
-        // Display name of meeting
         self.meetingName.text = meetingName
         
-        // Update defaults for current meeting
         let defaults = UserDefaults.standard
         defaults.set(meetingName, forKey: "CurrentMeeting")
         
-        // Reinitialise baseNames
         baseNames = [String]()
         
-        // Get the members for this meeting (if members have been added to defaults)
         if let namesArray = (defaults.array(forKey: meetingName)) {
             baseNames = namesArray as! [String]
         }
         
-        // Initialise table collection
         tableCollection = [(baseList, baseNames), (speakerList, [String]()), (doneList, [String]())]
         baseList.reloadData()
         speakerList.reloadData()
@@ -743,7 +645,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
    // MARK: - Handle swipe gestures
 
-   /// When cell is swiped, we get the member's name, remove it from current table and add it to next table
+   /// Get the member's name and index of table that was swiped and pass to functions to move name left or right.
    func handleSwipeGesture(_ recognizer: UISwipeGestureRecognizer) {
       guard recognizer.state == .ended else { return }
       guard recognizer.view is UITableView else { return }
@@ -752,12 +654,16 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
       
       switch recognizer.view!.tag {
       case 1:
+         guard recognizer.direction == .right else { return }
          currentTable = baseList
          tableIndex = 0
-         
       case 2:
          currentTable = speakerList
-         tableIndex = 1
+         tableIndex = 1         
+      case 3:
+         guard recognizer.direction == .left else { return }
+         currentTable = doneList
+         tableIndex = 2
       default:
          currentTable = nil
       }
@@ -769,44 +675,16 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 
       swipedCell = cell as! WMTableViewCell
       
-      let (_, currentNames) = tableCollection[tableIndex]
-      
-      // Get member's name
       if let nameText = swipedCell.memberText!.text {
-
-         // Create temporary new array omitting member's name
-         var tmpArray = [String]()
-         var position = 0
-         var counter = 0
-         for item in currentNames {
-             if item != nameText {
-                 tmpArray.append(item)
-                 counter += 1
-             } else {
-                 position = counter
-             }
+         if recognizer.direction == .left {
+            moveNameLeft(nameText, fromTableWithIndex: tableIndex)
          }
-         
-         // Set master array to new array
-         tableCollection[tableIndex] = (currentTable!, tmpArray)
-         var (nextTable, nextNameList) = tableCollection[tableIndex + 1]
-         nextNameList.append(nameText)
-         tableCollection[tableIndex + 1] = (nextTable, nextNameList)
-         
-         // Update undo stack
-         undoStack.append((tableIndex, position,  tableIndex + 1, nextNameList.count - 1,nameText))
-
-         
-         // Reload tables
-         baseList.reloadData()
-         speakerList.reloadData()
-         doneList.reloadData()
+         if recognizer.direction == .right {
+            moveNameRight(nameText, fromTableWithIndex: tableIndex)
+         }
       }
     }
-    
-    
-
-    
+   
     
     // MARK: - Handle timer fires
     
@@ -844,41 +722,99 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
        - index: the index of the table from which the name is moving
  */
     
-    func moveNameRight(_ name: String, fromTableWithIndex index: Int) {
-        
-        // Current names
-        let (currentTable, currentNames) = tableCollection[index]
-        
-        // Create temporary array omitting member's name
-        var tmpArray = [String]()
-        var position = 0
-        var counter = 0
-        for item in currentNames {
-            if item != name {
-                tmpArray.append(item)
-                counter += 1
-            } else {
-                position = counter
-            }
-        }
-        
-        // Set current table's member names array to temporary array
-        tableCollection[index] = (currentTable, tmpArray)
-        
-        // Append passed in name to table on right
-        var (nextTable, nextNameList) = tableCollection[index + 1]
-        nextNameList.append(name)
-        tableCollection[index + 1] = (nextTable, nextNameList)
-        
-        // Update undo stack
-        undoStack.append((index, position, index + 1, nextNameList.count - 1, name))
-        
-        // Reload tables
-        baseList.reloadData()
-        speakerList.reloadData()
-        doneList.reloadData()
-        
+   func moveNameRight(_ name: String, fromTableWithIndex index: Int) {
+      
+      let (currentTable, currentNames) = tableCollection[index]
+
+      var arrayWithoutName = [String]()
+      var position = 0
+      var counter = 0
+      for item in currentNames {
+         if item != name {
+             arrayWithoutName.append(item)
+             counter += 1
+         } else {
+             position = counter
+         }
+      }
+      
+      tableCollection[index] = (currentTable, arrayWithoutName)
+
+      var (nextTable, nextNameList) = tableCollection[index + 1]
+      nextNameList.append(name)
+      tableCollection[index + 1] = (nextTable, nextNameList)
+
+      undoStack.append((index, position, index + 1, nextNameList.count - 1, name))
+      if undoStack.count > 10 {
+         let newStack = Array(undoStack.dropFirst())
+      undoStack = newStack
+      }
+
+      baseList.reloadData()
+      speakerList.reloadData()
+      doneList.reloadData()
     }
-    
+   
+   
+   /**
+    Moves a name from the passed-in table and adds it to the next table on the left.
+    If the next table is the speaker list, the name is simply appended.
+    If the next table is the base table, the name is inserted into its original position.
+    - parameters:
+    - name: the name to move
+    - index: the index of the table from which the name is moving
+    */
+   
+   func moveNameLeft(_ name: String, fromTableWithIndex index: Int) {
+
+      let (currentTable, currentNames) = tableCollection[index]
+      
+      var arrayWithoutName = [String]()
+      var position = 0
+      var counter = 0
+      for item in currentNames {
+         if item != name {
+            arrayWithoutName.append(item)
+            counter += 1
+         } else {
+            position = counter
+         }
+      }
+      
+      tableCollection[index] = (currentTable, arrayWithoutName)
+      
+      var (nextTable, nextNameList) = tableCollection[index - 1]
+      
+      if index == 2 {
+         nextNameList.append(name)
+      }
+      
+      if index == 1 {
+         counter = 0
+         var pos2 = 0
+         for item in baseNames {
+            if item == name {
+               pos2 = counter
+            }
+            if nextNameList.contains(item) {
+               counter += 1
+            }
+         }
+         nextNameList.insert(name, at: pos2)
+      }
+      
+      tableCollection[index - 1] = (nextTable, nextNameList)
+      
+      undoStack.append((index, position, index - 1, nextNameList.count - 1, name))
+      if undoStack.count > 10 {
+         let newStack = Array(undoStack.dropFirst())
+         undoStack = newStack
+      }
+      
+      baseList.reloadData()
+      speakerList.reloadData()
+      doneList.reloadData()
+   }
+
 }
 
