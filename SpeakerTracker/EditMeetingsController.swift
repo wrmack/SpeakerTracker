@@ -174,23 +174,45 @@ class EditMeetingsController: UIViewController, UITableViewDelegate, UITableView
             // Remove from user defaults
             let defaults = UserDefaults.standard
             defaults.removeObject(forKey: self.meetingsArray[indexPath.row])
-            
+         
             // Remove from array of meetings
             self.meetingsArray.remove(at: indexPath.row)
-            
+         
+            // Reset current meeting
+            var currentMeeting = ""
+            if self.meetingsArray.count > 0 {
+               currentMeeting = self.meetingsArray[0]
+            }
+            defaults.set(currentMeeting, forKey: "CurrentMeeting")
+             
             // Delete row in table
             tableView.deleteRows(at: [indexPath], with: .automatic)
+         
+            delegate?.didSelectMeeting(currentMeeting)
 
         }
     }
 
     
     //MARK: UITableViewDelegate protocols
-    
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        /* ------------ User is not editing but is selecting a meeting to display ------- */
+   
+   /*
+      Ensure row out of range is not selectable.
+    */
+   
+   func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
+      if indexPath.row < meetingsArray.count {
+         return indexPath
+      }
+      return nil
+   }
+   
+   
+   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+      
+      guard indexPath.row < meetingsArray.count else {return}
+      
+      /* ------------ User is not editing but is selecting a meeting to display ------- */
         
         if (tableView.isEditing == false) {
             delegate?.didSelectMeeting(meetingsArray[indexPath.row])
@@ -239,11 +261,11 @@ class EditMeetingsController: UIViewController, UITableViewDelegate, UITableView
             })
 
         }
-    }
+   }
+   
     
-    
-    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
-        
+   func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
+      
         if (indexPath.row < meetingsArray.count) {
             return .delete
         }
@@ -262,7 +284,7 @@ class EditMeetingsController: UIViewController, UITableViewDelegate, UITableView
         
         if (theTableView?.isEditing == false) {
             theTableView?.setEditing(true, animated: true)
-            editButton?.setTitle("List", for: .normal)
+            editButton?.setTitle("Done", for: .normal)
         }
         else {
             theTableView?.setEditing(false, animated: true)

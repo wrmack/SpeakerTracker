@@ -52,10 +52,8 @@ class EditMembersController: UIViewController, EditMeetingsControllerDelegate {
         }
         
         // If final item in name array is empty then remove it
-        if nameArray.last == nil {
-            if nameArray.count > 0 {
+        while nameArray.last != nil && nameArray.last! == "" {
                 nameArray.removeLast()
-            }
         }
 
         // Get meeting name
@@ -180,7 +178,7 @@ class EditMembersController: UIViewController, EditMeetingsControllerDelegate {
                 textString = textString + item as String + "\n"
             }            
         }
-        else {textString = " "}
+        else {textString = ""}
         memberListTextView.text = textString
     }
 }

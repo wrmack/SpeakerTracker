@@ -401,6 +401,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
       undoStack = [(Int, Int, Int, Int, String)]()
    }
    
+   
     
     // MARK: - Properties
     
@@ -477,7 +478,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
          doneLabel.font = UIFont(name: "Arial", size: 20)
       }
 
-
+      // Get stored meetings and members from user defaults
       let defaults = UserDefaults.standard
       baseNames = [String]()
       if let currentMeeting = defaults.object(forKey: "CurrentMeeting") {
@@ -485,6 +486,16 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
              baseNames = namesArray as! [String]
          }
          meetingName.text = currentMeeting as? String
+      }
+      
+      // If nothing stored yet, supply default list
+      if (meetingName.text == "") && (baseNames.count == 0) {
+         meetingName.text = "Committee 1"
+         baseNames = ["Member1", "Member2", "Member3"]
+         let defaults = UserDefaults.standard
+         defaults.set(baseNames, forKey: meetingName.text!)
+         defaults.set(meetingName.text, forKey: "CurrentMeeting")
+         defaults.set(["Committee 1"], forKey: "MeetingNames")
       }
       
       tableCollection = [(baseList, baseNames), (speakerList, [String]()), (doneList, [String]())]
@@ -554,7 +565,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 
       switch tag {
       case 1:
-         var name = " "
+         var name = ""
          var (_,nameArray) = tableCollection[0]
          if nameArray.count > 0  {
              name = nameArray[indexPath.row]
@@ -563,7 +574,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
          if self.view.frame.size.width > 1300 {tvCell?.memberText?.font = UIFont(name: "Arial", size: 28)} // if iPad Pro 12"
 
       case 2:
-         var name = " "
+         var name = ""
          var (_,nameArray) = tableCollection[1]
          if nameArray.count > 0  {
              name = nameArray[indexPath.row]
@@ -572,7 +583,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
          if self.view.frame.size.width > 1300 {tvCell?.memberText?.font = UIFont(name: "Arial", size: 28)} // if iPad Pro 12"
 
       case 3:
-         var name = " "
+         var name = ""
          var (_,nameArray) = tableCollection[2]
          if nameArray.count > 0  {
              name = nameArray[indexPath.row]
