@@ -2,16 +2,8 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "reorder.png",
+      "filename" : "reordertemplate.png",
       "scale" : "1x"
-    },
-    {
-      "idiom" : "universal",
-      "scale" : "2x"
-    },
-    {
-      "idiom" : "universal",
-      "scale" : "3x"
     }
   ],
   "info" : {

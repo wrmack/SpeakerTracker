@@ -358,6 +358,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
          if speakerArray.count > 1 {
             speakerList.isEditing = true
             reorderOn = true
+            sender.tintColor = UIColor(red: 0.6, green: 0.6, blue: 1.0, alpha: 1.0)
             baseList.isUserInteractionEnabled = false
             doneList.isUserInteractionEnabled = false
             for cell in speakerList.visibleCells {
@@ -369,6 +370,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
       } else {
          speakerList.isEditing = false
          reorderOn = false
+         sender.tintColor = UIColor.lightGray
          baseList.isUserInteractionEnabled = true
          doneList.isUserInteractionEnabled = true
          for cell in speakerList.visibleCells {

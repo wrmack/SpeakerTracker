@@ -111,7 +111,7 @@ class InfoViewController: UIViewController {
       attStg.append(NSAttributedString(string: "\n\nThe code for this app is open source so others can improve it.  The code is here:\n", attributes: normalAttributes))
       var link = NSURL(string: "https://github.com/wrmack/SpeakerTracker")
       attStg.append(NSAttributedString(string: "https://github.com/wrmack/SpeakerTracker", attributes: [NSLinkAttributeName : link!, NSFontAttributeName : UIFont(name: "Arial-BoldMT", size: 14)!]))
-      attStg.append(NSAttributedString(string: "\n\nThese How to notes are here:\n", attributes: normalAttributes))
+      attStg.append(NSAttributedString(string: "\n\nThese 'How to...' notes are also here:\n", attributes: normalAttributes))
       link = NSURL(string: "https://github.com/wrmack/SpeakerTracker/wiki")
       attStg.append(NSAttributedString(string: "https://github.com/wrmack/SpeakerTracker/wiki", attributes: [NSLinkAttributeName : link!, NSFontAttributeName : UIFont(name: "Arial-BoldMT", size: 14)!]))
       attStg.append(NSAttributedString(string: "\n\nPrivacy statement:\nPersonal information entered into this app is stored only on the device which contains the app" +
