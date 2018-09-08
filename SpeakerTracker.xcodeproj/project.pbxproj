@@ -7,6 +7,69 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4116B75721410A21000553BA /* DisplayDetailPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4116B75121410A21000553BA /* DisplayDetailPresenter.swift */; };
+		4116B75821410A21000553BA /* DisplayDetailWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4116B75221410A21000553BA /* DisplayDetailWorker.swift */; };
+		4116B75921410A21000553BA /* DisplayDetailRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4116B75321410A21000553BA /* DisplayDetailRouter.swift */; };
+		4116B75A21410A21000553BA /* DisplayDetailModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4116B75421410A21000553BA /* DisplayDetailModels.swift */; };
+		4116B75B21410A21000553BA /* DisplayDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4116B75521410A21000553BA /* DisplayDetailViewController.swift */; };
+		4116B75C21410A21000553BA /* DisplayDetailInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4116B75621410A21000553BA /* DisplayDetailInteractor.swift */; };
+		418285D2213A7E1800438325 /* TestTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 418285D1213A7E1800438325 /* TestTableViewController.swift */; };
+		418285D5213A8C9100438325 /* EditEntityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 418285D4213A8C9100438325 /* EditEntityView.swift */; };
+		418285DC213A938D00438325 /* AddEntityPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 418285D6213A938D00438325 /* AddEntityPresenter.swift */; };
+		418285DD213A938D00438325 /* AddEntityWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 418285D7213A938D00438325 /* AddEntityWorker.swift */; };
+		418285DE213A938D00438325 /* AddEntityRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 418285D8213A938D00438325 /* AddEntityRouter.swift */; };
+		418285DF213A938D00438325 /* AddEntityModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 418285D9213A938D00438325 /* AddEntityModels.swift */; };
+		418285E0213A938D00438325 /* AddEntityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 418285DA213A938D00438325 /* AddEntityViewController.swift */; };
+		418285E1213A938D00438325 /* AddEntityInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 418285DB213A938D00438325 /* AddEntityInteractor.swift */; };
+		41C3C747214356FE004AD9D9 /* SubEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41C3C746214356FE004AD9D9 /* SubEntity.swift */; };
+		41C3C75021435882004AD9D9 /* DisplaySubEntitiesPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41C3C74A21435882004AD9D9 /* DisplaySubEntitiesPresenter.swift */; };
+		41C3C75221435882004AD9D9 /* DisplaySubEntitiesRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41C3C74C21435882004AD9D9 /* DisplaySubEntitiesRouter.swift */; };
+		41C3C75321435882004AD9D9 /* DisplaySubEntitiesModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41C3C74D21435882004AD9D9 /* DisplaySubEntitiesModels.swift */; };
+		41C3C75421435882004AD9D9 /* DisplaySubEntitiesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41C3C74E21435882004AD9D9 /* DisplaySubEntitiesViewController.swift */; };
+		41C3C75521435882004AD9D9 /* DisplaySubEntitiesInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41C3C74F21435882004AD9D9 /* DisplaySubEntitiesInteractor.swift */; };
+		41C3C75C21436514004AD9D9 /* AddSubEntityPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41C3C75621436514004AD9D9 /* AddSubEntityPresenter.swift */; };
+		41C3C75E21436514004AD9D9 /* AddSubEntityRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41C3C75821436514004AD9D9 /* AddSubEntityRouter.swift */; };
+		41C3C75F21436514004AD9D9 /* AddSubEntityModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41C3C75921436514004AD9D9 /* AddSubEntityModels.swift */; };
+		41C3C76021436514004AD9D9 /* AddSubEntityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41C3C75A21436514004AD9D9 /* AddSubEntityViewController.swift */; };
+		41C3C76121436514004AD9D9 /* AddSubEntityInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41C3C75B21436514004AD9D9 /* AddSubEntityInteractor.swift */; };
+		41C3C763214365A9004AD9D9 /* EditSubEntityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41C3C762214365A9004AD9D9 /* EditSubEntityView.swift */; };
+		41C3C76B2143A4AA004AD9D9 /* SelectMembersPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41C3C7652143A4A9004AD9D9 /* SelectMembersPresenter.swift */; };
+		41C3C76D2143A4AA004AD9D9 /* SelectMembersRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41C3C7672143A4A9004AD9D9 /* SelectMembersRouter.swift */; };
+		41C3C76E2143A4AA004AD9D9 /* SelectMembersModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41C3C7682143A4AA004AD9D9 /* SelectMembersModels.swift */; };
+		41C3C76F2143A4AA004AD9D9 /* SelectMembersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41C3C7692143A4AA004AD9D9 /* SelectMembersViewController.swift */; };
+		41C3C7702143A4AA004AD9D9 /* SelectMembersInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41C3C76A2143A4AA004AD9D9 /* SelectMembersInteractor.swift */; };
+		41C6DA5B213B4F3200D73077 /* DisplayMembersPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41C6DA55213B4F3200D73077 /* DisplayMembersPresenter.swift */; };
+		41C6DA5D213B4F3200D73077 /* DisplayMembersRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41C6DA57213B4F3200D73077 /* DisplayMembersRouter.swift */; };
+		41C6DA5E213B4F3200D73077 /* DisplayMembersModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41C6DA58213B4F3200D73077 /* DisplayMembersModels.swift */; };
+		41C6DA5F213B4F3200D73077 /* DisplayMembersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41C6DA59213B4F3200D73077 /* DisplayMembersViewController.swift */; };
+		41C6DA60213B4F3200D73077 /* DisplayMembersInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41C6DA5A213B4F3200D73077 /* DisplayMembersInteractor.swift */; };
+		41C6DA76213B7EA800D73077 /* DisplayEventsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41C6DA70213B7EA800D73077 /* DisplayEventsPresenter.swift */; };
+		41C6DA77213B7EA800D73077 /* DisplayEventsWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41C6DA71213B7EA800D73077 /* DisplayEventsWorker.swift */; };
+		41C6DA78213B7EA800D73077 /* DisplayEventsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41C6DA72213B7EA800D73077 /* DisplayEventsRouter.swift */; };
+		41C6DA79213B7EA800D73077 /* DisplayEventsModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41C6DA73213B7EA800D73077 /* DisplayEventsModels.swift */; };
+		41C6DA7A213B7EA800D73077 /* DisplayEventsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41C6DA74213B7EA800D73077 /* DisplayEventsViewController.swift */; };
+		41C6DA7B213B7EA800D73077 /* DisplayEventsInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41C6DA75213B7EA800D73077 /* DisplayEventsInteractor.swift */; };
+		41C6DA91213B8A8B00D73077 /* AddMemberPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41C6DA8B213B8A8B00D73077 /* AddMemberPresenter.swift */; };
+		41C6DA93213B8A8B00D73077 /* AddMemberRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41C6DA8D213B8A8B00D73077 /* AddMemberRouter.swift */; };
+		41C6DA94213B8A8B00D73077 /* AddMemberModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41C6DA8E213B8A8B00D73077 /* AddMemberModels.swift */; };
+		41C6DA95213B8A8B00D73077 /* AddMemberViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41C6DA8F213B8A8B00D73077 /* AddMemberViewController.swift */; };
+		41C6DA96213B8A8B00D73077 /* AddMemberInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41C6DA90213B8A8B00D73077 /* AddMemberInteractor.swift */; };
+		41C6DA98213B8C0300D73077 /* EditMemberView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41C6DA97213B8C0300D73077 /* EditMemberView.swift */; };
+		41D4F3E0214268C800DC848F /* DisplayEntitiesPopUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41D4F3DF214268C800DC848F /* DisplayEntitiesPopUpViewController.swift */; };
+		41D4F3E521427C1100DC848F /* DisplayEntitiesPopUpPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41D4F3E421427C1100DC848F /* DisplayEntitiesPopUpPresenter.swift */; };
+		41D4F3E721427C4900DC848F /* DisplayEntitiesPopUpInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41D4F3E621427C4900DC848F /* DisplayEntitiesPopUpInteractor.swift */; };
+		41D4F3E921427CD600DC848F /* DisplayEntitiesPopUpModelsModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41D4F3E821427CD600DC848F /* DisplayEntitiesPopUpModelsModels.swift */; };
+		41F721742139CAE200AD98AA /* Member.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41F721732139CAE200AD98AA /* Member.swift */; };
+		41F721782139CE7A00AD98AA /* Entity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41F721772139CE7A00AD98AA /* Entity.swift */; };
+		41F7217A2139CEB900AD98AA /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41F721792139CEB900AD98AA /* Event.swift */; };
+		41F7217C2139D92400AD98AA /* EntityDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41F7217B2139D92400AD98AA /* EntityDocument.swift */; };
+		41F7217E2139D93C00AD98AA /* EventDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41F7217D2139D93C00AD98AA /* EventDocument.swift */; };
+		41F721902139F75400AD98AA /* DisplayEntitiesPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41F7218A2139F75400AD98AA /* DisplayEntitiesPresenter.swift */; };
+		41F721912139F75400AD98AA /* DisplayEntitiesWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41F7218B2139F75400AD98AA /* DisplayEntitiesWorker.swift */; };
+		41F721922139F75400AD98AA /* DisplayEntitiesRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41F7218C2139F75400AD98AA /* DisplayEntitiesRouter.swift */; };
+		41F721932139F75400AD98AA /* DisplayEntitiesModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41F7218D2139F75400AD98AA /* DisplayEntitiesModels.swift */; };
+		41F721942139F75400AD98AA /* DisplayEntitiesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41F7218E2139F75400AD98AA /* DisplayEntitiesViewController.swift */; };
+		41F721952139F75400AD98AA /* DisplayEntitiesInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41F7218F2139F75400AD98AA /* DisplayEntitiesInteractor.swift */; };
 		5F1D83B11EFDF35200239F7A /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F1D83B01EFDF35200239F7A /* InfoViewController.swift */; };
 		5F782E391D4B152F00144EA9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F782E381D4B152F00144EA9 /* AppDelegate.swift */; };
 		5F782E3B1D4B152F00144EA9 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F782E3A1D4B152F00144EA9 /* ViewController.swift */; };
@@ -39,6 +102,70 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4116B75121410A21000553BA /* DisplayDetailPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayDetailPresenter.swift; sourceTree = "<group>"; };
+		4116B75221410A21000553BA /* DisplayDetailWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayDetailWorker.swift; sourceTree = "<group>"; };
+		4116B75321410A21000553BA /* DisplayDetailRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayDetailRouter.swift; sourceTree = "<group>"; };
+		4116B75421410A21000553BA /* DisplayDetailModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayDetailModels.swift; sourceTree = "<group>"; };
+		4116B75521410A21000553BA /* DisplayDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayDetailViewController.swift; sourceTree = "<group>"; };
+		4116B75621410A21000553BA /* DisplayDetailInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayDetailInteractor.swift; sourceTree = "<group>"; };
+		418285D1213A7E1800438325 /* TestTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestTableViewController.swift; sourceTree = "<group>"; };
+		418285D3213A802300438325 /* Documents.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = Documents.md; sourceTree = "<group>"; };
+		418285D4213A8C9100438325 /* EditEntityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditEntityView.swift; sourceTree = "<group>"; };
+		418285D6213A938D00438325 /* AddEntityPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEntityPresenter.swift; sourceTree = "<group>"; };
+		418285D7213A938D00438325 /* AddEntityWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEntityWorker.swift; sourceTree = "<group>"; };
+		418285D8213A938D00438325 /* AddEntityRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEntityRouter.swift; sourceTree = "<group>"; };
+		418285D9213A938D00438325 /* AddEntityModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEntityModels.swift; sourceTree = "<group>"; };
+		418285DA213A938D00438325 /* AddEntityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEntityViewController.swift; sourceTree = "<group>"; };
+		418285DB213A938D00438325 /* AddEntityInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEntityInteractor.swift; sourceTree = "<group>"; };
+		41C3C746214356FE004AD9D9 /* SubEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubEntity.swift; sourceTree = "<group>"; };
+		41C3C74A21435882004AD9D9 /* DisplaySubEntitiesPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplaySubEntitiesPresenter.swift; sourceTree = "<group>"; };
+		41C3C74C21435882004AD9D9 /* DisplaySubEntitiesRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplaySubEntitiesRouter.swift; sourceTree = "<group>"; };
+		41C3C74D21435882004AD9D9 /* DisplaySubEntitiesModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplaySubEntitiesModels.swift; sourceTree = "<group>"; };
+		41C3C74E21435882004AD9D9 /* DisplaySubEntitiesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplaySubEntitiesViewController.swift; sourceTree = "<group>"; };
+		41C3C74F21435882004AD9D9 /* DisplaySubEntitiesInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplaySubEntitiesInteractor.swift; sourceTree = "<group>"; };
+		41C3C75621436514004AD9D9 /* AddSubEntityPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSubEntityPresenter.swift; sourceTree = "<group>"; };
+		41C3C75821436514004AD9D9 /* AddSubEntityRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSubEntityRouter.swift; sourceTree = "<group>"; };
+		41C3C75921436514004AD9D9 /* AddSubEntityModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSubEntityModels.swift; sourceTree = "<group>"; };
+		41C3C75A21436514004AD9D9 /* AddSubEntityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSubEntityViewController.swift; sourceTree = "<group>"; };
+		41C3C75B21436514004AD9D9 /* AddSubEntityInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSubEntityInteractor.swift; sourceTree = "<group>"; };
+		41C3C762214365A9004AD9D9 /* EditSubEntityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditSubEntityView.swift; sourceTree = "<group>"; };
+		41C3C7652143A4A9004AD9D9 /* SelectMembersPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectMembersPresenter.swift; sourceTree = "<group>"; };
+		41C3C7672143A4A9004AD9D9 /* SelectMembersRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectMembersRouter.swift; sourceTree = "<group>"; };
+		41C3C7682143A4AA004AD9D9 /* SelectMembersModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectMembersModels.swift; sourceTree = "<group>"; };
+		41C3C7692143A4AA004AD9D9 /* SelectMembersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectMembersViewController.swift; sourceTree = "<group>"; };
+		41C3C76A2143A4AA004AD9D9 /* SelectMembersInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectMembersInteractor.swift; sourceTree = "<group>"; };
+		41C6DA55213B4F3200D73077 /* DisplayMembersPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayMembersPresenter.swift; sourceTree = "<group>"; };
+		41C6DA57213B4F3200D73077 /* DisplayMembersRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayMembersRouter.swift; sourceTree = "<group>"; };
+		41C6DA58213B4F3200D73077 /* DisplayMembersModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayMembersModels.swift; sourceTree = "<group>"; };
+		41C6DA59213B4F3200D73077 /* DisplayMembersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayMembersViewController.swift; sourceTree = "<group>"; };
+		41C6DA5A213B4F3200D73077 /* DisplayMembersInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayMembersInteractor.swift; sourceTree = "<group>"; };
+		41C6DA70213B7EA800D73077 /* DisplayEventsPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayEventsPresenter.swift; sourceTree = "<group>"; };
+		41C6DA71213B7EA800D73077 /* DisplayEventsWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayEventsWorker.swift; sourceTree = "<group>"; };
+		41C6DA72213B7EA800D73077 /* DisplayEventsRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayEventsRouter.swift; sourceTree = "<group>"; };
+		41C6DA73213B7EA800D73077 /* DisplayEventsModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayEventsModels.swift; sourceTree = "<group>"; };
+		41C6DA74213B7EA800D73077 /* DisplayEventsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayEventsViewController.swift; sourceTree = "<group>"; };
+		41C6DA75213B7EA800D73077 /* DisplayEventsInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayEventsInteractor.swift; sourceTree = "<group>"; };
+		41C6DA8B213B8A8B00D73077 /* AddMemberPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMemberPresenter.swift; sourceTree = "<group>"; };
+		41C6DA8D213B8A8B00D73077 /* AddMemberRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMemberRouter.swift; sourceTree = "<group>"; };
+		41C6DA8E213B8A8B00D73077 /* AddMemberModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMemberModels.swift; sourceTree = "<group>"; };
+		41C6DA8F213B8A8B00D73077 /* AddMemberViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMemberViewController.swift; sourceTree = "<group>"; };
+		41C6DA90213B8A8B00D73077 /* AddMemberInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMemberInteractor.swift; sourceTree = "<group>"; };
+		41C6DA97213B8C0300D73077 /* EditMemberView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditMemberView.swift; sourceTree = "<group>"; };
+		41D4F3DF214268C800DC848F /* DisplayEntitiesPopUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayEntitiesPopUpViewController.swift; sourceTree = "<group>"; };
+		41D4F3E421427C1100DC848F /* DisplayEntitiesPopUpPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayEntitiesPopUpPresenter.swift; sourceTree = "<group>"; };
+		41D4F3E621427C4900DC848F /* DisplayEntitiesPopUpInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayEntitiesPopUpInteractor.swift; sourceTree = "<group>"; };
+		41D4F3E821427CD600DC848F /* DisplayEntitiesPopUpModelsModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayEntitiesPopUpModelsModels.swift; sourceTree = "<group>"; };
+		41F721732139CAE200AD98AA /* Member.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Member.swift; sourceTree = "<group>"; };
+		41F721772139CE7A00AD98AA /* Entity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Entity.swift; sourceTree = "<group>"; };
+		41F721792139CEB900AD98AA /* Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
+		41F7217B2139D92400AD98AA /* EntityDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityDocument.swift; sourceTree = "<group>"; };
+		41F7217D2139D93C00AD98AA /* EventDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDocument.swift; sourceTree = "<group>"; };
+		41F7218A2139F75400AD98AA /* DisplayEntitiesPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayEntitiesPresenter.swift; sourceTree = "<group>"; };
+		41F7218B2139F75400AD98AA /* DisplayEntitiesWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayEntitiesWorker.swift; sourceTree = "<group>"; };
+		41F7218C2139F75400AD98AA /* DisplayEntitiesRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayEntitiesRouter.swift; sourceTree = "<group>"; };
+		41F7218D2139F75400AD98AA /* DisplayEntitiesModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayEntitiesModels.swift; sourceTree = "<group>"; };
+		41F7218E2139F75400AD98AA /* DisplayEntitiesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayEntitiesViewController.swift; sourceTree = "<group>"; };
+		41F7218F2139F75400AD98AA /* DisplayEntitiesInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayEntitiesInteractor.swift; sourceTree = "<group>"; };
 		5F1D83B01EFDF35200239F7A /* InfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
 		5F782E351D4B152F00144EA9 /* SpeakerTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SpeakerTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5F782E381D4B152F00144EA9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -84,9 +211,280 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4116B75D21410A3A000553BA /* Display Detail */ = {
+			isa = PBXGroup;
+			children = (
+				4116B75521410A21000553BA /* DisplayDetailViewController.swift */,
+				4116B75621410A21000553BA /* DisplayDetailInteractor.swift */,
+				4116B75121410A21000553BA /* DisplayDetailPresenter.swift */,
+				4116B75221410A21000553BA /* DisplayDetailWorker.swift */,
+				4116B75321410A21000553BA /* DisplayDetailRouter.swift */,
+				4116B75421410A21000553BA /* DisplayDetailModels.swift */,
+			);
+			path = "Display Detail";
+			sourceTree = "<group>";
+		};
+		4116B75E21410A81000553BA /* Setup */ = {
+			isa = PBXGroup;
+			children = (
+				41C3C7442142F85E004AD9D9 /* Master */,
+				41C3C7452142F87E004AD9D9 /* Detail */,
+			);
+			path = Setup;
+			sourceTree = "<group>";
+		};
+		41C3C7432142F833004AD9D9 /* Edit sub-entities */ = {
+			isa = PBXGroup;
+			children = (
+				41C3C762214365A9004AD9D9 /* EditSubEntityView.swift */,
+				41C3C7642143A480004AD9D9 /* Select members */,
+				41C3C74821435829004AD9D9 /* Display sub-entities */,
+				41C3C74921435843004AD9D9 /* Add sub-entity */,
+			);
+			path = "Edit sub-entities";
+			sourceTree = "<group>";
+		};
+		41C3C7442142F85E004AD9D9 /* Master */ = {
+			isa = PBXGroup;
+			children = (
+				41F721802139F0E000AD98AA /* Edit entities */,
+				41C3C7432142F833004AD9D9 /* Edit sub-entities */,
+				41C6DA54213B4EEC00D73077 /* Edit members */,
+				41F721812139F10700AD98AA /* Edit events */,
+			);
+			path = Master;
+			sourceTree = "<group>";
+		};
+		41C3C7452142F87E004AD9D9 /* Detail */ = {
+			isa = PBXGroup;
+			children = (
+				4116B75D21410A3A000553BA /* Display Detail */,
+				41D4F3E1214268E800DC848F /* Display entities in popup */,
+			);
+			path = Detail;
+			sourceTree = "<group>";
+		};
+		41C3C74821435829004AD9D9 /* Display sub-entities */ = {
+			isa = PBXGroup;
+			children = (
+				41C3C74E21435882004AD9D9 /* DisplaySubEntitiesViewController.swift */,
+				41C3C74F21435882004AD9D9 /* DisplaySubEntitiesInteractor.swift */,
+				41C3C74A21435882004AD9D9 /* DisplaySubEntitiesPresenter.swift */,
+				41C3C74C21435882004AD9D9 /* DisplaySubEntitiesRouter.swift */,
+				41C3C74D21435882004AD9D9 /* DisplaySubEntitiesModels.swift */,
+			);
+			path = "Display sub-entities";
+			sourceTree = "<group>";
+		};
+		41C3C74921435843004AD9D9 /* Add sub-entity */ = {
+			isa = PBXGroup;
+			children = (
+				41C3C75A21436514004AD9D9 /* AddSubEntityViewController.swift */,
+				41C3C75B21436514004AD9D9 /* AddSubEntityInteractor.swift */,
+				41C3C75621436514004AD9D9 /* AddSubEntityPresenter.swift */,
+				41C3C75821436514004AD9D9 /* AddSubEntityRouter.swift */,
+				41C3C75921436514004AD9D9 /* AddSubEntityModels.swift */,
+			);
+			path = "Add sub-entity";
+			sourceTree = "<group>";
+		};
+		41C3C7642143A480004AD9D9 /* Select members */ = {
+			isa = PBXGroup;
+			children = (
+				41C3C7692143A4AA004AD9D9 /* SelectMembersViewController.swift */,
+				41C3C76A2143A4AA004AD9D9 /* SelectMembersInteractor.swift */,
+				41C3C7652143A4A9004AD9D9 /* SelectMembersPresenter.swift */,
+				41C3C7672143A4A9004AD9D9 /* SelectMembersRouter.swift */,
+				41C3C7682143A4AA004AD9D9 /* SelectMembersModels.swift */,
+			);
+			path = "Select members";
+			sourceTree = "<group>";
+		};
+		41C6DA54213B4EEC00D73077 /* Edit members */ = {
+			isa = PBXGroup;
+			children = (
+				41C6DA97213B8C0300D73077 /* EditMemberView.swift */,
+				41C6DA61213B4F7100D73077 /* Display members */,
+				41C6DA88213B8A4A00D73077 /* Add member */,
+				41C6DA8A213B8A6600D73077 /* Edit member */,
+				41C6DA89213B8A5A00D73077 /* Remove member */,
+			);
+			path = "Edit members";
+			sourceTree = "<group>";
+		};
+		41C6DA61213B4F7100D73077 /* Display members */ = {
+			isa = PBXGroup;
+			children = (
+				41C6DA59213B4F3200D73077 /* DisplayMembersViewController.swift */,
+				41C6DA5A213B4F3200D73077 /* DisplayMembersInteractor.swift */,
+				41C6DA55213B4F3200D73077 /* DisplayMembersPresenter.swift */,
+				41C6DA57213B4F3200D73077 /* DisplayMembersRouter.swift */,
+				41C6DA58213B4F3200D73077 /* DisplayMembersModels.swift */,
+			);
+			path = "Display members";
+			sourceTree = "<group>";
+		};
+		41C6DA88213B8A4A00D73077 /* Add member */ = {
+			isa = PBXGroup;
+			children = (
+				41C6DA8F213B8A8B00D73077 /* AddMemberViewController.swift */,
+				41C6DA90213B8A8B00D73077 /* AddMemberInteractor.swift */,
+				41C6DA8B213B8A8B00D73077 /* AddMemberPresenter.swift */,
+				41C6DA8D213B8A8B00D73077 /* AddMemberRouter.swift */,
+				41C6DA8E213B8A8B00D73077 /* AddMemberModels.swift */,
+			);
+			path = "Add member";
+			sourceTree = "<group>";
+		};
+		41C6DA89213B8A5A00D73077 /* Remove member */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "Remove member";
+			sourceTree = "<group>";
+		};
+		41C6DA8A213B8A6600D73077 /* Edit member */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "Edit member";
+			sourceTree = "<group>";
+		};
+		41D4F3E1214268E800DC848F /* Display entities in popup */ = {
+			isa = PBXGroup;
+			children = (
+				41D4F3DF214268C800DC848F /* DisplayEntitiesPopUpViewController.swift */,
+				41D4F3E621427C4900DC848F /* DisplayEntitiesPopUpInteractor.swift */,
+				41D4F3E421427C1100DC848F /* DisplayEntitiesPopUpPresenter.swift */,
+				41D4F3E821427CD600DC848F /* DisplayEntitiesPopUpModelsModels.swift */,
+			);
+			path = "Display entities in popup";
+			sourceTree = "<group>";
+		};
+		41F721722139CA7900AD98AA /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				41F721732139CAE200AD98AA /* Member.swift */,
+				41F721772139CE7A00AD98AA /* Entity.swift */,
+				41C3C746214356FE004AD9D9 /* SubEntity.swift */,
+				41F721792139CEB900AD98AA /* Event.swift */,
+				41F7217B2139D92400AD98AA /* EntityDocument.swift */,
+				41F7217D2139D93C00AD98AA /* EventDocument.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		41F7217F2139F0CE00AD98AA /* Use cases */ = {
+			isa = PBXGroup;
+			children = (
+				41F721822139F14000AD98AA /* Track speakers */,
+				4116B75E21410A81000553BA /* Setup */,
+			);
+			path = "Use cases";
+			sourceTree = "<group>";
+		};
+		41F721802139F0E000AD98AA /* Edit entities */ = {
+			isa = PBXGroup;
+			children = (
+				418285D1213A7E1800438325 /* TestTableViewController.swift */,
+				418285D4213A8C9100438325 /* EditEntityView.swift */,
+				41F721832139F38600AD98AA /* Display entities */,
+				41F721842139F3A800AD98AA /* Add entity */,
+				41F721852139F3B900AD98AA /* Remove entity */,
+				41F721862139F56B00AD98AA /* Edit an entity */,
+			);
+			path = "Edit entities";
+			sourceTree = "<group>";
+		};
+		41F721812139F10700AD98AA /* Edit events */ = {
+			isa = PBXGroup;
+			children = (
+				41F721872139F60700AD98AA /* Display events */,
+				41F721892139F62F00AD98AA /* Remove event */,
+				41F721882139F61A00AD98AA /* Add event */,
+			);
+			path = "Edit events";
+			sourceTree = "<group>";
+		};
+		41F721822139F14000AD98AA /* Track speakers */ = {
+			isa = PBXGroup;
+			children = (
+				5F782E3A1D4B152F00144EA9 /* ViewController.swift */,
+			);
+			path = "Track speakers";
+			sourceTree = "<group>";
+		};
+		41F721832139F38600AD98AA /* Display entities */ = {
+			isa = PBXGroup;
+			children = (
+				41F7218E2139F75400AD98AA /* DisplayEntitiesViewController.swift */,
+				41F7218F2139F75400AD98AA /* DisplayEntitiesInteractor.swift */,
+				41F7218A2139F75400AD98AA /* DisplayEntitiesPresenter.swift */,
+				41F7218B2139F75400AD98AA /* DisplayEntitiesWorker.swift */,
+				41F7218C2139F75400AD98AA /* DisplayEntitiesRouter.swift */,
+				41F7218D2139F75400AD98AA /* DisplayEntitiesModels.swift */,
+			);
+			path = "Display entities";
+			sourceTree = "<group>";
+		};
+		41F721842139F3A800AD98AA /* Add entity */ = {
+			isa = PBXGroup;
+			children = (
+				418285DA213A938D00438325 /* AddEntityViewController.swift */,
+				418285DB213A938D00438325 /* AddEntityInteractor.swift */,
+				418285D6213A938D00438325 /* AddEntityPresenter.swift */,
+				418285D7213A938D00438325 /* AddEntityWorker.swift */,
+				418285D8213A938D00438325 /* AddEntityRouter.swift */,
+				418285D9213A938D00438325 /* AddEntityModels.swift */,
+			);
+			path = "Add entity";
+			sourceTree = "<group>";
+		};
+		41F721852139F3B900AD98AA /* Remove entity */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "Remove entity";
+			sourceTree = "<group>";
+		};
+		41F721862139F56B00AD98AA /* Edit an entity */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "Edit an entity";
+			sourceTree = "<group>";
+		};
+		41F721872139F60700AD98AA /* Display events */ = {
+			isa = PBXGroup;
+			children = (
+				41C6DA74213B7EA800D73077 /* DisplayEventsViewController.swift */,
+				41C6DA75213B7EA800D73077 /* DisplayEventsInteractor.swift */,
+				41C6DA70213B7EA800D73077 /* DisplayEventsPresenter.swift */,
+				41C6DA71213B7EA800D73077 /* DisplayEventsWorker.swift */,
+				41C6DA72213B7EA800D73077 /* DisplayEventsRouter.swift */,
+				41C6DA73213B7EA800D73077 /* DisplayEventsModels.swift */,
+			);
+			path = "Display events";
+			sourceTree = "<group>";
+		};
+		41F721882139F61A00AD98AA /* Add event */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "Add event";
+			sourceTree = "<group>";
+		};
+		41F721892139F62F00AD98AA /* Remove event */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "Remove event";
+			sourceTree = "<group>";
+		};
 		5F782E2C1D4B152F00144EA9 = {
 			isa = PBXGroup;
 			children = (
+				418285D3213A802300438325 /* Documents.md */,
 				5F782E371D4B152F00144EA9 /* SpeakerTracker */,
 				5F782E4C1D4B153000144EA9 /* SpeakerTrackerTests */,
 				5F782E571D4B153000144EA9 /* SpeakerTrackerUITests */,
@@ -108,16 +506,17 @@
 			isa = PBXGroup;
 			children = (
 				5F782E381D4B152F00144EA9 /* AppDelegate.swift */,
-				5F782E3A1D4B152F00144EA9 /* ViewController.swift */,
+				5F782E3C1D4B152F00144EA9 /* Main.storyboard */,
+				5F782E411D4B152F00144EA9 /* LaunchScreen.storyboard */,
+				5F782E441D4B152F00144EA9 /* Info.plist */,
+				5F782E3F1D4B152F00144EA9 /* Assets.xcassets */,
+				41F721722139CA7900AD98AA /* Models */,
+				41F7217F2139F0CE00AD98AA /* Use cases */,
 				5FCB017A1E299AC900FBCB06 /* MeetingChooserViewController.swift */,
 				5F83D6881D4D34E400120A7D /* EditMembersController.swift */,
 				5FF9E6001E2878CE008554EE /* EditMeetingsController.swift */,
 				5F1D83B01EFDF35200239F7A /* InfoViewController.swift */,
 				5F8BE5611D546F310040DD76 /* WMTableViewCell.swift */,
-				5F782E3C1D4B152F00144EA9 /* Main.storyboard */,
-				5F782E3F1D4B152F00144EA9 /* Assets.xcassets */,
-				5F782E411D4B152F00144EA9 /* LaunchScreen.storyboard */,
-				5F782E441D4B152F00144EA9 /* Info.plist */,
 			);
 			path = SpeakerTracker;
 			sourceTree = "<group>";
@@ -203,19 +602,21 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0800;
-				LastUpgradeCheck = 0820;
+				LastUpgradeCheck = 0930;
 				ORGANIZATIONNAME = "Warwick McNaughton";
 				TargetAttributes = {
 					5F782E341D4B152F00144EA9 = {
 						CreatedOnToolsVersion = 8.0;
 						DevelopmentTeam = C4XR3G25JL;
 						DevelopmentTeamName = "W McNaughton";
+						LastSwiftMigration = 0930;
 						ProvisioningStyle = Automatic;
 					};
 					5F782E481D4B153000144EA9 = {
 						CreatedOnToolsVersion = 8.0;
 						DevelopmentTeam = C4XR3G25JL;
 						DevelopmentTeamName = "W McNaughton";
+						LastSwiftMigration = 0930;
 						ProvisioningStyle = Automatic;
 						TestTargetID = 5F782E341D4B152F00144EA9;
 					};
@@ -223,6 +624,7 @@
 						CreatedOnToolsVersion = 8.0;
 						DevelopmentTeam = C4XR3G25JL;
 						DevelopmentTeamName = "W McNaughton";
+						LastSwiftMigration = 0930;
 						ProvisioningStyle = Automatic;
 						TestTargetID = 5F782E341D4B152F00144EA9;
 					};
@@ -280,13 +682,76 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				41C3C75E21436514004AD9D9 /* AddSubEntityRouter.swift in Sources */,
+				41C3C7702143A4AA004AD9D9 /* SelectMembersInteractor.swift in Sources */,
+				41C6DA98213B8C0300D73077 /* EditMemberView.swift in Sources */,
 				5FCB017B1E299AC900FBCB06 /* MeetingChooserViewController.swift in Sources */,
+				4116B75A21410A21000553BA /* DisplayDetailModels.swift in Sources */,
+				41D4F3E921427CD600DC848F /* DisplayEntitiesPopUpModelsModels.swift in Sources */,
+				41C6DA5B213B4F3200D73077 /* DisplayMembersPresenter.swift in Sources */,
+				41C3C75F21436514004AD9D9 /* AddSubEntityModels.swift in Sources */,
+				41C3C76F2143A4AA004AD9D9 /* SelectMembersViewController.swift in Sources */,
+				418285D2213A7E1800438325 /* TestTableViewController.swift in Sources */,
+				41D4F3E721427C4900DC848F /* DisplayEntitiesPopUpInteractor.swift in Sources */,
+				418285DE213A938D00438325 /* AddEntityRouter.swift in Sources */,
+				41C3C763214365A9004AD9D9 /* EditSubEntityView.swift in Sources */,
+				41C3C75321435882004AD9D9 /* DisplaySubEntitiesModels.swift in Sources */,
+				41C6DA94213B8A8B00D73077 /* AddMemberModels.swift in Sources */,
+				41F721922139F75400AD98AA /* DisplayEntitiesRouter.swift in Sources */,
+				41C6DA93213B8A8B00D73077 /* AddMemberRouter.swift in Sources */,
+				418285DD213A938D00438325 /* AddEntityWorker.swift in Sources */,
+				41C3C75421435882004AD9D9 /* DisplaySubEntitiesViewController.swift in Sources */,
+				41F721952139F75400AD98AA /* DisplayEntitiesInteractor.swift in Sources */,
+				41F721902139F75400AD98AA /* DisplayEntitiesPresenter.swift in Sources */,
+				41C6DA5F213B4F3200D73077 /* DisplayMembersViewController.swift in Sources */,
 				5F782E3B1D4B152F00144EA9 /* ViewController.swift in Sources */,
+				41C3C76021436514004AD9D9 /* AddSubEntityViewController.swift in Sources */,
 				5F782E391D4B152F00144EA9 /* AppDelegate.swift in Sources */,
+				41F721932139F75400AD98AA /* DisplayEntitiesModels.swift in Sources */,
+				41C3C75521435882004AD9D9 /* DisplaySubEntitiesInteractor.swift in Sources */,
+				41C3C76E2143A4AA004AD9D9 /* SelectMembersModels.swift in Sources */,
+				41C6DA7B213B7EA800D73077 /* DisplayEventsInteractor.swift in Sources */,
 				5F1D83B11EFDF35200239F7A /* InfoViewController.swift in Sources */,
+				4116B75721410A21000553BA /* DisplayDetailPresenter.swift in Sources */,
+				41F7217A2139CEB900AD98AA /* Event.swift in Sources */,
+				41C6DA77213B7EA800D73077 /* DisplayEventsWorker.swift in Sources */,
 				5F83D6891D4D34E400120A7D /* EditMembersController.swift in Sources */,
+				41F721782139CE7A00AD98AA /* Entity.swift in Sources */,
+				41C6DA96213B8A8B00D73077 /* AddMemberInteractor.swift in Sources */,
+				41D4F3E521427C1100DC848F /* DisplayEntitiesPopUpPresenter.swift in Sources */,
+				41C3C747214356FE004AD9D9 /* SubEntity.swift in Sources */,
+				41F721942139F75400AD98AA /* DisplayEntitiesViewController.swift in Sources */,
+				41C6DA76213B7EA800D73077 /* DisplayEventsPresenter.swift in Sources */,
+				41C6DA7A213B7EA800D73077 /* DisplayEventsViewController.swift in Sources */,
+				41C6DA5D213B4F3200D73077 /* DisplayMembersRouter.swift in Sources */,
+				41C3C75221435882004AD9D9 /* DisplaySubEntitiesRouter.swift in Sources */,
+				4116B75821410A21000553BA /* DisplayDetailWorker.swift in Sources */,
 				5FF9E6011E2878CE008554EE /* EditMeetingsController.swift in Sources */,
+				41F721912139F75400AD98AA /* DisplayEntitiesWorker.swift in Sources */,
+				4116B75B21410A21000553BA /* DisplayDetailViewController.swift in Sources */,
+				418285DF213A938D00438325 /* AddEntityModels.swift in Sources */,
+				418285E1213A938D00438325 /* AddEntityInteractor.swift in Sources */,
+				41C3C76B2143A4AA004AD9D9 /* SelectMembersPresenter.swift in Sources */,
+				41C3C76D2143A4AA004AD9D9 /* SelectMembersRouter.swift in Sources */,
+				41C3C75C21436514004AD9D9 /* AddSubEntityPresenter.swift in Sources */,
 				5F8BE5631D546F310040DD76 /* WMTableViewCell.swift in Sources */,
+				41C6DA60213B4F3200D73077 /* DisplayMembersInteractor.swift in Sources */,
+				41C3C75021435882004AD9D9 /* DisplaySubEntitiesPresenter.swift in Sources */,
+				41D4F3E0214268C800DC848F /* DisplayEntitiesPopUpViewController.swift in Sources */,
+				41C6DA79213B7EA800D73077 /* DisplayEventsModels.swift in Sources */,
+				41C6DA5E213B4F3200D73077 /* DisplayMembersModels.swift in Sources */,
+				41C3C76121436514004AD9D9 /* AddSubEntityInteractor.swift in Sources */,
+				418285DC213A938D00438325 /* AddEntityPresenter.swift in Sources */,
+				4116B75921410A21000553BA /* DisplayDetailRouter.swift in Sources */,
+				4116B75C21410A21000553BA /* DisplayDetailInteractor.swift in Sources */,
+				41C6DA78213B7EA800D73077 /* DisplayEventsRouter.swift in Sources */,
+				41F7217C2139D92400AD98AA /* EntityDocument.swift in Sources */,
+				41F721742139CAE200AD98AA /* Member.swift in Sources */,
+				418285D5213A8C9100438325 /* EditEntityView.swift in Sources */,
+				41C6DA95213B8A8B00D73077 /* AddMemberViewController.swift in Sources */,
+				41C6DA91213B8A8B00D73077 /* AddMemberPresenter.swift in Sources */,
+				41F7217E2139D93C00AD98AA /* EventDocument.swift in Sources */,
+				418285E0213A938D00438325 /* AddEntityViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -350,15 +815,23 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -381,12 +854,13 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -400,15 +874,23 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -425,10 +907,11 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -440,11 +923,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				INFOPLIST_FILE = SpeakerTracker/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.wm.SpeakerTracker;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = 2;
 			};
 			name = Debug;
@@ -455,11 +939,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				INFOPLIST_FILE = SpeakerTracker/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.wm.SpeakerTracker;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = 2;
 			};
 			name = Release;
@@ -472,7 +957,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.wm.SpeakerTrackerTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SpeakerTracker.app/SpeakerTracker";
 			};
 			name = Debug;
@@ -485,7 +971,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.wm.SpeakerTrackerTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SpeakerTracker.app/SpeakerTracker";
 			};
 			name = Release;
@@ -497,7 +984,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.wm.SpeakerTrackerUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 				TEST_TARGET_NAME = SpeakerTracker;
 			};
 			name = Debug;
@@ -509,7 +997,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.wm.SpeakerTrackerUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 				TEST_TARGET_NAME = SpeakerTracker;
 			};
 			name = Release;

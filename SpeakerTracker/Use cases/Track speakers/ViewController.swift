@@ -164,11 +164,12 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
  
     
 /**
- * A storyboard button action.  The undo button was pressed.  The undo stack comprises an array of tuples.
- * Each tuple corresponds to an action of a name being moved. The tuple stores the name's position in the source table
- * and the name's position in the destination table.
- *
- * When the undo button is pressed, the last tuple in the array is popped off the array and the action reversed.
+    A storyboard button action:  the undo button was pressed.
+     
+    The undo stack comprises an array of tuples.
+    Each tuple holds: source table index, name position in source table, destination table index, name position in destination table and name of member.
+ 
+    When the undo button is pressed, the last tuple in the array is popped off the array and the action reversed.
  */
     
     @IBAction func undoPressed(_ sender: UIButton) {
@@ -431,7 +432,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     /// Tracks the reorder toggle on speaker list
     var reorderOn = false
     
-    /// The undo stack is an array of tuples.  Each tuple holds the 'from' table index, the position of the name, the 'to' table index, position in table and name of member.
+    /// The undo stack is an array of tuples.  Each tuple holds: source table index, name position in source table, destination table index, name position in destination table and name of member.
     var undoStack = [(Int, Int, Int, Int, String)]()
     
     /// A view controller to display the meeting chooser popover
@@ -519,6 +520,16 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
       
     }
 
+    /*
+     Adjust tab bar of original UITabBarController once views have loaded
+     */
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        let tabBarCont = UIApplication.shared.keyWindow?.rootViewController as! UITabBarController
+        let tabBarRect = tabBarCont.tabBar.frame
+        tabBarCont.tabBar.frame = CGRect(x: view.frame.origin.x, y: tabBarRect.origin.y, width: view.frame.size.width, height: tabBarRect.size.height)
+    }
+    
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -659,7 +670,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
    // MARK: - Handle swipe gestures
 
    /// Get the member's name and index of table that was swiped and pass to functions to move name left or right.
-   func handleSwipeGesture(_ recognizer: UISwipeGestureRecognizer) {
+   @objc func handleSwipeGesture(_ recognizer: UISwipeGestureRecognizer) {
       guard recognizer.state == .ended else { return }
       guard recognizer.view is UITableView else { return }
       var currentTable: UITableView?
@@ -706,17 +717,17 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
  * Updates the timer displays.
  */
     
-    func timerFireMethod(_ timer: Timer) {
+    @objc func timerFireMethod(_ timer: Timer) {
        
         let secondsSinceStart: Int = abs(Int(startTime!.timeIntervalSinceNow))
         let minutes = secondsSinceStart / 60
         let seconds = secondsSinceStart - (minutes * 60)
         var secondsString = String(seconds)
-        if secondsString.characters.count == 1 {
+        if secondsString.count == 1 {
             secondsString = "0" + secondsString
         }
         var minutesString = String(minutes)
-        if minutesString.characters.count == 1 {
+        if minutesString.count == 1 {
             minutesString = "0" + minutesString
         }
         //print("\(minutesString) : \(secondsString)")

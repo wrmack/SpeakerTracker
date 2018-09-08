@@ -280,7 +280,7 @@ class EditMeetingsController: UIViewController, UITableViewDelegate, UITableView
 
     // MARK: Helpers
     
-    func editButtonPressed(_ sender: UIButton) {
+    @objc func editButtonPressed(_ sender: UIButton) {
         
         if (theTableView?.isEditing == false) {
             theTableView?.setEditing(true, animated: true)
