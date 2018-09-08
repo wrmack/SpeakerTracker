@@ -33,7 +33,7 @@ class EditMembersController: UIViewController, EditMeetingsControllerDelegate {
         
         // Turn text from text view into an array of characters
         let text = memberListTextView.text
-        let textCharacterArray = Array(text!.characters)
+        let textCharacterArray = Array(text!)
         
         // Iterate through array of characters, saving a name to nameArray at each new-line character
         var tmpString = ""
@@ -143,7 +143,7 @@ class EditMembersController: UIViewController, EditMeetingsControllerDelegate {
     
     // MARK: - Notification handlers
     
-    func handleKeyboardShowNotification(_ notification: NSNotification) {
+    @objc func handleKeyboardShowNotification(_ notification: NSNotification) {
         
         // Store current height of member list
         memberListHeight = memberListTextView.frame.size.height
@@ -161,7 +161,7 @@ class EditMembersController: UIViewController, EditMeetingsControllerDelegate {
     }
     
     
-    func handleKeyboardHideNotification(_ notification: NSNotification) {
+    @objc func handleKeyboardHideNotification(_ notification: NSNotification) {
         memberListTextView.frame.size.height = memberListHeight!
         
     }
