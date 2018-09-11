@@ -15,12 +15,14 @@ import UIKit
 enum AddSubEntity {
   // MARK: Use cases
   
-    enum Something {
+    enum SubEntity {
         struct Request {
         }
         struct Response {
+            var members: [Member]?
         }
         struct ViewModel {
+            var memberNames: String?
         }
     }
 }

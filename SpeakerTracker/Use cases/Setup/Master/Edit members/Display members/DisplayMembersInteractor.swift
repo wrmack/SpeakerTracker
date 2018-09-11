@@ -45,12 +45,15 @@ class DisplayMembersInteractor: DisplayMembersBusinessLogic, DisplayMembersDataS
     
     
     func setCurrentMember(index: Int) {
-        if members != nil {
+        if members != nil && members!.count > 0 {
             member = members![index]
         }
     }
     
-    
+    /*
+     The datastore property entity is updated through data-passing
+     This updates the members stored property and passes members to the presenter to prepare for display.
+     */
     func refreshMembers() {
         self.members = entity?.members
         let response = DisplayMembers.Members.Response(members: self.members)

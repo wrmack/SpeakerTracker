@@ -16,7 +16,7 @@ protocol DisplayMembersDisplayLogic: class {
     func displayMembers(viewModel: DisplayMembers.Members.ViewModel)
 }
 
-class DisplayMembersViewController: UITableViewController, DisplayMembersDisplayLogic, DisplayDetailViewControllerDelegate {
+class DisplayMembersViewController: UITableViewController, DisplayMembersDisplayLogic, DisplayDetailViewControllerDelegate, DisplayDetailViewControllerEditDelegate {
     var interactor: DisplayMembersBusinessLogic?
     var router: (NSObjectProtocol & DisplayMembersRoutingLogic & DisplayMembersDataPassing)?
     var memberNames = [String]()
@@ -92,6 +92,7 @@ class DisplayMembersViewController: UITableViewController, DisplayMembersDisplay
         tabBarCont.tabBar.frame = CGRect(x: (detailVCView?.frame.origin.x)!, y: tbFrame.origin.y, width: (detailVCView?.frame.size.width)!, height: tbFrame.size.height)
  
         detailVC!.delegate = self
+        detailVC?.editDelegate = self
         detailVC!.detailLabel.text = "Select an entity  〉"
         detailVC!.detailLabel.textAlignment = .left
         detailVC!.detailButton.isHidden = false
@@ -106,6 +107,7 @@ class DisplayMembersViewController: UITableViewController, DisplayMembersDisplay
     @IBAction func addMember(_ sender: Any) {
         router?.routeToAddMember() 
     }
+    
     
     // MARK: - VIP
     
@@ -123,6 +125,10 @@ class DisplayMembersViewController: UITableViewController, DisplayMembersDisplay
     }
     
     func refreshAfterAddingMember() {
+        interactor!.refreshMembers()
+    }
+    
+    func refreshAfterEditingMember() {
         interactor!.refreshMembers()
     }
     
@@ -183,5 +189,13 @@ class DisplayMembersViewController: UITableViewController, DisplayMembersDisplay
         fetchMembers(entity: entity)
     }
     
+    
+    // MARK: - DisplayDetailViewControllerEditDelegate methods
+    
+    func didPressEditButtonInDisplayDetailViewController(selectedItem: AnyObject?) {
+        if selectedItem is Member {
+            router!.routeToEditMember() 
+        }
+    }
 
 }

@@ -68,11 +68,13 @@ class AddMemberViewController: UIViewController, EditMemberViewDelegate, AddMemb
         }
     }
 
+    
     // MARK: - View lifecycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
         let editView = EditMemberView(frame: CGRect.zero)
+        editView.deleteButton!.isEnabled = false
         editView.delegate = self
         view.addSubview(editView)
         editView.heading?.text = "New member"
@@ -83,6 +85,7 @@ class AddMemberViewController: UIViewController, EditMemberViewDelegate, AddMemb
         editView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
     }
 
+    
     //MARK: - EditEntityViewDelegate methods
     
     func saveButtonTapped(member: Member) {
@@ -94,5 +97,10 @@ class AddMemberViewController: UIViewController, EditMemberViewDelegate, AddMemb
     
     func cancelButtonTapped() {
         self.router?.returnToSource(source: self.sourceVC!)
+    }
+    
+    
+    func deleteButtonTapped(member: Member) {
+        print("This delegate method not implemented when adding a member")
     }
 }

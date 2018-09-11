@@ -12,15 +12,16 @@
 
 import UIKit
 
-@objc protocol AddSubEntityRoutingLogic {
+protocol AddSubEntityRoutingLogic {
     func returnToSource(source: DisplaySubEntitiesViewController)
     func routeToSelectMembers()
-    func returnFromSelectMembers()
+    func returnFromSelectMembers(members: [Member]?)
 }
 
 protocol AddSubEntityDataPassing {
     var dataStore: AddSubEntityDataStore? { get }
 }
+
 
 class AddSubEntityRouter: NSObject, AddSubEntityRoutingLogic, AddSubEntityDataPassing {
     weak var viewController: AddSubEntityViewController?
@@ -37,22 +38,26 @@ class AddSubEntityRouter: NSObject, AddSubEntityRoutingLogic, AddSubEntityDataPa
         source.router?.returnFromAddingSubEntity()
     }
     
+    
     func routeToSelectMembers() {
         selectMembersVC = SelectMembersViewController(source: viewController!)
         var destinationDS = selectMembersVC?.router?.dataStore
         passDataToSelectMembersDataStore(source: dataStore!, destination: &destinationDS!)
- //       viewController?.present(selectMembersVC!, animated: true, completion: nil)
         splitVC = viewController!.splitViewController
         splitVC?.showDetailViewController(selectMembersVC!, sender: viewController)
         selectMembersVC?.fetchMemberNames()
     }
     
     
-    func returnFromSelectMembers() {
-//        viewController?.dismiss(animated: false, completion: nil)
+    func returnFromSelectMembers(members: [Member]?) {
+        if members != nil {
+            
+            viewController!.refreshAfterSelectingMembers()
+        }
         splitVC?.showDetailViewController(viewController!, sender: nil)
         selectMembersVC = nil
     }
+    
     
     // MARK: Passing data
     
@@ -64,4 +69,6 @@ class AddSubEntityRouter: NSObject, AddSubEntityRoutingLogic, AddSubEntityDataPa
     func passDataToSelectMembersDataStore(source: AddSubEntityDataStore, destination: inout SelectMembersDataStore) {
         destination.entity = source.entity
     }
+    
+ 
 }

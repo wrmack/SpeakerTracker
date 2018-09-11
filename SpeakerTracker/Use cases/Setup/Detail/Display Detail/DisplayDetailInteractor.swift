@@ -14,6 +14,7 @@ import UIKit
 
 protocol DisplayDetailBusinessLogic {
     func getSelectedItemFields(request: DisplayDetail.Detail.Request)
+    func getSelectedItem() -> AnyObject?
 }
 
 protocol DisplayDetailDataStore {
@@ -22,49 +23,24 @@ protocol DisplayDetailDataStore {
 
 class DisplayDetailInteractor: DisplayDetailBusinessLogic, DisplayDetailDataStore {
     var presenter: DisplayDetailPresentationLogic?
-    var worker: DisplayDetailWorker?
     var selectedItem: AnyObject?
 
+    
     // MARK: - VIP
     
+    /*
+     The selected item was set through data-passing.
+     Passes the selected item to the presenter for presenting as an array of title-detail tuples.
+     */
     func getSelectedItemFields(request: DisplayDetail.Detail.Request) {
-        var labelDetailArray = [(String, String)]()
-        switch selectedItem {
-        case is Member:
-            let member = selectedItem as! Member
-            labelDetailArray.append(("Title:", (member.title)!))
-            labelDetailArray.append(("First name:", (member.firstName)!))
-            labelDetailArray.append(("Last name:", (member.lastName)!))
-            labelDetailArray.append(("On governing body:", member.isGoverningBodyMember == true ? "Yes" : "No"))
-        
-        case is Entity:
-            let entity = selectedItem as! Entity
-            labelDetailArray.append(("Name:", entity.name!))
-            if entity.subEntities != nil {
-                var subEntityString = String()
-                for sub in entity.subEntities! {
-                    if subEntityString.count > 0 {
-                        subEntityString.append(", ")
-                    }
-                    subEntityString.append(sub.name!)
-                }
-                labelDetailArray.append(("Sub-entities:", subEntityString))
-            }
-            if entity.members != nil {
-                var memberString = String()
-                for member in entity.members! {
-                    if memberString.count > 0 {
-                        memberString.append(", ")
-                    }
-                    memberString.append(member.firstName! + member.lastName!)
-                }
-                labelDetailArray.append(("Members:", memberString))
-            }
-        default:
-            break
-        }
-
-        let response = DisplayDetail.Detail.Response(detailFields: labelDetailArray)
+        let response = DisplayDetail.Detail.Response(selectedItem: selectedItem)
         presenter?.presentDetailFields(response: response)
+    }
+    
+    
+    // MARK: - Datastore
+    
+    func getSelectedItem() -> AnyObject? {
+        return selectedItem
     }
 }

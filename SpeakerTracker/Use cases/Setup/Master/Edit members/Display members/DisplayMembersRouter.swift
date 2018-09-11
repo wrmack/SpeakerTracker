@@ -14,7 +14,9 @@ import UIKit
 
 @objc protocol DisplayMembersRoutingLogic {
     func routeToAddMember()
+    func routeToEditMember()
     func returnFromAddingMember()
+    func returnFromEditingMember()
     func updateDetailVC()
 }
 
@@ -26,6 +28,7 @@ class DisplayMembersRouter: NSObject, DisplayMembersRoutingLogic, DisplayMembers
     weak var viewController: DisplayMembersViewController?
     var dataStore: DisplayMembersDataStore?
     var addMemberVC: AddMemberViewController?
+    var editMemberVC: EditMemberViewController?
     var displayDetailVC: DisplayDetailViewController?
 
 
@@ -42,16 +45,34 @@ class DisplayMembersRouter: NSObject, DisplayMembersRoutingLogic, DisplayMembers
         splitVC?.showDetailViewController(addMemberVC!, sender: displayDetailVC)
     }
     
-     
+    
+    func routeToEditMember() {
+        editMemberVC = EditMemberViewController(sourceVC: viewController!)
+        let splitVC = viewController!.splitViewController
+        displayDetailVC = splitVC?.viewControllers[1] as? DisplayDetailViewController
+        var destinationDS = editMemberVC?.router?.dataStore
+        passDataToEditMemberDataStore(source: dataStore!, destination: &destinationDS!)
+        splitVC?.showDetailViewController(editMemberVC!, sender: displayDetailVC)
+        editMemberVC!.populateEditView()
+    }
+    
+    
     func returnFromAddingMember() {
         let splitVC = viewController!.splitViewController
         splitVC!.showDetailViewController(displayDetailVC!, sender: nil)
         addMemberVC = nil
         viewController!.refreshAfterAddingMember()
-    }
+    }    
+
     
+    func returnFromEditingMember() {
+        let splitVC = viewController!.splitViewController
+        splitVC!.showDetailViewController(displayDetailVC!, sender: nil)
+        editMemberVC = nil
+        viewController!.refreshAfterEditingMember()
+    }
 
-
+    
     func updateDetailVC() {
         let splitVC = viewController!.splitViewController
         displayDetailVC = splitVC?.viewControllers[1] as? DisplayDetailViewController
@@ -59,11 +80,17 @@ class DisplayMembersRouter: NSObject, DisplayMembersRoutingLogic, DisplayMembers
         passDataToDisplayDetail(source: dataStore!, destination: &destinationDS!)
         displayDetailVC!.updateDetails()
     }
+    
 
     // MARK: Passing data
     
     func passDataToAddMemberDataStore(source: DisplayMembersDataStore, destination: inout AddMemberDataStore) {
         destination.entity = source.entity
+    }
+    
+    func passDataToEditMemberDataStore(source: DisplayMembersDataStore, destination: inout EditMemberDataStore) {
+        destination.entity = source.entity
+        destination.member = source.member
     }
     
     func passDataToDisplayDetail(source: DisplayMembersDataStore, destination: inout DisplayDetailDataStore) {

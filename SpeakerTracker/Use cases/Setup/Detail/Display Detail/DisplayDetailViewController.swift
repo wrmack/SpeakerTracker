@@ -20,11 +20,17 @@ protocol DisplayDetailViewControllerDelegate: class {
     func didSelectEntityInDisplayDetailViewController(entity: Entity)
 }
 
+protocol DisplayDetailViewControllerEditDelegate: class {
+    func didPressEditButtonInDisplayDetailViewController(selectedItem: AnyObject?)
+}
+
+
 class DisplayDetailViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, DisplayDetailDisplayLogic, EntitiesPopUpViewControllerDelegate {
     var interactor: DisplayDetailBusinessLogic?
     var router: (NSObjectProtocol & DisplayDetailRoutingLogic & DisplayDetailDataPassing)?
     var fields:  [(String, String)]?
     weak var delegate: DisplayDetailViewControllerDelegate?
+    weak var editDelegate: DisplayDetailViewControllerEditDelegate?
     
     // Storyboard outlets
 
@@ -47,6 +53,12 @@ class DisplayDetailViewController: UIViewController, UITableViewDelegate, UITabl
         popoverController!.permittedArrowDirections = .up
         entityPopUpController.delegate = self
         entityPopUpController.reloadData()
+    }
+    
+    
+    @IBAction func editButtonPressed(_ button: UIButton) {
+        let selectedItem = interactor!.getSelectedItem()
+        editDelegate?.didPressEditButtonInDisplayDetailViewController(selectedItem: selectedItem)
     }
     
     
@@ -125,6 +137,7 @@ class DisplayDetailViewController: UIViewController, UITableViewDelegate, UITabl
         detailTableView.reloadData()
     }
     
+    
     // MARK: - Table view data source
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -149,13 +162,9 @@ class DisplayDetailViewController: UIViewController, UITableViewDelegate, UITabl
         
         return cell!
     }
+
     
     // MARK: EntityPopUpViewControllerDelegate methods
-    
-//    func dismissEntityPopUpViewController(_ viewController: DisplayEntitiesPopUpViewController) {
-//        dismiss(animated: true, completion: nil)
-//    }
-//    
     
     func didSelectEntityInPopUpViewController(_ viewController: DisplayEntitiesPopUpViewController, entity: Entity) {
         dismiss(animated: false, completion: nil)

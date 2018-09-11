@@ -13,16 +13,28 @@
 import UIKit
 
 protocol AddSubEntityPresentationLogic {
-//    func presentSomething(response: AddSubEntity.Something.Response)
+    func presentMembers(response: AddSubEntity.SubEntity.Response)
 }
+
 
 class AddSubEntityPresenter: AddSubEntityPresentationLogic {
     weak var viewController: AddSubEntityDisplayLogic?
 
     // MARK: Do something
 
-//    func presentSomething(response: AddSubEntity.Something.Response) {
-//        let viewModel = AddSubEntity.Something.ViewModel()
-//        viewController?.displaySomething(viewModel: viewModel)
-//    }
+    func presentMembers(response: AddSubEntity.SubEntity.Response) {
+        var memberString: String?
+        let members = response.members
+        if members != nil {
+            memberString = String()
+            for member in members! {
+                if memberString!.count > 0 {
+                    memberString!.append(", ")
+                }
+                memberString!.append(member.firstName! + member.lastName!)
+            }
+        }
+        let viewModel = AddSubEntity.SubEntity.ViewModel(memberNames: memberString)
+        viewController?.displayMemberNames(viewModel: viewModel)
+    }
 }
