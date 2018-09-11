@@ -10,15 +10,17 @@ import Foundation
 
 struct Member: Codable {
     
-    let title: String?
-    let firstName: String?
-    let lastName: String?
-    let isGoverningBodyMember: Bool?
+    var title: String?
+    var firstName: String?
+    var lastName: String?
+    var isGoverningBodyMember: Bool?
+    var id: UUID?
     
-    init(title: String?, firstName: String?, lastName: String?,isGoverningBodyMember: Bool?) {
+    init(title: String?, firstName: String?, lastName: String?,isGoverningBodyMember: Bool?, id: UUID?) {
         self.title = title
         self.firstName = firstName
         self.lastName = lastName
         self.isGoverningBodyMember = isGoverningBodyMember
+        self.id = id
     }
 }

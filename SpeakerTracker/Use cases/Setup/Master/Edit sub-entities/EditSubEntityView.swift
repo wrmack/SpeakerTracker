@@ -143,7 +143,7 @@ class EditSubEntityView: UIView {
         membersDetailLabel = UILabel(frame: CGRect.zero)
         membersDetailLabel?.backgroundColor = UIColor.clear
         membersDetailLabel?.backgroundColor = UIColor(white: 0.95, alpha: 1.0)
-        membersDetailLabel?.textColor = UIColor(white: 0.6, alpha: 1.0)
+        membersDetailLabel?.textColor = UIColor(white: 0.4, alpha: 1.0)
         membersDetailLabel?.numberOfLines = 0
         containerView.addSubview(membersDetailLabel!)
         membersDetailLabel?.translatesAutoresizingMaskIntoConstraints = false

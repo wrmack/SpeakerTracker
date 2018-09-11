@@ -13,21 +13,33 @@
 import UIKit
 
 protocol AddSubEntityBusinessLogic {
+    func fetchMembers(request: AddSubEntity.SubEntity.Request)
     func saveSubEntityToEntity(subEntity: SubEntity, callback: @escaping ()->())
 }
 
 protocol AddSubEntityDataStore {
     var entity: Entity? { get set }
+    var members: [Member]? {get set}
 }
 
 
-class AddSubEntityInteractor: AddSubEntityBusinessLogic, AddSubEntityDataStore {
+class AddSubEntityInteractor: AddSubEntityBusinessLogic, AddSubEntityDataStore { 
     var presenter: AddSubEntityPresentationLogic?
     var entity: Entity?
-
+    var members: [Member]?
+    
     
     // MARK: VIP
+    
+    func fetchMembers(request: AddSubEntity.SubEntity.Request) {
+        let response = AddSubEntity.SubEntity.Response(members: self.members)
+        self.presenter?.presentMembers(response: response)
+    }
+    
+    
     func saveSubEntityToEntity(subEntity: SubEntity, callback: @escaping ()->()) {
+        var subEntity = subEntity
+        subEntity.members = self.members
         if entity!.subEntities == nil {
             entity!.subEntities = [SubEntity]()
         }

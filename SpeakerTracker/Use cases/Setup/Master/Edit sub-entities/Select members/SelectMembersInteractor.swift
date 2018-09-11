@@ -13,26 +13,38 @@
 import UIKit
 
 protocol SelectMembersBusinessLogic {
-     func fetchMembers(request: SelectMembers.Members.Request)
+    func fetchMembers(request: SelectMembers.Members.Request)
+    func getMembers(indices: [Int] ) -> [Member]
 }
 
 protocol SelectMembersDataStore {
     var entity: Entity? {get set}
+    var members: [Member]? {get set}
 }
 
 class SelectMembersInteractor: SelectMembersBusinessLogic, SelectMembersDataStore {
     var presenter: SelectMembersPresentationLogic?
-//    var members: [Member]?
     var entity: Entity?
-    
+    var members: [Member]?
 
 
 
     // MARK: VIP
 
     func fetchMembers(request: SelectMembers.Members.Request) {
-//        self.members = request.entity?.members
         let response = SelectMembers.Members.Response(members: entity!.members)
         self.presenter?.presentMembers(response: response) 
+    }
+    
+    
+    // MARK: Datastore
+    
+    func getMembers(indices: [Int] ) -> [Member] {
+        let allMembers = entity?.members
+        var selectedMembers = [Member]()
+        for idx in indices {
+            selectedMembers.append(allMembers![idx])
+        }
+        return selectedMembers
     }
 }

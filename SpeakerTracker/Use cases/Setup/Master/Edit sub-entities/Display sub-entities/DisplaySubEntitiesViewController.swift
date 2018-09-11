@@ -101,7 +101,7 @@ class DisplaySubEntitiesViewController: UITableViewController, DisplaySubEntitie
         detailVC!.detailButton.setTitle("No entity selected", for: UIControlState.normal)
         router?.updateDetailVC()
     }
-    // MARK: - VIP
+
 
     // MARK: - VIP
     

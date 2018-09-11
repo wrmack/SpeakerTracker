@@ -148,15 +148,16 @@ class SelectMembersViewController: UIViewController, SelectMembersDisplayLogic, 
     // MARK: Button actions
     
     @objc func saveButtonTapped(_: UIButton) {
-//        if selectedRows != nil {
-//            let selectedMembers = (interactor?.getMembers(indices: selectedRows!))!
+        if selectedRows != nil {
+            let selectedMembers = (interactor?.getMembers(indices: selectedRows!))!
+            router?.returnToSource(members: selectedMembers)
 //            if addMode == true {
 //                router?.returnToSourceWithMembers(source: sourceAddKVC!, members: selectedMembers)
 //            }
 //            else if editMode == true {
 //                router?.returnToSourceWithToys(source: sourceEditKVC!, toys: selectedToys)
 //            }
-//        }
+        }
 //        else {
 //            if addMode == true {
 //                router?.returnToSource(source: sourceAddKVC!)
@@ -169,7 +170,7 @@ class SelectMembersViewController: UIViewController, SelectMembersDisplayLogic, 
     
     
     @objc func cancelButtonTapped(_: UIButton) {
-        router!.returnToSource()
+        router!.returnToSource(members: nil)
         if addMode == true {
 //            router?.returnToSource(source: sourceAddKVC!)
         }

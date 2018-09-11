@@ -19,8 +19,13 @@ protocol DisplayMembersPresentationLogic {
 class DisplayMembersPresenter: DisplayMembersPresentationLogic {
     weak var viewController: DisplayMembersDisplayLogic?
 
+    
     // MARK: VIP
-
+    /*
+     Receives an array of members.
+     Creates a string array of member names.
+     Passes this to the view-controller for displaying.
+     */
     func presentMembers(response: DisplayMembers.Members.Response) {
         var memberNames = [String]()
         if let members = response.members {
