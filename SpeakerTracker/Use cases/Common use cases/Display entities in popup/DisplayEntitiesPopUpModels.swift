@@ -1,5 +1,5 @@
 //
-//  DisplayEntitiesPopUpModelsModels.swift
+//  DisplayEntitiesPopUpModels.swift
 //  SpeakerTracker
 //
 //  Created by Warwick McNaughton on 7/09/18.

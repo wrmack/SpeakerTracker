@@ -22,8 +22,7 @@ protocol AddEntityDataStore {
 
 class AddEntityInteractor: AddEntityBusinessLogic, AddEntityDataStore {
     var presenter: AddEntityPresentationLogic?
-    var worker: AddEntityWorker?
-    //var name: String = ""
+
 
     
     func saveEntityToDisk(entity: Entity, callback: @escaping ()->()) {

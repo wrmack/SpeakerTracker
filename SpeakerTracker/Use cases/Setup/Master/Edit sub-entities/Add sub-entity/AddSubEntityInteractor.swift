@@ -43,6 +43,7 @@ class AddSubEntityInteractor: AddSubEntityBusinessLogic, AddSubEntityDataStore {
         if entity!.subEntities == nil {
             entity!.subEntities = [SubEntity]()
         }
+        subEntity.id = UUID()
         entity?.subEntities?.append(subEntity)
         guard let docDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else {
             print("AddSubEntityInteractor: saveSubEntityToEntity: error: Document directory not found")

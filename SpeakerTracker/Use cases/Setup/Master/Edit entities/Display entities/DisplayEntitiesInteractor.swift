@@ -25,7 +25,6 @@ protocol DisplayEntitiesDataStore {
 
 class DisplayEntitiesInteractor: DisplayEntitiesBusinessLogic, DisplayEntitiesDataStore {
     var presenter: DisplayEntitiesPresentationLogic?
-    var worker: DisplayEntitiesWorker?
     var entity: Entity?
     var entities: [Entity]?
   

@@ -164,7 +164,7 @@ class DisplayDetailViewController: UIViewController, UITableViewDelegate, UITabl
     }
 
     
-    // MARK: EntityPopUpViewControllerDelegate methods
+    // MARK: - EntityPopUpViewControllerDelegate methods
     
     func didSelectEntityInPopUpViewController(_ viewController: DisplayEntitiesPopUpViewController, entity: Entity) {
         dismiss(animated: false, completion: nil)

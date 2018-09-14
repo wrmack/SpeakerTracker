@@ -31,13 +31,27 @@ class SelectMembersRouter: NSObject, SelectMembersRoutingLogic, SelectMembersDat
     func returnToSource(members: [Member]?) {
         if members != nil {
             dataStore!.members = members
-            var destinationDS = viewController?.source!.router?.dataStore
-            passDataToAddSubEntityDataStore(source: dataStore!, destination: &destinationDS! )
+
+            if  viewController?.sourceAddVC != nil {
+                var destinationDS = viewController?.sourceAddVC!.router?.dataStore
+                passDataToAddSubEntityDataStore(source: dataStore!, destination: &destinationDS! )
+                 viewController!.sourceAddVC!.router!.returnFromSelectMembers(members: members)
+            }
+            else if  viewController?.sourceEditVC != nil {
+                var destinationDS = viewController?.sourceEditVC!.router?.dataStore
+                passDataToEditSubEntityDataStore(source: dataStore!, destination: &destinationDS! )
+                viewController!.sourceEditVC!.router!.returnFromSelectMembers(members: members)
+            }
+            
         }
-        viewController!.source!.router!.returnFromSelectMembers(members: members) 
+       
     }
     
     func passDataToAddSubEntityDataStore(source: SelectMembersDataStore, destination: inout AddSubEntityDataStore ) {
         destination.members = source.members 
+    }
+    
+    func passDataToEditSubEntityDataStore(source: SelectMembersDataStore, destination: inout EditSubEntityDataStore ) {
+        destination.members = source.members
     }
 }

@@ -45,6 +45,11 @@ class EditMemberViewController: UIViewController, EditMemberDisplayLogic, EditMe
     }
 
     
+    deinit {
+        print("EditMemberViewController deinitialising")
+    }
+    
+    
     // MARK: - Setup
 
     private func setup() {
@@ -60,16 +65,7 @@ class EditMemberViewController: UIViewController, EditMemberDisplayLogic, EditMe
         router.dataStore = interactor
     }
 
-    // MARK: - Routing
 
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let scene = segue.identifier {
-            let selector = NSSelectorFromString("routeTo\(scene)WithSegue:")
-            if let router = router, router.responds(to: selector) {
-                router.perform(selector, with: segue)
-            }
-        }
-    }
 
     // MARK: - View lifecycle
 
@@ -88,10 +84,6 @@ class EditMemberViewController: UIViewController, EditMemberDisplayLogic, EditMe
 
     
     // MARK: - VIP
-
-
-    
-    
     
     func populateEditView() {
         let member = interactor?.getMember()
@@ -111,6 +103,7 @@ class EditMemberViewController: UIViewController, EditMemberDisplayLogic, EditMe
             self.router?.returnToSource(source: self.sourceVC!)
         })
     }
+    
     
     /*
      Removing a member has its own use-case instead of simply being handled by this interactor.
