@@ -10,7 +10,6 @@
 /* Abstract
  *
  * Manages display of the three speaking lists and timer.  
- * Presents EditMembersController for editing the member list for current meeting.
  * Presents MeetingChooserViewController for selecting the meeting to display.
  * An undo stack is maintained such that whenever a name is moved from one table to another the undo stack is updated.
  *
@@ -26,11 +25,11 @@
 
 import UIKit
 
-class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, MeetingChooserViewControllerDelegate  {
+class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, EntitiesPopUpViewControllerDelegate, SubEntitiesPopUpViewControllerDelegate   {
 
     // MARK: - Storyboard references
     
-    @IBOutlet weak var meetingName: UILabel!
+
     @IBOutlet weak var baseList: UITableView!
     @IBOutlet weak var speakerList: UITableView!
     @IBOutlet weak var doneList: UITableView!
@@ -40,10 +39,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     @IBOutlet weak var speakerLabel: UILabel!
     @IBOutlet weak var doneLabel: UILabel!
     @IBOutlet weak var meetingButton: UIButton!
-    @IBOutlet weak var editButton: UIButton!
     @IBOutlet weak var undoButton: UIButton!
     @IBOutlet weak var resetButton: UIButton!
-    @IBOutlet weak var showTimerButton: UIButton!    
     @IBOutlet weak var memberTextConstraintLeading: NSLayoutConstraint!
     @IBOutlet weak var timerLabel: UILabel!
     @IBOutlet weak var startButton: UIButton!
@@ -54,27 +51,42 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     @IBOutlet weak var smPauseButton: UIButton!
     @IBOutlet weak var smStopButton: UIButton!
     @IBOutlet weak var smTimerBackground: UIView!
+    @IBOutlet weak var selectEntityButton: UIButton!
+    @IBOutlet weak var selectSubEntityButton: UIButton!
+    @IBOutlet weak var expandButton: UIButton!
 
-    
     
     // MARK: Storyboard actions
     
-    @IBAction func meetingChooserPressed(_ sender: UIButton) {
-        
-        // Create instance of MeetingChooserViewController and set its presentation style to be a popover
-        meetingChooser = MeetingChooserViewController()
-        meetingChooser?.delegate = self
-        meetingChooser?.modalPresentationStyle = UIModalPresentationStyle.popover
-        present(meetingChooser!, animated: true, completion: nil)
-        
-        // Get the associated popover presentation controller and set its source
-        let meetingChooserPopoverController = meetingChooser?.popoverPresentationController
-        meetingChooserPopoverController!.sourceView = sender
-        meetingChooserPopoverController!.sourceRect = CGRect(x: 0, y: sender.frame.size.height, width: sender.frame.size.width, height: 1)
-        meetingChooserPopoverController!.permittedArrowDirections = .up
 
+    @IBAction func selectEntityPressed(_ button: UIButton) {
+        let entityPopUpController = DisplayEntitiesPopUpViewController(nibName: nil, bundle: nil)
+        entityPopUpController.modalPresentationStyle = .popover
+        present(entityPopUpController, animated: true, completion: nil)
+        
+        let popoverController = entityPopUpController.popoverPresentationController
+        popoverController!.delegate = self as? UIPopoverPresentationControllerDelegate
+        popoverController!.sourceView = button.superview!
+        popoverController!.sourceRect = button.frame
+        popoverController!.permittedArrowDirections = .up
+        entityPopUpController.delegate = self
+        entityPopUpController.reloadData()
     }
-
+    
+    
+    @IBAction func selectSubEntityPressed(_ button: UIButton) {
+        let subEntityPopUpController = DisplaySubEntitiesPopUpViewController(entity: currentEntity!)
+        subEntityPopUpController.modalPresentationStyle = .popover
+        present(subEntityPopUpController, animated: true, completion: nil)
+        
+        let popoverController = subEntityPopUpController.popoverPresentationController
+        popoverController!.delegate = self as? UIPopoverPresentationControllerDelegate
+        popoverController!.sourceView = button.superview!
+        popoverController!.sourceRect = button.frame
+        popoverController!.permittedArrowDirections = .up
+        subEntityPopUpController.delegate = self
+    }
+    
     
 /**
      A storyboard button action.  The right button on a base-list table row was pressed.
@@ -147,6 +159,36 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
 
     
+    
+    @IBAction func doneRightButtonPressed(_ button: UIButton) {
+        if doneRightButtonIsPlaying == false {
+            handleStartTimer()
+            button.setTitle("◼︎", for: .normal)
+            (button.superview!.superview as! UITableViewCell).setSelected(true, animated: true)
+            doneRightButtonIsPlaying = true
+        }
+        else {
+            doneRightButtonIsPlaying = false
+            let elapsedSeconds = handleStopTimer()
+            let minutes = elapsedSeconds / 60
+            let seconds = elapsedSeconds - (minutes * 60)
+            var secondsString = String(seconds)
+            if secondsString.count == 1 {
+                secondsString = "0" + secondsString
+            }
+            var minutesString = String(minutes)
+            if minutesString.count == 1 {
+                minutesString = "0" + minutesString
+            }
+            let combinedString = minutesString + ":" + secondsString
+            button.setTitle(combinedString, for: .normal)
+            button.setTitleColor(UIColor.red, for: .normal)
+            button.titleLabel!.font = UIFont.systemFont(ofSize:14)
+        }
+    }
+    
+    
+    
 /**
      Resets all lists and the undo stack.
  */
@@ -203,12 +245,11 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     }
     
-/**
- * A storyboard button action.  The button to show the large timer was pressed.
- * The large timer is displayed (or, if already displayed, is hidden - the button is a toggle)
- */
-    
-    @IBAction func showTimer(_ sender: UIButton) {
+    /**
+     * A storyboard button action.  When the button is pressed, the large timer is toggled on and off.
+     */
+    @IBAction func showLargeTimer(_ sender: UIButton) {
+        
         if timerVisible == false {
             dimmerView.isHidden = false
             timerLabel.isHidden = false
@@ -225,8 +266,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             view.bringSubview(toFront: startButton)
             view.bringSubview(toFront: pauseButton)
             view.bringSubview(toFront: stopButton)
-            showTimerButton.setTitle("Hide timer", for: .normal)
-            
+           expandButton.setImage(UIImage(named: "shrink2"), for: .normal)
         } else {
             dimmerView.isHidden = true
             timerLabel.isHidden = true
@@ -238,9 +278,11 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             stopButton.isEnabled = false
             timerVisible = false
             view.sendSubview(toBack:stackView)
-            showTimerButton.setTitle("Show timer", for: .normal)
-        }
+           expandButton.setImage(UIImage(named: "expand2"), for: .normal)
+         }
     }
+
+  
   
     
 /**
@@ -332,16 +374,16 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     
     @IBAction func stopTimer(_ sender: UIButton) {
-        handleStopTimer()
+        _ = handleStopTimer()
     }
     
     
     @IBAction func stopSmTimer(_ sender: UIButton) {
-        handleStopTimer()
+        _ = handleStopTimer()
     }
     
     /// Called when either stop button is pressed
-    func handleStopTimer() {
+    func handleStopTimer() -> Int {
         timer?.invalidate()
         startButton.isEnabled = true
         pauseButton.isEnabled = false
@@ -349,6 +391,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         smStartButton.isEnabled = true
         smPauseButton.isEnabled = false
         smStopButton.isEnabled = false
+        return abs(Int(startTime!.timeIntervalSinceNow))
     }
     
     
@@ -393,7 +436,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
       let defaults = UserDefaults.standard
       if let currentMeeting = defaults.object(forKey: "CurrentMeeting") {
          baseNames = defaults.array(forKey: currentMeeting as! String) as! [String]
-         meetingName.text = currentMeeting as? String
+//         meetingName.text = currentMeeting as? String
       }
       tableCollection = [(baseList, baseNames), (speakerList, [String]()), (doneList, [String]())]
 
@@ -435,8 +478,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     /// The undo stack is an array of tuples.  Each tuple holds: source table index, name position in source table, destination table index, name position in destination table and name of member.
     var undoStack = [(Int, Int, Int, Int, String)]()
     
-    /// A view controller to display the meeting chooser popover
-    var meetingChooser: MeetingChooserViewController?
+    var currentEntity: Entity?
+    var currentSubEntity: SubEntity?
+    var doneRightButtonIsPlaying = false
     
     
     
@@ -447,11 +491,10 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 
       // Appearance tweaks
       smTimerBackground.layer.cornerRadius = 10
-      meetingButton.layer.cornerRadius = 2
-      editButton.layer.cornerRadius = 2
+//      meetingButton.layer.cornerRadius = 2
+//      editButton.layer.cornerRadius = 2
       undoButton.layer.cornerRadius = 2
       resetButton.layer.cornerRadius = 2
-      showTimerButton.layer.cornerRadius = 2
 
       // Set datasource and delegate for table views
       baseList.dataSource = self
@@ -488,18 +531,18 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
          if let namesArray = (defaults.array(forKey: currentMeeting as! String)) {
              baseNames = namesArray as! [String]
          }
-         meetingName.text = currentMeeting as? String
+//         meetingName.text = currentMeeting as? String
       }
       
       // If nothing stored yet, supply default list
-      if (meetingName.text == "") && (baseNames.count == 0) {
-         meetingName.text = "Committee 1"
-         baseNames = ["Member1", "Member2", "Member3"]
-         let defaults = UserDefaults.standard
-         defaults.set(baseNames, forKey: meetingName.text!)
-         defaults.set(meetingName.text, forKey: "CurrentMeeting")
-         defaults.set(["Committee 1"], forKey: "MeetingNames")
-      }
+//      if (meetingName.text == "") && (baseNames.count == 0) {
+//         meetingName.text = "Committee 1"
+//         baseNames = ["Member1", "Member2", "Member3"]
+//         let defaults = UserDefaults.standard
+//         defaults.set(baseNames, forKey: meetingName.text!)
+//         defaults.set(meetingName.text, forKey: "CurrentMeeting")
+//         defaults.set(["Committee 1"], forKey: "MeetingNames")
+//      }
       
       tableCollection = [(baseList, baseNames), (speakerList, [String]()), (doneList, [String]())]
       
@@ -646,9 +689,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
      func didSelectMeeting(_ meetingName: String) {
         
-        meetingChooser?.dismiss(animated: true, completion: nil)
+ //       meetingChooser?.dismiss(animated: true, completion: nil)
         
-        self.meetingName.text = meetingName
+//        self.meetingName.text = meetingName
         
         let defaults = UserDefaults.standard
         defaults.set(meetingName, forKey: "CurrentMeeting")
@@ -665,6 +708,42 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         doneList.reloadData()
     }
 
+    
+    // MARK: - EntitiesPopUpViewControllerDelegate methods
+    
+    func didSelectEntityInPopUpViewController(_ viewController: DisplayEntitiesPopUpViewController, entity: Entity) {
+        print(entity.name)
+        dismiss(animated: false, completion: nil)
+        selectEntityButton.setTitle(entity.name, for: .normal)
+        selectEntityButton.setTitleColor(UIColor.lightText, for: .normal)
+        selectEntityButton.titleLabel?.textAlignment = .left
+        currentEntity = entity
+    }
+    
+    
+    // MARK: - SubEntitiesPopUpViewControllerDelegate methods
+    
+    func didSelectSubEntityInPopUpViewController(_ viewController: DisplaySubEntitiesPopUpViewController, subEntity: SubEntity) {
+        print(subEntity.name)
+        dismiss(animated: false, completion: nil)
+        selectSubEntityButton.setTitle(subEntity.name, for: .normal)
+        selectSubEntityButton.setTitleColor(UIColor.lightText, for: .normal)
+        selectSubEntityButton.titleLabel?.textAlignment = .left
+        currentSubEntity = subEntity
+        baseNames = [String]()
+        if let memberArray = subEntity.members {
+            for member in memberArray {
+                let name = member.firstName! + " " + member.lastName!
+                baseNames.append(name)
+            }
+        }
+        
+        tableCollection = [(baseList, baseNames), (speakerList, [String]()), (doneList, [String]())]
+        baseList.reloadData()
+        speakerList.reloadData()
+        doneList.reloadData()
+    }
+    
     
     
    // MARK: - Handle swipe gestures

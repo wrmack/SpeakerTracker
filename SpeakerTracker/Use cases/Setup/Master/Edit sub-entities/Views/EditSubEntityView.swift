@@ -12,7 +12,9 @@ protocol EditSubEntityViewDelegate: class {
     func cancelButtonTapped()
     func saveButtonTapped(subEntity: SubEntity)
     func membersDisclosureButtonTapped()
+    func deleteButtonTapped(subEntity: SubEntity)
 }
+
 
 class EditSubEntityView: UIView {
     
@@ -24,7 +26,8 @@ class EditSubEntityView: UIView {
     let TEXTCOLOR = UIColor(white: 0.4, alpha: 1.0)
     
     var heading: UILabel?
-    
+    var deleteButton: UIBarButtonItem?
+    var subEntity: SubEntity?
     var nameBox: UITextField?
     var membersDetailLabel: UILabel?
     
@@ -70,7 +73,11 @@ class EditSubEntityView: UIView {
         
         let cancelButton =   UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancelButtonTapped(_:)))
         cancelButton.isEnabled = true
-        toolbar.setItems([cancelButton, flexibleSpace, saveButton], animated: false)
+        
+        deleteButton = UIBarButtonItem(title: "Delete", style: .plain, target: self, action: #selector(deleteButtonTapped(_:)))
+        deleteButton!.setTitleTextAttributes([NSAttributedStringKey.foregroundColor : UIColor.red], for: .normal)
+        
+        toolbar.setItems([cancelButton, flexibleSpace, flexibleSpace, flexibleSpace,flexibleSpace, flexibleSpace, flexibleSpace, deleteButton!, flexibleSpace, saveButton], animated: false)
         
         heading = UILabel(frame: CGRect.zero)
         //      heading?.text = "Toy detail"
@@ -211,19 +218,51 @@ class EditSubEntityView: UIView {
         
     }
     
+    
+    func populateFields(subEntity: SubEntity?) {
+        self.subEntity = subEntity
+        if subEntity != nil {
+            nameBox!.text = subEntity?.name ?? ""
+            var memberNames = String()
+            if let members = subEntity?.members {
+                for member in members {
+                    if memberNames.count > 0 {
+                        memberNames.append(", ")
+                    }
+                    let name = (member.firstName! + " " + member.lastName! )
+                    memberNames.append(name)
+                }
+                membersDetailLabel?.text = memberNames
+            }
+        }
+            
+    }
+    
+    
+    
     // MARK: Delegate methods
     
     @objc func cancelButtonTapped(_: UIButton) {
         delegate?.cancelButtonTapped()
     }
     
+    
     @objc func saveButtonTapped(_: UIButton) {
-        let subEntity = SubEntity(name: nameBox?.text, type: nil, members: nil, additionalMembers: nil, subEntities: nil, fileName: nil)
-        delegate?.saveButtonTapped(subEntity: subEntity) 
+        var id: UUID?
+        if subEntity != nil {
+            id = subEntity?.id
+        }
+        let editedSubEntity = SubEntity(name: nameBox?.text, type: nil, members: nil, additionalMembers: nil, subEntities: nil, fileName: nil, id: id)
+        delegate?.saveButtonTapped(subEntity: editedSubEntity) 
     }
+    
     
     @objc func membersSelectButtonTapped(_: UIButton) {
         delegate?.membersDisclosureButtonTapped()
+    }
+    
+    @objc func deleteButtonTapped(_: UIButton) {
+        delegate!.deleteButtonTapped(subEntity: subEntity!)
     }
 }
 

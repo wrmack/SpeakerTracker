@@ -14,7 +14,9 @@ import UIKit
 
 @objc protocol DisplaySubEntitiesRoutingLogic {
     func routeToAddSubEntity()
+    func routeToEditSubEntity()
     func returnFromAddingSubEntity()
+    func returnFromEditingSubEntity()
     func updateDetailVC()
 }
 
@@ -27,6 +29,7 @@ class DisplaySubEntitiesRouter: NSObject, DisplaySubEntitiesRoutingLogic, Displa
     var dataStore: DisplaySubEntitiesDataStore?
     var addSubEntityVC: AddSubEntityViewController?
     var displayDetailVC: DisplayDetailViewController?
+    var editSubEntityVC: EditSubEntityViewController?
     
     
     func routeToAddSubEntity() {
@@ -57,10 +60,35 @@ class DisplaySubEntitiesRouter: NSObject, DisplaySubEntitiesRoutingLogic, Displa
     }
     
     
+    func routeToEditSubEntity() {
+        editSubEntityVC = EditSubEntityViewController(sourceVC: viewController!)
+        let splitVC = viewController!.splitViewController
+        displayDetailVC = splitVC?.viewControllers[1] as? DisplayDetailViewController
+        var destinationDS = editSubEntityVC?.router?.dataStore
+        passDataToEditSubEntityDataStore(source: dataStore!, destination: &destinationDS!)
+        splitVC?.showDetailViewController(editSubEntityVC!, sender: displayDetailVC)
+        editSubEntityVC!.populateEditView()
+    }
+    
+    
+    func returnFromEditingSubEntity() {
+        let splitVC = viewController!.splitViewController
+        splitVC!.showDetailViewController(displayDetailVC!, sender: nil)
+        editSubEntityVC = nil
+        viewController!.refreshAfterEditingSubEntity()
+    }
+    
+    
+    
     // MARK: Passing data
     
     func passDataToAddSubEntityDataStore(source: DisplaySubEntitiesDataStore, destination: inout AddSubEntityDataStore) {
         destination.entity = source.entity
+    }
+    
+    func passDataToEditSubEntityDataStore(source: DisplaySubEntitiesDataStore, destination: inout EditSubEntityDataStore) {
+        destination.entity = source.entity
+        destination.subEntity = source.subEntity
     }
     
     func passDataToDisplayDetail(source: DisplaySubEntitiesDataStore, destination: inout DisplayDetailDataStore) {

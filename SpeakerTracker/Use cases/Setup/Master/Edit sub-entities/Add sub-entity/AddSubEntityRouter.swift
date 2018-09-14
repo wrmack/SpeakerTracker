@@ -51,7 +51,6 @@ class AddSubEntityRouter: NSObject, AddSubEntityRoutingLogic, AddSubEntityDataPa
     
     func returnFromSelectMembers(members: [Member]?) {
         if members != nil {
-            
             viewController!.refreshAfterSelectingMembers()
         }
         splitVC?.showDetailViewController(viewController!, sender: nil)

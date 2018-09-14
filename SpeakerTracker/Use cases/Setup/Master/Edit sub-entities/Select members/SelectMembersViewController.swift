@@ -26,14 +26,20 @@ class SelectMembersViewController: UIViewController, SelectMembersDisplayLogic, 
     var selectedRows: [Int]?
     var addMode = false
     var editMode = false
-    var source: AddSubEntityViewController?
+    var sourceAddVC: AddSubEntityViewController?
+    var sourceEditVC: EditSubEntityViewController?
     
 
     // MARK: Object lifecycle
 
-    convenience init(source: AddSubEntityViewController) {
+    convenience init(source: AnyObject) {
         self.init(nibName: nil, bundle: nil)
-        self.source = source
+        if source is AddSubEntityViewController {
+            self.sourceAddVC = (source as! AddSubEntityViewController) 
+        }
+        if source is EditSubEntityViewController {
+            self.sourceEditVC = (source as! EditSubEntityViewController)
+        }
     }
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {

@@ -9,7 +9,6 @@
 import UIKit
 
 protocol EntitiesPopUpViewControllerDelegate: class {
-//    func dismissEntityPopUpViewController(_ viewController: DisplayEntitiesPopUpViewController)
     func didSelectEntityInPopUpViewController(_ viewController: DisplayEntitiesPopUpViewController, entity: Entity)
 }
 
@@ -164,19 +163,6 @@ class DisplayEntitiesPopUpViewController: UIViewController, UITableViewDelegate,
     
     func reloadData() {
         entityNames = [String]()
-        
-//        let folderArray = libraryManager.specialFoldersArray + libraryManager.userFoldersArray
-//        for folder in folderArray {
-//            if (folder.type != FolderModel.DocumentFolderType.recentFolder.rawValue) {
-//                folders!.append(folder)
-//            }
-//        }
-//        
-//        if UIDevice.current.userInterfaceIdiom == UIUserInterfaceIdiom.pad {
-//            var maxHeight  = ((TABLE_CELL_HEIGHT * CGFloat(folders!.count)) + TOOLBAR_HEIGHT)
-//            if (maxHeight > MAXIMUM_TABLE_HEIGHT) {maxHeight = MAXIMUM_TABLE_HEIGHT}
-//            self.preferredContentSize = CGSize(width: MAXIMUM_TABLE_WIDTH, height: maxHeight)
-//        }
     }
  
     

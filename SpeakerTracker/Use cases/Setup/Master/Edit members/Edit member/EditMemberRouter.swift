@@ -22,6 +22,7 @@ protocol EditMemberDataPassing {
     var dataStore: EditMemberDataStore? { get }
 }
 
+
 class EditMemberRouter: NSObject, EditMemberRoutingLogic, EditMemberDataPassing {
     weak var viewController: EditMemberViewController?
     var dataStore: EditMemberDataStore?
@@ -32,7 +33,7 @@ class EditMemberRouter: NSObject, EditMemberRoutingLogic, EditMemberDataPassing 
     
     func returnToSource(source: DisplayMembersViewController) {
         var destinationDS = source.router?.dataStore
-        passDataToDisplayMemberDataStore(source: dataStore!, destination: &destinationDS!)
+        passDataToDisplayMembersDataStore(source: dataStore!, destination: &destinationDS!)
         source.router?.returnFromEditingMember() 
     }
     
@@ -48,14 +49,14 @@ class EditMemberRouter: NSObject, EditMemberRoutingLogic, EditMemberDataPassing 
     func returnFromRemovingMember() {
         let source = viewController?.sourceVC
         var destinationDS = source!.router?.dataStore
-        passDataToDisplayMemberDataStore(source: dataStore!, destination: &destinationDS!)
+        passDataToDisplayMembersDataStore(source: dataStore!, destination: &destinationDS!)
         returnToSource(source: viewController!.sourceVC!)
     }
     
     
     // MARK: Passing data
     
-    func passDataToDisplayMemberDataStore(source: EditMemberDataStore, destination: inout DisplayMembersDataStore) {
+    func passDataToDisplayMembersDataStore(source: EditMemberDataStore, destination: inout DisplayMembersDataStore) {
         destination.entity = source.entity
     }
     

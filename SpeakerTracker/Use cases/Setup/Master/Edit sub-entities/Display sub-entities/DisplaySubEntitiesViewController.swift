@@ -18,7 +18,7 @@ protocol DisplaySubEntitiesDisplayLogic: class {
 
 
 
-class DisplaySubEntitiesViewController: UITableViewController, DisplaySubEntitiesDisplayLogic, DisplayDetailViewControllerDelegate {
+class DisplaySubEntitiesViewController: UITableViewController, DisplaySubEntitiesDisplayLogic, DisplayDetailViewControllerDelegate, DisplayDetailViewControllerEditDelegate {
     var interactor: DisplaySubEntitiesBusinessLogic?
     var router: (NSObjectProtocol & DisplaySubEntitiesRoutingLogic & DisplaySubEntitiesDataPassing)?
     var subEntityNames = [String]()
@@ -94,6 +94,7 @@ class DisplaySubEntitiesViewController: UITableViewController, DisplaySubEntitie
         tabBarCont.tabBar.frame = CGRect(x: (detailVCView?.frame.origin.x)!, y: tbFrame.origin.y, width: (detailVCView?.frame.size.width)!, height: tbFrame.size.height)
         
         detailVC!.delegate = self
+        detailVC?.editDelegate = self
         detailVC!.detailLabel.text = "Select an entity  〉"
         detailVC!.detailLabel.textAlignment = .left
         detailVC!.detailButton.isHidden = false
@@ -119,6 +120,11 @@ class DisplaySubEntitiesViewController: UITableViewController, DisplaySubEntitie
     }
     
     func refreshAfterAddingSubEntity() {
+        interactor!.refreshSubEntities()
+    }
+    
+    
+    func refreshAfterEditingSubEntity() {
         interactor!.refreshSubEntities()
     }
     
@@ -178,7 +184,14 @@ class DisplaySubEntitiesViewController: UITableViewController, DisplaySubEntitie
         subEntitySelected = true
         fetchSubEntities(entity: entity)
     }
+ 
     
-
+    // MARK: - DisplayDetailViewControllerEditDelegate methods
+    
+    func didPressEditButtonInDisplayDetailViewController(selectedItem: AnyObject?) {
+        if selectedItem is SubEntity {
+            router!.routeToEditSubEntity()
+        }
+    }
     
 }

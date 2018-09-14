@@ -15,12 +15,14 @@ struct SubEntity: Codable {
     var additionalMembers: [Member]?
     var subEntities: [SubEntity]?
     var fileName: String?
+    var id: UUID?
     
-    init(name: String?, type: EntityType?, members: [Member]?, additionalMembers: [Member]?, subEntities: [SubEntity]?, fileName: String? ) {
+    init(name: String?, type: EntityType?, members: [Member]?, additionalMembers: [Member]?, subEntities: [SubEntity]?, fileName: String?, id: UUID? ) {
         self.name = name
         self.type = type
         self.members = members
         self.additionalMembers = additionalMembers
         self.subEntities = subEntities
+        self.id = id
     }
 }

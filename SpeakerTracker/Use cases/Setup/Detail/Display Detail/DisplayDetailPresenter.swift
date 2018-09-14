@@ -19,10 +19,66 @@ protocol DisplayDetailPresentationLogic {
 class DisplayDetailPresenter: DisplayDetailPresentationLogic {
     weak var viewController: DisplayDetailDisplayLogic?
 
+    
     // MARK: - VIP
     
+    /*
+     Converts the selected item's properties into an array of title-detail tuples.
+     Passes this array back to the view controller for displaying.
+     */
     func presentDetailFields(response: DisplayDetail.Detail.Response) {
-        let viewModel = DisplayDetail.Detail.ViewModel(detailFields: response.detailFields)
+        let selectedItem = response.selectedItem
+        var labelDetailArray = [(String, String)]()
+        switch selectedItem {
+        case is Member:
+            let member = selectedItem as! Member
+            labelDetailArray.append(("Title:", (member.title)!))
+            labelDetailArray.append(("First name:", (member.firstName)!))
+            labelDetailArray.append(("Last name:", (member.lastName)!))
+            labelDetailArray.append(("On governing body:", member.isGoverningBodyMember == true ? "Yes" : "No"))
+            
+        case is Entity:
+            let entity = selectedItem as! Entity
+            labelDetailArray.append(("Name:", entity.name!))
+            if entity.subEntities != nil {
+                var subEntityString = String()
+                for sub in entity.subEntities! {
+                    if subEntityString.count > 0 {
+                        subEntityString.append(", ")
+                    }
+                    subEntityString.append(sub.name!)
+                }
+                labelDetailArray.append(("Sub-entities:", subEntityString))
+            }
+            if entity.members != nil {
+                var memberString = String()
+                for member in entity.members! {
+                    if memberString.count > 0 {
+                        memberString.append(", ")
+                    }
+                    memberString.append(member.firstName! + member.lastName!)
+                }
+                labelDetailArray.append(("Members:", memberString))
+            }
+            
+        case is SubEntity:
+            let subEntity = selectedItem as! SubEntity
+            labelDetailArray.append(("Name:", subEntity.name!))
+            if subEntity.members != nil {
+                var memberString = String()
+                for member in subEntity.members! {
+                    if memberString.count > 0 {
+                        memberString.append(", ")
+                    }
+                    memberString.append(member.firstName! + " " + member.lastName!)
+                }
+                labelDetailArray.append(("Members:", memberString))
+            }
+        default:
+            break
+        }
+
+        let viewModel = DisplayDetail.Detail.ViewModel(detailFields: labelDetailArray)
         viewController?.displayDetailFields(viewModel: viewModel)
     }
 }
