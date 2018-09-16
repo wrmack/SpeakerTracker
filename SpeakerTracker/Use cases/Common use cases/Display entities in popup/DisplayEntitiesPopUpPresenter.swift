@@ -19,7 +19,7 @@ protocol DisplayEntitiesPopUpPresentationLogic {
 class DisplayEntitiesPopUpPresenter: DisplayEntitiesPopUpPresentationLogic {
     weak var viewController: DisplayEntitiesPopUpDisplayLogic?
 
-    // MARK: Do something
+    // MARK: VIP
 
     func presentEntities(response: DisplayEntitiesPopUp.Entities.Response) {
         var entityNames = [String]()

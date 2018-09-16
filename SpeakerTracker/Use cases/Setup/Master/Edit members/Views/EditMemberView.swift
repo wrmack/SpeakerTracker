@@ -32,7 +32,6 @@ class EditMemberView: UIView {
     var titleBox: UITextField?
     var firstNameBox: UITextField?
     var lastNameBox: UITextField?
-    var isGoverningBodyMemberBox: UITextField?
 
     weak var delegate: EditMemberViewDelegate?
     
@@ -178,28 +177,7 @@ class EditMemberView: UIView {
         lastNameBox?.trailingAnchor.constraint(equalTo: containerView.trailingAnchor).isActive = true
         lastNameBox?.topAnchor.constraint(equalTo: lastNameLabel.bottomAnchor, constant: SMALLSPACING).isActive = true
         lastNameBox?.heightAnchor.constraint(equalToConstant: TEXTBOXHEIGHT).isActive = true
-        
-        // ========= Is governing body member?
-        let isGBLabel = UILabel(frame: CGRect.zero)
-        isGBLabel.backgroundColor = UIColor.clear
-        isGBLabel.text = "Members"
-        isGBLabel.textColor = TEXTCOLOR
-        containerView.addSubview(isGBLabel)
-        isGBLabel.translatesAutoresizingMaskIntoConstraints = false
-        isGBLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor).isActive = true
-        isGBLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor).isActive = true
-        isGBLabel.topAnchor.constraint(equalTo: (lastNameBox?.bottomAnchor)!, constant: LARGESPACING).isActive = true
-        isGBLabel.heightAnchor.constraint(equalToConstant: LABELHEIGHT).isActive = true
-        
-        isGoverningBodyMemberBox = UITextField(frame: CGRect.zero)
-        isGoverningBodyMemberBox?.backgroundColor = UIColor.white
-        containerView.addSubview(isGoverningBodyMemberBox!)
-        isGoverningBodyMemberBox?.translatesAutoresizingMaskIntoConstraints = false
-        isGoverningBodyMemberBox?.leadingAnchor.constraint(equalTo: containerView.leadingAnchor).isActive = true
-        isGoverningBodyMemberBox?.trailingAnchor.constraint(equalTo: containerView.trailingAnchor).isActive = true
-        isGoverningBodyMemberBox?.topAnchor.constraint(equalTo: isGBLabel.bottomAnchor, constant: SMALLSPACING).isActive = true
-        isGoverningBodyMemberBox?.heightAnchor.constraint(equalToConstant: TEXTBOXHEIGHT).isActive = true
-        
+    
     }
     
     
@@ -209,7 +187,6 @@ class EditMemberView: UIView {
             titleBox!.text = member?.title ?? ""
             firstNameBox!.text = member?.firstName ?? ""
             lastNameBox!.text = member?.lastName ?? ""
-            //            isGoverningBodyMemberBox!.text = member?.isGoverningBodyMember
         }
     }
     
@@ -226,7 +203,7 @@ class EditMemberView: UIView {
         if member != nil {
             id = member?.id
         }
-        let editedMember = Member(title: titleBox?.text, firstName: firstNameBox?.text, lastName: lastNameBox?.text, isGoverningBodyMember: nil, id: id)
+        let editedMember = Member(title: titleBox?.text, firstName: firstNameBox?.text, lastName: lastNameBox?.text, id: id)
         delegate?.saveButtonTapped(member: editedMember)
     }
     

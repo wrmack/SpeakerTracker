@@ -13,25 +13,64 @@
 import UIKit
 
 protocol DisplayEventsBusinessLogic {
-    func doSomething(request: DisplayEvents.Something.Request)
+     func fetchEvents(request: DisplayEvents.Events.Request)
+    func setCurrentEvent(index: Int)
 }
 
 protocol DisplayEventsDataStore {
-  //var name: String { get set }
+    var event: Event? {get set}
 }
+
 
 class DisplayEventsInteractor: DisplayEventsBusinessLogic, DisplayEventsDataStore {
     var presenter: DisplayEventsPresentationLogic?
-    var worker: DisplayEventsWorker?
-    //var name: String = ""
+    var event: Event?
+    var events: [Event]?
 
-    // MARK: Do something
-
-    func doSomething(request: DisplayEvents.Something.Request) {
-    worker = DisplayEventsWorker()
-    worker?.doSomeWork()
-
-    let response = DisplayEvents.Something.Response()
-    presenter?.presentSomething(response: response)
-}
+    
+    // MARK: - VIP
+    
+    func fetchEvents(request: DisplayEvents.Events.Request) {
+        events = [Event]()
+        let fileManager = FileManager.default
+        guard let docDirectory = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first else {
+            print("DisplayEventsInteractor: fetchEvents: error: Document directory not found")
+            return
+        }
+        do {
+            let fileURLs = try fileManager.contentsOfDirectory(at: docDirectory, includingPropertiesForKeys: nil)
+            for url in fileURLs {
+                if url.pathExtension == "evt" {
+                    let eventDoc = EventDocument(fileURL: url)
+                    eventDoc.open(completionHandler: { success in
+                        if !success {
+                            print("DisplayEventsInteractor: fetchEvents: error opening document")
+                        }
+                        else {
+                            eventDoc.close(completionHandler: { success in
+                                guard let event = eventDoc.event else {
+                                    print("DisplayEventsInteractor: fetchEvents: event is nil")
+                                    return
+                                }
+                                self.events!.append(event)
+                                let response = DisplayEvents.Events.Response(events: self.events)
+                                self.presenter?.presentEvents(response: response)
+                            })
+                        }
+                    })
+                }
+            }
+            
+        } catch {
+            print("Error while enumerating files \(docDirectory.path): \(error.localizedDescription)")
+        }
+        
+    }
+    
+    
+    // MARK: - Datastore
+    
+    func setCurrentEvent(index: Int) {
+        event = events![index]
+    }
 }

@@ -15,12 +15,43 @@ import UIKit
 enum TrackSpeakers {
   // MARK: Use cases
   
-    enum Something {
+    enum Speakers {
         struct Request {
         }
         struct Response {
+            var baseList: [Member]?
+            var speakerList: [Member]?
+            var doneList: [Member]?
         }
         struct ViewModel {
+            var baseNames: [String]?
+            var speakerNames: [String]?
+            var doneNames: [String]?
         }
     }
+}
+
+struct TablePosition {
+    var tableIndex: Int?
+    var tableRow: Int?
+    init(tableIndex: Int?, tableRow: Int?) {
+        self.tableIndex = tableIndex
+        self.tableRow = tableRow
+    }
+}
+
+struct SpeakerRecording {
+    var enabled = false
+    var row: Int?
+    var button: UIButton?
+}
+
+struct UndoStack {
+    var speakerMovements: [SpeakerMovement]
+}
+
+struct SpeakerMovement {
+    var sourceTablePosition: TablePosition?
+    var destinationTablePosition: TablePosition?
+    var member: Member?
 }

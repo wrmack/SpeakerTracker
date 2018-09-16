@@ -13,16 +13,33 @@
 import UIKit
 
 protocol TrackSpeakersPresentationLogic {
-    func presentSomething(response: TrackSpeakers.Something.Response)
+    func presentNames(response: TrackSpeakers.Speakers.Response)
 }
 
 class TrackSpeakersPresenter: TrackSpeakersPresentationLogic {
     weak var viewController: TrackSpeakersDisplayLogic?
 
-    // MARK: Do something
+    // MARK: - VIP
 
-    func presentSomething(response: TrackSpeakers.Something.Response) {
-        let viewModel = TrackSpeakers.Something.ViewModel()
-        viewController?.displaySomething(viewModel: viewModel)
+    func presentNames(response: TrackSpeakers.Speakers.Response) {
+        var baseNames = [String]()
+        var speakerNames = [String]()
+        var doneNames = [String]()
+        
+        for member in response.baseList! {
+            let memberName = member.firstName! + " " + member.lastName!
+            baseNames.append(memberName)
+        }
+        for member in response.speakerList! {
+            let memberName = member.firstName! + " " + member.lastName!
+            speakerNames.append(memberName)
+        }
+        for member in response.doneList! {
+            let memberName = member.firstName! + " " + member.lastName!
+            doneNames.append(memberName)
+        }
+        
+        let viewModel = TrackSpeakers.Speakers.ViewModel(baseNames: baseNames, speakerNames: speakerNames, doneNames: doneNames )
+        viewController?.displayNames(viewModel: viewModel)
     }
 }

@@ -21,10 +21,10 @@ protocol AddEntityDisplayLogic: class {
 class AddEntityViewController: UIViewController, EditEntityViewDelegate, AddEntityDisplayLogic {
     var interactor: AddEntityBusinessLogic?
     var router: (NSObjectProtocol & AddEntityRoutingLogic & AddEntityDataPassing)?
-    var sourceVC:DisplayEntitiesViewController?
+    var sourceVC: DisplayEntitiesViewController?
 
 
-    // MARK: Object lifecycle
+    // MARK: - Object lifecycle
 
     convenience init(sourceVC: DisplayEntitiesViewController) {
         self.init(nibName:nil, bundle: nil)
@@ -42,7 +42,7 @@ class AddEntityViewController: UIViewController, EditEntityViewDelegate, AddEnti
         setup()
     }
 
-    // MARK: Setup
+    // MARK: - Setup
 
     private func setup() {
         let viewController = self
@@ -57,7 +57,7 @@ class AddEntityViewController: UIViewController, EditEntityViewDelegate, AddEnti
         router.dataStore = interactor
     }
 
-    // MARK: Routing
+    // MARK: - Routing
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let scene = segue.identifier {
@@ -86,7 +86,7 @@ class AddEntityViewController: UIViewController, EditEntityViewDelegate, AddEnti
     
     //MARK: EditEntityViewDelegate methods
     
-    func saveButtonTapped(entity:Entity) {
+    func saveButtonTapped(entity: Entity) {
         interactor?.saveEntityToDisk(entity: entity, callback: {
             self.router?.returnToSource(source: self.sourceVC!)
         })

@@ -35,20 +35,19 @@ class DisplayDetailPresenter: DisplayDetailPresentationLogic {
             labelDetailArray.append(("Title:", (member.title)!))
             labelDetailArray.append(("First name:", (member.firstName)!))
             labelDetailArray.append(("Last name:", (member.lastName)!))
-            labelDetailArray.append(("On governing body:", member.isGoverningBodyMember == true ? "Yes" : "No"))
             
         case is Entity:
             let entity = selectedItem as! Entity
             labelDetailArray.append(("Name:", entity.name!))
-            if entity.subEntities != nil {
-                var subEntityString = String()
-                for sub in entity.subEntities! {
-                    if subEntityString.count > 0 {
-                        subEntityString.append(", ")
+            if entity.meetingGroups != nil {
+                var meetingGroupString = String()
+                for sub in entity.meetingGroups! {
+                    if meetingGroupString.count > 0 {
+                        meetingGroupString.append(", ")
                     }
-                    subEntityString.append(sub.name!)
+                    meetingGroupString.append(sub.name!)
                 }
-                labelDetailArray.append(("Sub-entities:", subEntityString))
+                labelDetailArray.append(("Meeting groups:", meetingGroupString))
             }
             if entity.members != nil {
                 var memberString = String()
@@ -61,12 +60,12 @@ class DisplayDetailPresenter: DisplayDetailPresentationLogic {
                 labelDetailArray.append(("Members:", memberString))
             }
             
-        case is SubEntity:
-            let subEntity = selectedItem as! SubEntity
-            labelDetailArray.append(("Name:", subEntity.name!))
-            if subEntity.members != nil {
+        case is MeetingGroup:
+            let meetingGroup = selectedItem as! MeetingGroup
+            labelDetailArray.append(("Name:", meetingGroup.name!))
+            if meetingGroup.members != nil {
                 var memberString = String()
-                for member in subEntity.members! {
+                for member in meetingGroup.members! {
                     if memberString.count > 0 {
                         memberString.append(", ")
                     }

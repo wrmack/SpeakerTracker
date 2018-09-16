@@ -8,25 +8,28 @@
 
 import Foundation
 
-enum EntityType: Int, Codable {
-    case topLevelParent = 1
-    case subordinate = 2
-}
-
 
 struct Entity: Codable {
     let name: String?
-    let type: EntityType?
     var members: [Member]?
-    var additionalMembers: [Member]?
-    var subEntities: [SubEntity]?
+    var meetingGroups: [MeetingGroup]?
     var fileName: String?
+    var id: UUID?
     
-    init(name: String?, type: EntityType?, members: [Member]?, additionalMembers: [Member]?, subEntities: [SubEntity]?, fileName: String? ) {
+    init(name: String?, members: [Member]?, meetingGroups: [MeetingGroup]?, fileName: String?, id: UUID? ) {
         self.name = name
-        self.type = type
         self.members = members
-        self.additionalMembers = additionalMembers
-        self.subEntities = subEntities
+        self.meetingGroups = meetingGroups
+        self.id = id
+    }
+}
+
+
+extension Entity: Equatable {
+    static func == (lhs: Entity, rhs: Entity) -> Bool {
+        if lhs.id != nil && rhs.id != nil {
+            return lhs.id == rhs.id
+        }
+        return lhs.name == rhs.name
     }
 }

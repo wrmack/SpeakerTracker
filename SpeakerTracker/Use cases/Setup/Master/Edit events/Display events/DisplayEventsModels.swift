@@ -12,20 +12,16 @@
 
 import UIKit
 
-enum DisplayEvents
-{
-  // MARK: Use cases
+enum DisplayEvents {
   
-  enum Something
-  {
-    struct Request
-    {
+    enum Events {
+        struct Request {
+        }
+        struct Response {
+            var events: [Event]?
+        }
+        struct ViewModel {
+            var eventNames: [String]?
+        }
     }
-    struct Response
-    {
-    }
-    struct ViewModel
-    {
-    }
-  }
 }

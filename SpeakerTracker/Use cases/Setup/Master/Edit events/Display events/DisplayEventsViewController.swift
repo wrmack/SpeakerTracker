@@ -13,13 +13,15 @@
 import UIKit
 
 protocol DisplayEventsDisplayLogic: class {
-    func displaySomething(viewModel: DisplayEvents.Something.ViewModel)
+    func displayEvents(viewModel: DisplayEvents.Events.ViewModel)
 }
 
 class DisplayEventsViewController: UITableViewController, DisplayEventsDisplayLogic {
     var interactor: DisplayEventsBusinessLogic?
     var router: (NSObjectProtocol & DisplayEventsRoutingLogic & DisplayEventsDataPassing)?
+    var eventNames = [String]()
 
+    
     // MARK: Object lifecycle
 
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
@@ -62,7 +64,6 @@ class DisplayEventsViewController: UITableViewController, DisplayEventsDisplayLo
   
     override func viewDidLoad() {
         super.viewDidLoad()
-        doSomething()
     }
 
     /*
@@ -76,26 +77,75 @@ class DisplayEventsViewController: UITableViewController, DisplayEventsDisplayLo
         }
         
         let splitVC = splitViewController
-        let detailNavC = splitVC?.viewControllers[1]
-        let detailVCView = detailNavC!.view
+        let detailVC = splitVC?.viewControllers[1] as! DisplayDetailViewController
+        let detailVCView = detailVC.view
         let tbFrame = tabBarCont.tabBar.frame
         tabBarCont.tabBar.frame = CGRect(x: (detailVCView?.frame.origin.x)!, y: tbFrame.origin.y, width: (detailVCView?.frame.size.width)!, height: tbFrame.size.height)
+        
+        detailVC.detailLabel.text = "Add or edit an event"
+        detailVC.detailButton.isHidden = true
+        detailVC.detailLabel.textAlignment = .center
+        fetchEvents()
     }
-    // MARK: Do something
+    
+    
+    
+    // MARK: - Storyboard actions
+    
 
-  
     @IBAction func addEvent(_ sender: Any) {
+        router?.routeToAddEvent()
         
     }
     
     
-    func doSomething() {
-        let request = DisplayEvents.Something.Request()
-        interactor?.doSomething(request: request)
+    // MARK: - VIP
+    
+    func fetchEvents() {
+        let request = DisplayEvents.Events.Request()
+        interactor?.fetchEvents(request: request)
+    }
+    
+    
+    
+    func displayEvents(viewModel: DisplayEvents.Events.ViewModel) {
+        eventNames = viewModel.eventNames!
+        tableView.reloadData()
+        interactor?.setCurrentEvent(index: 0)
+        router!.updateDetailVC()
+    }
+    
+    
+    func refreshAfterAddingEvent() {
+        fetchEvents()
+    }
+    
+    // MARK: - Table view data source
+    
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return eventNames.count
+    }
+    
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "EventsMasterCell", for: indexPath)
+        cell.textLabel?.text = eventNames[indexPath.row]
+        return cell
+    }
+    
+    
+    // MARK: UITableViewDelegate methods
+    
+    override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
+        interactor?.setCurrentEvent(index: indexPath.row)
+        router!.updateDetailVC()
+        return indexPath
     }
 
-
-    func displaySomething(viewModel: DisplayEvents.Something.ViewModel) {
-        //nameTextField.text = viewModel.name
-  }
+    
 }

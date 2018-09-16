@@ -13,7 +13,9 @@
 import UIKit
 
 @objc protocol DisplayEventsRoutingLogic {
-  //func routeToSomewhere(segue: UIStoryboardSegue?)
+    func routeToAddEvent()
+    func returnFromAddingEvent()
+    func updateDetailVC()
 }
 
 protocol DisplayEventsDataPassing {
@@ -23,35 +25,37 @@ protocol DisplayEventsDataPassing {
 class DisplayEventsRouter: NSObject, DisplayEventsRoutingLogic, DisplayEventsDataPassing {
     weak var viewController: DisplayEventsViewController?
     var dataStore: DisplayEventsDataStore?
+    var addEventVC: AddEventViewController?
+    var displayDetailVC: DisplayDetailViewController?
   
+    
   // MARK: Routing
   
-  //func routeToSomewhere(segue: UIStoryboardSegue?)
-  //{
-  //  if let segue = segue {
-  //    let destinationVC = segue.destination as! SomewhereViewController
-  //    var destinationDS = destinationVC.router!.dataStore!
-  //    passDataToSomewhere(source: dataStore!, destination: &destinationDS)
-  //  } else {
-  //    let storyboard = UIStoryboard(name: "Main", bundle: nil)
-  //    let destinationVC = storyboard.instantiateViewController(withIdentifier: "SomewhereViewController") as! SomewhereViewController
-  //    var destinationDS = destinationVC.router!.dataStore!
-  //    passDataToSomewhere(source: dataStore!, destination: &destinationDS)
-  //    navigateToSomewhere(source: viewController!, destination: destinationVC)
-  //  }
-  //}
-
-  // MARK: Navigation
-  
-  //func navigateToSomewhere(source: DisplayEventsViewController, destination: SomewhereViewController)
-  //{
-  //  source.show(destination, sender: nil)
-  //}
-  
-  // MARK: Passing data
-  
-  //func passDataToSomewhere(source: DisplayEventsDataStore, destination: inout SomewhereDataStore)
-  //{
-  //  destination.name = source.name
-  //}
+    func routeToAddEvent() {
+        addEventVC = AddEventViewController(sourceVC: viewController!)
+        let splitVC = viewController!.splitViewController
+        displayDetailVC = splitVC?.viewControllers[1] as? DisplayDetailViewController
+        //        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "EditingViewToggled"), object: nil, userInfo: nil)
+        splitVC?.showDetailViewController(addEventVC!, sender: displayDetailVC)
+    }
+    
+    
+    func returnFromAddingEvent() {
+        let splitVC = viewController!.splitViewController
+        splitVC!.showDetailViewController(displayDetailVC!, sender: nil)
+        addEventVC = nil
+    }
+    
+    func updateDetailVC() {
+        let splitVC = viewController!.splitViewController
+        displayDetailVC = splitVC?.viewControllers[1] as? DisplayDetailViewController
+        var destinationDS = displayDetailVC?.router!.dataStore!
+        passDataToDisplayDetail(source: dataStore!, destination: &destinationDS!)
+        displayDetailVC!.updateDetails()
+    }
+    
+    
+    func passDataToDisplayDetail(source: DisplayEventsDataStore, destination: inout DisplayDetailDataStore) {
+        destination.selectedItem = source.event as AnyObject
+    }
 }
