@@ -29,14 +29,14 @@ class DisplayEntitiesPopUpViewController: UIViewController, UITableViewDelegate,
     
     // MARK: Constants
     
-    private let BUTTON_Y: CGFloat = 27.0   // Was7.0 but allow for status bar =================
+    private let BUTTON_Y: CGFloat = 27.0
     private let BUTTON_SPACE: CGFloat = 8.0
     private let BUTTON_HEIGHT: CGFloat = 30.0
     private let TITLE_Y: CGFloat = 8.0
     private let TITLE_HEIGHT: CGFloat = 28.0
     private let CANCEL_BUTTON_WIDTH: CGFloat = 56.0
-    private let TOOLBAR_HEIGHT: CGFloat = 44.0  // Was 44.0 but allow for statusbar =============
-    private let MAXIMUM_TABLE_WIDTH: CGFloat = 288.0
+    private let TOOLBAR_HEIGHT: CGFloat = 44.0  
+    private let MAXIMUM_TABLE_WIDTH: CGFloat = 300.0
     private let MAXIMUM_TABLE_HEIGHT: CGFloat = 464.0
     private let TABLE_CELL_HEIGHT: CGFloat = 42.0
     

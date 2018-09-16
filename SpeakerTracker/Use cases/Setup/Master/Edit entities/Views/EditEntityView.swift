@@ -26,12 +26,8 @@ class EditEntityView: UIView {
     let TEXTCOLOR = UIColor(white: 0.4, alpha: 1.0)
     
     var heading: UILabel?
-    
     var entityNameBox: UITextField?
-    var typeBox: UITextField?
-    var membersBox: UITextField?
-    var additionalMembersBox: UITextField?
-
+    var entity: Entity?
     
     weak var delegate:EditEntityViewDelegate?
     
@@ -132,69 +128,6 @@ class EditEntityView: UIView {
         entityNameBox?.topAnchor.constraint(equalTo: entityNameLabel.bottomAnchor, constant: SMALLSPACING).isActive = true
         entityNameBox?.heightAnchor.constraint(equalToConstant: TEXTBOXHEIGHT).isActive = true
         
-        // ========= Type
-        let typeLabel = UILabel(frame: CGRect.zero)
-        typeLabel.backgroundColor = UIColor.clear
-        typeLabel.text = "Type"
-        typeLabel.textColor = TEXTCOLOR
-        containerView.addSubview(typeLabel)
-        typeLabel.translatesAutoresizingMaskIntoConstraints = false
-        typeLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor).isActive = true
-        typeLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor).isActive = true
-        typeLabel.topAnchor.constraint(equalTo: (entityNameBox?.bottomAnchor)!, constant: LARGESPACING).isActive = true
-        typeLabel.heightAnchor.constraint(equalToConstant: LABELHEIGHT).isActive = true
-        
-        typeBox = UITextField(frame: CGRect.zero)
-        typeBox?.backgroundColor = UIColor.white
-        containerView.addSubview(typeBox!)
-        typeBox?.translatesAutoresizingMaskIntoConstraints = false
-        typeBox?.leadingAnchor.constraint(equalTo: containerView.leadingAnchor).isActive = true
-        typeBox?.trailingAnchor.constraint(equalTo: containerView.trailingAnchor).isActive = true
-        typeBox?.topAnchor.constraint(equalTo: typeLabel.bottomAnchor, constant: SMALLSPACING).isActive = true
-        typeBox?.heightAnchor.constraint(equalToConstant: TEXTBOXHEIGHT).isActive = true
-        
-        // ========= Members
-        let membersLabel = UILabel(frame: CGRect.zero)
-        membersLabel.backgroundColor = UIColor.clear
-        membersLabel.text = "Members"
-        membersLabel.textColor = TEXTCOLOR
-        containerView.addSubview(membersLabel)
-        membersLabel.translatesAutoresizingMaskIntoConstraints = false
-        membersLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor).isActive = true
-        membersLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor).isActive = true
-        membersLabel.topAnchor.constraint(equalTo: (typeBox?.bottomAnchor)!, constant: LARGESPACING).isActive = true
-        membersLabel.heightAnchor.constraint(equalToConstant: LABELHEIGHT).isActive = true
-        
-        membersBox = UITextField(frame: CGRect.zero)
-        membersBox?.backgroundColor = UIColor.white
-        containerView.addSubview(membersBox!)
-        membersBox?.translatesAutoresizingMaskIntoConstraints = false
-        membersBox?.leadingAnchor.constraint(equalTo: containerView.leadingAnchor).isActive = true
-        membersBox?.trailingAnchor.constraint(equalTo: containerView.trailingAnchor).isActive = true
-        membersBox?.topAnchor.constraint(equalTo: membersLabel.bottomAnchor, constant: SMALLSPACING).isActive = true
-        membersBox?.heightAnchor.constraint(equalToConstant: TEXTBOXHEIGHT).isActive = true
-        
-        // ========= Additional members
-        let additionalMembersLabel = UILabel(frame: CGRect.zero)
-        additionalMembersLabel.backgroundColor = UIColor.clear
-        additionalMembersLabel.text = "Additional members"
-        additionalMembersLabel.textColor = TEXTCOLOR
-        containerView.addSubview(additionalMembersLabel)
-        additionalMembersLabel.translatesAutoresizingMaskIntoConstraints = false
-        additionalMembersLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor).isActive = true
-        additionalMembersLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor).isActive = true
-        additionalMembersLabel.topAnchor.constraint(equalTo: (membersBox?.bottomAnchor)!, constant: LARGESPACING).isActive = true
-        additionalMembersLabel.heightAnchor.constraint(equalToConstant: LABELHEIGHT).isActive = true
-        
-        additionalMembersBox = UITextField(frame: CGRect.zero)
-        additionalMembersBox?.backgroundColor = UIColor.white
-        containerView.addSubview(additionalMembersBox!)
-        additionalMembersBox?.translatesAutoresizingMaskIntoConstraints = false
-        additionalMembersBox?.leadingAnchor.constraint(equalTo: containerView.leadingAnchor).isActive = true
-        additionalMembersBox?.trailingAnchor.constraint(equalTo: containerView.trailingAnchor).isActive = true
-        additionalMembersBox?.topAnchor.constraint(equalTo: additionalMembersLabel.bottomAnchor, constant: SMALLSPACING).isActive = true
-        additionalMembersBox?.heightAnchor.constraint(equalToConstant: TEXTBOXHEIGHT).isActive = true
-        
     }
     
     // MARK: Delegate methods
@@ -204,9 +137,15 @@ class EditEntityView: UIView {
     }
     
     @objc func saveButtonTapped(_: UIButton) {
-        let entity = Entity(name: entityNameBox?.text, type: Int(typeBox!.text!).map { EntityType(rawValue: $0)! } , members: nil, additionalMembers: nil, subEntities: nil, fileName: nil)
-        
-        delegate?.saveButtonTapped(entity: entity)
+        let id: UUID?
+        if entity != nil && entity!.id != nil {
+            id = entity!.id
+        }
+        else {
+            id = UUID()
+        }
+        let editedEntity = Entity(name: entityNameBox?.text, members: nil, meetingGroups: nil, fileName: nil, id: id)
+        delegate?.saveButtonTapped(entity: editedEntity)
     }
 
 }

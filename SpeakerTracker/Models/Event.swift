@@ -10,20 +10,20 @@ import Foundation
 
 
 struct Event: Codable  {
-    let date: Date?
-    let entity: Entity?
-    let subEntity: SubEntity?
-    let members: [Member]?
-    let debates: [Debate]?
+    var filename: String?
+    var date: Date?
+    var entity: Entity?
+    var meetingGroup: MeetingGroup?
+    var debates: [Debate]?
     let id: UUID?
     
-    init(date: Date?, entity: Entity?, subEntity: SubEntity?, members: [Member]?, debates: [Debate]?, id: UUID?) {
+    init(date: Date?, entity: Entity?, meetingGroup: MeetingGroup?, debates: [Debate]?, id: UUID?, filename: String?) {
         self.date = date
         self.entity = entity
-        self.subEntity = subEntity
-        self.members = members
+        self.meetingGroup = meetingGroup
         self.debates = debates
         self.id = id
+        self.filename = filename
     }
 }
 

@@ -42,7 +42,6 @@ class WMTableViewCell: UITableViewCell {
             }
             memberTextLeadingAnchor = memberText?.leadingAnchor.constraint(equalTo: (leftButton?.trailingAnchor)!)
             memberTextLeadingAnchor.isActive = true
-            
         }
     }
 }

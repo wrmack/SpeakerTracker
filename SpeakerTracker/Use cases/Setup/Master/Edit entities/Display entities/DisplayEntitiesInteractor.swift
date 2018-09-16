@@ -29,7 +29,7 @@ class DisplayEntitiesInteractor: DisplayEntitiesBusinessLogic, DisplayEntitiesDa
     var entities: [Entity]?
   
     
-  // MARK: Do something
+    // MARK: - VIP
   
     func fetchEntities(request: DisplayEntities.Entities.Request) {
         entities = [Entity]()
@@ -68,6 +68,8 @@ class DisplayEntitiesInteractor: DisplayEntitiesBusinessLogic, DisplayEntitiesDa
  
     }
     
+    
+    // MARK: - Datastore
     
     func setCurrentEntity(index: Int) {
         entity = entities![index]

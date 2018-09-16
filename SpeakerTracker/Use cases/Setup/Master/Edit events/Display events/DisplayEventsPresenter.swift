@@ -13,16 +13,22 @@
 import UIKit
 
 protocol DisplayEventsPresentationLogic {
-    func presentSomething(response: DisplayEvents.Something.Response)
+    func presentEvents(response: DisplayEvents.Events.Response)
 }
 
 class DisplayEventsPresenter: DisplayEventsPresentationLogic {
     weak var viewController: DisplayEventsDisplayLogic?
 
-    // MARK: Do something
+    // MARK:- VIP
 
-    func presentSomething(response: DisplayEvents.Something.Response) {
-        let viewModel = DisplayEvents.Something.ViewModel()
-        viewController?.displaySomething(viewModel: viewModel)
+    func presentEvents(response: DisplayEvents.Events.Response) {
+        var eventNames = [String]()
+        for event in response.events! {
+            let dateString = event.date?.description
+            eventNames.append(dateString!)
+        }
+        
+        let viewModel = DisplayEvents.Events.ViewModel(eventNames: eventNames)
+        viewController?.displayEvents(viewModel: viewModel)
     }
 }

@@ -76,7 +76,7 @@ class EntityDocument: UIDocument {
             }
         }
         
-        // Create a filewrapper for the entity data and it to the directory filewrapper
+        // Create a filewrapper for the entity data and add it to the directory filewrapper
         do {
             let entityData = try PropertyListEncoder().encode(entity)
             directoryFileWrapper?.addRegularFile(withContents:entityData as Data, preferredFilename: "Entity")
