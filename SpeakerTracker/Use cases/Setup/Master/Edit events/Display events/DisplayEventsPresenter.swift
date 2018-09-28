@@ -23,9 +23,11 @@ class DisplayEventsPresenter: DisplayEventsPresentationLogic {
 
     func presentEvents(response: DisplayEvents.Events.Response) {
         var eventNames = [String]()
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd MMM yyyy"
         for event in response.events! {
-            let dateString = event.date?.description
-            eventNames.append(dateString!)
+            let dateString = formatter.string(from: event.date!)
+            eventNames.append(dateString)
         }
         
         let viewModel = DisplayEvents.Events.ViewModel(eventNames: eventNames)

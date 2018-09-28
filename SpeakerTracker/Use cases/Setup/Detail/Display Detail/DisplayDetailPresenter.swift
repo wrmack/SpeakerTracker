@@ -73,6 +73,29 @@ class DisplayDetailPresenter: DisplayDetailPresentationLogic {
                 }
                 labelDetailArray.append(("Members:", memberString))
             }
+            
+        case is Event:
+            let event = selectedItem as! Event
+            labelDetailArray.append(("Entity:", (event.entity?.name)!))
+            labelDetailArray.append(("Meeting group:", (event.meetingGroup?.name)!))
+            let formatter = DateFormatter()
+            formatter.dateFormat = "dd MMM yyyy"
+            let dateString = formatter.string(from: event.date!)
+            labelDetailArray.append(("Date:", dateString))
+            formatter.dateFormat = "hh:mm"
+            let timeString = formatter.string(from: event.date!)
+            labelDetailArray.append(("Time:", timeString))
+            if event.meetingGroup!.members != nil {
+                var memberString = String()
+                for member in event.meetingGroup!.members! {
+                    if memberString.count > 0 {
+                        memberString.append(", ")
+                    }
+                    memberString.append(member.firstName! + " " + member.lastName!)
+                }
+                labelDetailArray.append(("Members:", memberString))
+            }
+            labelDetailArray.append(("Note:", event.note!))
         default:
             break
         }

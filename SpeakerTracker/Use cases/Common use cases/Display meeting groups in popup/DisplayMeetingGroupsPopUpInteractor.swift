@@ -26,19 +26,21 @@ class  DisplayMeetingGroupsPopUpInteractor:  DisplayMeetingGroupsPopUpBusinessLo
     var presenter:  DisplayMeetingGroupsPopUpPresentationLogic?
     var entity: Entity?
     var meetingGroup: MeetingGroup?
-    var meetingGroups: [MeetingGroup]?
+    var meetingGroups = [MeetingGroup]()
 
 
 
     func fetchMeetingGroups(request:  DisplayMeetingGroupsPopUp.MeetingGroups.Request) {
-        self.meetingGroups = entity?.meetingGroups
+        if let mg = entity!.meetingGroups  {
+            self.meetingGroups = mg
+        }
         let response = DisplayMeetingGroupsPopUp.MeetingGroups.Response(meetingGroups: self.meetingGroups)
         self.presenter?.presentMeetingGroups(response: response)
     }
     
     
     func getMeetingGroup(index: Int) -> MeetingGroup {
-        return meetingGroups![index]
+        return meetingGroups[index]
     }
     
     func setEntity(entity: Entity?) {

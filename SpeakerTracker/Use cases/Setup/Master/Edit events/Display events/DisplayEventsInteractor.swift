@@ -13,12 +13,17 @@
 import UIKit
 
 protocol DisplayEventsBusinessLogic {
-     func fetchEvents(request: DisplayEvents.Events.Request)
+    func fetchEvents(request: DisplayEvents.Events.Request)
     func setCurrentEvent(index: Int)
+    func setMeetingGroup(meetingGroup: MeetingGroup)
+    func setEntity(entity: Entity)
+    func resetData()
 }
 
 protocol DisplayEventsDataStore {
     var event: Event? {get set}
+    var entity: Entity? {get set}
+    var meetingGroup: MeetingGroup? {get set}
 }
 
 
@@ -26,6 +31,8 @@ class DisplayEventsInteractor: DisplayEventsBusinessLogic, DisplayEventsDataStor
     var presenter: DisplayEventsPresentationLogic?
     var event: Event?
     var events: [Event]?
+    var entity: Entity?
+    var meetingGroup: MeetingGroup?
 
     
     // MARK: - VIP
@@ -52,7 +59,9 @@ class DisplayEventsInteractor: DisplayEventsBusinessLogic, DisplayEventsDataStor
                                     print("DisplayEventsInteractor: fetchEvents: event is nil")
                                     return
                                 }
-                                self.events!.append(event)
+                                if event.meetingGroup == self.meetingGroup {
+                                    self.events!.append(event)
+                                }
                                 let response = DisplayEvents.Events.Response(events: self.events)
                                 self.presenter?.presentEvents(response: response)
                             })
@@ -72,5 +81,21 @@ class DisplayEventsInteractor: DisplayEventsBusinessLogic, DisplayEventsDataStor
     
     func setCurrentEvent(index: Int) {
         event = events![index]
+    }
+    
+    
+    func setMeetingGroup(meetingGroup: MeetingGroup) {
+        self.meetingGroup = meetingGroup
+    }
+    
+    func setEntity(entity: Entity) {
+        self.entity = entity
+    }
+    
+    func resetData() {
+        self.entity = nil
+        self.event = nil
+        self.events = nil
+        self.meetingGroup = nil
     }
 }

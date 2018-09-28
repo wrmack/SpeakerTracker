@@ -16,11 +16,15 @@ protocol TrackSpeakersBusinessLogic {
     func setCurrentEntity(entity: Entity)
     func getCurrentEntity()-> Entity?
     func setCurrentMeetingGroup(meetingGroup: MeetingGroup)
+    func setCurrentEvent(event: Event?) 
     func fetchNames()
     func moveNameRight(from tablePosition: TablePosition )
     func moveNameLeft(from tablePosition: TablePosition )
     func resetAllNames()
     func undoLastAction()
+    func setCurrentSpeaker(row: Int)
+    func addCurrentSpeakerToDebate(debateReference: String, speakingTime: Int)
+    func addCurrentDebateToEvent()
 }
 
 protocol TrackSpeakersDataStore {
@@ -35,6 +39,8 @@ class TrackSpeakersInteractor: TrackSpeakersBusinessLogic, TrackSpeakersDataStor
     var currentEntity: Entity?
     var currentMeetingGroup: MeetingGroup?
     var currentSpeaker: Member?
+    var currentEvent: Event?
+    var currentDebate: Debate?
     var baseList = [Member]()
     var speakerList = [Member]()
     var doneList = [Member]()
@@ -62,6 +68,65 @@ class TrackSpeakersInteractor: TrackSpeakersBusinessLogic, TrackSpeakersDataStor
         speakerList = [Member]()
         doneList = [Member]()
     }
+    
+    
+    func setCurrentSpeaker(row: Int) {
+        currentSpeaker = doneList[row]
+    }
+    
+    
+    func setCurrentEvent(event: Event?) {
+        currentEvent = event
+    }
+    
+    func addCurrentSpeakerToDebate(debateReference: String, speakingTime: Int) {
+        let minutes = speakingTime / 60
+        let seconds = speakingTime - (minutes * 60)
+        let speakerEvent = SpeakerEvent(member: currentSpeaker, elapsedMinutes: minutes, elapsedSeconds: seconds, startTime: nil)
+        if currentDebate == nil {
+            currentDebate = Debate(reference: debateReference, speakerEvents: [SpeakerEvent]())
+        }
+        currentDebate?.speakerEvents?.append(speakerEvent) 
+    }
+    
+    
+    /*
+     Called when Reset is pressed
+     */
+    func addCurrentDebateToEvent() {
+         if currentEvent?.debates == nil {
+            currentEvent?.debates = [Debate]()
+        }
+        currentEvent?.debates?.append(currentDebate!)
+        currentDebate = nil
+        saveCurrentEvent()
+    }
+    
+    
+    func saveCurrentEvent() {
+        let fileManager = FileManager.default
+        guard let docDirectory = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first else {
+            print("TrackSpeakersInteractor: saveCurrentEvent: error: Document directory not found")
+            return
+        }
+        let eventURL = docDirectory.appendingPathComponent((currentEvent?.filename)! + ".evt")
+        let eventDoc = EventDocument(fileURL: eventURL)
+        eventDoc.open(completionHandler: { success in
+            if !success {
+                print("TrackSpeakersInteractor: saveCurrentEvent: error opening EventDocument")
+            }
+            else {
+                eventDoc.event = self.currentEvent
+                eventDoc.updateChangeCount(.done)
+                eventDoc.close(completionHandler: { success in
+                    if success == false {
+                        print("TrackSpeakersInteractor: saveCurrentEvent: error closing EventDocument")
+                    }
+                })
+            }
+        })
+    }
+    
     
     
     // MARK: - VIP

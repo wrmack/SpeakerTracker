@@ -22,6 +22,7 @@ class AddEventViewController: UIViewController, AddEventDisplayLogic, EditEventV
     var interactor: AddEventBusinessLogic?
     var router: (NSObjectProtocol & AddEventRoutingLogic & AddEventDataPassing)?
     var sourceVC: DisplayEventsViewController?
+    var editView: EditEventView?
 
     // MARK: - Object lifecycle
     
@@ -71,17 +72,27 @@ class AddEventViewController: UIViewController, AddEventDisplayLogic, EditEventV
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        let editView = EditEventView(frame: CGRect.zero)
-        editView.delegate = self
-        view.addSubview(editView)
-        editView.heading?.text = "New event"
-        editView.translatesAutoresizingMaskIntoConstraints = false
-        editView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        editView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        editView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-        editView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
     }
 
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+    }
+    
+    func setupEditView() {
+        editView = EditEventView(frame: CGRect.zero)
+        editView!.delegate = self
+        view.addSubview(editView!)
+        editView!.heading?.text = "New event"
+        editView!.translatesAutoresizingMaskIntoConstraints = false
+        editView!.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        editView!.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        editView!.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        editView!.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        editView!.eventSelectedEntityLabel?.text = interactor!.getEntity().name
+        editView!.eventSelectedMeetingGroupLabel?.text = interactor!.getMeetingGroup().name
+    }
     
     //MARK: - EditEventViewDelegate methods
     

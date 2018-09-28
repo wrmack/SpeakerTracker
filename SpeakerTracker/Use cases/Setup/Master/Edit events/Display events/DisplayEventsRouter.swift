@@ -35,7 +35,9 @@ class DisplayEventsRouter: NSObject, DisplayEventsRoutingLogic, DisplayEventsDat
         addEventVC = AddEventViewController(sourceVC: viewController!)
         let splitVC = viewController!.splitViewController
         displayDetailVC = splitVC?.viewControllers[1] as? DisplayDetailViewController
-        //        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "EditingViewToggled"), object: nil, userInfo: nil)
+        var destinationDS = addEventVC?.router!.dataStore!
+        passDataToAddEvent(source: dataStore!, destination: &destinationDS!)
+        addEventVC!.setupEditView()
         splitVC?.showDetailViewController(addEventVC!, sender: displayDetailVC)
     }
     
@@ -44,7 +46,9 @@ class DisplayEventsRouter: NSObject, DisplayEventsRoutingLogic, DisplayEventsDat
         let splitVC = viewController!.splitViewController
         splitVC!.showDetailViewController(displayDetailVC!, sender: nil)
         addEventVC = nil
+        viewController?.fetchEvents()
     }
+    
     
     func updateDetailVC() {
         let splitVC = viewController!.splitViewController
@@ -52,10 +56,16 @@ class DisplayEventsRouter: NSObject, DisplayEventsRoutingLogic, DisplayEventsDat
         var destinationDS = displayDetailVC?.router!.dataStore!
         passDataToDisplayDetail(source: dataStore!, destination: &destinationDS!)
         displayDetailVC!.updateDetails()
+        displayDetailVC?.largeToolbar()
     }
     
     
     func passDataToDisplayDetail(source: DisplayEventsDataStore, destination: inout DisplayDetailDataStore) {
         destination.selectedItem = source.event as AnyObject
+    }
+    
+    func passDataToAddEvent(source: DisplayEventsDataStore, destination: inout AddEventDataStore) {
+        destination.entity = source.entity
+        destination.meetingGroup = source.meetingGroup
     }
 }

@@ -16,10 +16,13 @@ protocol DisplayEventsDisplayLogic: class {
     func displayEvents(viewModel: DisplayEvents.Events.ViewModel)
 }
 
-class DisplayEventsViewController: UITableViewController, DisplayEventsDisplayLogic {
+class DisplayEventsViewController: UITableViewController, DisplayEventsDisplayLogic, DisplayDetailViewControllerDelegate {
+
+    
     var interactor: DisplayEventsBusinessLogic?
     var router: (NSObjectProtocol & DisplayEventsRoutingLogic & DisplayEventsDataPassing)?
     var eventNames = [String]()
+    var meetingGroupSelected = false
 
     
     // MARK: Object lifecycle
@@ -81,11 +84,16 @@ class DisplayEventsViewController: UITableViewController, DisplayEventsDisplayLo
         let detailVCView = detailVC.view
         let tbFrame = tabBarCont.tabBar.frame
         tabBarCont.tabBar.frame = CGRect(x: (detailVCView?.frame.origin.x)!, y: tbFrame.origin.y, width: (detailVCView?.frame.size.width)!, height: tbFrame.size.height)
-        
-        detailVC.detailLabel.text = "Add or edit an event"
-        detailVC.detailButton.isHidden = true
+         detailVC.detailLabel.text = "Select an entity  〉"
+        detailVC.detailButton.setTitleColor(UIColor(white: 0.3, alpha: 0.5), for: .normal)
+        detailVC.detailButton.setTitle("No entity selected", for: UIControlState.normal)
+        detailVC.detailButton.isHidden = false
         detailVC.detailLabel.textAlignment = .center
-        fetchEvents()
+        detailVC.delegate = self
+        interactor!.resetData()
+        eventNames = [String]()
+        tableView.reloadData()
+        router?.updateDetailVC()
     }
     
     
@@ -95,7 +103,6 @@ class DisplayEventsViewController: UITableViewController, DisplayEventsDisplayLo
 
     @IBAction func addEvent(_ sender: Any) {
         router?.routeToAddEvent()
-        
     }
     
     
@@ -111,6 +118,7 @@ class DisplayEventsViewController: UITableViewController, DisplayEventsDisplayLo
     func displayEvents(viewModel: DisplayEvents.Events.ViewModel) {
         eventNames = viewModel.eventNames!
         tableView.reloadData()
+        tableView.selectRow(at: IndexPath(row: 0, section: 0), animated: false, scrollPosition: .top)
         interactor?.setCurrentEvent(index: 0)
         router!.updateDetailVC()
     }
@@ -119,6 +127,15 @@ class DisplayEventsViewController: UITableViewController, DisplayEventsDisplayLo
     func refreshAfterAddingEvent() {
         fetchEvents()
     }
+    
+    func setEntity(entity: Entity) {
+        interactor!.setEntity(entity: entity) 
+    }
+    
+    func setMeetingGroup(meetingGroup: MeetingGroup) {
+        interactor!.setMeetingGroup(meetingGroup: meetingGroup)
+    }
+    
     
     // MARK: - Table view data source
     
@@ -148,4 +165,14 @@ class DisplayEventsViewController: UITableViewController, DisplayEventsDisplayLo
     }
 
     
+    // MARK: DisplayDetailViewControllerDelegate methods
+    
+    func didSelectEntityInDisplayDetailViewController(entity: Entity) {
+        setEntity(entity: entity)
+    }
+    
+    func didSelectMeetingGroupInDisplayDetailViewController(meetingGroup: MeetingGroup) {
+        setMeetingGroup(meetingGroup: meetingGroup)
+        fetchEvents()
+    }
 }
