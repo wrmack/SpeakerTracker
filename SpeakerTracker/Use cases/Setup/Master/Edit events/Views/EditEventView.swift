@@ -19,18 +19,20 @@ protocol EditEventViewDelegate: class {
 
 class EditEventView: UIView {
     
-    let LABELHEIGHT: CGFloat = 15
+    let LABELHEIGHT: CGFloat = 20
     let TEXTBOXHEIGHT: CGFloat = 40
-    let LARGESPACING: CGFloat = 20
+    let LARGESPACING: CGFloat = 30
     let SMALLSPACING: CGFloat = 5
     let BACKGROUNDCOLOR = UIColor.clear
-    let TEXTCOLOR = UIColor(white: 0.4, alpha: 1.0)
+    let LIGHTTEXTCOLOR = UIColor(white: 0.4, alpha: 1.0)
+    let DARKTEXTCOLOR = UIColor(white: 0.0, alpha: 1.0)
     
     var heading: UILabel?
-    
-    var eventDateBox: UITextField?
-
-    
+    var eventSelectedEntityLabel: UILabel?
+    var eventSelectedMeetingGroupLabel: UILabel?
+    var eventDatePicker: UIDatePicker?
+    var eventTimePicker: UIDatePicker?
+    var eventNoteBox: UITextField?
     weak var delegate:EditEventViewDelegate?
     
     override init(frame: CGRect) {
@@ -108,91 +110,118 @@ class EditEventView: UIView {
         
         scrollView.contentSize = CGSize(width: containerView.frame.size.width, height: 800)
         
-        // =======  Event date
+        
+        // =======  Event entity labels
+
+        let eventEntityLabel = UILabel(frame: CGRect.zero)
+        eventEntityLabel.backgroundColor = UIColor.clear
+        eventEntityLabel.text = "Entity: "
+        eventEntityLabel.textColor = LIGHTTEXTCOLOR
+        containerView.addSubview(eventEntityLabel)
+        eventEntityLabel.translatesAutoresizingMaskIntoConstraints = false
+        eventEntityLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor).isActive = true
+        //       eventDateLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor).isActive = true
+        eventEntityLabel.topAnchor.constraint(equalTo: containerView.topAnchor, constant: LARGESPACING).isActive = true
+        eventEntityLabel.heightAnchor.constraint(equalToConstant: LABELHEIGHT).isActive = true
+ 
+        
+        eventSelectedEntityLabel = UILabel(frame: CGRect.zero)
+        eventSelectedEntityLabel!.backgroundColor = UIColor.clear
+        eventSelectedEntityLabel!.text = "test"
+        eventSelectedEntityLabel!.textColor = DARKTEXTCOLOR
+        containerView.addSubview(eventSelectedEntityLabel!)
+        eventSelectedEntityLabel!.translatesAutoresizingMaskIntoConstraints = false
+        eventSelectedEntityLabel!.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 200).isActive = true
+        //       eventDateLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor).isActive = true
+        eventSelectedEntityLabel!.topAnchor.constraint(equalTo: eventEntityLabel.topAnchor).isActive = true
+        eventSelectedEntityLabel!.heightAnchor.constraint(equalToConstant: LABELHEIGHT).isActive = true
+        
+         // =======  Event meeting group labels
+        
+        let eventMeetingGroupLabel = UILabel(frame: CGRect.zero)
+        eventMeetingGroupLabel.backgroundColor = UIColor.clear
+        eventMeetingGroupLabel.text = "Meeting group: "
+        eventMeetingGroupLabel.textColor = LIGHTTEXTCOLOR
+        containerView.addSubview(eventMeetingGroupLabel)
+        eventMeetingGroupLabel.translatesAutoresizingMaskIntoConstraints = false
+        eventMeetingGroupLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor).isActive = true
+        //       eventDateLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor).isActive = true
+        eventMeetingGroupLabel.topAnchor.constraint(equalTo: eventEntityLabel.bottomAnchor, constant: LARGESPACING).isActive = true
+        eventMeetingGroupLabel.heightAnchor.constraint(equalToConstant: LABELHEIGHT).isActive = true
+        
+        
+        eventSelectedMeetingGroupLabel = UILabel(frame: CGRect.zero)
+        eventSelectedMeetingGroupLabel!.backgroundColor = UIColor.clear
+        eventSelectedMeetingGroupLabel!.text = "test"
+        eventSelectedMeetingGroupLabel!.textColor = DARKTEXTCOLOR
+        containerView.addSubview(eventSelectedMeetingGroupLabel!)
+        eventSelectedMeetingGroupLabel!.translatesAutoresizingMaskIntoConstraints = false
+        eventSelectedMeetingGroupLabel!.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 200).isActive = true
+        //       eventDateLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor).isActive = true
+        eventSelectedMeetingGroupLabel!.topAnchor.constraint(equalTo: eventMeetingGroupLabel.topAnchor).isActive = true
+        eventSelectedMeetingGroupLabel!.heightAnchor.constraint(equalToConstant: LABELHEIGHT).isActive = true
+        
+
+        
+        
+        // =======  Event date and time
         let eventDateLabel = UILabel(frame: CGRect.zero)
         eventDateLabel.backgroundColor = UIColor.clear
-        eventDateLabel.text = "Entity date"
-        eventDateLabel.textColor = TEXTCOLOR
+        eventDateLabel.text = "Event date and time:"
+        eventDateLabel.textColor = LIGHTTEXTCOLOR
         containerView.addSubview(eventDateLabel)
         eventDateLabel.translatesAutoresizingMaskIntoConstraints = false
         eventDateLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor).isActive = true
-        eventDateLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor).isActive = true
-        eventDateLabel.topAnchor.constraint(equalTo: containerView.topAnchor, constant: LARGESPACING).isActive = true
+ //       eventDateLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor).isActive = true
+        eventDateLabel.topAnchor.constraint(equalTo: eventMeetingGroupLabel.bottomAnchor, constant: LARGESPACING).isActive = true
         eventDateLabel.heightAnchor.constraint(equalToConstant: LABELHEIGHT).isActive = true
         
-        eventDateBox = UITextField(frame: CGRect.zero)
-        eventDateBox?.backgroundColor = UIColor.white
-        containerView.addSubview(eventDateBox!)
-        eventDateBox?.translatesAutoresizingMaskIntoConstraints = false
-        eventDateBox?.leadingAnchor.constraint(equalTo: containerView.leadingAnchor).isActive = true
-        eventDateBox?.trailingAnchor.constraint(equalTo: containerView.trailingAnchor).isActive = true
-        eventDateBox?.topAnchor.constraint(equalTo: eventDateLabel.bottomAnchor, constant: SMALLSPACING).isActive = true
-        eventDateBox?.heightAnchor.constraint(equalToConstant: TEXTBOXHEIGHT).isActive = true
         
-//        // ========= Type
-//        let typeLabel = UILabel(frame: CGRect.zero)
-//        typeLabel.backgroundColor = UIColor.clear
-//        typeLabel.text = "Type"
-//        typeLabel.textColor = TEXTCOLOR
-//        containerView.addSubview(typeLabel)
-//        typeLabel.translatesAutoresizingMaskIntoConstraints = false
-//        typeLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor).isActive = true
-//        typeLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor).isActive = true
-//        typeLabel.topAnchor.constraint(equalTo: (entityNameBox?.bottomAnchor)!, constant: LARGESPACING).isActive = true
-//        typeLabel.heightAnchor.constraint(equalToConstant: LABELHEIGHT).isActive = true
-//
-//        typeBox = UITextField(frame: CGRect.zero)
-//        typeBox?.backgroundColor = UIColor.white
-//        containerView.addSubview(typeBox!)
-//        typeBox?.translatesAutoresizingMaskIntoConstraints = false
-//        typeBox?.leadingAnchor.constraint(equalTo: containerView.leadingAnchor).isActive = true
-//        typeBox?.trailingAnchor.constraint(equalTo: containerView.trailingAnchor).isActive = true
-//        typeBox?.topAnchor.constraint(equalTo: typeLabel.bottomAnchor, constant: SMALLSPACING).isActive = true
-//        typeBox?.heightAnchor.constraint(equalToConstant: TEXTBOXHEIGHT).isActive = true
-//
-//        // ========= Members
-//        let membersLabel = UILabel(frame: CGRect.zero)
-//        membersLabel.backgroundColor = UIColor.clear
-//        membersLabel.text = "Members"
-//        membersLabel.textColor = TEXTCOLOR
-//        containerView.addSubview(membersLabel)
-//        membersLabel.translatesAutoresizingMaskIntoConstraints = false
-//        membersLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor).isActive = true
-//        membersLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor).isActive = true
-//        membersLabel.topAnchor.constraint(equalTo: (typeBox?.bottomAnchor)!, constant: LARGESPACING).isActive = true
-//        membersLabel.heightAnchor.constraint(equalToConstant: LABELHEIGHT).isActive = true
-//
-//        membersBox = UITextField(frame: CGRect.zero)
-//        membersBox?.backgroundColor = UIColor.white
-//        containerView.addSubview(membersBox!)
-//        membersBox?.translatesAutoresizingMaskIntoConstraints = false
-//        membersBox?.leadingAnchor.constraint(equalTo: containerView.leadingAnchor).isActive = true
-//        membersBox?.trailingAnchor.constraint(equalTo: containerView.trailingAnchor).isActive = true
-//        membersBox?.topAnchor.constraint(equalTo: membersLabel.bottomAnchor, constant: SMALLSPACING).isActive = true
-//        membersBox?.heightAnchor.constraint(equalToConstant: TEXTBOXHEIGHT).isActive = true
-//
-//        // ========= Additional members
-//        let additionalMembersLabel = UILabel(frame: CGRect.zero)
-//        additionalMembersLabel.backgroundColor = UIColor.clear
-//        additionalMembersLabel.text = "Additional members"
-//        additionalMembersLabel.textColor = TEXTCOLOR
-//        containerView.addSubview(additionalMembersLabel)
-//        additionalMembersLabel.translatesAutoresizingMaskIntoConstraints = false
-//        additionalMembersLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor).isActive = true
-//        additionalMembersLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor).isActive = true
-//        additionalMembersLabel.topAnchor.constraint(equalTo: (membersBox?.bottomAnchor)!, constant: LARGESPACING).isActive = true
-//        additionalMembersLabel.heightAnchor.constraint(equalToConstant: LABELHEIGHT).isActive = true
-//
-//        additionalMembersBox = UITextField(frame: CGRect.zero)
-//        additionalMembersBox?.backgroundColor = UIColor.white
-//        containerView.addSubview(additionalMembersBox!)
-//        additionalMembersBox?.translatesAutoresizingMaskIntoConstraints = false
-//        additionalMembersBox?.leadingAnchor.constraint(equalTo: containerView.leadingAnchor).isActive = true
-//        additionalMembersBox?.trailingAnchor.constraint(equalTo: containerView.trailingAnchor).isActive = true
-//        additionalMembersBox?.topAnchor.constraint(equalTo: additionalMembersLabel.bottomAnchor, constant: SMALLSPACING).isActive = true
-//        additionalMembersBox?.heightAnchor.constraint(equalToConstant: TEXTBOXHEIGHT).isActive = true
-//
-    }
+        eventDatePicker = UIDatePicker(frame: CGRect.zero)
+        eventDatePicker!.datePickerMode = .date
+        eventDatePicker?.minimumDate = Date()
+        containerView.addSubview(eventDatePicker!)
+        eventDatePicker?.translatesAutoresizingMaskIntoConstraints = false
+        eventDatePicker?.leadingAnchor.constraint(equalTo: containerView.leadingAnchor).isActive = true
+//        eventDatePicker?.trailingAnchor.constraint(equalTo: containerView.trailingAnchor).isActive = true
+        eventDatePicker?.topAnchor.constraint(equalTo: eventDateLabel.bottomAnchor, constant: SMALLSPACING).isActive = true
+        //       eventDatePicker?.heightAnchor.constraint(equalToConstant: TEXTBOXHEIGHT).isActive = true
+        
+        
+        eventTimePicker = UIDatePicker(frame: CGRect.zero)
+        eventTimePicker!.datePickerMode = .time
+        eventTimePicker?.minuteInterval = 15
+        containerView.addSubview(eventTimePicker!)
+        eventTimePicker?.translatesAutoresizingMaskIntoConstraints = false
+ //       eventTimePicker?.leadingAnchor.constraint(equalTo: containerView.leadingAnchor).isActive = true
+        eventTimePicker?.trailingAnchor.constraint(equalTo: containerView.trailingAnchor).isActive = true
+        eventTimePicker?.topAnchor.constraint(equalTo: eventDateLabel.bottomAnchor, constant: SMALLSPACING).isActive = true
+        //       eventDatePicker?.heightAnchor.constraint(equalToConstant: TEXTBOXHEIGHT).isActive = true
+        
+        
+        // =======  Event optional note
+        
+        let eventNoteLabel = UILabel(frame: CGRect.zero)
+        eventNoteLabel.backgroundColor = UIColor.clear
+        eventNoteLabel.text = "Optional note: "
+        eventNoteLabel.textColor = LIGHTTEXTCOLOR
+        containerView.addSubview(eventNoteLabel)
+        eventNoteLabel.translatesAutoresizingMaskIntoConstraints = false
+        eventNoteLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor).isActive = true
+        //       eventDateLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor).isActive = true
+        eventNoteLabel.topAnchor.constraint(equalTo: eventTimePicker!.bottomAnchor, constant: LARGESPACING).isActive = true
+        eventNoteLabel.heightAnchor.constraint(equalToConstant: LABELHEIGHT).isActive = true
+        
+        
+        eventNoteBox = UITextField(frame: CGRect.zero)
+        eventNoteBox?.backgroundColor = UIColor.white
+        containerView.addSubview(eventNoteBox!)
+        eventNoteBox?.translatesAutoresizingMaskIntoConstraints = false
+        eventNoteBox?.leadingAnchor.constraint(equalTo: containerView.leadingAnchor).isActive = true
+        eventNoteBox?.trailingAnchor.constraint(equalTo: containerView.trailingAnchor).isActive = true
+        eventNoteBox?.topAnchor.constraint(equalTo: eventNoteLabel.bottomAnchor, constant: SMALLSPACING).isActive = true
+        eventNoteBox?.heightAnchor.constraint(equalToConstant: TEXTBOXHEIGHT).isActive = true
+      }
     
     
     // MARK: Button action methods
@@ -202,9 +231,18 @@ class EditEventView: UIView {
     }
     
     @objc func saveButtonTapped(_: UIButton) {
+        let cal = Calendar.current
+  //      let startOfDay = cal.startOfDay(for: eventDatePicker.date)
+        let dateComponents = cal.dateComponents(Set([Calendar.Component.day,Calendar.Component.month, Calendar.Component.year]), from: eventDatePicker!.date)
+        let newDate = cal.date(from: dateComponents)
+        let timeComponents = cal.dateComponents(Set([Calendar.Component.hour,Calendar.Component.minute]), from: eventTimePicker!.date)
+        let newDateWithTime = cal.date(byAdding: timeComponents, to: newDate!)
+        let df = DateFormatter()
+        df.dateFormat = "yyyy-MM-dd_hh-mm"
+        let newDateString = df.string(from: newDateWithTime!)
+        print(newDateString)
         let id = UUID()
-        let test = Date()
-        let event = Event(date: test, entity: nil, meetingGroup: nil, debates: nil, id: id, filename: nil)
+        let event = Event(date: newDateWithTime, entity: nil, meetingGroup: nil, note: eventNoteBox?.text, debates: nil, id: id, filename: newDateString)
         delegate?.saveButtonTapped(event: event)
     }
     

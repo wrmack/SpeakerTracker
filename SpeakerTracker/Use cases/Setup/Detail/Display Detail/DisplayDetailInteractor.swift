@@ -15,6 +15,8 @@ import UIKit
 protocol DisplayDetailBusinessLogic {
     func getSelectedItemFields(request: DisplayDetail.Detail.Request)
     func getSelectedItem() -> AnyObject?
+    func getCurrentEntity()-> Entity
+    func setCurrentEntity(entity: Entity)
 }
 
 protocol DisplayDetailDataStore {
@@ -24,6 +26,7 @@ protocol DisplayDetailDataStore {
 class DisplayDetailInteractor: DisplayDetailBusinessLogic, DisplayDetailDataStore {
     var presenter: DisplayDetailPresentationLogic?
     var selectedItem: AnyObject?
+    var currentEntity: Entity?
 
     
     // MARK: - VIP
@@ -42,5 +45,13 @@ class DisplayDetailInteractor: DisplayDetailBusinessLogic, DisplayDetailDataStor
     
     func getSelectedItem() -> AnyObject? {
         return selectedItem
+    }
+    
+    func setCurrentEntity(entity: Entity) {
+        currentEntity = entity
+    }
+    
+    func getCurrentEntity()-> Entity {
+        return currentEntity!
     }
 }

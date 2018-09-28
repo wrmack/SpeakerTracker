@@ -76,6 +76,7 @@ class DisplayMembersRouter: NSObject, DisplayMembersRoutingLogic, DisplayMembers
     func updateDetailVC() {
         let splitVC = viewController!.splitViewController
         displayDetailVC = splitVC?.viewControllers[1] as? DisplayDetailViewController
+        displayDetailVC?.smallToolbar()
         var destinationDS = displayDetailVC?.router!.dataStore!
         passDataToDisplayDetail(source: dataStore!, destination: &destinationDS!)
         displayDetailVC!.updateDetails()

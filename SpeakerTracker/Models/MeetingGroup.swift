@@ -20,3 +20,10 @@ struct MeetingGroup: Codable {
         self.id = id
     }
 }
+
+
+extension MeetingGroup: Equatable {
+    static func == (lhs: MeetingGroup, rhs: MeetingGroup) -> Bool {
+        return lhs.id == rhs.id
+    }
+}

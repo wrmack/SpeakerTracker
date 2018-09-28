@@ -14,13 +14,15 @@ struct Event: Codable  {
     var date: Date?
     var entity: Entity?
     var meetingGroup: MeetingGroup?
+    var note: String?
     var debates: [Debate]?
     let id: UUID?
     
-    init(date: Date?, entity: Entity?, meetingGroup: MeetingGroup?, debates: [Debate]?, id: UUID?, filename: String?) {
+    init(date: Date?, entity: Entity?, meetingGroup: MeetingGroup?, note: String?, debates: [Debate]?, id: UUID?, filename: String?) {
         self.date = date
         self.entity = entity
         self.meetingGroup = meetingGroup
+        self.note = note
         self.debates = debates
         self.id = id
         self.filename = filename
@@ -30,7 +32,7 @@ struct Event: Codable  {
 
 struct Debate: Codable {
     let reference: String?
-    let speakerEvents: [(SpeakerEvent)]?
+    var speakerEvents: [(SpeakerEvent)]?
     
     init(reference: String?, speakerEvents: [(SpeakerEvent)]?) {
         self.reference = reference

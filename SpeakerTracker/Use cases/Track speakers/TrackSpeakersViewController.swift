@@ -55,6 +55,7 @@ class TrackSpeakersViewController: UIViewController, TrackSpeakersDisplayLogic, 
     
     var speakerRecording = SpeakerRecording(enabled: false, row: nil, button: nil)
     
+    var sideBarIsHidden = true
     
     // MARK: - Storyboard outlets
     
@@ -77,8 +78,7 @@ class TrackSpeakersViewController: UIViewController, TrackSpeakersDisplayLogic, 
     @IBOutlet weak var remainingLabel: UILabel!
     @IBOutlet weak var speakerLabel: UILabel!
     @IBOutlet weak var doneLabel: UILabel!
-    @IBOutlet weak var undoButton: UIButton!
-    @IBOutlet weak var resetButton: UIButton!
+
     
     // Timer buttons and labels
     @IBOutlet weak var timerLabel: UILabel!
@@ -90,17 +90,25 @@ class TrackSpeakersViewController: UIViewController, TrackSpeakersDisplayLogic, 
     @IBOutlet weak var smPauseButton: UIButton!
     @IBOutlet weak var smStopButton: UIButton!
     
-    /// Button which displays the large timer when pressed.  The button image is toggled when button pressed.
+    /// Buttons down right side of screen
     @IBOutlet weak var expandButton: UIButton!
+    @IBOutlet weak var undoButton: UIButton!
+    @IBOutlet weak var resetButton: UIButton!    
+    @IBOutlet weak var recordingOnLabel: UILabel!
     
-    
+    // Sidebar, views and buttons
+    @IBOutlet weak var sideBarView: UIView!
+    @IBOutlet weak var sideBarLeadingConstraint: NSLayoutConstraint!
+    @IBOutlet weak var disclosureSideBarButtonView: UIView!
+    @IBOutlet weak var discloseSideBarButton: UIButton!
     @IBOutlet weak var selectEntityButton: UIButton!
-    @IBOutlet weak var selectEventButton: UIButton!
-    @IBOutlet weak var debateReferenceLabel: UILabel!
-    @IBOutlet weak var debateReference: UITextField!
-    @IBOutlet weak var recordingOn: UIButton!
-    
     @IBOutlet weak var selectMeetingGroupButton: UIButton!
+    @IBOutlet weak var eventView: UIView!
+    @IBOutlet weak var recordSwitch: UISwitch!
+    @IBOutlet weak var selectEventButton: UIButton!
+    @IBOutlet weak var debateReference: UITextField!
+
+
     
     // MARK: - Object lifecycle
 
@@ -162,6 +170,8 @@ class TrackSpeakersViewController: UIViewController, TrackSpeakersDisplayLogic, 
         // Appearance tweaks
         undoButton.layer.cornerRadius = 2
         resetButton.layer.cornerRadius = 2
+        disclosureSideBarButtonView.layer.cornerRadius = 10
+        disclosureSideBarButtonView.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMaxXMinYCorner]
         
         // Set datasource and delegate for table views
         baseList.dataSource = self
@@ -170,13 +180,15 @@ class TrackSpeakersViewController: UIViewController, TrackSpeakersDisplayLogic, 
         speakerList.delegate = self
         
         
-        // At start up, hide timer views and ensure stackview is at back so does not intercept touches
+        // At start up, hide timer views, ensure stackview is at back so does not intercept touches, hide sidebar and the view containing the event selectors
         dimmerView.isHidden = true
         timerLabel.isHidden = true
         startButton.isHidden = true
         pauseButton.isHidden = true
         stopButton.isHidden = true
         view.sendSubview(toBack:stackView)
+        sideBarLeadingConstraint.constant = -450
+        eventView.isHidden = true
         
         
         // If iPad Pro 12.9" make adjustments to row height
@@ -207,6 +219,8 @@ class TrackSpeakersViewController: UIViewController, TrackSpeakersDisplayLogic, 
             selectMeetingGroupButton.setTitleColor(UIColor.white, for: .normal)
             setCurrentMeetingGroup(meetingGroup: meetingGroup)
         }
+        selectMeetingGroupButton.isEnabled = (selectEntityButton.titleLabel?.text == "Select an entity") ? false : true
+        recordSwitch.isEnabled = (selectMeetingGroupButton.titleLabel?.text == "Select a meeting group") ? false : true
         
         fetchNames()
         
@@ -239,6 +253,25 @@ class TrackSpeakersViewController: UIViewController, TrackSpeakersDisplayLogic, 
     
     
     // MARK: - Storyboard actions
+  
+    @IBAction func discloseSideBarPressed(_ sender: UIButton) {
+        if sideBarIsHidden == true {
+            sideBarIsHidden = false
+            sender.setTitle("◀︎", for: .normal)
+            UIView.animate(withDuration: 1.0, animations: {
+                self.sideBarLeadingConstraint.constant = 0
+                self.view.layoutIfNeeded()
+            })
+        }
+        else {
+            sideBarIsHidden = true
+            sender.setTitle("▶︎", for: .normal)
+            UIView.animate(withDuration: 1.0, animations: {
+                self.sideBarLeadingConstraint.constant = -450
+                self.view.layoutIfNeeded()
+            })
+        }
+    }
     
     @IBAction func selectEntityPressed(_ button: UIButton) {
         let entityPopUpController = DisplayEntitiesPopUpViewController(nibName: nil, bundle: nil)
@@ -257,7 +290,7 @@ class TrackSpeakersViewController: UIViewController, TrackSpeakersDisplayLogic, 
     @IBAction func selectMeetingGroupPressed(_ sender: UIButton) {
         let currentEntity = getCurrentEntity()
         if currentEntity == nil {
-            let alert = UIAlertController(title: "Sub-entity not found", message: "Select an entity first", preferredStyle: .alert)
+            let alert = UIAlertController(title: "Meeting group not found", message: "Select an entity first", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .default, handler: { _ in
                 NSLog("The \"OK\" alert occured.")
             }))
@@ -355,6 +388,7 @@ class TrackSpeakersViewController: UIViewController, TrackSpeakersDisplayLogic, 
         sender.setTitle("00:00", for: .normal)
         sender.titleLabel!.font = UIFont.systemFont(ofSize:14)
         handleStartTimer()
+        interactor!.setCurrentSpeaker(row: index!.row)
     }
     
     
@@ -365,6 +399,7 @@ class TrackSpeakersViewController: UIViewController, TrackSpeakersDisplayLogic, 
     
     @IBAction func resetAll(_ sender: UIButton) {
         resetAllNames()
+        interactor!.addCurrentDebateToEvent()
     }
     
     
@@ -485,21 +520,17 @@ class TrackSpeakersViewController: UIViewController, TrackSpeakersDisplayLogic, 
         }
     }
     
-
-    @IBAction func recordingOnPressed(_ button: UIButton) {
-        if button.isSelected == false{
-            button.isSelected = true
-            selectEventButton.isHidden = false
-            debateReference.isHidden = false
-            debateReferenceLabel.isHidden = false
+ 
+    @IBAction func recordSwitchPressed(_ sender: UISwitch) {
+        if sender.isOn == true {
+            eventView.isHidden = false
+            recordingOnLabel.textColor = UIColor.red
         }
         else {
-            button.isSelected = false
-            selectEventButton.isHidden = true
-            debateReference.isHidden = true
-            debateReferenceLabel.isHidden = true
+            eventView.isHidden = true
+            recordingOnLabel.textColor = UIColor.darkGray
+            interactor?.addCurrentDebateToEvent()
         }
-        
     }
     
     
@@ -510,14 +541,16 @@ class TrackSpeakersViewController: UIViewController, TrackSpeakersDisplayLogic, 
          interactor?.setCurrentEntity(entity: entity)
     }
     
-    
     func getCurrentEntity() -> Entity? {
         return interactor!.getCurrentEntity()
     }
     
-    
     func setCurrentMeetingGroup(meetingGroup: MeetingGroup) {
         interactor?.setCurrentMeetingGroup(meetingGroup: meetingGroup)
+    }
+    
+    func setCurrentEvent(event: Event?) {
+        interactor!.setCurrentEvent(event: event)
     }
     
     
@@ -657,6 +690,7 @@ class TrackSpeakersViewController: UIViewController, TrackSpeakersDisplayLogic, 
         selectEntityButton.setTitle(entity.name, for: .normal)
         selectEntityButton.setTitleColor(UIColor.white, for: .normal)
         selectEntityButton.titleLabel?.textAlignment = .left
+        selectMeetingGroupButton.isEnabled = true
         setCurrentEntity(entity: entity)
     }
     
@@ -669,6 +703,7 @@ class TrackSpeakersViewController: UIViewController, TrackSpeakersDisplayLogic, 
         selectMeetingGroupButton.setTitleColor(UIColor.white, for: .normal)
         selectMeetingGroupButton.titleLabel?.textAlignment = .left
         setCurrentMeetingGroup(meetingGroup: meetingGroup)
+        recordSwitch.isEnabled = true
         fetchNames()
         let defaults = UserDefaults.standard
         let entity = getCurrentEntity()
@@ -689,7 +724,7 @@ class TrackSpeakersViewController: UIViewController, TrackSpeakersDisplayLogic, 
         selectEventButton.setTitle(dateString, for: .normal)
         selectEventButton.setTitleColor(UIColor.lightText, for: .normal)
         selectEventButton.titleLabel?.textAlignment = .left
-//        currentEvent = event
+        setCurrentEvent(event: event)
     }
     
     
@@ -823,7 +858,9 @@ class TrackSpeakersViewController: UIViewController, TrackSpeakersDisplayLogic, 
         smStartButton.isEnabled = true
         smPauseButton.isEnabled = false
         smStopButton.isEnabled = false
-        return abs(Int(startTime!.timeIntervalSinceNow))
+        let speakingTime = abs(Int(startTime!.timeIntervalSinceNow))
+        interactor!.addCurrentSpeakerToDebate(debateReference: debateReference.text!, speakingTime: speakingTime)
+        return speakingTime
     }
     
     

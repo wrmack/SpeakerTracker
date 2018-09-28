@@ -190,6 +190,10 @@ class DisplayMembersViewController: UITableViewController, DisplayMembersDisplay
     }
     
     
+    func didSelectMeetingGroupInDisplayDetailViewController(meetingGroup: MeetingGroup) {
+        
+    }
+    
     // MARK: - DisplayDetailViewControllerEditDelegate methods
     
     func didPressEditButtonInDisplayDetailViewController(selectedItem: AnyObject?) {
