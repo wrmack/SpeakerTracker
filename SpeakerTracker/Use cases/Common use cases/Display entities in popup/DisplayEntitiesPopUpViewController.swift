@@ -73,7 +73,7 @@ class DisplayEntitiesPopUpViewController: UIViewController, UITableViewDelegate,
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        view.backgroundColor = UIColor(white:0.95, alpha:1.0)
+        view.backgroundColor = UIColor(white:0.8, alpha:1.0)
         self.preferredContentSize = CGSize(width: MAXIMUM_TABLE_WIDTH, height: MAXIMUM_TABLE_HEIGHT)
         
         let viewRect = self.view.bounds
@@ -171,7 +171,7 @@ class DisplayEntitiesPopUpViewController: UIViewController, UITableViewDelegate,
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if true {
             let entity = interactor!.getEntity(index: indexPath.row)
-            delegate!.didSelectEntityInPopUpViewController(self, entity:entity)
+            delegate!.didSelectEntityInPopUpViewController(self, entity:entity!)
         }
     }
     
@@ -187,24 +187,27 @@ class DisplayEntitiesPopUpViewController: UIViewController, UITableViewDelegate,
             cell!.textLabel!.textAlignment = NSTextAlignment.center
             cell!.selectionStyle = UITableViewCellSelectionStyle.gray
         }
-        let entityName = entityNames![(indexPath).row]
-        cell!.textLabel!.text = entityName
-        
+        if entityNames!.count == 0 {
+            cell!.textLabel!.textColor = UIColor.lightGray
+            cell!.textLabel!.text = "No entities set up"
+            cell?.isUserInteractionEnabled = false
+        } else {
+            let entityName = entityNames![(indexPath).row]
+            cell!.textLabel!.textColor = UIColor.black
+            cell!.textLabel!.text = entityName
+            cell?.isUserInteractionEnabled = true
+        }
         return cell!
     }
     
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section:Int) -> Int {
+        if entityNames!.count == 0 {
+            return 1
+        }
         return (entityNames!.count)
     }
     
-    
-    
-    // MARK: UIButton action methods
-//
-//    func cancelButtonTapped(_ button: UIButton) {
-//        delegate!.dismissEntityPopUpViewController(self)
-//    }
 
 }

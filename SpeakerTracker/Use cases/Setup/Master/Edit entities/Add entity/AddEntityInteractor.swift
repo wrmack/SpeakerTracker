@@ -30,7 +30,7 @@ class AddEntityInteractor: AddEntityBusinessLogic, AddEntityDataStore {
             print("Error: Document directory not found")
             return
         }
-        let docFileURL =  documentsDirectory.appendingPathComponent(entity.name! + ".ent")
+        let docFileURL =  documentsDirectory.appendingPathComponent(entity.id!.uuidString + ".ent")
         let entityDoc = EntityDocument(fileURL: docFileURL, name: entity.name, entity: entity)
         entityDoc.save(to: docFileURL, for: .forCreating, completionHandler: { success in
             if !success {

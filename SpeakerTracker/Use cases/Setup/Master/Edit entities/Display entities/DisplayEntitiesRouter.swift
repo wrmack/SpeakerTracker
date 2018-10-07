@@ -15,6 +15,8 @@ import UIKit
 @objc protocol DisplayEntitiesRoutingLogic {
     func routeToAddEntity()
     func returnFromAddingEntity()
+    func routeToEditEntity()
+    func returnFromEditingEntity()
     func updateDetailVC() 
 }
 
@@ -26,36 +28,62 @@ class DisplayEntitiesRouter: NSObject, DisplayEntitiesRoutingLogic, DisplayEntit
     weak var viewController: DisplayEntitiesViewController?
     var dataStore: DisplayEntitiesDataStore?
     var addEntityVC: AddEntityViewController?
+    var editEntityVC: EditEntityViewController?
     var displayDetailVC: DisplayDetailViewController?
+    var displayDetailNavC: UINavigationController?
 
   
     
     func routeToAddEntity() {
         addEntityVC = AddEntityViewController(sourceVC: viewController!)
         let splitVC = viewController!.splitViewController
-        displayDetailVC = splitVC?.viewControllers[1] as? DisplayDetailViewController
-//        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "EditingViewToggled"), object: nil, userInfo: nil)
-        splitVC?.showDetailViewController(addEntityVC!, sender: displayDetailVC)
+        if displayDetailNavC == nil {
+            displayDetailNavC = (splitVC?.viewControllers[1] as! UINavigationController)
+        }
+        displayDetailNavC?.pushViewController(addEntityVC!, animated: true)
     }
     
   
     func returnFromAddingEntity() {
-        let splitVC = viewController!.splitViewController
-        splitVC!.showDetailViewController(displayDetailVC!, sender: nil)
+        displayDetailNavC?.popViewController(animated: true)
         addEntityVC = nil
+        viewController?.refreshAfterAddingEntity()
+    }
+    
+    
+    func routeToEditEntity() {
+        editEntityVC = EditEntityViewController(sourceVC: viewController!)
+        let splitVC = viewController!.splitViewController
+        if displayDetailNavC == nil {
+            displayDetailNavC = (splitVC?.viewControllers[1] as! UINavigationController)
+        }
+        var destinationDS = editEntityVC?.router?.dataStore
+        passDataToEditEntityDataStore(source: dataStore!, destination: &destinationDS!)
+        displayDetailNavC?.pushViewController(editEntityVC!, animated: true)
+    }
+    
+    func returnFromEditingEntity() {
+        displayDetailNavC?.popViewController(animated: true)
+        editEntityVC = nil
+        viewController!.refreshAfterEditingEntity() 
     }
     
     func updateDetailVC() {
         let splitVC = viewController!.splitViewController
-        displayDetailVC = splitVC?.viewControllers[1] as? DisplayDetailViewController
-        displayDetailVC?.smallToolbar()
+        displayDetailVC = (splitVC?.viewControllers[1] as! UINavigationController).viewControllers[0] as? DisplayDetailViewController
         var destinationDS = displayDetailVC?.router!.dataStore!
         passDataToDisplayDetail(source: dataStore!, destination: &destinationDS!)
         displayDetailVC!.updateDetails()
     }
     
     
+    // MARK: Passing data
+    
     func passDataToDisplayDetail(source: DisplayEntitiesDataStore, destination: inout DisplayDetailDataStore) {
         destination.selectedItem = source.entity as AnyObject
+    }
+    
+    func passDataToEditEntityDataStore(source: DisplayEntitiesDataStore, destination: inout EditEntityDataStore) {
+        destination.entity = source.entity
     }
 }

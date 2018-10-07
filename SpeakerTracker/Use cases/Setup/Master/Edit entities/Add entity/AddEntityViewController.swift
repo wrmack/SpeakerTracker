@@ -18,10 +18,12 @@ protocol AddEntityDisplayLogic: class {
 
 
 
-class AddEntityViewController: UIViewController, EditEntityViewDelegate, AddEntityDisplayLogic {
+class AddEntityViewController: UIViewController, AddEntityDisplayLogic {
+    
     var interactor: AddEntityBusinessLogic?
     var router: (NSObjectProtocol & AddEntityRoutingLogic & AddEntityDataPassing)?
     var sourceVC: DisplayEntitiesViewController?
+    var editView: EditEntityView?
 
 
     // MARK: - Object lifecycle
@@ -72,28 +74,59 @@ class AddEntityViewController: UIViewController, EditEntityViewDelegate, AddEnti
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        let editView = EditEntityView(frame: CGRect.zero)
-        editView.delegate = self
-        view.addSubview(editView)
-        editView.heading?.text = "New entity"
-        editView.translatesAutoresizingMaskIntoConstraints = false
-        editView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        editView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        editView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-        editView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        editView = EditEntityView(frame: CGRect.zero)
+        view.addSubview(editView!)
+        editView!.headingLabel!.text = "Create new entity"
+        editView!.translatesAutoresizingMaskIntoConstraints = false
+        editView!.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        editView!.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        editView!.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        editView!.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        
+        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancelButtonTapped))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(saveButtonTapped))
     }
     
     
     //MARK: EditEntityViewDelegate methods
     
-    func saveButtonTapped(entity: Entity) {
-        interactor?.saveEntityToDisk(entity: entity, callback: {
+//    func saveButtonTapped(entity: Entity) {
+//        interactor?.saveEntityToDisk(entity: entity, callback: {
+//            self.router?.returnToSource(source: self.sourceVC!)
+//        })
+//    }
+//
+//
+//    func cancelButtonTapped() {
+//        self.router?.returnToSource(source: self.sourceVC!)
+//    }
+//
+//    func deleteButtonTapped(entity: Entity) {
+//
+//    }
+    
+    
+    
+    @objc func saveButtonTapped() {
+        
+        let id: UUID?
+        if editView!.entity != nil && editView!.entity!.id != nil {
+            id = editView!.entity!.id
+        }
+        else {
+            id = UUID()
+        }
+        let editedEntity = Entity(name: editView!.entityNameBox?.text, members: nil, meetingGroups: nil, id: id)
+        
+        interactor?.saveEntityToDisk(entity: editedEntity, callback: {
             self.router?.returnToSource(source: self.sourceVC!)
         })
     }
     
     
-    func cancelButtonTapped() {
+    @objc func cancelButtonTapped() {
         self.router?.returnToSource(source: self.sourceVC!)
     }
+
+ 
 }

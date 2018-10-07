@@ -3,7 +3,7 @@
     {
       "orientation" : "portrait",
       "idiom" : "ipad",
-      "filename" : "appicon768.png",
+      "filename" : "launchiconcommittee768x1024@1x.png",
       "extent" : "full-screen",
       "minimum-system-version" : "7.0",
       "scale" : "1x"
@@ -11,7 +11,7 @@
     {
       "orientation" : "landscape",
       "idiom" : "ipad",
-      "filename" : "appicon1024.png",
+      "filename" : "launchiconcommittee1024x768@1x.png",
       "extent" : "full-screen",
       "minimum-system-version" : "7.0",
       "scale" : "1x"
@@ -19,7 +19,7 @@
     {
       "orientation" : "portrait",
       "idiom" : "ipad",
-      "filename" : "appicon1536.png",
+      "filename" : "launchiconcommittee1536x2048@2x.png",
       "extent" : "full-screen",
       "minimum-system-version" : "7.0",
       "scale" : "2x"
@@ -27,7 +27,7 @@
     {
       "orientation" : "landscape",
       "idiom" : "ipad",
-      "filename" : "appicon2048.png",
+      "filename" : "launchiconcommittee1536x2048@2x-1.png",
       "extent" : "full-screen",
       "minimum-system-version" : "7.0",
       "scale" : "2x"

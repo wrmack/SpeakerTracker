@@ -31,7 +31,8 @@ class AddMeetingGroupPresenter: AddMeetingGroupPresentationLogic {
                 if memberString!.count > 0 {
                     memberString!.append(", ")
                 }
-                memberString!.append(member.firstName! + member.lastName!)
+                let name = (member.title ?? "") + " " + member.firstName! + " " + member.lastName!
+                memberString!.append(name)
             }
         }
         let viewModel = AddMeetingGroup.MeetingGroup.ViewModel(memberNames: memberString)

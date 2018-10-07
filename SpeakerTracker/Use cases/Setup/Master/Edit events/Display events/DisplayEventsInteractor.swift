@@ -17,6 +17,7 @@ protocol DisplayEventsBusinessLogic {
     func setCurrentEvent(index: Int)
     func setMeetingGroup(meetingGroup: MeetingGroup)
     func setEntity(entity: Entity)
+    func getCurrentEntity() -> Entity
     func resetData()
 }
 
@@ -37,6 +38,7 @@ class DisplayEventsInteractor: DisplayEventsBusinessLogic, DisplayEventsDataStor
     
     // MARK: - VIP
     
+    // TODO: Sends to presenter for each file
     func fetchEvents(request: DisplayEvents.Events.Request) {
         events = [Event]()
         let fileManager = FileManager.default
@@ -80,7 +82,9 @@ class DisplayEventsInteractor: DisplayEventsBusinessLogic, DisplayEventsDataStor
     // MARK: - Datastore
     
     func setCurrentEvent(index: Int) {
-        event = events![index]
+        if (events?.count)! > 0 {
+            event = events![index]
+        }
     }
     
     
@@ -90,7 +94,16 @@ class DisplayEventsInteractor: DisplayEventsBusinessLogic, DisplayEventsDataStor
     
     func setEntity(entity: Entity) {
         self.entity = entity
+        self.events = nil
+        self.event = nil
+        self.meetingGroup = nil
     }
+    
+    
+    func getCurrentEntity() -> Entity {
+        return self.entity!
+    }
+    
     
     func resetData() {
         self.entity = nil

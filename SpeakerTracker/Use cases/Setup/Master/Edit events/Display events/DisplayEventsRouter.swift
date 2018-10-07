@@ -15,6 +15,8 @@ import UIKit
 @objc protocol DisplayEventsRoutingLogic {
     func routeToAddEvent()
     func returnFromAddingEvent()
+    func routeToEditEvent()
+    func returnFromEditingEvent()
     func updateDetailVC()
 }
 
@@ -26,7 +28,9 @@ class DisplayEventsRouter: NSObject, DisplayEventsRoutingLogic, DisplayEventsDat
     weak var viewController: DisplayEventsViewController?
     var dataStore: DisplayEventsDataStore?
     var addEventVC: AddEventViewController?
+    var editEventVC: EditEventViewController?
     var displayDetailVC: DisplayDetailViewController?
+    var displayNavC: UINavigationController?
   
     
   // MARK: Routing
@@ -34,29 +38,43 @@ class DisplayEventsRouter: NSObject, DisplayEventsRoutingLogic, DisplayEventsDat
     func routeToAddEvent() {
         addEventVC = AddEventViewController(sourceVC: viewController!)
         let splitVC = viewController!.splitViewController
-        displayDetailVC = splitVC?.viewControllers[1] as? DisplayDetailViewController
+        displayNavC = splitVC?.viewControllers[1] as? UINavigationController
         var destinationDS = addEventVC?.router!.dataStore!
         passDataToAddEvent(source: dataStore!, destination: &destinationDS!)
-        addEventVC!.setupEditView()
-        splitVC?.showDetailViewController(addEventVC!, sender: displayDetailVC)
+        displayNavC?.pushViewController(addEventVC!, animated: true)
     }
     
     
     func returnFromAddingEvent() {
-        let splitVC = viewController!.splitViewController
-        splitVC!.showDetailViewController(displayDetailVC!, sender: nil)
+        displayNavC?.popViewController(animated: true)
         addEventVC = nil
         viewController?.fetchEvents()
     }
     
     
+    func routeToEditEvent() {
+        editEventVC = EditEventViewController(sourceVC: viewController!)
+        let splitVC = viewController!.splitViewController
+        displayNavC = splitVC?.viewControllers[1] as? UINavigationController
+        var destinationDS = editEventVC?.router!.dataStore!
+        passDataToEditEvent(source: dataStore!, destination: &destinationDS!)
+        displayNavC?.pushViewController(editEventVC!, animated: true)
+    }
+    
+    
+    func returnFromEditingEvent() {
+        displayNavC?.popViewController(animated: true)
+        editEventVC = nil
+        viewController?.fetchEvents()
+    }
+    
     func updateDetailVC() {
         let splitVC = viewController!.splitViewController
-        displayDetailVC = splitVC?.viewControllers[1] as? DisplayDetailViewController
+        displayNavC = splitVC?.viewControllers[1] as? UINavigationController
+        displayDetailVC = displayNavC?.viewControllers[0] as? DisplayDetailViewController
         var destinationDS = displayDetailVC?.router!.dataStore!
         passDataToDisplayDetail(source: dataStore!, destination: &destinationDS!)
         displayDetailVC!.updateDetails()
-        displayDetailVC?.largeToolbar()
     }
     
     
@@ -67,5 +85,9 @@ class DisplayEventsRouter: NSObject, DisplayEventsRoutingLogic, DisplayEventsDat
     func passDataToAddEvent(source: DisplayEventsDataStore, destination: inout AddEventDataStore) {
         destination.entity = source.entity
         destination.meetingGroup = source.meetingGroup
+    }
+    
+    func passDataToEditEvent(source: DisplayEventsDataStore, destination: inout EditEventDataStore) {
+        destination.event = source.event
     }
 }

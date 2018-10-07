@@ -71,14 +71,25 @@ class EditMeetingGroupViewController: UIViewController, EditMeetingGroupDisplayL
     override func viewDidLoad() {
         super.viewDidLoad()
         editView = EditMeetingGroupView(frame: CGRect.zero)
-        editView!.delegate = self
         view.addSubview(editView!)
-        editView!.heading?.text = "Edit member"
+        editView!.headingLabel?.text = "Edit member"
         editView!.translatesAutoresizingMaskIntoConstraints = false
         editView!.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         editView!.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         editView!.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
         editView!.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        
+        let space = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.fixedSpace, target: nil, action: nil)
+        space.width = 100
+        
+        let trashItem = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(saveButtonTapped))
+        trashItem.tintColor = UIColor.red
+        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancelButtonTapped))
+        navigationItem.rightBarButtonItems = [ UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(saveButtonTapped)), space,trashItem]
+        
+        editView?.delegate = self
+        
+        populateEditView()
     }
 
     
@@ -99,31 +110,34 @@ class EditMeetingGroupViewController: UIViewController, EditMeetingGroupDisplayL
     func displayMemberNames(viewModel: EditMeetingGroup.MeetingGroup.ViewModel) {
         editView?.membersDetailLabel?.text = viewModel.memberNames
     }
-
-
-    // MARK: - EditMeetingGroupViewDelegate methods
     
-    func cancelButtonTapped() {
-        self.router?.returnToSource(source: self.sourceVC!)
-    }
+    // MARK: - Button actions
     
-    
-    func saveButtonTapped(meetingGroup: MeetingGroup) {
-        interactor?.saveMeetingGroupToEntity(meetingGroup: meetingGroup, callback: {
+    @objc func saveButtonTapped() {
+        var id: UUID?
+        
+        let meetingGroup = editView?.meetingGroup
+        if meetingGroup != nil {
+            id = meetingGroup?.id
+        }
+        let editedMeetingGroup = MeetingGroup(name: editView!.nameBox?.text, members: nil, fileName: nil, id: id)
+        
+        interactor?.saveMeetingGroupToEntity(meetingGroup: editedMeetingGroup, callback: {
             self.router?.returnToSource(source: self.sourceVC!)
         })
     }
     
     
-    /*
-     Removing a member has its own use-case instead of simply being handled by this interactor.
-     Having a separate removal use-case allows the use-case to be used from elsewhere - eg from the master view table.
-     */
-    func deleteButtonTapped(meetingGroup: MeetingGroup) {
-        interactor!.addMeetingGroupToBeDeletedToDataStore(meetingGroup: meetingGroup)
-        self.router!.navigateToRemoveMeetingGroup()
+    @objc func cancelButtonTapped() {
+        self.router?.returnToSource(source: self.sourceVC!)
     }
     
+    func deleteButtonTapped(meetingGroup: MeetingGroup) {
+        print("This delegate method is implemented when editing a member")
+    }
+    
+    
+    // MARK: - EditMeetingGroupViewDelegate methods
     
     func membersDisclosureButtonTapped() {
         self.router?.routeToSelectMembers()

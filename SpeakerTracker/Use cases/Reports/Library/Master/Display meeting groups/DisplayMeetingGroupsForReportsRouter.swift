@@ -27,10 +27,10 @@ class DisplayMeetingGroupsForReportsRouter: NSObject, DisplayMeetingGroupsForRep
     
     func updateDetailVC() {
         let splitVC = viewController!.splitViewController
-        let displayDetailVC = splitVC?.viewControllers[1] as? DisplayReportsViewController
-        var destinationDS = displayDetailVC?.router!.dataStore!
-        passDataToDisplayDetail(source: dataStore!, destination: &destinationDS!)
-        displayDetailVC!.updateReports() 
+        let displayDetailVC = (splitVC?.viewControllers[1] as? UINavigationController)?.viewControllers[0] as! DisplayReportsViewController
+        var destinationDS = displayDetailVC.router!.dataStore!
+        passDataToDisplayDetail(source: dataStore!, destination: &destinationDS)
+        displayDetailVC.updateReports()
     }
     
     

@@ -40,11 +40,19 @@ class RemoveMeetingGroupInteractor: RemoveMeetingGroupBusinessLogic, RemoveMeeti
                 entity?.meetingGroups!.remove(at: idx)
             }
         }
+        let defaults = UserDefaults.standard
+        if let currentEntityData = defaults.data(forKey: "CurrentEntity") {
+            let savedEntity = try! JSONDecoder().decode(Entity.self, from: currentEntityData)
+            if savedEntity == self.entity {
+                let encodedEntity = try? JSONEncoder().encode(self.entity)
+                defaults.set(encodedEntity, forKey: "CurrentEntity")
+            }
+        }
         guard let docDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else {
             print("RemoveMeetingGroupInteractor: removeMeetingGroup: error: Document directory not found")
             return
         }
-        let docFileURL = docDirectory.appendingPathComponent((entity?.fileName)! + ".ent")
+        let docFileURL = docDirectory.appendingPathComponent((entity?.id?.uuidString)! + ".ent")
         let entityDoc = EntityDocument(fileURL: docFileURL)
         entityDoc.open(completionHandler: { success in
             if !success {

@@ -13,19 +13,15 @@
 import UIKit
 
 
-protocol DisplayReportsViewControllerDelegate: class  {
-    func didSelectEntityInDisplayReportsController(entity: Entity)
-}
 
 protocol DisplayReportsDisplayLogic: class {
     func displayReports(viewModel: DisplayReports.Reports.ViewModel)
 }
 
 
-class DisplayReportsViewController: UICollectionViewController, DisplayReportsDisplayLogic {
+class DisplayReportsViewController: UICollectionViewController, DisplayReportsDisplayLogic, UICollectionViewDelegateFlowLayout {
     var interactor: DisplayReportsBusinessLogic?
     var router: (NSObjectProtocol & DisplayReportsRoutingLogic & DisplayReportsDataPassing)?
-    weak var delegate: DisplayReportsViewControllerDelegate?
     var thumbs = [ThumbFields]()
      
     
@@ -117,6 +113,7 @@ class DisplayReportsViewController: UICollectionViewController, DisplayReportsDi
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ReportThumb", for: indexPath) as! WMCollectionViewCell
+        cell.timeLabel.text = thumbs[indexPath.item].time
         cell.dateLabel.text = thumbs[indexPath.item].date
         
         return cell
@@ -132,11 +129,28 @@ class DisplayReportsViewController: UICollectionViewController, DisplayReportsDi
     // MARK: - Collection view delegate methods
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print("Item: \(indexPath.item)")
+        print("Selected item: \(indexPath.item)")
         interactor!.setSelectedItem(item: indexPath.item)
         router?.passSelectedItemToShowReport()
     }
     
     
+    // MARK: - Collection view flow layout delegate methods
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: 150, height: 200)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 30, left: 20, bottom: 20, right: 20)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 20
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 20
+    }
 
 }

@@ -30,7 +30,7 @@ class DisplayEventsPopUpInteractor: DisplayEventsPopUpBusinessLogic, DisplayEven
     var currentDebate: Debate?
     var currentMemberSpeaking: Member?
     
-
+    // TODO: Sends to presenter each file
     func fetchEvents(request: DisplayEventsPopUp.Events.Request) {
         events = [Event]()
         let fileManager = FileManager.default

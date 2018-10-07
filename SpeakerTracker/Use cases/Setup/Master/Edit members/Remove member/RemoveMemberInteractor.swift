@@ -29,8 +29,15 @@ class RemoveMemberInteractor: RemoveMemberBusinessLogic, RemoveMemberDataStore {
     var member: Member?
 
     
-    // MARK: Do something
-
+    // MARK: Remove member
+    
+    
+    /*
+     Remove from entity's members.
+     Remove from entity's meeting groups
+     If entity is saved in user defaults, update with changed entity.
+     Update entity document file with changed entity.
+     */
     func removeMember(callback: @escaping ()->()) {
         if member!.id != nil {
             if let idx = entity!.members?.firstIndex(where: {$0.id == member!.id}) {
@@ -42,27 +49,35 @@ class RemoveMemberInteractor: RemoveMemberBusinessLogic, RemoveMemberDataStore {
                 entity?.members!.remove(at: idx)
             }
         }
+        if entity?.meetingGroups != nil {
+            for (i, group) in zip(entity!.meetingGroups!.indices, entity!.meetingGroups!) {
+                if group.members != nil {
+                    if let idx = group.members!.firstIndex(where:{$0.id == member!.id}) {
+                        entity!.meetingGroups![i].members?.remove(at: idx)
+                    }
+                }
+            }
+        }
+        let defaults = UserDefaults.standard
+        if let currentEntityData = defaults.data(forKey: "CurrentEntity") {
+            let savedEntity = try! JSONDecoder().decode(Entity.self, from: currentEntityData)
+            if savedEntity == self.entity {
+                let encodedEntity = try? JSONEncoder().encode(self.entity)
+                defaults.set(encodedEntity, forKey: "CurrentEntity")
+            }
+        }
         guard let docDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else {
             print("DisplayMembersInteractor: fetchMembers: error: Document directory not found")
             return
         }
-        let docFileURL = docDirectory.appendingPathComponent((entity?.fileName)! + ".ent")
+        let docFileURL = docDirectory.appendingPathComponent((entity?.id?.uuidString)! + ".ent")
         let entityDoc = EntityDocument(fileURL: docFileURL)
         entityDoc.open(completionHandler: { success in
             if !success {
                 print("DisplayMembersInteractor: fetchMembers: error opening EntityDocument")
             }
             else {
-                if self.member!.id != nil {
-                    if let idx = entityDoc.entity!.members?.firstIndex(where: {$0.id == self.member!.id}) {
-                        entityDoc.entity?.members!.remove(at: idx)
-                    }
-                }
-                else {
-                    if let idx = entityDoc.entity!.members?.firstIndex(where: {$0.lastName == self.member!.lastName}) {
-                        entityDoc.entity?.members!.remove(at: idx)
-                    }
-                }
+                entityDoc.entity = self.entity
                 entityDoc.updateChangeCount(.done)
                 entityDoc.close(completionHandler: { success in
                     print(entityDoc)

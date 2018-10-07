@@ -29,32 +29,55 @@ class DisplayMeetingGroupsRouter: NSObject, DisplayMeetingGroupsRoutingLogic, Di
     var dataStore: DisplayMeetingGroupsDataStore?
     var addMeetingGroupVC: AddMeetingGroupViewController?
     var displayDetailVC: DisplayDetailViewController?
+    var displayDetailNavC: UINavigationController?
     var editMeetingGroupVC: EditMeetingGroupViewController?
+
+    
+    
+//    func routeToAddMeetingGroup() {
+//        addMeetingGroupVC = AddMeetingGroupViewController(sourceVC: viewController!)
+//        let splitVC = viewController!.splitViewController
+//        displayDetailNavC = splitVC?.viewControllers[1] as? UINavigationController
+//        displayDetailVC = displayDetailNavC!.viewControllers[0] as? DisplayDetailViewController
+//        var destinationDS = addMeetingGroupVC?.router?.dataStore
+//        passDataToAddMeetingGroupDataStore(source: dataStore!, destination: &destinationDS!)
+//        splitVC?.showDetailViewController(addMeetingGroupVC!, sender: displayDetailVC)
+//    }
+//
+//
+//    func returnFromAddingMeetingGroup() {
+//        let splitVC = viewController!.splitViewController
+//        splitVC!.showDetailViewController(displayDetailNavC!, sender: nil)
+//        addMeetingGroupVC = nil
+//        viewController!.refreshAfterAddingMeetingGroup()
+//    }
     
     
     func routeToAddMeetingGroup() {
         addMeetingGroupVC = AddMeetingGroupViewController(sourceVC: viewController!)
         let splitVC = viewController!.splitViewController
-        displayDetailVC = splitVC?.viewControllers[1] as? DisplayDetailViewController
+        displayDetailNavC = splitVC?.viewControllers[1] as? UINavigationController
+//        displayDetailVC = displayDetailNavC!.viewControllers[0] as? DisplayDetailViewController
         var destinationDS = addMeetingGroupVC?.router?.dataStore
         passDataToAddMeetingGroupDataStore(source: dataStore!, destination: &destinationDS!)
-        splitVC?.showDetailViewController(addMeetingGroupVC!, sender: displayDetailVC)
+        displayDetailNavC?.pushViewController(addMeetingGroupVC!, animated: true)
     }
-    
-    
+
+
     func returnFromAddingMeetingGroup() {
-        let splitVC = viewController!.splitViewController
-        splitVC!.showDetailViewController(displayDetailVC!, sender: nil)
+        displayDetailNavC?.popViewController(animated: true)
         addMeetingGroupVC = nil
         viewController!.refreshAfterAddingMeetingGroup()
     }
-    
+
     
     
     func updateDetailVC() {
-        let splitVC = viewController!.splitViewController
-        displayDetailVC = splitVC?.viewControllers[1] as? DisplayDetailViewController
-        displayDetailVC?.smallToolbar()
+        if displayDetailVC == nil {
+            let splitVC = viewController!.splitViewController
+            displayDetailNavC = splitVC?.viewControllers[1] as? UINavigationController
+            displayDetailVC = displayDetailNavC!.viewControllers[0] as? DisplayDetailViewController
+        }
         var destinationDS = displayDetailVC?.router!.dataStore!
         passDataToDisplayDetail(source: dataStore!, destination: &destinationDS!)
         displayDetailVC!.updateDetails()
@@ -64,17 +87,17 @@ class DisplayMeetingGroupsRouter: NSObject, DisplayMeetingGroupsRoutingLogic, Di
     func routeToEditMeetingGroup() {
         editMeetingGroupVC = EditMeetingGroupViewController(sourceVC: viewController!)
         let splitVC = viewController!.splitViewController
-        displayDetailVC = splitVC?.viewControllers[1] as? DisplayDetailViewController
+        displayDetailNavC = splitVC?.viewControllers[1] as? UINavigationController
+//        displayDetailVC = displayDetailNavC!.viewControllers[0] as? DisplayDetailViewController
         var destinationDS = editMeetingGroupVC?.router?.dataStore
         passDataToEditMeetingGroupDataStore(source: dataStore!, destination: &destinationDS!)
-        splitVC?.showDetailViewController(editMeetingGroupVC!, sender: displayDetailVC)
-        editMeetingGroupVC!.populateEditView()
+//        splitVC?.showDetailViewController(editMeetingGroupVC!, sender: displayDetailVC)
+        displayDetailNavC?.pushViewController(editMeetingGroupVC!, animated: true)
     }
     
     
     func returnFromEditingMeetingGroup() {
-        let splitVC = viewController!.splitViewController
-        splitVC!.showDetailViewController(displayDetailVC!, sender: nil)
+        displayDetailNavC?.popViewController(animated: true)
         editMeetingGroupVC = nil
         viewController!.refreshAfterEditingMeetingGroup()
     }

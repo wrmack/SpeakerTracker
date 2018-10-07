@@ -203,22 +203,7 @@ class TrackSpeakersViewController: UIViewController, TrackSpeakersDisplayLogic, 
             doneLabel.font = UIFont(name: "Arial", size: 20)
         }
         
-        // Get stored entities and meeting groups from user defaults
-        let defaults = UserDefaults.standard
-        let entity: Entity
-        let meetingGroup: MeetingGroup
-        if let currentEntityData = defaults.data(forKey: "CurrentEntity") {
-            entity = try! JSONDecoder().decode(Entity.self, from: currentEntityData)
-            selectEntityButton.setTitle(entity.name, for: .normal)
-            selectEntityButton.setTitleColor(UIColor.white, for: .normal)
-            setCurrentEntity(entity: entity)
-        }
-        if let currentMeetingGroupData = defaults.data(forKey: "CurrentMeetingGroup") {
-            meetingGroup = try! JSONDecoder().decode(MeetingGroup.self, from: currentMeetingGroupData)
-            selectMeetingGroupButton.setTitle(meetingGroup.name, for: .normal)
-            selectMeetingGroupButton.setTitleColor(UIColor.white, for: .normal)
-            setCurrentMeetingGroup(meetingGroup: meetingGroup)
-        }
+
         selectMeetingGroupButton.isEnabled = (selectEntityButton.titleLabel?.text == "Select an entity") ? false : true
         recordSwitch.isEnabled = (selectMeetingGroupButton.titleLabel?.text == "Select a meeting group") ? false : true
         
@@ -249,6 +234,23 @@ class TrackSpeakersViewController: UIViewController, TrackSpeakersDisplayLogic, 
         let tabBarCont = UIApplication.shared.keyWindow?.rootViewController as! UITabBarController
         let tabBarRect = tabBarCont.tabBar.frame
         tabBarCont.tabBar.frame = CGRect(x: view.frame.origin.x, y: tabBarRect.origin.y, width: view.frame.size.width, height: tabBarRect.size.height)
+        
+        // Get stored entities and meeting groups from user defaults
+        let defaults = UserDefaults.standard
+        let entity: Entity
+        let meetingGroup: MeetingGroup
+        if let currentEntityData = defaults.data(forKey: "CurrentEntity") {
+            entity = try! JSONDecoder().decode(Entity.self, from: currentEntityData)
+            selectEntityButton.setTitle(entity.name, for: .normal)
+            selectEntityButton.setTitleColor(UIColor.white, for: .normal)
+            setCurrentEntity(entity: entity)
+        }
+        if let currentMeetingGroupData = defaults.data(forKey: "CurrentMeetingGroup") {
+            meetingGroup = try! JSONDecoder().decode(MeetingGroup.self, from: currentMeetingGroupData)
+            selectMeetingGroupButton.setTitle(meetingGroup.name, for: .normal)
+            selectMeetingGroupButton.setTitleColor(UIColor.white, for: .normal)
+            setCurrentMeetingGroup(meetingGroup: meetingGroup)
+        }
     }
     
     

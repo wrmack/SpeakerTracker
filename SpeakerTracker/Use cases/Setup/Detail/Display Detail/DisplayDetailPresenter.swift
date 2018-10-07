@@ -55,7 +55,11 @@ class DisplayDetailPresenter: DisplayDetailPresentationLogic {
                     if memberString.count > 0 {
                         memberString.append(", ")
                     }
-                    memberString.append(member.firstName! + member.lastName!)
+                    var fullTitle: String?
+                    if let title = member.title {
+                        fullTitle = title + " "
+                    }
+                    memberString.append((fullTitle ?? "") + member.firstName! + " " + member.lastName!)
                 }
                 labelDetailArray.append(("Members:", memberString))
             }

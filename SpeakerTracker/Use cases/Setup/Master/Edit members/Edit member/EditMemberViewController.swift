@@ -18,7 +18,7 @@ protocol EditMemberDisplayLogic: class {
 
 
 
-class EditMemberViewController: UIViewController, EditMemberDisplayLogic, EditMemberViewDelegate {
+class EditMemberViewController: UIViewController, EditMemberDisplayLogic {
     var interactor: EditMemberBusinessLogic?
     var router: (NSObjectProtocol & EditMemberRoutingLogic & EditMemberDataPassing)?
     var sourceVC: DisplayMembersViewController?
@@ -72,14 +72,24 @@ class EditMemberViewController: UIViewController, EditMemberDisplayLogic, EditMe
     override func viewDidLoad() {
         super.viewDidLoad()
         editView = EditMemberView(frame: CGRect.zero)
-        editView!.delegate = self
+        editView!.addAnotherButton!.isHidden = true
         view.addSubview(editView!)
-        editView!.heading?.text = "Edit member"
+        editView!.headingLabel?.text = "Edit member"
         editView!.translatesAutoresizingMaskIntoConstraints = false
         editView!.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         editView!.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         editView!.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
         editView!.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        
+        let space = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.fixedSpace, target: nil, action: nil)
+        space.width = 100
+        
+        let trashItem = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(deleteButtonTapped))
+        trashItem.tintColor = UIColor.red
+        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancelButtonTapped))
+        navigationItem.rightBarButtonItems = [ UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(saveButtonTapped)), space,trashItem]
+        
+        populateEditView()
     }
 
     
@@ -93,13 +103,18 @@ class EditMemberViewController: UIViewController, EditMemberDisplayLogic, EditMe
     
     // MARK: - EditMemberViewDelegate methods
     
-    func cancelButtonTapped() {
+    @objc func cancelButtonTapped() {
         self.router?.returnToSource(source: self.sourceVC!)
     }
     
     
-    func saveButtonTapped(member: Member) {
-        interactor?.saveMemberToEntity(member: member, callback: {
+    @objc func saveButtonTapped() {
+        var id: UUID?
+        if editView!.member != nil {
+            id = editView!.member?.id
+        }
+        let editedMember = Member(title: editView!.titleBox?.text, firstName: editView!.firstNameBox?.text, lastName: editView!.lastNameBox?.text, id: id)
+        interactor?.saveMemberToEntity(member: editedMember, callback: {
             self.router?.returnToSource(source: self.sourceVC!)
         })
     }
@@ -109,8 +124,8 @@ class EditMemberViewController: UIViewController, EditMemberDisplayLogic, EditMe
      Removing a member has its own use-case instead of simply being handled by this interactor.
      Having a separate removal use-case allows the use-case to be used from elsewhere - eg from the master view table.
      */
-    func deleteButtonTapped(member: Member) {
-        interactor!.addMemberToBeDeletedToDataStore(member: member)
+    @objc func deleteButtonTapped() {
+        interactor!.addMemberToBeDeletedToDataStore(member: editView!.member!)
         self.router!.navigateToRemoveMember()
     }
 

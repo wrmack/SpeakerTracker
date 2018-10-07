@@ -30,6 +30,7 @@ class DisplayMembersRouter: NSObject, DisplayMembersRoutingLogic, DisplayMembers
     var addMemberVC: AddMemberViewController?
     var editMemberVC: EditMemberViewController?
     var displayDetailVC: DisplayDetailViewController?
+    var displayDetailNavC: UINavigationController?
 
 
     
@@ -38,36 +39,32 @@ class DisplayMembersRouter: NSObject, DisplayMembersRoutingLogic, DisplayMembers
     func routeToAddMember() {
         addMemberVC = AddMemberViewController(sourceVC: viewController!)
         let splitVC = viewController!.splitViewController
-        displayDetailVC = splitVC?.viewControllers[1] as? DisplayDetailViewController
-        //        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "EditingViewToggled"), object: nil, userInfo: nil)
+        displayDetailNavC = splitVC?.viewControllers[1] as? UINavigationController
         var destinationDS = addMemberVC?.router?.dataStore
         passDataToAddMemberDataStore(source: dataStore!, destination: &destinationDS!)
-        splitVC?.showDetailViewController(addMemberVC!, sender: displayDetailVC)
+        displayDetailNavC?.pushViewController(addMemberVC!, animated: true)
     }
     
     
     func routeToEditMember() {
         editMemberVC = EditMemberViewController(sourceVC: viewController!)
         let splitVC = viewController!.splitViewController
-        displayDetailVC = splitVC?.viewControllers[1] as? DisplayDetailViewController
+        displayDetailNavC = splitVC?.viewControllers[1] as? UINavigationController
         var destinationDS = editMemberVC?.router?.dataStore
         passDataToEditMemberDataStore(source: dataStore!, destination: &destinationDS!)
-        splitVC?.showDetailViewController(editMemberVC!, sender: displayDetailVC)
-        editMemberVC!.populateEditView()
+        displayDetailNavC?.pushViewController(editMemberVC!, animated: true)
     }
     
     
     func returnFromAddingMember() {
-        let splitVC = viewController!.splitViewController
-        splitVC!.showDetailViewController(displayDetailVC!, sender: nil)
+        displayDetailNavC?.popViewController(animated: true)
         addMemberVC = nil
         viewController!.refreshAfterAddingMember()
     }    
 
     
     func returnFromEditingMember() {
-        let splitVC = viewController!.splitViewController
-        splitVC!.showDetailViewController(displayDetailVC!, sender: nil)
+        displayDetailNavC?.popViewController(animated: true)
         editMemberVC = nil
         viewController!.refreshAfterEditingMember()
     }
@@ -75,8 +72,7 @@ class DisplayMembersRouter: NSObject, DisplayMembersRoutingLogic, DisplayMembers
     
     func updateDetailVC() {
         let splitVC = viewController!.splitViewController
-        displayDetailVC = splitVC?.viewControllers[1] as? DisplayDetailViewController
-        displayDetailVC?.smallToolbar()
+        displayDetailVC = (splitVC?.viewControllers[1] as! UINavigationController).viewControllers[0] as? DisplayDetailViewController
         var destinationDS = displayDetailVC?.router!.dataStore!
         passDataToDisplayDetail(source: dataStore!, destination: &destinationDS!)
         displayDetailVC!.updateDetails()

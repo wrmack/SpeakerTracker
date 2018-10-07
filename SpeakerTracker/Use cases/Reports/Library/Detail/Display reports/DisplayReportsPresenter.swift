@@ -26,8 +26,14 @@ class DisplayReportsPresenter: DisplayReportsPresentationLogic {
         for event in response.events! {
             var thumb = ThumbFields()
             let formatter = DateFormatter()
-            formatter.dateFormat = "dd-MM-yyyy"
-             thumb.date = formatter.string(from: event.date!)
+            formatter.dateStyle = .long
+            formatter.timeStyle = .none
+            let dateStrg = formatter.string(from: event.date!)
+            formatter.dateStyle = .none
+            formatter.timeStyle = .short
+            let timeStrg = formatter.string(from: event.date!)
+            thumb.time = timeStrg
+            thumb.date = dateStrg
             thumbFields.append(thumb)
         }
         

@@ -22,8 +22,7 @@ class DisplayMeetingGroupsForReportsViewController: UITableViewController, Displ
     var router: (NSObjectProtocol & DisplayMeetingGroupsForReportsRoutingLogic & DisplayMeetingGroupsForReportsDataPassing)?
     var meetingGroupNames = [String]()
     var meetingGroupSelected = false
-    
-    @IBOutlet weak var entityButton: UIButton!
+
     
     
     // MARK: Object lifecycle
@@ -68,13 +67,34 @@ class DisplayMeetingGroupsForReportsViewController: UITableViewController, Displ
   
     override func viewDidLoad() {
         super.viewDidLoad()
-//        let splitVC = splitViewController
-//        let detailVC = splitVC?.viewControllers[1] as! DisplayReportsViewController
-//        detailVC.delegate = self
     }
 
     
-    @IBAction func entityButtonPressed(_ sender: UIButton) {
+    override func viewDidAppear(_ animated: Bool) {
+        tableView.register(DisplayMtgGpsForReportsHeaderView.self, forHeaderFooterViewReuseIdentifier: "ReportMeetingGroupHeaderView")
+        
+        guard let tabBarCont = UIApplication.shared.keyWindow?.rootViewController as? UITabBarController else {
+            print("DisplayMeetingGroupsForReportsViewController: could not get UITabBarController")
+            return
+        }
+        let tbFrame = tabBarCont.tabBar.frame
+        tabBarCont.tabBar.frame = CGRect(x:0, y: tbFrame.origin.y, width: (UIApplication.shared.keyWindow?.frame.size.width)!, height: tbFrame.size.height)
+        
+        let defaults = UserDefaults.standard
+        let entity: Entity
+        if let currentEntityData = defaults.data(forKey: "CurrentEntity") {
+            entity = try! JSONDecoder().decode(Entity.self, from: currentEntityData)
+            let header = tableView.headerView(forSection: 0) as! DisplayMtgGpsForReportsHeaderView
+            header.entityButton?.setTitle(entity.name, for: .normal)
+            header.entityButton?.setTitleColor(UIColor.black, for: .normal)
+            meetingGroupSelected = true
+            fetchMeetingGroups(entity: entity)
+        }
+    
+    }
+    
+    
+    @objc func entityButtonPressed(_ sender: UIButton) {
         let entityPopUpController = DisplayEntitiesPopUpViewController(nibName: nil, bundle: nil)
         entityPopUpController.modalPresentationStyle = .popover
         present(entityPopUpController, animated: true, completion: nil)
@@ -100,6 +120,9 @@ class DisplayMeetingGroupsForReportsViewController: UITableViewController, Displ
     func displayMeetingGroups(viewModel: DisplayMeetingGroupsForReports.MeetingGroups.ViewModel) {
         meetingGroupNames = viewModel.meetingGroupNames!
         tableView.reloadData()
+        if meetingGroupNames.count > 0 {
+            tableView.selectRow(at: IndexPath(row: 0, section: 0), animated: false, scrollPosition: .top)
+        }
         interactor?.setCurrentMeetingGroup(index: 0)
         router!.updateDetailVC()
     }
@@ -153,23 +176,50 @@ class DisplayMeetingGroupsForReportsViewController: UITableViewController, Displ
     }
     
     
+    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        if section == 0 {
+            var header = tableView.dequeueReusableHeaderFooterView(withIdentifier: "ReportMeetingGroupHeaderView") as? DisplayMtgGpsForReportsHeaderView
+            if header == nil {
+                header = DisplayMtgGpsForReportsHeaderView(reuseIdentifier: "ReportMeetingGroupHeaderView")
+            }
+            print("viewForHeader")
+            return header
+        }
+        else {
+            return nil
+        }
+    }
+    
+    
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        if section == 0 {
+            return 50
+        }
+        return 0
+    }
+    
+    override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        if section == 0 {
+            print("willDisplayHeader")
+        }
+    }
+    
+    override func tableView(_ tableView: UITableView, didEndDisplayingHeaderView view: UIView, forSection section: Int) {
+
+    }
+    
+    
     // MARK: EntitiesPopUpViewControllerDelegate methods
     
     func didSelectEntityInPopUpViewController(_ viewController: DisplayEntitiesPopUpViewController, entity: Entity) {
-        dismiss(animated: false, completion: nil)
-        entityButton!.setTitle(entity.name, for: .normal)
-        entityButton!.setTitleColor(UIColor.black, for: .normal)
-        entityButton!.titleLabel?.textAlignment = .center
+        let header = tableView.headerView(forSection: 0) as! DisplayMtgGpsForReportsHeaderView
+        let entityBtn = header.entityButton
+        entityBtn!.setTitle(entity.name, for: .normal)
+        entityBtn!.setTitleColor(UIColor.black, for: .normal)
+        entityBtn!.titleLabel?.textAlignment = .center
         dismiss(animated: true, completion: nil)
         meetingGroupSelected = true
         fetchMeetingGroups(entity: entity)
     }
     
-    // MARK: DisplayReportsViewControllerDelegate methods
-    
-//    func didSelectEntityInDisplayReportsController(entity: Entity) {
-//        dismiss(animated: true, completion: nil)
-//        meetingGroupSelected = true
-//        fetchMeetingGroups(entity: entity)
-//    }
 }

@@ -18,7 +18,7 @@ protocol AddEventDisplayLogic: class {
 
 
 
-class AddEventViewController: UIViewController, AddEventDisplayLogic, EditEventViewDelegate {
+class AddEventViewController: UIViewController, AddEventDisplayLogic {
     var interactor: AddEventBusinessLogic?
     var router: (NSObjectProtocol & AddEventRoutingLogic & AddEventDataPassing)?
     var sourceVC: DisplayEventsViewController?
@@ -72,6 +72,7 @@ class AddEventViewController: UIViewController, AddEventDisplayLogic, EditEventV
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupEditView()
     }
 
     
@@ -82,9 +83,8 @@ class AddEventViewController: UIViewController, AddEventDisplayLogic, EditEventV
     
     func setupEditView() {
         editView = EditEventView(frame: CGRect.zero)
-        editView!.delegate = self
         view.addSubview(editView!)
-        editView!.heading?.text = "New event"
+        editView!.headingLabel?.text = "Create a new event" 
         editView!.translatesAutoresizingMaskIntoConstraints = false
         editView!.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         editView!.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
@@ -92,18 +92,32 @@ class AddEventViewController: UIViewController, AddEventDisplayLogic, EditEventV
         editView!.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         editView!.eventSelectedEntityLabel?.text = interactor!.getEntity().name
         editView!.eventSelectedMeetingGroupLabel?.text = interactor!.getMeetingGroup().name
+        
+        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancelButtonTapped))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(saveButtonTapped))
     }
     
-    //MARK: - EditEventViewDelegate methods
+    //MARK: - Button actions
     
-    func saveButtonTapped(event: Event) {
+    @objc func saveButtonTapped() {
+        let cal = Calendar.current
+        let dateComponents = cal.dateComponents(Set([Calendar.Component.day,Calendar.Component.month, Calendar.Component.year]), from: editView!.eventDatePicker!.date)
+        let newDate = cal.date(from: dateComponents)
+        let timeComponents = cal.dateComponents(Set([Calendar.Component.hour,Calendar.Component.minute]), from: editView!.eventTimePicker!.date)
+        let newDateWithTime = cal.date(byAdding: timeComponents, to: newDate!)
+        let df = DateFormatter()
+        df.dateFormat = "yyyy-MM-dd_hh-mm"
+        let newDateString = df.string(from: newDateWithTime!)
+        print(newDateString)
+        let id = UUID()
+        let event = Event(date: newDateWithTime, entity: nil, meetingGroup: nil, note: editView!.eventNoteBox?.text, debates: nil, id: id, filename: newDateString)
         interactor?.saveEventToDisk(event: event, callback: {
             self.router?.returnToSource(source: self.sourceVC!)
         })
     }
     
     
-    func cancelButtonTapped() {
+    @objc func cancelButtonTapped() {
         self.router?.returnToSource(source: self.sourceVC!)
     }
 }

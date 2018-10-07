@@ -16,6 +16,8 @@ protocol DisplayMembersBusinessLogic {
     func fetchMembers(request: DisplayMembers.Members.Request)
     func setCurrentMember(index: Int)
     func refreshMembers()
+    func checkEntitiesExist()->Bool?
+    func checkEntitySelected() ->Bool?
 }
 
 protocol DisplayMembersDataStore {
@@ -48,6 +50,9 @@ class DisplayMembersInteractor: DisplayMembersBusinessLogic, DisplayMembersDataS
         if members != nil && members!.count > 0 {
             member = members![index]
         }
+        else {
+            member = nil
+        }
     }
     
     /*
@@ -56,7 +61,33 @@ class DisplayMembersInteractor: DisplayMembersBusinessLogic, DisplayMembersDataS
      */
     func refreshMembers() {
         self.members = entity?.members
+        setCurrentMember(index: 0)
         let response = DisplayMembers.Members.Response(members: self.members)
         self.presenter?.presentMembers(response: response)
+    }
+    
+    func checkEntitiesExist()->Bool? {
+        guard let docDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else {
+            print("DisplayMembersInteractor: checkEntitiesExist: error: Document directory not found")
+            return nil
+        }
+        do {
+            let contents = try FileManager.default.contentsOfDirectory(at: docDirectory, includingPropertiesForKeys: nil, options: .skipsHiddenFiles)
+            var exists = false
+            if contents.count == 0 { return exists}
+            for url in contents {
+                if url.pathExtension == "ent" { exists = true }
+            }
+            return exists
+        }
+        catch {
+            print(error)
+            return nil
+        }
+    }
+    
+    func checkEntitySelected() ->Bool? {
+        let isSelected = self.entity != nil ? true : false
+        return isSelected
     }
 }

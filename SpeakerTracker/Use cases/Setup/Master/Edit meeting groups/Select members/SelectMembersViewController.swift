@@ -85,43 +85,47 @@ class SelectMembersViewController: UIViewController, SelectMembersDisplayLogic, 
         super.viewDidLoad()
         
         // =======  Toolbar with buttons
-        let toolbar = UIToolbar(frame: CGRect.zero)
-        toolbar.backgroundColor = UIColor(white: 0.97, alpha: 0.8)
-        toolbar.barStyle = UIBarStyle.default
-        toolbar.isTranslucent = true
-        toolbar.clipsToBounds = false
-        toolbar.setShadowImage(nil, forToolbarPosition: .top)
-        toolbar.layer.shadowOffset = CGSize(width: 0, height: 0.3)
-        toolbar.layer.shadowColor = UIColor(white: 0.3, alpha: 0.8).cgColor
-        toolbar.layer.shadowOpacity = 0.8
-        toolbar.layer.shadowRadius = 0.1
+//        let toolbar = UIToolbar(frame: CGRect.zero)
+//        toolbar.backgroundColor = UIColor(white: 0.97, alpha: 0.8)
+//        toolbar.barStyle = UIBarStyle.default
+//        toolbar.isTranslucent = true
+//        toolbar.clipsToBounds = false
+//        toolbar.setShadowImage(nil, forToolbarPosition: .top)
+//        toolbar.layer.shadowOffset = CGSize(width: 0, height: 0.3)
+//        toolbar.layer.shadowColor = UIColor(white: 0.3, alpha: 0.8).cgColor
+//        toolbar.layer.shadowOpacity = 0.8
+//        toolbar.layer.shadowRadius = 0.1
         
-        let saveButton =   UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(saveButtonTapped(_:)))
-        saveButton.isEnabled = true
+//        let saveButton =   UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(saveButtonTapped(_:)))
+//        saveButton.isEnabled = true
+//
+//        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+//
+//        let cancelButton =   UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancelButtonTapped(_:)))
+//        cancelButton.isEnabled = true
+//        toolbar.setItems([cancelButton, flexibleSpace, saveButton], animated: false)
+//        view.addSubview(toolbar)
         
-        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+//        toolbar.translatesAutoresizingMaskIntoConstraints = false
+//        toolbar.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+//        toolbar.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+//        toolbar.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+//        toolbar.heightAnchor.constraint(equalToConstant: 64).isActive = true
         
-        let cancelButton =   UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancelButtonTapped(_:)))
-        cancelButton.isEnabled = true
-        toolbar.setItems([cancelButton, flexibleSpace, saveButton], animated: false)
-        view.addSubview(toolbar)
+//        let heading = UILabel(frame: CGRect.zero)
+//        heading.text = "Select members"
+//        heading.font = UIFont.boldSystemFont(ofSize: 17)
+//        heading.textAlignment = .center
+//        toolbar.addSubview(heading)
+//        heading.translatesAutoresizingMaskIntoConstraints = false
+//        heading.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+//        heading.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+//        heading.topAnchor.constraint(equalTo: view.topAnchor, constant: 32).isActive = true
+//        heading.heightAnchor.constraint(equalToConstant: 20).isActive = true
         
-        toolbar.translatesAutoresizingMaskIntoConstraints = false
-        toolbar.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        toolbar.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        toolbar.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-        toolbar.heightAnchor.constraint(equalToConstant: 64).isActive = true
         
-        let heading = UILabel(frame: CGRect.zero)
-        heading.text = "Select members"
-        heading.font = UIFont.boldSystemFont(ofSize: 17)
-        heading.textAlignment = .center
-        toolbar.addSubview(heading)
-        heading.translatesAutoresizingMaskIntoConstraints = false
-        heading.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        heading.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        heading.topAnchor.constraint(equalTo: view.topAnchor, constant: 32).isActive = true
-        heading.heightAnchor.constraint(equalToConstant: 20).isActive = true
+        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancelButtonTapped))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(saveButtonTapped))
         
         // ========= Tableview
         tableView = UITableView(frame: CGRect.zero)
@@ -136,6 +140,8 @@ class SelectMembersViewController: UIViewController, SelectMembersDisplayLogic, 
         tableView?.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         
     }
+    
+
 
     // MARK: VIP
     
@@ -153,36 +159,16 @@ class SelectMembersViewController: UIViewController, SelectMembersDisplayLogic, 
     
     // MARK: Button actions
     
-    @objc func saveButtonTapped(_: UIButton) {
+    @objc func saveButtonTapped() {
         if selectedRows != nil {
             let selectedMembers = (interactor?.getMembers(indices: selectedRows!))!
             router?.returnToSource(members: selectedMembers)
-//            if addMode == true {
-//                router?.returnToSourceWithMembers(source: sourceAddKVC!, members: selectedMembers)
-//            }
-//            else if editMode == true {
-//                router?.returnToSourceWithToys(source: sourceEditKVC!, toys: selectedToys)
-//            }
         }
-//        else {
-//            if addMode == true {
-//                router?.returnToSource(source: sourceAddKVC!)
-//            }
-//            else if editMode == true {
-//                router?.returnToSource(source: sourceEditKVC!)
-//            }
-//        }
     }
     
     
-    @objc func cancelButtonTapped(_: UIButton) {
+    @objc func cancelButtonTapped() {
         router!.returnToSource(members: nil)
-        if addMode == true {
-//            router?.returnToSource(source: sourceAddKVC!)
-        }
-        else if editMode == true {
-   //         router?.returnToSource(source: sourceEditKVC!)
-        }
     }
     
     // MARK: UITableViewDataSource methods

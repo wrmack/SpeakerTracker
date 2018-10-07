@@ -27,7 +27,7 @@ class DisplayEntitiesPopUpInteractor: DisplayEntitiesPopUpBusinessLogic, Display
     var entities: [Entity]?
     
     
-    
+    // TODO: Sends to presenter each file 
     func fetchEntities(request: DisplayEntitiesPopUp.Entities.Request) {
         entities = [Entity]()
         let fileManager = FileManager.default
@@ -50,10 +50,6 @@ class DisplayEntitiesPopUpInteractor: DisplayEntitiesPopUpBusinessLogic, Display
                                     print("DisplayEntitiesPopUpInteractorInteractor: fetchEntities: entity is nil")
                                     return
                                 }
-                                if entity.fileName == nil {
-                                    let urlWithoutExt = url.deletingPathExtension()
-                                    entity.fileName = urlWithoutExt.lastPathComponent
-                                }
                                 self.entities!.append(entity)
                                 let response = DisplayEntitiesPopUp.Entities.Response(entities: self.entities)
                                 self.presenter?.presentEntities(response: response) 
@@ -69,7 +65,10 @@ class DisplayEntitiesPopUpInteractor: DisplayEntitiesPopUpBusinessLogic, Display
     }
     
     
-    func getEntity(index: Int) -> Entity {
-        return entities![index]
+    func getEntity(index: Int) -> Entity? {
+        if (entities?.count)! > 0 {
+            return entities![index]
+        }
+        return nil
     }
 }

@@ -38,11 +38,19 @@ class EditMemberInteractor: EditMemberBusinessLogic, EditMemberDataStore {
         if let idx = entity!.members?.firstIndex(where: {$0.id == member.id}) {
             entity?.members![idx] = member
         }
+        let defaults = UserDefaults.standard
+        if let currentEntityData = defaults.data(forKey: "CurrentEntity") {
+            let savedEntity = try! JSONDecoder().decode(Entity.self, from: currentEntityData)
+            if savedEntity == self.entity {
+                let encodedEntity = try? JSONEncoder().encode(self.entity)
+                defaults.set(encodedEntity, forKey: "CurrentEntity")
+            }
+        }
         guard let docDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else {
             print("DisplayMembersInteractor: fetchMembers: error: Document directory not found")
             return
         }
-        let docFileURL = docDirectory.appendingPathComponent((entity?.fileName)! + ".ent")
+        let docFileURL = docDirectory.appendingPathComponent((entity?.id?.uuidString)! + ".ent")
         let entityDoc = EntityDocument(fileURL: docFileURL)
         entityDoc.open(completionHandler: { success in
             if !success {
@@ -54,7 +62,7 @@ class EditMemberInteractor: EditMemberBusinessLogic, EditMemberDataStore {
                     entityDoc.entity!.members = [Member]()
                 }
                 if let idx = self.entity!.members?.firstIndex(where: {$0.id == member.id}) {
-                    self.entity?.members![idx] = member
+                    entityDoc.entity?.members![idx] = member
                 }
                 entityDoc.updateChangeCount(.done)
                 entityDoc.close(completionHandler: { success in
