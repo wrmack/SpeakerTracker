@@ -47,9 +47,9 @@ class EditMemberRouter: NSObject, EditMemberRoutingLogic, EditMemberDataPassing 
     
     
     func returnFromRemovingMember() {
-        let source = viewController?.sourceVC
-        var destinationDS = source!.router?.dataStore
-        passDataToDisplayMembersDataStore(source: dataStore!, destination: &destinationDS!)
+//        let source = viewController?.sourceVC
+//        var destinationDS = source!.router?.dataStore
+//        passDataToDisplayMembersDataStore(source: dataStore!, destination: &destinationDS!)
         returnToSource(source: viewController!.sourceVC!)
     }
     

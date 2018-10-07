@@ -28,6 +28,7 @@ class AddMeetingGroupRouter: NSObject, AddMeetingGroupRoutingLogic, AddMeetingGr
     var dataStore: AddMeetingGroupDataStore?
     var selectMembersVC: SelectMembersViewController?
     var splitVC: UISplitViewController?
+    var displayNavC: UINavigationController?
   
     
   // MARK: Routing
@@ -44,7 +45,8 @@ class AddMeetingGroupRouter: NSObject, AddMeetingGroupRoutingLogic, AddMeetingGr
         var destinationDS = selectMembersVC?.router?.dataStore
         passDataToSelectMembersDataStore(source: dataStore!, destination: &destinationDS!)
         splitVC = viewController!.splitViewController
-        splitVC?.showDetailViewController(selectMembersVC!, sender: viewController)
+        displayNavC = splitVC?.viewControllers[1] as? UINavigationController
+        displayNavC?.pushViewController(selectMembersVC!, animated: true)
         selectMembersVC?.fetchMemberNames()
     }
     
@@ -53,7 +55,7 @@ class AddMeetingGroupRouter: NSObject, AddMeetingGroupRoutingLogic, AddMeetingGr
         if members != nil {
             viewController!.refreshAfterSelectingMembers()
         }
-        splitVC?.showDetailViewController(viewController!, sender: nil)
+        displayNavC?.popViewController(animated: true)
         selectMembersVC = nil
     }
     

@@ -75,15 +75,20 @@ class AddMeetingGroupViewController: UIViewController, AddMeetingGroupDisplayLog
     override func viewDidLoad() {
         super.viewDidLoad()
         editView = EditMeetingGroupView(frame: CGRect.zero)
-        editView!.delegate = self
         view.addSubview(editView!)
-        editView!.heading?.text = "New sub-entity"
+        editView!.headingLabel?.text = "Create new meeting group"
         editView!.translatesAutoresizingMaskIntoConstraints = false
         editView!.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         editView!.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         editView!.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
         editView!.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-    }
+        
+        editView?.delegate = self
+        
+        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancelButtonTapped))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(saveButtonTapped))
+     }
+ 
     
     // MARK: - VIP
     
@@ -98,26 +103,28 @@ class AddMeetingGroupViewController: UIViewController, AddMeetingGroupDisplayLog
     }
     
     
-    //MARK: - EditEntityViewDelegate methods
+
+    // MARK: - Button actions
     
-    func saveButtonTapped(meetingGroup: MeetingGroup) {
-        interactor?.saveMeetingGroupToEntity(meetingGroup: meetingGroup, callback: { 
+    @objc func saveButtonTapped() {
+        let id = UUID()
+        let addedMeetingGroup = MeetingGroup(name: editView!.nameBox?.text, members: nil, fileName: nil, id: id)
+
+        interactor?.saveMeetingGroupToEntity(meetingGroup: addedMeetingGroup, callback: {
             self.router?.returnToSource(source: self.sourceVC!)
         })
     }
     
     
-    func cancelButtonTapped() {
+    @objc func cancelButtonTapped() {
         self.router?.returnToSource(source: self.sourceVC!)
     }
     
     
+    // MARK: - EditMeetingGroupViewDelegate methods
+    
     func membersDisclosureButtonTapped() {
         self.router?.routeToSelectMembers()
     }
-    
-    
-    func deleteButtonTapped(meetingGroup: MeetingGroup) {
-        print("This delegate method is ot implemented when adding a member")
-    }
+
 }

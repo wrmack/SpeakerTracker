@@ -18,7 +18,9 @@ protocol DisplayMeetingGroupsDisplayLogic: class {
 
 
 
-class DisplayMeetingGroupsViewController: UITableViewController, DisplayMeetingGroupsDisplayLogic, DisplayDetailViewControllerDelegate, DisplayDetailViewControllerEditDelegate {
+class DisplayMeetingGroupsViewController: UITableViewController, DisplayMeetingGroupsDisplayLogic, EntitiesPopUpViewControllerDelegate, DisplayDetailViewControllerEditMeetingGroupDelegate {
+
+    
     var interactor: DisplayMeetingGroupsBusinessLogic?
     var router: (NSObjectProtocol & DisplayMeetingGroupsRoutingLogic & DisplayMeetingGroupsDataPassing)?
     var meetingGroupNames = [String]()
@@ -74,6 +76,7 @@ class DisplayMeetingGroupsViewController: UITableViewController, DisplayMeetingG
   
     override func viewDidLoad() {
         super.viewDidLoad()
+        
     }
 
 
@@ -82,31 +85,61 @@ class DisplayMeetingGroupsViewController: UITableViewController, DisplayMeetingG
      */
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        
+        let splitVC = splitViewController
+        let detailNavC = splitVC?.viewControllers[1] as! UINavigationController
+        let detailVC = detailNavC.viewControllers[0] as! DisplayDetailViewController
+        detailVC.editMeetingGroupDelegate = self
+        
+        tableView.register(DisplayMeetingGroupsHeaderView.self, forHeaderFooterViewReuseIdentifier: "MeetingGroupHeaderView")
+        
         guard let tabBarCont = UIApplication.shared.keyWindow?.rootViewController as? UITabBarController else {
             print("DisplayMeetingGroupsViewController: could not get UITabBarController")
             return
         }
-        
-        let splitVC = splitViewController
-        let detailVC = splitVC?.viewControllers[1] as? DisplayDetailViewController
-        let detailVCView = detailVC?.view
         let tbFrame = tabBarCont.tabBar.frame
-        tabBarCont.tabBar.frame = CGRect(x: (detailVCView?.frame.origin.x)!, y: tbFrame.origin.y, width: (detailVCView?.frame.size.width)!, height: tbFrame.size.height)
-        
-        detailVC!.delegate = self
-        detailVC?.editDelegate = self
-        detailVC!.detailLabel.text = "Select an entity  〉"
-        detailVC!.detailLabel.textAlignment = .left
-        detailVC!.detailButton.isHidden = false
-        detailVC!.detailButton.setTitleColor(UIColor(white: 0.3, alpha: 0.5), for: .normal)
-        detailVC!.detailButton.setTitle("No entity selected", for: UIControlState.normal)
-        router?.updateDetailVC()
+        if tbFrame.origin.x == 0 {
+            let detailVCView = detailVC.view
+            let detailVCViewWidth = detailVCView!.frame.size.width
+            let tbFrameCurrentWidth = tbFrame.size.width
+            tabBarCont.tabBar.frame = CGRect(x: tbFrameCurrentWidth - detailVCViewWidth, y: tbFrame.origin.y, width: detailVCViewWidth, height: tbFrame.size.height)
+        }
+        let defaults = UserDefaults.standard
+        var entity: Entity?
+        if let currentEntityData = defaults.data(forKey: "CurrentEntity") {
+            entity = try! JSONDecoder().decode(Entity.self, from: currentEntityData)
+            let header = tableView.headerView(forSection: 0) as! DisplayMeetingGroupsHeaderView
+            header.entityButton?.setTitle(entity!.name, for: .normal)
+            header.entityButton?.setTitleColor(UIColor.black, for: .normal)
+            meetingGroupSelected = true
+        }
+        else {
+            let header = tableView.headerView(forSection: 0) as! DisplayMeetingGroupsHeaderView
+            header.entityButton?.setTitle("Select entity", for: .normal)
+            header.entityButton?.setTitleColor(UIColor(white: 0.8, alpha: 1.0), for: .normal)
+        }
+       fetchMeetingGroups(entity: entity)
     }
 
 
+    @objc func entityButtonPressed(_ sender: UIButton) {
+        let entityPopUpController = DisplayEntitiesPopUpViewController(nibName: nil, bundle: nil)
+        entityPopUpController.modalPresentationStyle = .popover
+        present(entityPopUpController, animated: true, completion: nil)
+        
+        let popoverController = entityPopUpController.popoverPresentationController
+        popoverController!.delegate = self as? UIPopoverPresentationControllerDelegate
+        popoverController!.sourceView = sender.superview!
+        popoverController!.sourceRect = sender.frame
+        popoverController!.permittedArrowDirections = .up
+        entityPopUpController.delegate = self
+        entityPopUpController.reloadData()
+    }
+    
+    
     // MARK: - VIP
     
-    func fetchMeetingGroups(entity: Entity) {
+    func fetchMeetingGroups(entity: Entity?) {
         let request = DisplayMeetingGroups.MeetingGroups.Request(entity: entity)
         interactor?.fetchMeetingGroups(request: request)
     }
@@ -115,6 +148,9 @@ class DisplayMeetingGroupsViewController: UITableViewController, DisplayMeetingG
     func displayMeetingGroups(viewModel: DisplayMeetingGroups.MeetingGroups.ViewModel) {
         meetingGroupNames = viewModel.meetingGroupNames!
         tableView.reloadData()
+        if meetingGroupNames.count > 0 {
+            tableView.selectRow(at: IndexPath(row: 0, section: 0), animated: false, scrollPosition: .top)
+        }
         interactor?.setCurrentMeetingGroup(index: 0)
         router!.updateDetailVC()
     }
@@ -155,14 +191,16 @@ class DisplayMeetingGroupsViewController: UITableViewController, DisplayMeetingG
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MeetingGroupsMasterCell", for: indexPath)
         if meetingGroupNames.count == 0 && meetingGroupSelected {
-            cell.textLabel?.text = "Add meeting group"
+            cell.textLabel?.text = "No meeting groups"
             cell.textLabel?.textAlignment = .center
-            cell.textLabel?.textColor = UIColor(white: 0.5, alpha: 0.7)
+            cell.textLabel?.textColor = UIColor(white: 0.7, alpha: 1)
+            cell.isUserInteractionEnabled = false
         }
         else {
             cell.textLabel?.text = meetingGroupNames[indexPath.row]
             cell.textLabel?.textAlignment = .left
             cell.textLabel?.textColor = UIColor.black
+            cell.isUserInteractionEnabled = true
         }
         return cell
     }
@@ -177,23 +215,48 @@ class DisplayMeetingGroupsViewController: UITableViewController, DisplayMeetingG
     }
     
     
-    // MARK: - DisplayDetailViewControllerDelegate methods
+    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        if section == 0 {
+            var header = tableView.dequeueReusableHeaderFooterView(withIdentifier: "MeetingGroupHeaderView") as? DisplayMeetingGroupsHeaderView
+            if header == nil {
+                header = DisplayMeetingGroupsHeaderView(reuseIdentifier: "MeetingGroupHeaderView")
+            }
+            return header
+        }
+        else {
+            return nil
+        }
+    }
     
-    func didSelectEntityInDisplayDetailViewController(entity: Entity) {
+    
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        if section == 0 {
+            return 50
+        }
+        return 0
+    }
+    
+    
+    // MARK: - DisplayEntitiesPopUpViewControllerDelegate methods
+    
+    func didSelectEntityInPopUpViewController(_ viewController: DisplayEntitiesPopUpViewController, entity: Entity) {
+        let header = tableView.headerView(forSection: 0) as! DisplayMeetingGroupsHeaderView
+        let entityBtn = header.entityButton
+        entityBtn!.setTitle(entity.name, for: .normal)
+        entityBtn!.setTitleColor(UIColor.black, for: .normal)
+        entityBtn!.titleLabel?.textAlignment = .center
         dismiss(animated: true, completion: nil)
         meetingGroupSelected = true
+        let defaults = UserDefaults.standard
+        let encodedEntity = try? JSONEncoder().encode(entity)
+        defaults.set(encodedEntity, forKey: "CurrentEntity")
         fetchMeetingGroups(entity: entity)
     }
+
     
+    // MARK: - DisplayDetailViewControllerEditMeetingGroupDelegate methods
     
-    func didSelectMeetingGroupInDisplayDetailViewController(meetingGroup: MeetingGroup) {
-        
-    }
- 
-    
-    // MARK: - DisplayDetailViewControllerEditDelegate methods
-    
-    func didPressEditButtonInDisplayDetailViewController(selectedItem: AnyObject?) {
+    func didPressEditMeetingGroup(selectedItem: AnyObject?) {
         if selectedItem is MeetingGroup {
             router!.routeToEditMeetingGroup()
         }

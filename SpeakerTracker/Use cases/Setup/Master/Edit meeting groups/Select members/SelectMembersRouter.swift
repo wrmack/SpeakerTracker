@@ -31,7 +31,7 @@ class SelectMembersRouter: NSObject, SelectMembersRoutingLogic, SelectMembersDat
     func returnToSource(members: [Member]?) {
         if members != nil {
             dataStore!.members = members
-
+        }
             if  viewController?.sourceAddVC != nil {
                 var destinationDS = viewController?.sourceAddVC!.router?.dataStore
                 passDataToAddMeetingGroupDataStore(source: dataStore!, destination: &destinationDS! )
@@ -43,8 +43,7 @@ class SelectMembersRouter: NSObject, SelectMembersRoutingLogic, SelectMembersDat
                 viewController!.sourceEditVC!.router!.returnFromSelectMembers(members: members)
             }
             
-        }
-       
+
     }
     
     func passDataToAddMeetingGroupDataStore(source: SelectMembersDataStore, destination: inout AddMeetingGroupDataStore ) {

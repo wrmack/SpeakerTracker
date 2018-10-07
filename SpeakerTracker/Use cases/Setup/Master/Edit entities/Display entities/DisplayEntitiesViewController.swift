@@ -16,7 +16,7 @@ protocol DisplayEntitiesDisplayLogic: class {
     func displayEntities(viewModel: DisplayEntities.Entities.ViewModel)
 }
 
-class DisplayEntitiesViewController: UITableViewController, DisplayEntitiesDisplayLogic {
+class DisplayEntitiesViewController: UITableViewController, DisplayEntitiesDisplayLogic, DisplayDetailViewControllerEditEntityDelegate {
     var interactor: DisplayEntitiesBusinessLogic?
     var router: (NSObjectProtocol & DisplayEntitiesRoutingLogic & DisplayEntitiesDataPassing)?
     var entityNames = [String]()
@@ -77,20 +77,23 @@ class DisplayEntitiesViewController: UITableViewController, DisplayEntitiesDispl
      */
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        let splitVC = splitViewController
+        let detailVC = (splitVC?.viewControllers[1] as! UINavigationController).viewControllers[0] as! DisplayDetailViewController
+        detailVC.editEntityDelegate = self
         guard let tabBarCont = UIApplication.shared.keyWindow?.rootViewController as? UITabBarController else {
             print("DisplayEntitiesViewController: could not get UITabBarController")
             return
         }
 
-        let splitVC = splitViewController
-        let detailVC = splitVC?.viewControllers[1] as! DisplayDetailViewController
-        let detailVCView = detailVC.view
         let tbFrame = tabBarCont.tabBar.frame
-        tabBarCont.tabBar.frame = CGRect(x: (detailVCView?.frame.origin.x)!, y: tbFrame.origin.y, width: (detailVCView?.frame.size.width)!, height: tbFrame.size.height)
-        
-        detailVC.detailLabel.text = "Add or edit a top-level entity"
-        detailVC.detailButton.isHidden = true
-        detailVC.detailLabel.textAlignment = .center
+        if tbFrame.origin.x == 0 {
+            let splitVC = splitViewController
+            let detailVC = (splitVC?.viewControllers[1] as! UINavigationController).viewControllers[0] as! DisplayDetailViewController
+            let detailVCView = detailVC.view
+            let detailVCViewWidth = detailVCView!.frame.size.width
+            let tbFrameCurrentWidth = tbFrame.size.width
+            tabBarCont.tabBar.frame = CGRect(x: tbFrameCurrentWidth - detailVCViewWidth, y: tbFrame.origin.y, width: detailVCViewWidth, height: tbFrame.size.height)
+        }
 
         fetchEntities()
     }
@@ -116,6 +119,9 @@ class DisplayEntitiesViewController: UITableViewController, DisplayEntitiesDispl
     func displayEntities(viewModel: DisplayEntities.Entities.ViewModel) {
         entityNames = viewModel.entityNames!
         tableView.reloadData()
+        if entityNames.count > 0 {
+            tableView.selectRow(at: IndexPath(row: 0, section: 0), animated: false, scrollPosition: .top)
+        }
         interactor?.setCurrentEntity(index: 0)
         router!.updateDetailVC()
     }
@@ -125,6 +131,9 @@ class DisplayEntitiesViewController: UITableViewController, DisplayEntitiesDispl
         fetchEntities()
     }
 
+    func refreshAfterEditingEntity() {
+        fetchEntities()
+    }
     
     
     // MARK: - Table view data source
@@ -135,18 +144,32 @@ class DisplayEntitiesViewController: UITableViewController, DisplayEntitiesDispl
 
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return entityNames.count
+        if entityNames.count == 0 {
+            return 1
+        }
+        return entityNames.count
     }
     
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "EntitiesMasterCell", for: indexPath)
-        cell.textLabel?.text = entityNames[indexPath.row]
+        if entityNames.count == 0 {
+            cell.textLabel?.text = "No entities"
+            cell.textLabel?.textColor = UIColor(white: 0.7, alpha: 1.0)
+            cell.textLabel?.textAlignment = .center
+            cell.isUserInteractionEnabled = false
+        }
+        else {
+            cell.textLabel?.text = entityNames[indexPath.row]
+            cell.textLabel?.textColor = UIColor(white: 0, alpha: 1.0)
+            cell.isUserInteractionEnabled = true
+            cell.textLabel?.textAlignment = .left
+        }
         return cell
      }
 
     
-    // MARK: UITableViewDelegate methods
+    // MARK: - UITableViewDelegate methods
     
     override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
         interactor?.setCurrentEntity(index: indexPath.row)
@@ -155,48 +178,12 @@ class DisplayEntitiesViewController: UITableViewController, DisplayEntitiesDispl
     }
 
     
-    /*
-     // Override to support conditional editing of the table view.
-     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-     // Return false if you do not want the specified item to be editable.
-     return true
-     }
-     */
+    // MARK: - DisplayDetailViewControllerEditEntityDelegate methods
     
-    /*
-     // Override to support editing the table view.
-     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-     if editingStyle == .delete {
-     // Delete the row from the data source
-     tableView.deleteRows(at: [indexPath], with: .fade)
-     } else if editingStyle == .insert {
-     // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-     }
-     }
-     */
-    
-    /*
-     // Override to support rearranging the table view.
-     override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-     
-     }
-     */
-    
-    /*
-     // Override to support conditional rearranging of the table view.
-     override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-     // Return false if you do not want the item to be re-orderable.
-     return true
-     }
-     */
-    
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destination.
-     // Pass the selected object to the new view controller.
-     }
-     */
+    func didPressEditEntity(selectedItem: AnyObject?) {
+        if selectedItem is Entity {
+            router!.routeToEditEntity()
+        }
+    }
+  
 }

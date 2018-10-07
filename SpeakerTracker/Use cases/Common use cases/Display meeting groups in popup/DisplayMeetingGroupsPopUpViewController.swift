@@ -127,7 +127,7 @@ class  DisplayMeetingGroupsPopUpViewController: UIViewController, UITableViewDel
         theTitleLabel!.autoresizingMask = UIViewAutoresizing.flexibleWidth
         theTitleLabel!.backgroundColor = UIColor.clear
         theTitleLabel!.shadowOffset = CGSize(width: 0.0, height: 1.0)
-        theTitleLabel!.text = NSLocalizedString("Entities", comment:"title")
+        theTitleLabel!.text = NSLocalizedString("Meeting groups", comment:"title")
         theToolbar!.addSubview(theTitleLabel!)
         
         var tableRect = viewRect
@@ -182,9 +182,9 @@ class  DisplayMeetingGroupsPopUpViewController: UIViewController, UITableViewDel
     }
     
     
-//    func reloadData() {
-//        meetingGroupNames = [String]()
-//    }
+    func reloadData() {
+        meetingGroupNames = [String]()
+    }
     
     
     // MARK: UITableViewDelegate methods
@@ -208,8 +208,8 @@ class  DisplayMeetingGroupsPopUpViewController: UIViewController, UITableViewDel
             cell!.textLabel!.textAlignment = NSTextAlignment.center
             cell!.selectionStyle = UITableViewCellSelectionStyle.gray
         }
-        let entityName = meetingGroupNames![(indexPath).row]
-        cell!.textLabel!.text = entityName
+        let meetingGroupName = meetingGroupNames![(indexPath).row]
+        cell!.textLabel!.text = meetingGroupName
         
         return cell!
     }

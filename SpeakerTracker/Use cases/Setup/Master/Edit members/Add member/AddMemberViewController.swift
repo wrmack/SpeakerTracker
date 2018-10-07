@@ -18,10 +18,11 @@ protocol AddMemberDisplayLogic: class {
 
 
 
-class AddMemberViewController: UIViewController, EditMemberViewDelegate, AddMemberDisplayLogic {
+class AddMemberViewController: UIViewController, AddMemberDisplayLogic, EditMemberViewDelegate {
     var interactor: AddMemberBusinessLogic?
     var router: (NSObjectProtocol & AddMemberRoutingLogic & AddMemberDataPassing)?
     var sourceVC: DisplayMembersViewController?
+    var editView: EditMemberView?
 
     // MARK: - Object lifecycle
 
@@ -73,34 +74,46 @@ class AddMemberViewController: UIViewController, EditMemberViewDelegate, AddMemb
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        let editView = EditMemberView(frame: CGRect.zero)
-        editView.deleteButton!.isEnabled = false
-        editView.delegate = self
-        view.addSubview(editView)
-        editView.heading?.text = "New member"
-        editView.translatesAutoresizingMaskIntoConstraints = false
-        editView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        editView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        editView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-        editView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        editView = EditMemberView(frame: CGRect.zero)
+        editView!.addAnotherButton!.isHidden = false
+        view.addSubview(editView!)
+        editView!.headingLabel?.text = "Create a new member"
+        editView!.translatesAutoresizingMaskIntoConstraints = false
+        editView!.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        editView!.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        editView!.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        editView!.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        editView?.delegate = self
+        
+        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancelButtonTapped))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(saveButtonTapped))
     }
 
     
-    //MARK: - EditEntityViewDelegate methods
+    //MARK: - Button actions
     
-    func saveButtonTapped(member: Member) {
-        interactor?.saveMemberToEntity(member: member, callback: {
+    @objc func saveButtonTapped() {
+        var id: UUID?
+        if editView!.member != nil {
+            id = editView!.member?.id
+        }
+        else {id = UUID()}
+        let editedMember = Member(title: editView!.titleBox?.text, firstName: editView!.firstNameBox?.text, lastName: editView!.lastNameBox?.text, id: id)
+        interactor?.saveMemberToEntity(member: editedMember, callback: {
             self.router?.returnToSource(source: self.sourceVC!)
         })
     }
     
     
-    func cancelButtonTapped() {
+    @objc func cancelButtonTapped() {
         self.router?.returnToSource(source: self.sourceVC!)
     }
     
     
-    func deleteButtonTapped(member: Member) {
-        print("This delegate method not implemented when adding a member")
+    // MARK: - EditMemberViewDelegate methods
+    
+    func addAnotherButtonTapped(member: Member?) {
+        interactor!.addMemberToTempList(member: member!)
     }
+    
 }

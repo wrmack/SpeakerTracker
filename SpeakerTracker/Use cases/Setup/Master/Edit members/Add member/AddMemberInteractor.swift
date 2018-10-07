@@ -14,6 +14,7 @@ import UIKit
 
 protocol AddMemberBusinessLogic {
     func saveMemberToEntity(member: Member, callback: @escaping ()->())
+    func addMemberToTempList(member: Member)
 }
 
 protocol AddMemberDataStore {
@@ -23,32 +24,51 @@ protocol AddMemberDataStore {
 class AddMemberInteractor: AddMemberBusinessLogic, AddMemberDataStore {
     var presenter: AddMemberPresentationLogic?
     var entity: Entity?
+    var tempMemberList: [Member]?
 
 
-    // MARK: VIP
+    // MARK: Model management
+    
+    /*
+     Saves member to model and persistent storage.
+     Called when user decides to saves new member.
+     tempMemberList is an array that is updated when user presses the "Add another" button, but is not saved until this is called.
+     Also updates currenty entity in user defaults.
+     */
     func saveMemberToEntity(member: Member, callback: @escaping ()->()) {
-        if entity!.members == nil {
-            entity!.members = [Member]()
+        if entity?.members == nil {
+            entity?.members = [Member]()
         }
-        var newMember = member
-        newMember.id = UUID() 
-        entity?.members?.append(newMember)
+
+        if tempMemberList != nil && tempMemberList!.count > 0 {
+            entity?.members?.append(contentsOf: tempMemberList!)
+            tempMemberList = nil
+        }
+        
+        let newMember = member
+        if newMember.title != "" || newMember.firstName != "" || newMember.lastName != "" {
+            entity?.members?.append(newMember)
+        }
+        let defaults = UserDefaults.standard
+        if let currentEntityData = defaults.data(forKey: "CurrentEntity") {
+            let savedEntity = try! JSONDecoder().decode(Entity.self, from: currentEntityData)
+            if savedEntity == self.entity {
+                let encodedEntity = try? JSONEncoder().encode(self.entity)
+                defaults.set(encodedEntity, forKey: "CurrentEntity")
+            }
+        }
         guard let docDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else {
             print("DisplayMembersInteractor: fetchMembers: error: Document directory not found")
             return
         }
-        let docFileURL = docDirectory.appendingPathComponent((entity?.fileName)! + ".ent")
+        let docFileURL = docDirectory.appendingPathComponent((entity?.id?.uuidString)! + ".ent")
         let entityDoc = EntityDocument(fileURL: docFileURL)
         entityDoc.open(completionHandler: { success in
             if !success {
                 print("DisplayMembersInteractor: fetchMembers: error opening EntityDocument")
             }
             else {
-                
-                if entityDoc.entity!.members == nil {
-                    entityDoc.entity!.members = [Member]()
-                }
-                entityDoc.entity?.members?.append(newMember)
+                entityDoc.entity = self.entity
                 entityDoc.updateChangeCount(.done)
                 entityDoc.close(completionHandler: { success in
                     print(entityDoc)
@@ -56,6 +76,12 @@ class AddMemberInteractor: AddMemberBusinessLogic, AddMemberDataStore {
                 })
             }
         })
+    }
+    
+    
+    func addMemberToTempList(member: Member) {
+        if tempMemberList == nil { tempMemberList = [Member]()}
+        tempMemberList?.append(member)
     }
  
 }

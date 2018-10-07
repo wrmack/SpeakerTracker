@@ -29,7 +29,7 @@ class DisplayReportsInteractor: DisplayReportsBusinessLogic, DisplayReportsDataS
     var selectedItem: Event?
 
     // MARK: - VIP
-    
+    // TODO: Sends to presenter for each evt file. See 
     /*
      The meeting group was set through data-passing.
      Gets all events for the meeting group.
@@ -64,6 +64,9 @@ class DisplayReportsInteractor: DisplayReportsBusinessLogic, DisplayReportsDataS
                                 if event.meetingGroup == self.meetingGroup {
                                     self.events!.append(event)
                                 }
+                                self.events?.sort(by: { evt1, evt2 in
+                                    return evt1.date! < evt2.date!
+                                })
                                 let response = DisplayReports.Reports.Response(events: self.events)
                                 self.presenter?.presentReports(response: response)
                             })

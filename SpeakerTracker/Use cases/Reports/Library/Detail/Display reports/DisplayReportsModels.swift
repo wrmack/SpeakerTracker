@@ -28,5 +28,6 @@ enum DisplayReports {
 }
 
 struct ThumbFields {
+    var time: String?
     var date: String?
 }

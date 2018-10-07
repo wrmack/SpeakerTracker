@@ -16,12 +16,14 @@ protocol DisplayMembersDisplayLogic: class {
     func displayMembers(viewModel: DisplayMembers.Members.ViewModel)
 }
 
-class DisplayMembersViewController: UITableViewController, DisplayMembersDisplayLogic, DisplayDetailViewControllerDelegate, DisplayDetailViewControllerEditDelegate {
+class DisplayMembersViewController: UITableViewController, DisplayMembersDisplayLogic, EntitiesPopUpViewControllerDelegate, DisplayDetailViewControllerEditMemberDelegate {
+    
     var interactor: DisplayMembersBusinessLogic?
     var router: (NSObjectProtocol & DisplayMembersRoutingLogic & DisplayMembersDataPassing)?
     var memberNames = [String]()
     var entitySelected = false
 
+    @IBOutlet weak var addMemberButton: UIBarButtonItem!
     
     // MARK: - Object lifecycle
 
@@ -76,32 +78,72 @@ class DisplayMembersViewController: UITableViewController, DisplayMembersDisplay
 
     
     /*
-     Adjust tab bar of original UITabBarController once views have loaded
+     Disable the add-members button if no entities exist yet.
+     Register the headerfooterview.
+     Add self as delegate for DisplayDetailViewControllerEditMemberDelegate.
+     Adjust tab bar of original UITabBarController once views have loaded.
+     Check if a current entity has been saved.
+     Update the detail view controller.
      */
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+ //       let exist = interactor!.checkEntitiesExist()
+        let entitySelected = interactor!.checkEntitySelected()
+        addMemberButton.isEnabled = entitySelected! ? true : false
+        
+        tableView.register(DisplayMembersHeaderView.self, forHeaderFooterViewReuseIdentifier: "MembersHeaderView")
+        
+        let splitVC = splitViewController
+        let detailVC = (splitVC?.viewControllers[1] as! UINavigationController).viewControllers[0] as! DisplayDetailViewController
+        detailVC.editMemberDelegate = self
+        
         guard let tabBarCont = UIApplication.shared.keyWindow?.rootViewController as? UITabBarController else {
             print("DisplayMembersViewController: could not get UITabBarController")
             return
         }
         
-        let splitVC = splitViewController
-        let detailVC = splitVC?.viewControllers[1] as? DisplayDetailViewController
-        let detailVCView = detailVC?.view
         let tbFrame = tabBarCont.tabBar.frame
-        tabBarCont.tabBar.frame = CGRect(x: (detailVCView?.frame.origin.x)!, y: tbFrame.origin.y, width: (detailVCView?.frame.size.width)!, height: tbFrame.size.height)
+        if tbFrame.origin.x == 0 {
+            let detailVCView = detailVC.view
+            let detailVCViewWidth = detailVCView!.frame.size.width
+            let tbFrameCurrentWidth = tbFrame.size.width
+            tabBarCont.tabBar.frame = CGRect(x: tbFrameCurrentWidth - detailVCViewWidth, y: tbFrame.origin.y, width: detailVCViewWidth, height: tbFrame.size.height)
+        }
  
-        detailVC!.delegate = self
-        detailVC?.editDelegate = self
-        detailVC!.detailLabel.text = "Select an entity  〉"
-        detailVC!.detailLabel.textAlignment = .left
-        detailVC!.detailButton.isHidden = false
-        detailVC!.detailButton.setTitleColor(UIColor(white: 0.3, alpha: 0.5), for: .normal)
-        detailVC!.detailButton.setTitle("No entity selected", for: UIControlState.normal)
-        router?.updateDetailVC()
+        let defaults = UserDefaults.standard
+        var entity: Entity?
+        if let currentEntityData = defaults.data(forKey: "CurrentEntity") {
+            entity = try! JSONDecoder().decode(Entity.self, from: currentEntityData)
+            let header = tableView.headerView(forSection: 0) as! DisplayMembersHeaderView
+            header.entityButton?.setTitle(entity!.name, for: .normal)
+            header.entityButton?.setTitleColor(UIColor.black, for: .normal)
+ //           fetchMembers(entity: entity)
+        }
+        else {
+            let header = tableView.headerView(forSection: 0) as! DisplayMembersHeaderView
+            header.entityButton?.setTitle("Select entity", for: .normal)
+            header.entityButton?.setTitleColor(UIColor(white: 0.8, alpha: 1.0), for: .normal)
+        }
+        fetchMembers(entity: entity)
+  //      router?.updateDetailVC()
     }
     
 
+    @objc func entityButtonPressed(_ sender: UIButton) {
+        let entityPopUpController = DisplayEntitiesPopUpViewController(nibName: nil, bundle: nil)
+        entityPopUpController.modalPresentationStyle = .popover
+        present(entityPopUpController, animated: true, completion: nil)
+        
+        let popoverController = entityPopUpController.popoverPresentationController
+        popoverController!.delegate = self as? UIPopoverPresentationControllerDelegate
+        popoverController!.sourceView = sender.superview!
+        popoverController!.sourceRect = sender.frame
+        popoverController!.permittedArrowDirections = .up
+        entityPopUpController.delegate = self
+        entityPopUpController.reloadData()
+    }
+    
+    
     // MARK: - Storyboard actions
 
     @IBAction func addMember(_ sender: Any) {
@@ -111,7 +153,7 @@ class DisplayMembersViewController: UITableViewController, DisplayMembersDisplay
     
     // MARK: - VIP
     
-    func fetchMembers(entity: Entity) {
+    func fetchMembers(entity: Entity?) {
         let request = DisplayMembers.Members.Request(entity: entity)
         interactor?.fetchMembers(request: request)
     }
@@ -120,6 +162,9 @@ class DisplayMembersViewController: UITableViewController, DisplayMembersDisplay
     func displayMembers(viewModel: DisplayMembers.Members.ViewModel) {
         memberNames = viewModel.memberNames!
         tableView.reloadData()
+        if memberNames.count > 0 {
+            tableView.selectRow(at: IndexPath(row: 0, section: 0), animated: false, scrollPosition: .top)
+        }
         interactor?.setCurrentMember(index: 0)
         router!.updateDetailVC()
     }
@@ -153,7 +198,7 @@ class DisplayMembersViewController: UITableViewController, DisplayMembersDisplay
 
     
     /*
-     If there are no member in the selected entity, display a prompt on the first line.
+     If there are no members in the selected entity, display a prompt on the first line.
      Otherwise display the members
      */
      override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -181,25 +226,51 @@ class DisplayMembersViewController: UITableViewController, DisplayMembersDisplay
     }
 
     
-    // MARK: - DisplayDetailViewControllerDelegate methods
-    
-    func didSelectEntityInDisplayDetailViewController(entity: Entity) {
-        dismiss(animated: true, completion: nil)
-        entitySelected = true
-        fetchMembers(entity: entity)
-    }
-    
-    
-    func didSelectMeetingGroupInDisplayDetailViewController(meetingGroup: MeetingGroup) {
-        
-    }
-    
-    // MARK: - DisplayDetailViewControllerEditDelegate methods
-    
-    func didPressEditButtonInDisplayDetailViewController(selectedItem: AnyObject?) {
-        if selectedItem is Member {
-            router!.routeToEditMember() 
+    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        if section == 0 {
+            var header = tableView.dequeueReusableHeaderFooterView(withIdentifier: "MembersHeaderView") as? DisplayMembersHeaderView
+            if header == nil {
+                header = DisplayMembersHeaderView(reuseIdentifier: "MembersHeaderView")
+            }
+            return header
+        }
+        else {
+            return nil
         }
     }
+    
+    
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        if section == 0 {
+            return 50
+        }
+        return 0
+    }
+    
+    
+    
+    // MARK: - DisplayEntitiesPopUpViewControllerDelegate methods
+    
+    func didSelectEntityInPopUpViewController(_ viewController: DisplayEntitiesPopUpViewController, entity: Entity) {
+        let header = tableView.headerView(forSection: 0) as! DisplayMembersHeaderView
+        let entityBtn = header.entityButton
+        entityBtn!.setTitle(entity.name, for: .normal)
+        entityBtn!.setTitleColor(UIColor.black, for: .normal)
+        entityBtn!.titleLabel?.textAlignment = .center
+        dismiss(animated: true, completion: nil)
+        let defaults = UserDefaults.standard
+        let encodedEntity = try? JSONEncoder().encode(entity)
+        defaults.set(encodedEntity, forKey: "CurrentEntity")
+        addMemberButton.isEnabled = true
+        fetchMembers(entity: entity)
+    }
 
+
+    // MARK: - DisplayDetailViewControllerEditMemberDelegate methods
+    
+    func didPressEditMember(selectedItem: AnyObject?) {
+        if selectedItem is Member {
+            router!.routeToEditMember()
+        }
+    }
 }

@@ -30,6 +30,7 @@ class EditMeetingGroupRouter: NSObject, EditMeetingGroupRoutingLogic, EditMeetin
     var removeMeetingGroupC: RemoveMeetingGroupController?
     var selectMembersVC: SelectMembersViewController?
     var splitVC: UISplitViewController?
+    var displayNavC: UINavigationController?
     
   
     // MARK: Routing
@@ -61,7 +62,8 @@ class EditMeetingGroupRouter: NSObject, EditMeetingGroupRoutingLogic, EditMeetin
         var destinationDS = selectMembersVC?.router?.dataStore
         passDataToSelectMembersDataStore(source: dataStore!, destination: &destinationDS!)
         splitVC = viewController!.splitViewController
-        splitVC?.showDetailViewController(selectMembersVC!, sender: viewController)
+        displayNavC = splitVC?.viewControllers[1] as? UINavigationController
+        displayNavC?.pushViewController(selectMembersVC!, animated: true)
         selectMembersVC?.fetchMemberNames()
     }
     
@@ -69,7 +71,7 @@ class EditMeetingGroupRouter: NSObject, EditMeetingGroupRoutingLogic, EditMeetin
         if members != nil {
             viewController!.refreshAfterSelectingMembers()
         }
-        splitVC?.showDetailViewController(viewController!, sender: nil)
+        displayNavC?.popViewController(animated: true)
         selectMembersVC = nil
     }
     

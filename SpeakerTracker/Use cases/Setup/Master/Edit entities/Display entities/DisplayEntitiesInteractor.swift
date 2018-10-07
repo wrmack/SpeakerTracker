@@ -31,6 +31,11 @@ class DisplayEntitiesInteractor: DisplayEntitiesBusinessLogic, DisplayEntitiesDa
     
     // MARK: - VIP
   
+    
+    /*
+     Gathers all ".ent" urls then enumerates them to build an array of entities.
+     Opening and closing of documents is async so array is passed to presenter when final document is closed.
+     */
     func fetchEntities(request: DisplayEntities.Entities.Request) {
         entities = [Entity]()
         let fileManager = FileManager.default
@@ -39,10 +44,20 @@ class DisplayEntitiesInteractor: DisplayEntitiesBusinessLogic, DisplayEntitiesDa
             return
         }
         do {
+            var entityUrls = [URL]()
             let fileURLs = try fileManager.contentsOfDirectory(at: docDirectory, includingPropertiesForKeys: nil)
             for url in fileURLs {
                 if url.pathExtension == "ent" {
-                    let entityDoc = EntityDocument(fileURL: url)
+                    entityUrls.append(url)
+                }
+            }
+            if entityUrls.count == 0 {
+                let response = DisplayEntities.Entities.Response(entities: self.entities)
+                self.presenter?.presentEntities(response: response)
+            }
+            else {
+                for entityUrl in entityUrls {
+                    let entityDoc = EntityDocument(fileURL: entityUrl)
                     entityDoc.open(completionHandler: { success in
                         if !success {
                             print("DisplayEntitiesInteractor: fetchEntities: error opening EntityDocument")
@@ -54,14 +69,15 @@ class DisplayEntitiesInteractor: DisplayEntitiesBusinessLogic, DisplayEntitiesDa
                                     return
                                 }
                                 self.entities!.append(entity)
-                                let response = DisplayEntities.Entities.Response(entities: self.entities)
-                                self.presenter?.presentEntities(response: response)
+                                if self.entities!.count == entityUrls.count {
+                                    let response = DisplayEntities.Entities.Response(entities: self.entities)
+                                    self.presenter?.presentEntities(response: response)
+                                }
                             })
                         }
                     })
                 }
             }
-
         } catch {
             print("Error while enumerating files \(docDirectory.path): \(error.localizedDescription)")
         }
@@ -72,7 +88,10 @@ class DisplayEntitiesInteractor: DisplayEntitiesBusinessLogic, DisplayEntitiesDa
     // MARK: - Datastore
     
     func setCurrentEntity(index: Int) {
-        entity = entities![index]
+        if entities!.count > 0 {
+            entity = entities![index]
+        }
+        else { entity = nil }
     }
     
 }
