@@ -8,6 +8,9 @@
 
 import Foundation
 
+/*
+ MeetingGroup: such as a full council, board, committee, sub-committee, working party
+ */
 struct MeetingGroup: Codable {
     let name: String?
     var members: [Member]?

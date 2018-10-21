@@ -24,7 +24,7 @@ class SelectMembersHeaderView: UITableViewHeaderFooterView {
     
     // MARK: - Views
     
-    func setupViews() {
+    private func setupViews() {
         contentView.backgroundColor = UIColor(white: 0.95, alpha: 1.0)
         let label = UILabel(frame: CGRect.zero)
         label.text = "Select members"

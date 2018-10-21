@@ -12,13 +12,8 @@
 
 import UIKit
 
-protocol RemoveMemberDisplayLogic: class {
-//    func displaySomething(viewModel: RemoveMember.Something.ViewModel)
-}
 
-
-
-class RemoveMemberController: NSObject, RemoveMemberDisplayLogic {
+class RemoveMemberController: NSObject {
     var interactor: RemoveMemberBusinessLogic?
     var router: (NSObjectProtocol & RemoveMemberRoutingLogic & RemoveMemberDataPassing)?
     var sourceVC: EditMemberViewController?
@@ -48,12 +43,9 @@ class RemoveMemberController: NSObject, RemoveMemberDisplayLogic {
     private func setup() {
         let controller = self
         let interactor = RemoveMemberInteractor()
-        let presenter = RemoveMemberPresenter()
         let router = RemoveMemberRouter()
         controller.interactor = interactor
         controller.router = router
-        interactor.presenter = presenter
-        presenter.controller = controller 
         router.controller = controller
         router.dataStore = interactor
     }

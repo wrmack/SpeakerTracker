@@ -31,7 +31,7 @@ class EditMeetingGroupView: WMEditView {
     }
     
     
-    func setup() {
+    private func setup() {
         
         // =======  Meeting group name
         let nameLabel = UILabel(frame: CGRect.zero)
@@ -119,7 +119,7 @@ class EditMeetingGroupView: WMEditView {
     
     // MARK: Button actions
  
-    @objc func membersSelectButtonTapped(_: UIButton) {
+    @objc private func membersSelectButtonTapped(_: UIButton) {
         delegate?.membersDisclosureButtonTapped()
     }
 

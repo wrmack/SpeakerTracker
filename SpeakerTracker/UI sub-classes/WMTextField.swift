@@ -9,6 +9,9 @@
 import UIKit
 
 
+/*
+ A subclass of UITextField which provides UI tweaks
+ */
 class WMTextField: UITextField {
     
     let padding = UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 5)
@@ -21,8 +24,6 @@ class WMTextField: UITextField {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-
     
     
     override open func textRect(forBounds bounds: CGRect) -> CGRect {

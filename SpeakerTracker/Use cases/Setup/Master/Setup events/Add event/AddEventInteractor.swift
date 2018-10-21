@@ -26,7 +26,6 @@ protocol AddEventDataStore {
 
 
 class AddEventInteractor: AddEventBusinessLogic, AddEventDataStore {
-    var presenter: AddEventPresentationLogic?
     var entity: Entity?
     var meetingGroup: MeetingGroup?
     

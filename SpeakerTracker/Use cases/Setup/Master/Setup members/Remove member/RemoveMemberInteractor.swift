@@ -24,7 +24,6 @@ protocol RemoveMemberDataStore {
 
 
 class RemoveMemberInteractor: RemoveMemberBusinessLogic, RemoveMemberDataStore {
-    var presenter: RemoveMemberPresentationLogic?
     var entity: Entity?
     var member: Member?
 
@@ -58,14 +57,11 @@ class RemoveMemberInteractor: RemoveMemberBusinessLogic, RemoveMemberDataStore {
                 }
             }
         }
-        let defaults = UserDefaults.standard
-        if let currentEntityData = defaults.data(forKey: "CurrentEntity") {
-            let savedEntity = try! JSONDecoder().decode(Entity.self, from: currentEntityData)
-            if savedEntity == self.entity {
-                let encodedEntity = try? JSONEncoder().encode(self.entity)
-                defaults.set(encodedEntity, forKey: "CurrentEntity")
-            }
+        let savedEntity = UserDefaultsManager.getCurrentEntity()
+        if savedEntity == self.entity {
+            UserDefaultsManager.saveCurrentEntity(entity: self.entity!)
         }
+        
         guard let docDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else {
             print("DisplayMembersInteractor: fetchMembers: error: Document directory not found")
             return

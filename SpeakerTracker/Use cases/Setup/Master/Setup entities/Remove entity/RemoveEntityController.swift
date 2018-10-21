@@ -12,13 +12,8 @@
 
 import UIKit
 
-protocol RemoveEntityDisplayLogic: class {
-//    func displaySomething(viewModel: RemoveEntity.Something.ViewModel)
-}
 
-
-
-class RemoveEntityController: NSObject, RemoveEntityDisplayLogic {
+class RemoveEntityController: NSObject {
     var interactor: RemoveEntityBusinessLogic?
     var router: (NSObjectProtocol & RemoveEntityRoutingLogic & RemoveEntityDataPassing)?
     var sourceVC: EditEntityViewController?
@@ -48,12 +43,9 @@ class RemoveEntityController: NSObject, RemoveEntityDisplayLogic {
     private func setup() {
         let controller = self
         let interactor = RemoveEntityInteractor()
-        let presenter = RemoveEntityPresenter()
         let router = RemoveEntityRouter()
         controller.interactor = interactor
         controller.router = router
-        interactor.presenter = presenter
-        presenter.controller = controller
         router.controller = controller
         router.dataStore = interactor
     }

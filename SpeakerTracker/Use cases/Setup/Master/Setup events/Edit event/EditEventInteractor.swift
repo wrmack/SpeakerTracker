@@ -23,7 +23,6 @@ protocol EditEventDataStore {
 }
 
 class EditEventInteractor: EditEventBusinessLogic, EditEventDataStore {
-    var presenter: EditEventPresentationLogic?
     var event: Event?
     
     

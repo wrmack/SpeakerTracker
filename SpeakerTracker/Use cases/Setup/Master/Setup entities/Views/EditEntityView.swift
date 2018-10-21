@@ -27,7 +27,7 @@ class EditEntityView: WMEditView {
     }
     
     
-    func setup() {
+    private func setup() {
         
         // =======  Entity name
         let entityNameLabel = UILabel(frame: CGRect.zero)

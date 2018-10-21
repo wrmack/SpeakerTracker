@@ -79,16 +79,13 @@ class DisplayMeetingGroupsForReportsViewController: UITableViewController, Displ
         }
         let tbFrame = tabBarCont.tabBar.frame
         tabBarCont.tabBar.frame = CGRect(x:0, y: tbFrame.origin.y, width: (UIApplication.shared.keyWindow?.frame.size.width)!, height: tbFrame.size.height)
-        
-        let defaults = UserDefaults.standard
-        let entity: Entity
-        if let currentEntityData = defaults.data(forKey: "CurrentEntity") {
-            entity = try! JSONDecoder().decode(Entity.self, from: currentEntityData)
+
+        if let savedEntity = UserDefaultsManager.getCurrentEntity() {
             let header = tableView.headerView(forSection: 0) as! DisplayMtgGpsForReportsHeaderView
-            header.entityButton?.setTitle(entity.name, for: .normal)
+            header.entityButton?.setTitle(savedEntity.name, for: .normal)
             header.entityButton?.setTitleColor(UIColor.black, for: .normal)
             meetingGroupSelected = true
-            fetchMeetingGroups(entity: entity)
+            fetchMeetingGroups(entity: savedEntity)
         }
     
     }
@@ -111,7 +108,7 @@ class DisplayMeetingGroupsForReportsViewController: UITableViewController, Displ
     
     // MARK: - VIP
     
-    func fetchMeetingGroups(entity: Entity) {
+    private func fetchMeetingGroups(entity: Entity) {
         let request = DisplayMeetingGroupsForReports.MeetingGroups.Request(entity: entity)
         interactor?.fetchMeetingGroups(request: request)
     }

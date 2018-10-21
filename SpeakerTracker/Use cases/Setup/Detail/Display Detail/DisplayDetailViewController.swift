@@ -17,10 +17,6 @@ protocol DisplayDetailDisplayLogic: class {
     func displayDetailFields(viewModel: DisplayDetail.Detail.ViewModel)
 }
 
-//protocol DisplayDetailViewControllerDelegate: class {
-//    func didSelectEntityInDisplayDetailViewController(entity: Entity)
-//    func didSelectMeetingGroupInDisplayDetailViewController(meetingGroup: MeetingGroup)
-//}
 
 protocol DisplayDetailViewControllerEditEntityDelegate: class {
     func didPressEditEntity(selectedItem: AnyObject?)
@@ -45,7 +41,6 @@ protocol DisplayDetailViewControllerEditEventDelegate: class {
 class DisplayDetailViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, DisplayDetailDisplayLogic {
     
     var interactor: DisplayDetailBusinessLogic?
-    var router: (NSObjectProtocol & DisplayDetailRoutingLogic & DisplayDetailDataPassing)?
     var fields = [(String, String)]()
     var selectMeetingGroupLabel: UILabel?
     var selectMeetingGroupButton: UIButton?
@@ -59,8 +54,8 @@ class DisplayDetailViewController: UIViewController, UITableViewDelegate, UITabl
     
     // Storyboard outlets
 
-    @IBOutlet weak var detailTableView: UITableView!
-    @IBOutlet weak var editButton: UIBarButtonItem!
+    @IBOutlet private weak var detailTableView: UITableView!
+    @IBOutlet private weak var editButton: UIBarButtonItem!
     
 
     
@@ -90,26 +85,11 @@ class DisplayDetailViewController: UIViewController, UITableViewDelegate, UITabl
         let viewController = self
         let interactor = DisplayDetailInteractor()
         let presenter = DisplayDetailPresenter()
-        let router = DisplayDetailRouter()
         viewController.interactor = interactor
-        viewController.router = router
         interactor.presenter = presenter
         presenter.viewController = viewController
-        router.viewController = viewController
-        router.dataStore = interactor
     }
 
-    
-    // MARK: Routing
-
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let scene = segue.identifier {
-            let selector = NSSelectorFromString("routeTo\(scene)WithSegue:")
-            if let router = router, router.responds(to: selector) {
-                router.perform(selector, with: segue)
-            }
-        }
-    }
 
     
     // MARK: View lifecycle
@@ -122,7 +102,7 @@ class DisplayDetailViewController: UIViewController, UITableViewDelegate, UITabl
     }
 
     
-    // MARK: - Exposed functions
+    // MARK: - Exposed methods
     
     func updateDetails() {
         getFields()
@@ -146,12 +126,12 @@ class DisplayDetailViewController: UIViewController, UITableViewDelegate, UITabl
     
     // MARK: - Datastore
     
-    func setCurrentEntity(entity: Entity) {
+    private func setCurrentEntity(entity: Entity) {
         interactor!.setCurrentEntity(entity: entity)
     }
     
     
-    func getCurrentEntity()-> Entity {
+    private func getCurrentEntity()-> Entity {
         return interactor!.getCurrentEntity()
     }
     
@@ -159,7 +139,7 @@ class DisplayDetailViewController: UIViewController, UITableViewDelegate, UITabl
     // Button actions
     
     
-    @IBAction func editButtonPressed(_ sender: UIBarButtonItem) {
+    @IBAction private func editButtonPressed(_ sender: UIBarButtonItem) {
         let selectedItem = interactor?.getSelectedItem()
         switch selectedItem {
         case is Entity:

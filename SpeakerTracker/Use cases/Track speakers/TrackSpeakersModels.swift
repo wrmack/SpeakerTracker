@@ -40,6 +40,7 @@ struct TablePosition {
     }
 }
 
+
 struct SpeakerRecording {
 //    var enabled = false
     var row: Int?

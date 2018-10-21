@@ -25,12 +25,17 @@ protocol EditMemberDataStore {
 
 
 class EditMemberInteractor: EditMemberBusinessLogic, EditMemberDataStore {
-    var presenter: EditMemberPresentationLogic?
     var entity: Entity?
     var member: Member?
 
     
     // MARK: VIP
+    
+    /*
+     Replace member already exists for in-memory entity, replace member with passed-in member.
+     If the saved current entity is this one, update it.
+     
+     */
     func saveMemberToEntity(member: Member, callback: @escaping ()->()) {
         if entity!.members == nil {
             entity!.members = [Member]()
@@ -38,13 +43,9 @@ class EditMemberInteractor: EditMemberBusinessLogic, EditMemberDataStore {
         if let idx = entity!.members?.firstIndex(where: {$0.id == member.id}) {
             entity?.members![idx] = member
         }
-        let defaults = UserDefaults.standard
-        if let currentEntityData = defaults.data(forKey: "CurrentEntity") {
-            let savedEntity = try! JSONDecoder().decode(Entity.self, from: currentEntityData)
-            if savedEntity == self.entity {
-                let encodedEntity = try? JSONEncoder().encode(self.entity)
-                defaults.set(encodedEntity, forKey: "CurrentEntity")
-            }
+        let savedEntity = UserDefaultsManager.getCurrentEntity()
+        if savedEntity == self.entity {
+            UserDefaultsManager.saveCurrentEntity(entity: self.entity!)
         }
         guard let docDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else {
             print("DisplayMembersInteractor: fetchMembers: error: Document directory not found")

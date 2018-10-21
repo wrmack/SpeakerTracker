@@ -90,9 +90,9 @@ class AddMeetingGroupViewController: UIViewController, AddMeetingGroupDisplayLog
      }
  
     
-    // MARK: - VIP
+    // MARK: - Methods
     
-    func refreshAfterSelectingMembers() {
+    internal func refreshAfterSelectingMembers() {
         let request = AddMeetingGroup.MeetingGroup.Request()
         interactor?.fetchMembers(request: request)
     }
@@ -106,7 +106,7 @@ class AddMeetingGroupViewController: UIViewController, AddMeetingGroupDisplayLog
 
     // MARK: - Button actions
     
-    @objc func saveButtonTapped() {
+    @objc private func saveButtonTapped() {
         let id = UUID()
         let addedMeetingGroup = MeetingGroup(name: editView!.nameBox?.text, members: nil, fileName: nil, id: id)
 
@@ -116,7 +116,7 @@ class AddMeetingGroupViewController: UIViewController, AddMeetingGroupDisplayLog
     }
     
     
-    @objc func cancelButtonTapped() {
+    @objc private func cancelButtonTapped() {
         self.router?.returnToSource(source: self.sourceVC!)
     }
     

@@ -12,13 +12,8 @@
 
 import UIKit
 
-protocol EditEntityDisplayLogic: class {
- //   func displaySomething(viewModel: EditEntity.Something.ViewModel)
-}
 
-
-
-class EditEntityViewController: UIViewController, EditEntityDisplayLogic {
+class EditEntityViewController: UIViewController {
     var interactor: EditEntityBusinessLogic?
     var router: (NSObjectProtocol & EditEntityRoutingLogic & EditEntityDataPassing)?
     var sourceVC: DisplayEntitiesViewController?
@@ -54,12 +49,9 @@ class EditEntityViewController: UIViewController, EditEntityDisplayLogic {
     private func setup() {
         let viewController = self
         let interactor = EditEntityInteractor()
-        let presenter = EditEntityPresenter()
         let router = EditEntityRouter()
         viewController.interactor = interactor
         viewController.router = router
-        interactor.presenter = presenter
-        presenter.viewController = viewController
         router.viewController = viewController
         router.dataStore = interactor
     }
@@ -89,8 +81,9 @@ class EditEntityViewController: UIViewController, EditEntityDisplayLogic {
         populateEditView()
     }
 
-  
-    func populateEditView() {
+    
+    // MARK: - Methods
+    private func populateEditView() {
         let entity = interactor?.getEntity() 
         editView?.populateFields(entity: entity)
     }
@@ -98,13 +91,13 @@ class EditEntityViewController: UIViewController, EditEntityDisplayLogic {
     
     // MARK: - Button actions
 
-    @objc func deleteButtonTapped() {
+    @objc private func deleteButtonTapped() {
         interactor!.addEntityToBeDeletedToDataStore(entity: editView!.entity!)
         self.router!.navigateToRemoveEntity()
     }
 
     
-    @objc func saveButtonTapped() {
+    @objc private func saveButtonTapped() {
         let id: UUID?
         if editView!.entity != nil && editView!.entity!.id != nil {
             id = editView!.entity!.id
@@ -119,7 +112,7 @@ class EditEntityViewController: UIViewController, EditEntityDisplayLogic {
     }
     
     
-    @objc func cancelButtonTapped() {
+    @objc private func cancelButtonTapped() {
         self.router?.returnToSource(source: self.sourceVC!)
     }
     

@@ -24,18 +24,9 @@ protocol ConvertToPdfDataStore {
 }
 
 class ConvertToPdfInteractor: ConvertToPdfBusinessLogic, ConvertToPdfDataStore {
-    var presenter: ConvertToPdfPresentationLogic?
     var attText: NSAttributedString?
     var pdfUrl: URL?
     
-    
-    // MARK: Do something
-
-    func doSomething(request: ConvertToPdf.Something.Request) {
-
-        let response = ConvertToPdf.Something.Response()
-        presenter?.presentSomething(response: response)
-    }
     
     
     func convertToPdf(callback: @escaping (()->())) {

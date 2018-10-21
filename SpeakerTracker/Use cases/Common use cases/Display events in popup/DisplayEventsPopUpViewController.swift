@@ -161,7 +161,7 @@ class DisplayEventsPopUpViewController: UIViewController, DisplayEventsPopUpDisp
     
     // MARK: VIP
     
-    func fetchEvents() {
+    private func fetchEvents() {
         let request = DisplayEventsPopUp.Events.Request()
         interactor?.fetchEvents(request: request)
     }
@@ -173,7 +173,7 @@ class DisplayEventsPopUpViewController: UIViewController, DisplayEventsPopUpDisp
     }
     
     
-    
+    // MARK: Methods
     
     func reloadData() {
         eventNames = [String]()
@@ -212,6 +212,5 @@ class DisplayEventsPopUpViewController: UIViewController, DisplayEventsPopUpDisp
     func tableView(_ tableView: UITableView, numberOfRowsInSection section:Int) -> Int {
         return (eventNames!.count)
     }
-    
-    
+
 }

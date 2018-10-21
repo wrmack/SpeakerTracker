@@ -12,13 +12,8 @@
 
 import UIKit
 
-protocol AddMemberDisplayLogic: class {
-//    func displaySomething(viewModel: AddMember.Something.ViewModel)
-}
 
-
-
-class AddMemberViewController: UIViewController, AddMemberDisplayLogic, EditMemberViewDelegate {
+class AddMemberViewController: UIViewController, EditMemberViewDelegate {
     var interactor: AddMemberBusinessLogic?
     var router: (NSObjectProtocol & AddMemberRoutingLogic & AddMemberDataPassing)?
     var sourceVC: DisplayMembersViewController?
@@ -48,26 +43,23 @@ class AddMemberViewController: UIViewController, AddMemberDisplayLogic, EditMemb
     private func setup() {
         let viewController = self
         let interactor = AddMemberInteractor()
-        let presenter = AddMemberPresenter()
         let router = AddMemberRouter()
         viewController.interactor = interactor
         viewController.router = router
-        interactor.presenter = presenter
-        presenter.viewController = viewController
         router.viewController = viewController
         router.dataStore = interactor
     }
 
     // MARK: - Routing
 
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let scene = segue.identifier {
-            let selector = NSSelectorFromString("routeTo\(scene)WithSegue:")
-            if let router = router, router.responds(to: selector) {
-                router.perform(selector, with: segue)
-            }
-        }
-    }
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        if let scene = segue.identifier {
+//            let selector = NSSelectorFromString("routeTo\(scene)WithSegue:")
+//            if let router = router, router.responds(to: selector) {
+//                router.perform(selector, with: segue)
+//            }
+//        }
+//    }
 
     
     // MARK: - View lifecycle
@@ -92,7 +84,7 @@ class AddMemberViewController: UIViewController, AddMemberDisplayLogic, EditMemb
     
     //MARK: - Button actions
     
-    @objc func saveButtonTapped() {
+    @objc private func saveButtonTapped() {
         var id: UUID?
         if editView!.member != nil {
             id = editView!.member?.id
@@ -105,7 +97,7 @@ class AddMemberViewController: UIViewController, AddMemberDisplayLogic, EditMemb
     }
     
     
-    @objc func cancelButtonTapped() {
+    @objc private func cancelButtonTapped() {
         self.router?.returnToSource(source: self.sourceVC!)
     }
     

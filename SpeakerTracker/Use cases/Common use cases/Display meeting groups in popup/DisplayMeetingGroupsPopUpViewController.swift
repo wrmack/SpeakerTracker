@@ -25,7 +25,7 @@ protocol DisplayMeetingGroupsPopUpDisplayLogic: class {
 class  DisplayMeetingGroupsPopUpViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, DisplayMeetingGroupsPopUpDisplayLogic {
     
     
-    var router: (NSObjectProtocol &  DisplayMeetingGroupsPopUpRoutingLogic &  DisplayMeetingGroupsPopUpDataPassing)?
+//    var router: (NSObjectProtocol &  DisplayMeetingGroupsPopUpDataPassing)?
 
     // MARK: Properties
     
@@ -82,13 +82,9 @@ class  DisplayMeetingGroupsPopUpViewController: UIViewController, UITableViewDel
         let viewController = self
         let interactor =  DisplayMeetingGroupsPopUpInteractor()
         let presenter = DisplayMeetingGroupsPopUpPresenter()
-        let router =  DisplayMeetingGroupsPopUpRouter()
         viewController.interactor = interactor
-        viewController.router = router
         interactor.presenter = presenter
         presenter.viewController = viewController
-        router.viewController = viewController
-        router.dataStore = interactor
     }
 
   
@@ -170,7 +166,7 @@ class  DisplayMeetingGroupsPopUpViewController: UIViewController, UITableViewDel
     
     // MARK: VIP
     
-    func fetchMeetingGroups() {
+    private func fetchMeetingGroups() {
         let request = DisplayMeetingGroupsPopUp.MeetingGroups.Request()
         interactor?.fetchMeetingGroups(request: request)
     }
@@ -181,6 +177,8 @@ class  DisplayMeetingGroupsPopUpViewController: UIViewController, UITableViewDel
         theTableView!.reloadData()
     }
     
+    
+    // MARK: Methods
     
     func reloadData() {
         meetingGroupNames = [String]()

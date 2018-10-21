@@ -8,7 +8,11 @@
 
 import Foundation
 
-
+/*
+ Event: such as a meeting
+ Debate: one debate comprises a number of speeches (speaker events)
+ SpeakerEvent: a speech
+ */
 struct Event: Codable  {
     var filename: String?
     var date: Date?

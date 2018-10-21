@@ -144,14 +144,14 @@ class DisplayMembersViewController: UITableViewController, DisplayMembersDisplay
     
     // MARK: - Storyboard actions
 
-    @IBAction func addMember(_ sender: Any) {
+    @IBAction private func addMember(_ sender: Any) {
         router?.routeToAddMember() 
     }
     
     
     // MARK: - VIP
     
-    func fetchMembers(entity: Entity?) {
+    private func fetchMembers(entity: Entity?) {
         let request = DisplayMembers.Members.Request(entity: entity)
         interactor?.fetchMembers(request: request)
     }
@@ -166,6 +166,8 @@ class DisplayMembersViewController: UITableViewController, DisplayMembersDisplay
         interactor?.setCurrentMember(index: 0)
         router!.updateDetailVC()
     }
+    
+    // MARK: - Datastore
     
     func refreshAfterAddingMember() {
         interactor!.refreshMembers()
@@ -256,9 +258,7 @@ class DisplayMembersViewController: UITableViewController, DisplayMembersDisplay
         entityBtn!.setTitleColor(UIColor.black, for: .normal)
         entityBtn!.titleLabel?.textAlignment = .center
         dismiss(animated: true, completion: nil)
-        let defaults = UserDefaults.standard
-        let encodedEntity = try? JSONEncoder().encode(entity)
-        defaults.set(encodedEntity, forKey: "CurrentEntity")
+        UserDefaultsManager.saveCurrentEntity(entity: entity)
         addMemberButton.isEnabled = true
         fetchMembers(entity: entity)
     }

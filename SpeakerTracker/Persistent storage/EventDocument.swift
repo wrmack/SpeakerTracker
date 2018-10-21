@@ -41,10 +41,14 @@ class EventDocument: UIDocument {
     
     // MARK: Loading and saving
     
+    /*
+     Gets the package directory filewrapper.
+     There is one file in the package, with a key "Event".
+     Gets the file contents and stores in event property.
+     */
     override func load(fromContents contents: Any, ofType typeName: String?) throws {
-        // The 'contents' that are passed in will be a package directory filewrapper containing filewrappers for the files in the directory
-        directoryFileWrapper = contents as? FileWrapper // The package directory
-        let fileWrappers: Dictionary  = directoryFileWrapper!.fileWrappers! // The filewrappers inside the package directory
+        directoryFileWrapper = contents as? FileWrapper
+        let fileWrappers: Dictionary  = directoryFileWrapper!.fileWrappers!
         for (key, filewrapper) in fileWrappers {
             print((key, filewrapper))
             
@@ -61,6 +65,10 @@ class EventDocument: UIDocument {
     }
     
     
+    /*
+     Creates a new filewrapper for the directory package (or, if already exists, removes any existing filewrappers for regular-files).
+     Adds a regular-file filewrapper for data in event stored property.
+     */
     override func contents(forType typeName: String) throws -> Any {
         // Create an empty directory filewrapper if it does not exist
         if directoryFileWrapper == nil  {

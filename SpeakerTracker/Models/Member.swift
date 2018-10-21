@@ -8,8 +8,9 @@
 
 import Foundation
 
+
+
 struct Member: Codable {
-    
     var title: String?
     var firstName: String?
     var lastName: String?
@@ -21,7 +22,6 @@ struct Member: Codable {
         self.lastName = lastName
         self.id = id
     }
-    
 }
 
 extension Member: Equatable {

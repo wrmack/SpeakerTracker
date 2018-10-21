@@ -49,13 +49,9 @@ class EditMeetingGroupInteractor: EditMeetingGroupBusinessLogic, EditMeetingGrou
         if let idx = entity!.meetingGroups?.firstIndex(where: {$0.id == meetingGroup.id}) {
             entity?.meetingGroups![idx] = self.meetingGroup!
         }
-        let defaults = UserDefaults.standard
-        if let currentEntityData = defaults.data(forKey: "CurrentEntity") {
-            let savedEntity = try! JSONDecoder().decode(Entity.self, from: currentEntityData)
-            if savedEntity == self.entity {
-                let encodedEntity = try? JSONEncoder().encode(self.entity)
-                defaults.set(encodedEntity, forKey: "CurrentEntity")
-            }
+        let savedEntity = UserDefaultsManager.getCurrentEntity()
+        if savedEntity == self.entity {
+            UserDefaultsManager.saveCurrentEntity(entity: self.entity!)
         }
         guard let docDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else {
             print("EditMeetingGroupInteractor: saveMeetingGroupToEntity: error: Document directory not found")

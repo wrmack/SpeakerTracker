@@ -83,7 +83,6 @@ class DisplayEntitiesPopUpViewController: UIViewController, UITableViewDelegate,
         theToolbar = UIView()
         self.view.addSubview(theToolbar!)
         
-        /* ------------------------------  Toolbar auto layout --------------------------- */
         theToolbar!.translatesAutoresizingMaskIntoConstraints = false
         theToolbar!.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         theToolbar!.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
@@ -147,7 +146,7 @@ class DisplayEntitiesPopUpViewController: UIViewController, UITableViewDelegate,
     
     // MARK: VIP
     
-    func fetchEntities() {
+    private func fetchEntities() {
         let request = DisplayEntitiesPopUp.Entities.Request()
         interactor?.fetchEntities(request: request) 
     }
@@ -159,7 +158,7 @@ class DisplayEntitiesPopUpViewController: UIViewController, UITableViewDelegate,
     }
     
     
-    
+    // MARK: Methods
     
     func reloadData() {
         entityNames = [String]()
@@ -208,6 +207,4 @@ class DisplayEntitiesPopUpViewController: UIViewController, UITableViewDelegate,
         }
         return (entityNames!.count)
     }
-    
-
 }

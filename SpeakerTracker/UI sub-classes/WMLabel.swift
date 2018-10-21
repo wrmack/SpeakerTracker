@@ -9,6 +9,9 @@
 import UIKit
 
 
+/*
+ A sub-class of UILabel which provides UI tweaks
+ */
 class WMLabel: UILabel {
     let padding = UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 5)
     

@@ -88,26 +88,7 @@ class AddEntityViewController: UIViewController, AddEntityDisplayLogic {
     }
     
     
-    //MARK: EditEntityViewDelegate methods
-    
-//    func saveButtonTapped(entity: Entity) {
-//        interactor?.saveEntityToDisk(entity: entity, callback: {
-//            self.router?.returnToSource(source: self.sourceVC!)
-//        })
-//    }
-//
-//
-//    func cancelButtonTapped() {
-//        self.router?.returnToSource(source: self.sourceVC!)
-//    }
-//
-//    func deleteButtonTapped(entity: Entity) {
-//
-//    }
-    
-    
-    
-    @objc func saveButtonTapped() {
+    @objc private func saveButtonTapped() {
         
         let id: UUID?
         if editView!.entity != nil && editView!.entity!.id != nil {
@@ -124,7 +105,7 @@ class AddEntityViewController: UIViewController, AddEntityDisplayLogic {
     }
     
     
-    @objc func cancelButtonTapped() {
+    @objc private func cancelButtonTapped() {
         self.router?.returnToSource(source: self.sourceVC!)
     }
 

@@ -45,12 +45,4 @@ class WMTableViewCell: UITableViewCell {
         }
     }
     
-    
-//    override func prepareForReuse() {
-//        if isDoneListCell {
-//            rightButton?.setTitle("▶︎", for: .normal)
-//            rightButton?.setTitleColor(UIColor.blue, for: .normal)
-//            rightButton?.titleLabel!.font = UIFont.boldSystemFont(ofSize: 22)
-//        }
-//    }
 }

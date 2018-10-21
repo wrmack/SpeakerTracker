@@ -12,13 +12,9 @@
 
 import UIKit
 
-protocol AddEventDisplayLogic: class {
-//    func displaySomething(viewModel: AddEvent.Something.ViewModel)
-}
 
 
-
-class AddEventViewController: UIViewController, AddEventDisplayLogic {
+class AddEventViewController: UIViewController {
     var interactor: AddEventBusinessLogic?
     var router: (NSObjectProtocol & AddEventRoutingLogic & AddEventDataPassing)?
     var sourceVC: DisplayEventsViewController?
@@ -47,26 +43,14 @@ class AddEventViewController: UIViewController, AddEventDisplayLogic {
     private func setup() {
         let viewController = self
         let interactor = AddEventInteractor()
-        let presenter = AddEventPresenter()
         let router = AddEventRouter()
         viewController.interactor = interactor
         viewController.router = router
-        interactor.presenter = presenter
-        presenter.viewController = viewController
         router.viewController = viewController
         router.dataStore = interactor
     }
 
-    // MARK: - Routing
 
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let scene = segue.identifier {
-            let selector = NSSelectorFromString("routeTo\(scene)WithSegue:")
-            if let router = router, router.responds(to: selector) {
-                router.perform(selector, with: segue)
-            }
-        }
-    }
 
     // MARK: - View lifecycle
 
@@ -81,7 +65,7 @@ class AddEventViewController: UIViewController, AddEventDisplayLogic {
 
     }
     
-    func setupEditView() {
+    private func setupEditView() {
         editView = EditEventView(frame: CGRect.zero)
         view.addSubview(editView!)
         editView!.headingLabel?.text = "Create a new event" 
@@ -99,7 +83,7 @@ class AddEventViewController: UIViewController, AddEventDisplayLogic {
     
     //MARK: - Button actions
     
-    @objc func saveButtonTapped() {
+    @objc private func saveButtonTapped() {
         let cal = Calendar.current
         let dateComponents = cal.dateComponents(Set([Calendar.Component.day,Calendar.Component.month, Calendar.Component.year]), from: editView!.eventDatePicker!.date)
         let newDate = cal.date(from: dateComponents)
@@ -117,7 +101,7 @@ class AddEventViewController: UIViewController, AddEventDisplayLogic {
     }
     
     
-    @objc func cancelButtonTapped() {
+    @objc private func cancelButtonTapped() {
         self.router?.returnToSource(source: self.sourceVC!)
     }
 }

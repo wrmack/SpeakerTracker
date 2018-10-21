@@ -70,14 +70,14 @@ class SelectMembersViewController: UIViewController, SelectMembersDisplayLogic, 
 
     // MARK: Routing
 
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let scene = segue.identifier {
-            let selector = NSSelectorFromString("routeTo\(scene)WithSegue:")
-            if let router = router, router.responds(to: selector) {
-                router.perform(selector, with: segue)
-            }
-        }
-    }
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        if let scene = segue.identifier {
+//            let selector = NSSelectorFromString("routeTo\(scene)WithSegue:")
+//            if let router = router, router.responds(to: selector) {
+//                router.perform(selector, with: segue)
+//            }
+//        }
+//    }
 
     // MARK: View lifecycle
 
@@ -105,7 +105,7 @@ class SelectMembersViewController: UIViewController, SelectMembersDisplayLogic, 
 
     // MARK: VIP
     
-    func fetchMemberNames() {
+    internal func fetchMemberNames() {
         let request = SelectMembers.Members.Request()
         interactor?.fetchMembers(request: request)
     }
@@ -119,7 +119,7 @@ class SelectMembersViewController: UIViewController, SelectMembersDisplayLogic, 
     
     // MARK: Button actions
     
-    @objc func saveButtonTapped() {
+    @objc private func saveButtonTapped() {
         if selectedRows != nil {
             let selectedMembers = (interactor?.getMembers(indices: selectedRows!))!
             router?.returnToSource(members: selectedMembers)
@@ -127,7 +127,7 @@ class SelectMembersViewController: UIViewController, SelectMembersDisplayLogic, 
     }
     
     
-    @objc func cancelButtonTapped() {
+    @objc private func cancelButtonTapped() {
         router!.returnToSource(members: nil)
     }
     

@@ -57,14 +57,14 @@ class DisplayEntitiesViewController: UITableViewController, DisplayEntitiesDispl
 
     // MARK: Routing
 
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let scene = segue.identifier {
-            let selector = NSSelectorFromString("routeTo\(scene)WithSegue:")
-            if let router = router, router.responds(to: selector) {
-                router.perform(selector, with: segue)
-            }
-        }
-    }
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        if let scene = segue.identifier {
+//            let selector = NSSelectorFromString("routeTo\(scene)WithSegue:")
+//            if let router = router, router.responds(to: selector) {
+//                router.perform(selector, with: segue)
+//            }
+//        }
+//    }
 
     // MARK: View lifecycle
 
@@ -102,14 +102,14 @@ class DisplayEntitiesViewController: UITableViewController, DisplayEntitiesDispl
     // MARK: - Storyboard actions
 
 
-    @IBAction func addEntity(_ sender: Any) {
+    @IBAction private func addEntity(_ sender: Any) {
         router?.routeToAddEntity() 
     }
 
 
     // MARK: - VIP
     
-    func fetchEntities() {
+    private func fetchEntities() {
         let request = DisplayEntities.Entities.Request()
         interactor?.fetchEntities(request: request)
     }
@@ -127,6 +127,7 @@ class DisplayEntitiesViewController: UITableViewController, DisplayEntitiesDispl
     }
     
     
+    // MARK: - Methods
     func refreshAfterAddingEntity() {
         fetchEntities()
     }

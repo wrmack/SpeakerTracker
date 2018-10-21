@@ -9,7 +9,9 @@
 import UIKit
 
 
-
+/*
+ Provides a super-class for various editing views used for setup use-cases.
+ */
 class WMEditView: UIView {
     
     // MARK: - Constants
@@ -77,6 +79,4 @@ class WMEditView: UIView {
         headingLabel!.topAnchor.constraint(equalTo: containerView!.topAnchor, constant: 10).isActive = true
         headingLabel!.heightAnchor.constraint(equalToConstant: 50).isActive = true
     }
-    
-
 }

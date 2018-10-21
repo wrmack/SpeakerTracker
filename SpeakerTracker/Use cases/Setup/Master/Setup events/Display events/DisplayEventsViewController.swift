@@ -119,7 +119,7 @@ class DisplayEventsViewController: UITableViewController, DisplayEventsDisplayLo
     
     // MARK: - Button actions
     
-    @objc func entityButtonPressed(_ sender: UIButton) {
+    @objc internal func entityButtonPressed(_ sender: UIButton) {
         let entityPopUpController = DisplayEntitiesPopUpViewController(nibName: nil, bundle: nil)
         entityPopUpController.modalPresentationStyle = .popover
         present(entityPopUpController, animated: true, completion: nil)
@@ -135,7 +135,7 @@ class DisplayEventsViewController: UITableViewController, DisplayEventsDisplayLo
     
     
     
-    @objc func meetingGroupButtonPressed(_ sender: UIButton) {
+    @objc internal func meetingGroupButtonPressed(_ sender: UIButton) {
         let meetingGroupPopUpController = DisplayMeetingGroupsPopUpViewController(entity: getCurrentEntity())
         meetingGroupPopUpController.modalPresentationStyle = .popover
         present(meetingGroupPopUpController, animated: true, completion: nil)
@@ -154,14 +154,14 @@ class DisplayEventsViewController: UITableViewController, DisplayEventsDisplayLo
     // MARK: - Storyboard actions
     
 
-    @IBAction func addEvent(_ sender: Any) {
+    @IBAction private func addEvent(_ sender: Any) {
         router?.routeToAddEvent()
     }
     
     
     // MARK: - VIP
     
-    func fetchEvents() {
+    internal func fetchEvents() {
         let request = DisplayEvents.Events.Request()
         interactor?.fetchEvents(request: request)
     }
@@ -179,9 +179,7 @@ class DisplayEventsViewController: UITableViewController, DisplayEventsDisplayLo
     }
     
     
-    func refreshAfterAddingEvent() {
-        fetchEvents()
-    }
+    // MARK: - Datastore
     
     func setEntity(entity: Entity) {
         interactor!.setEntity(entity: entity) 
@@ -196,6 +194,12 @@ class DisplayEventsViewController: UITableViewController, DisplayEventsDisplayLo
         interactor!.setMeetingGroup(meetingGroup: meetingGroup)
     }
     
+    
+    // MARK: = Methods
+    
+    func refreshAfterAddingEvent() {
+        fetchEvents()
+    }
     
     // MARK: - Table view data source
     
@@ -261,9 +265,7 @@ class DisplayEventsViewController: UITableViewController, DisplayEventsDisplayLo
         addEventButton.isEnabled = false
         dismiss(animated: true, completion: nil)
         meetingGroupSelected = true
-        let defaults = UserDefaults.standard
-        let encodedEntity = try? JSONEncoder().encode(entity)
-        defaults.set(encodedEntity, forKey: "CurrentEntity")
+        UserDefaultsManager.saveCurrentEntity(entity: entity)
         setEntity(entity: entity)
         fetchEvents()
     }

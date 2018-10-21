@@ -27,7 +27,7 @@ class DisplayReportsViewController: UICollectionViewController, DisplayReportsDi
     
     
 
-    // MARK: Object lifecycle
+    // MARK: - Object lifecycle
 
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
@@ -39,7 +39,7 @@ class DisplayReportsViewController: UICollectionViewController, DisplayReportsDi
         setup()
     }
   
-  // MARK: Setup
+  // MARK: -Setup
   
     private func setup() {
         let viewController = self
@@ -54,16 +54,16 @@ class DisplayReportsViewController: UICollectionViewController, DisplayReportsDi
         router.dataStore = interactor
     }
 
-    // MARK: Routing
+    // MARK: - Routing
   
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let scene = segue.identifier {
-            let selector = NSSelectorFromString("routeTo\(scene)WithSegue:")
-            if let router = router, router.responds(to: selector) {
-                router.perform(selector, with: segue)
-            }
-        }
-    }
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        if let scene = segue.identifier {
+//            let selector = NSSelectorFromString("routeTo\(scene)WithSegue:")
+//            if let router = router, router.responds(to: selector) {
+//                router.perform(selector, with: segue)
+//            }
+//        }
+//    }
     
     
     @IBAction func unwindToDisplayReports(sender: UIStoryboardSegue) {
@@ -72,19 +72,12 @@ class DisplayReportsViewController: UICollectionViewController, DisplayReportsDi
     }
     
   
-  // MARK: View lifecycle
+  // MARK: - View lifecycle
   
     override func viewDidLoad() {
         super.viewDidLoad()
     }
   
-    
-    func updateReports() {
-        getReports()
-    }
-    
-    
-  //@IBOutlet weak var nameTextField: UITextField!
   
     // MARK: - VIP
     
@@ -99,9 +92,15 @@ class DisplayReportsViewController: UICollectionViewController, DisplayReportsDi
         collectionView?.reloadData()
     }
     
+    // MARK: - Methods
     
     
-    // MARK: Collection view datasource
+    func updateReports() {
+        getReports()
+    }
+    
+    
+    // MARK: - Collection view datasource
     
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
@@ -114,8 +113,7 @@ class DisplayReportsViewController: UICollectionViewController, DisplayReportsDi
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ReportThumb", for: indexPath) as! WMCollectionViewCell
         cell.timeLabel.text = thumbs[indexPath.item].time
-        cell.dateLabel.text = thumbs[indexPath.item].date
-        
+        cell.dateLabel.text = thumbs[indexPath.item].date        
         return cell
     }
     
