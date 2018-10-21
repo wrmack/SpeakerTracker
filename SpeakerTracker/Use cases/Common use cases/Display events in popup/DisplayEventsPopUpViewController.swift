@@ -50,6 +50,12 @@ class DisplayEventsPopUpViewController: UIViewController, DisplayEventsPopUpDisp
     
     // MARK: Object lifecycle
     
+    convenience init(entity: Entity, meetingGroup: MeetingGroup) {
+        self.init(nibName: nil, bundle: nil)
+        interactor!.setEntity(entity: entity)
+        interactor!.setMeetingGroup(meetingGroup: meetingGroup)
+    }
+    
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nil, bundle: nil)
         eventNames = [String]()

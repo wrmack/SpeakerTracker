@@ -53,12 +53,15 @@ class TrackSpeakersViewController: UIViewController, TrackSpeakersDisplayLogic, 
     /// The undo stack is an array of tuples.  Each tuple holds: source table index, name position in source table, destination table index, name position in destination table and name of member.
     var undoStack = [(Int, Int, Int, Int, String)]()
     
-    var speakerRecording = SpeakerRecording(enabled: false, row: nil, button: nil)
+    var speakerRecording = SpeakerRecording(row: nil, button: nil)
     
     var sideBarIsHidden = true
     
+    var eventRecordingIsOn = false
+
     // MARK: - Storyboard outlets
-    
+
+    // MARK: Table views
     /// There are three table views with lists of speakers.  This is the left table view, containing the starting list of names.
     @IBOutlet weak var baseList: UITableView!
     
@@ -68,19 +71,13 @@ class TrackSpeakersViewController: UIViewController, TrackSpeakersDisplayLogic, 
     /// There are three table views with lists of speakers.  This is the right table view, containing the speaker and the list of those who have spoken.
     @IBOutlet weak var doneList: UITableView!
     
-    /// The view that dims the background when the large timer is displayed
-    @IBOutlet weak var dimmerView: UIView!
-    
-    /// Holds start, pause and stop buttons for large timer
-    @IBOutlet weak var stackView: UIStackView!
-    
     // References to labels for purposes of tweaking appearance
     @IBOutlet weak var remainingLabel: UILabel!
     @IBOutlet weak var speakerLabel: UILabel!
     @IBOutlet weak var doneLabel: UILabel!
 
     
-    // Timer buttons and labels
+    // MARK: Timer buttons and labels
     @IBOutlet weak var timerLabel: UILabel!
     @IBOutlet weak var startButton: UIButton!
     @IBOutlet weak var pauseButton: UIButton!
@@ -90,13 +87,19 @@ class TrackSpeakersViewController: UIViewController, TrackSpeakersDisplayLogic, 
     @IBOutlet weak var smPauseButton: UIButton!
     @IBOutlet weak var smStopButton: UIButton!
     
-    /// Buttons down right side of screen
+    // The view that dims the background when the large timer is displayed
+    @IBOutlet weak var dimmerView: UIView!
+    
+    /// Holds start, pause and stop buttons for large timer
+    @IBOutlet weak var stackView: UIStackView!
+    
+    // MARK: Buttons on right side of screen
     @IBOutlet weak var expandButton: UIButton!
     @IBOutlet weak var undoButton: UIButton!
     @IBOutlet weak var resetButton: UIButton!    
     @IBOutlet weak var recordingOnLabel: UILabel!
     
-    // Sidebar, views and buttons
+    // MARK: Sidebar, views and buttons
     @IBOutlet weak var sideBarView: UIView!
     @IBOutlet weak var sideBarLeadingConstraint: NSLayoutConstraint!
     @IBOutlet weak var disclosureSideBarButtonView: UIView!
@@ -106,9 +109,9 @@ class TrackSpeakersViewController: UIViewController, TrackSpeakersDisplayLogic, 
     @IBOutlet weak var eventView: UIView!
     @IBOutlet weak var recordSwitch: UISwitch!
     @IBOutlet weak var selectEventButton: UIButton!
-    @IBOutlet weak var debateReference: UITextField!
-
-
+    @IBOutlet weak var debateNote: UITextField!
+    @IBOutlet weak var meetingGroupLabel: UILabel!
+    
     
     // MARK: - Object lifecycle
 
@@ -172,6 +175,12 @@ class TrackSpeakersViewController: UIViewController, TrackSpeakersDisplayLogic, 
         resetButton.layer.cornerRadius = 2
         disclosureSideBarButtonView.layer.cornerRadius = 10
         disclosureSideBarButtonView.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMaxXMinYCorner]
+        selectEntityButton.layer.cornerRadius = 10
+        selectEntityButton.layer.masksToBounds = true
+        selectMeetingGroupButton.layer.cornerRadius = 10
+        selectMeetingGroupButton.layer.masksToBounds = true
+        selectEventButton.layer.cornerRadius = 10
+        selectEventButton.layer.masksToBounds = true
         
         // Set datasource and delegate for table views
         baseList.dataSource = self
@@ -187,7 +196,7 @@ class TrackSpeakersViewController: UIViewController, TrackSpeakersDisplayLogic, 
         pauseButton.isHidden = true
         stopButton.isHidden = true
         view.sendSubview(toBack:stackView)
-        sideBarLeadingConstraint.constant = -450
+        sideBarLeadingConstraint.constant = -370
         eventView.isHidden = true
         
         
@@ -226,6 +235,7 @@ class TrackSpeakersViewController: UIViewController, TrackSpeakersDisplayLogic, 
         
     }
     
+    
     /*
      Adjust tab bar of original UITabBarController once views have loaded
      */
@@ -236,26 +246,34 @@ class TrackSpeakersViewController: UIViewController, TrackSpeakersDisplayLogic, 
         tabBarCont.tabBar.frame = CGRect(x: view.frame.origin.x, y: tabBarRect.origin.y, width: view.frame.size.width, height: tabBarRect.size.height)
         
         // Get stored entities and meeting groups from user defaults
-        let defaults = UserDefaults.standard
-        let entity: Entity
-        let meetingGroup: MeetingGroup
-        if let currentEntityData = defaults.data(forKey: "CurrentEntity") {
-            entity = try! JSONDecoder().decode(Entity.self, from: currentEntityData)
+        if let entity = UserDefaultsManager.getCurrentEntity() {
             selectEntityButton.setTitle(entity.name, for: .normal)
             selectEntityButton.setTitleColor(UIColor.white, for: .normal)
             setCurrentEntity(entity: entity)
+            selectMeetingGroupButton.isEnabled = true
         }
-        if let currentMeetingGroupData = defaults.data(forKey: "CurrentMeetingGroup") {
-            meetingGroup = try! JSONDecoder().decode(MeetingGroup.self, from: currentMeetingGroupData)
-            selectMeetingGroupButton.setTitle(meetingGroup.name, for: .normal)
-            selectMeetingGroupButton.setTitleColor(UIColor.white, for: .normal)
-            setCurrentMeetingGroup(meetingGroup: meetingGroup)
+        if let meetingGroup = UserDefaultsManager.getCurrentMeetingGroup() {
+            let checkIfBelongsToEntity = meetingGroupBelongsToCurrentEntity(meetingGroup: meetingGroup)
+            if checkIfBelongsToEntity {
+                selectMeetingGroupButton.setTitle(meetingGroup.name, for: .normal)
+                selectMeetingGroupButton.setTitleColor(UIColor.white, for: .normal)
+                setCurrentMeetingGroup(meetingGroup: meetingGroup)
+                meetingGroupLabel.text = meetingGroup.name
+                meetingGroupLabel.textColor = UIColor(white: 0.94, alpha: 1.0)
+                recordSwitch.isEnabled = true
+            }
+            else {
+                selectMeetingGroupButton.setTitle("", for: .normal)
+                meetingGroupLabel.text = "〈  Select a meeting group in side-bar"
+            }
+            fetchNames()
         }
     }
     
     
     // MARK: - Storyboard actions
-  
+    
+    // MARK: Sidebar buttons
     @IBAction func discloseSideBarPressed(_ sender: UIButton) {
         if sideBarIsHidden == true {
             sideBarIsHidden = false
@@ -269,7 +287,7 @@ class TrackSpeakersViewController: UIViewController, TrackSpeakersDisplayLogic, 
             sideBarIsHidden = true
             sender.setTitle("▶︎", for: .normal)
             UIView.animate(withDuration: 1.0, animations: {
-                self.sideBarLeadingConstraint.constant = -450
+                self.sideBarLeadingConstraint.constant = -370
                 self.view.layoutIfNeeded()
             })
         }
@@ -314,7 +332,9 @@ class TrackSpeakersViewController: UIViewController, TrackSpeakersDisplayLogic, 
     
     
     @IBAction func selectEventPressed(_ button: UIButton) {
-        let eventPopUpController = DisplayEventsPopUpViewController()
+        let entity = getCurrentEntity()
+        let meetingGroup = getCurrentMeetingGroup()
+        let eventPopUpController = DisplayEventsPopUpViewController(entity: entity!, meetingGroup: meetingGroup!)
         eventPopUpController.modalPresentationStyle = .popover
         present(eventPopUpController, animated: true, completion: nil)
         
@@ -326,6 +346,21 @@ class TrackSpeakersViewController: UIViewController, TrackSpeakersDisplayLogic, 
         eventPopUpController.delegate = self
     }
     
+    
+    @IBAction func recordSwitchPressed(_ sender: UISwitch) {
+        if sender.isOn == true {
+            eventView.isHidden = false
+        }
+        else {
+            eventView.isHidden = true
+            recordingOnLabel.textColor = UIColor.darkGray
+            eventRecordingIsOn = false
+            addCurrentDebateToEvent()
+        }
+    }
+    
+    
+    // MARK: Table view row buttons
     
     /**
      A storyboard button action.  The right button on a base-list table row was pressed.
@@ -376,32 +411,102 @@ class TrackSpeakersViewController: UIViewController, TrackSpeakersDisplayLogic, 
         let touch = event.allTouches?.first
         let pointInTable = touch?.location(in: doneList)
         let index = doneList.indexPathForRow(at: pointInTable!)
+        if speakerRecording.row == index!.row {
+            _ = handleStopTimer()
+        }
+        let cell = doneList.cellForRow(at: index!) as! WMTableViewCell
+        cell.rightButton?.setTitleColor(UIColor(red: 0, green: 0.48, blue: 1.0, alpha: 1.0), for: .normal)
+        cell.rightButton?.setTitle("▶︎", for: .normal)
+        cell.rightButton!.titleLabel!.font = UIFont.systemFont(ofSize: 22)
         moveNameLeft(from: TablePosition(tableIndex: 2, tableRow: index?.row))
     }
     
-    
+    /*
+     If current speaker is on different row:
+     - turn off current speaker if still speaking (check status of start button)
+     - start timer for this speaker.
+     If current speaker is this speaker:
+     - stop this speaker
+     */
     @IBAction func doneRightButtonPressed(_ sender: UIButton, forEvent event: UIEvent) {
+
         let touch = event.allTouches?.first
         let pointInTable = touch?.location(in: doneList)
         let index = doneList.indexPathForRow(at: pointInTable!)
-        speakerRecording.row = index?.row
-        speakerRecording.button = sender
-        sender.setTitleColor(UIColor.red, for: .normal)
-        sender.setTitle("00:00", for: .normal)
-        sender.titleLabel!.font = UIFont.systemFont(ofSize:14)
-        handleStartTimer()
-        interactor!.setCurrentSpeaker(row: index!.row)
+        if speakerRecording.row != index!.row {
+            if smStartButton.isEnabled == false {
+                _ = handleStopTimer()
+            }
+            speakerRecording.row = index?.row
+            speakerRecording.button = sender
+            sender.setTitleColor(UIColor.red, for: .normal)
+            sender.setTitle("00:00", for: .normal)
+            sender.titleLabel!.font = UIFont.systemFont(ofSize:14)
+            handleStartTimer()
+            setCurrentSpeaker(row: index!.row)
+        }
+        else {
+            if smStartButton.isEnabled == false {
+                _ = handleStopTimer()
+            }
+            speakerRecording = SpeakerRecording(row: nil, button: nil)
+        }
+    }
+    
+    @IBAction func reorderButton(_ sender: UIButton) {
+        
+        if reorderOn == false {
+            let (_, speakerArray) = tableCollection[1]
+            if speakerArray.count > 1 {
+                speakerList.isEditing = true
+                reorderOn = true
+                sender.tintColor = UIColor(red: 0.6, green: 0.6, blue: 1.0, alpha: 1.0)
+                baseList.isUserInteractionEnabled = false
+                doneList.isUserInteractionEnabled = false
+                for cell in speakerList.visibleCells {
+                    (cell as! WMTableViewCell).leftButton?.isHidden = true
+                    (cell as! WMTableViewCell).rightButton?.isHidden = true
+                    (cell as! WMTableViewCell).setNeedsUpdateConstraints()
+                }
+            }
+        } else {
+            speakerList.isEditing = false
+            reorderOn = false
+            sender.tintColor = UIColor.lightGray
+            baseList.isUserInteractionEnabled = true
+            doneList.isUserInteractionEnabled = true
+            for cell in speakerList.visibleCells {
+                (cell as! WMTableViewCell).leftButton?.isHidden = false
+                (cell as! WMTableViewCell).rightButton?.isHidden = false
+                (cell as! WMTableViewCell).setNeedsUpdateConstraints()
+            }
+        }
     }
     
     
+    // MARK: Controls
     
     /**
      Resets all lists and the undo stack.
      */
     
     @IBAction func resetAll(_ sender: UIButton) {
+        var (_, nameArray): (UITableView, [String])
+        (_,nameArray) = tableCollection[2]
+        let numRows = nameArray.count
+        for row in 0..<numRows {
+            let cell = doneList.cellForRow(at: IndexPath(row: row, section: 0)) as! WMTableViewCell
+            cell.rightButton?.setTitleColor(UIColor(red: 0, green: 0.48, blue: 1.0, alpha: 1.0), for: .normal)
+            cell.rightButton?.setTitle("▶︎", for: .normal)
+            cell.rightButton!.titleLabel!.font = UIFont.systemFont(ofSize: 22)
+        }
+        if smStartButton.isEnabled == false {
+            _ = handleStopTimer()
+        }
         resetAllNames()
-        interactor!.addCurrentDebateToEvent()
+        if eventRecordingIsOn == true {
+            addCurrentDebateToEvent()
+        }
     }
     
     
@@ -419,7 +524,7 @@ class TrackSpeakersViewController: UIViewController, TrackSpeakersDisplayLogic, 
     }
     
     
-    
+    // MARK: Timer buttons
     /**
      * A storyboard button action.  When the button is pressed, the large timer is toggled on and off.
      */
@@ -490,52 +595,6 @@ class TrackSpeakersViewController: UIViewController, TrackSpeakersDisplayLogic, 
         _ = handleStopTimer()
     }
     
-
-    
-    @IBAction func reorderButton(_ sender: UIButton) {
-        
-        if reorderOn == false {
-            let (_, speakerArray) = tableCollection[1]
-            if speakerArray.count > 1 {
-                speakerList.isEditing = true
-                reorderOn = true
-                sender.tintColor = UIColor(red: 0.6, green: 0.6, blue: 1.0, alpha: 1.0)
-                baseList.isUserInteractionEnabled = false
-                doneList.isUserInteractionEnabled = false
-                for cell in speakerList.visibleCells {
-                    (cell as! WMTableViewCell).leftButton?.isHidden = true
-                    (cell as! WMTableViewCell).rightButton?.isHidden = true
-                    (cell as! WMTableViewCell).setNeedsUpdateConstraints()
-                }
-            }
-        } else {
-            speakerList.isEditing = false
-            reorderOn = false
-            sender.tintColor = UIColor.lightGray
-            baseList.isUserInteractionEnabled = true
-            doneList.isUserInteractionEnabled = true
-            for cell in speakerList.visibleCells {
-                (cell as! WMTableViewCell).leftButton?.isHidden = false
-                (cell as! WMTableViewCell).rightButton?.isHidden = false
-                (cell as! WMTableViewCell).setNeedsUpdateConstraints()
-            }
-        }
-    }
-    
- 
-    @IBAction func recordSwitchPressed(_ sender: UISwitch) {
-        if sender.isOn == true {
-            eventView.isHidden = false
-            recordingOnLabel.textColor = UIColor.red
-        }
-        else {
-            eventView.isHidden = true
-            recordingOnLabel.textColor = UIColor.darkGray
-            interactor?.addCurrentDebateToEvent()
-        }
-    }
-    
-    
     
     // MARK: - Datastore
 
@@ -551,8 +610,28 @@ class TrackSpeakersViewController: UIViewController, TrackSpeakersDisplayLogic, 
         interactor?.setCurrentMeetingGroup(meetingGroup: meetingGroup)
     }
     
+    func getCurrentMeetingGroup()-> MeetingGroup? {
+        return interactor?.getCurrentMeetingGroup()
+    }
+    
+    func meetingGroupBelongsToCurrentEntity(meetingGroup: MeetingGroup) -> Bool {
+        return interactor!.meetingGroupBelongsToCurrentEntity(meetingGroup: meetingGroup)
+    }
+
+    func setCurrentSpeaker(row: Int) {
+        interactor!.setCurrentSpeaker(row: row)
+    }
+    
+    func addCurrentSpeakerToDebate(debateNote: String, startTime: Date, speakingTime: Int) {
+        interactor!.addCurrentSpeakerToDebate(debateNote: debateNote, startTime: startTime, speakingTime: speakingTime)
+    }
+    
     func setCurrentEvent(event: Event?) {
         interactor!.setCurrentEvent(event: event)
+    }
+    
+    func addCurrentDebateToEvent() {
+        interactor?.addCurrentDebateToEvent()
     }
     
     
@@ -631,6 +710,7 @@ class TrackSpeakersViewController: UIViewController, TrackSpeakersDisplayLogic, 
             if nameArray.count > 0  {
                 name = nameArray[indexPath.row]
             }
+            tvCell!.isDoneListCell = false
             tvCell?.memberText?.text = name
             if self.view.frame.size.width > 1300 {tvCell?.memberText?.font = UIFont(name: "Arial", size: 28)} // if iPad Pro 12"
             
@@ -640,6 +720,7 @@ class TrackSpeakersViewController: UIViewController, TrackSpeakersDisplayLogic, 
             if nameArray.count > 0  {
                 name = nameArray[indexPath.row]
             }
+            tvCell!.isDoneListCell = false
             tvCell?.memberText!.text = name
             if self.view.frame.size.width > 1300 {tvCell?.memberText?.font = UIFont(name: "Arial", size: 28)} // if iPad Pro 12"
             
@@ -649,6 +730,7 @@ class TrackSpeakersViewController: UIViewController, TrackSpeakersDisplayLogic, 
             if nameArray.count > 0  {
                 name = nameArray[indexPath.row]
             }
+            tvCell!.isDoneListCell = true
             tvCell?.memberText!.text = name
             if self.view.frame.size.width > 1300 {tvCell?.memberText?.font = UIFont(name: "Arial", size: 28)} // if iPad Pro 12"
             
@@ -706,6 +788,8 @@ class TrackSpeakersViewController: UIViewController, TrackSpeakersDisplayLogic, 
         selectMeetingGroupButton.titleLabel?.textAlignment = .left
         setCurrentMeetingGroup(meetingGroup: meetingGroup)
         recordSwitch.isEnabled = true
+        meetingGroupLabel.text = meetingGroup.name
+        meetingGroupLabel.textColor = UIColor(white: 0.94, alpha: 1.0)
         fetchNames()
         let defaults = UserDefaults.standard
         let entity = getCurrentEntity()
@@ -724,9 +808,11 @@ class TrackSpeakersViewController: UIViewController, TrackSpeakersDisplayLogic, 
         formatter.dateFormat = "yyyy-MM-dd"
         let dateString = formatter.string(from: event.date!)
         selectEventButton.setTitle(dateString, for: .normal)
-        selectEventButton.setTitleColor(UIColor.lightText, for: .normal)
+        selectEventButton.setTitleColor(UIColor.white, for: .normal)
         selectEventButton.titleLabel?.textAlignment = .left
         setCurrentEvent(event: event)
+        recordingOnLabel.textColor = UIColor.red
+        eventRecordingIsOn = true
     }
     
     
@@ -788,7 +874,6 @@ class TrackSpeakersViewController: UIViewController, TrackSpeakersDisplayLogic, 
         }
         timerLabel.text = "\(minutesString):\(secondsString)"
         smTimerLabel.text = "\(minutesString):\(secondsString)"
-        speakerRecording.button?.titleLabel!.text = "\(minutesString):\(secondsString)"
         speakerRecording.button?.setTitle("\(minutesString):\(secondsString)", for: .normal)
     }
     
@@ -861,7 +946,9 @@ class TrackSpeakersViewController: UIViewController, TrackSpeakersDisplayLogic, 
         smPauseButton.isEnabled = false
         smStopButton.isEnabled = false
         let speakingTime = abs(Int(startTime!.timeIntervalSinceNow))
-        interactor!.addCurrentSpeakerToDebate(debateReference: debateReference.text!, speakingTime: speakingTime)
+        if eventRecordingIsOn == true {
+            addCurrentSpeakerToDebate(debateNote: debateNote.text!, startTime: startTime!, speakingTime: speakingTime)
+        }
         return speakingTime
     }
     
