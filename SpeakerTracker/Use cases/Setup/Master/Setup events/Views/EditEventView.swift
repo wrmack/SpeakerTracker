@@ -29,7 +29,7 @@ class EditEventView: WMEditView {
     }
     
     
-    func setup() {
+    private func setup() {
         
         // =======  Event entity labels
 
@@ -153,6 +153,7 @@ class EditEventView: WMEditView {
         eventNoteBox?.topAnchor.constraint(equalTo: eventNoteLabel.bottomAnchor, constant: SMALLSPACING).isActive = true
         eventNoteBox?.heightAnchor.constraint(equalToConstant: TEXTBOXHEIGHT).isActive = true
       }
+    
     
     func populateFields(event: Event?) {
         self.event = event

@@ -22,7 +22,6 @@ protocol AddMemberDataStore {
 }
 
 class AddMemberInteractor: AddMemberBusinessLogic, AddMemberDataStore {
-    var presenter: AddMemberPresentationLogic?
     var entity: Entity?
     var tempMemberList: [Member]?
 
@@ -49,13 +48,9 @@ class AddMemberInteractor: AddMemberBusinessLogic, AddMemberDataStore {
         if newMember.title != "" || newMember.firstName != "" || newMember.lastName != "" {
             entity?.members?.append(newMember)
         }
-        let defaults = UserDefaults.standard
-        if let currentEntityData = defaults.data(forKey: "CurrentEntity") {
-            let savedEntity = try! JSONDecoder().decode(Entity.self, from: currentEntityData)
-            if savedEntity == self.entity {
-                let encodedEntity = try? JSONEncoder().encode(self.entity)
-                defaults.set(encodedEntity, forKey: "CurrentEntity")
-            }
+        let savedEntity = UserDefaultsManager.getCurrentEntity()
+        if savedEntity == self.entity {
+            UserDefaultsManager.saveCurrentEntity(entity: self.entity!)
         }
         guard let docDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else {
             print("DisplayMembersInteractor: fetchMembers: error: Document directory not found")

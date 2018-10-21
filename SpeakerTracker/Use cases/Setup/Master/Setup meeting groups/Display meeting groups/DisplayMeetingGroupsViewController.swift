@@ -26,12 +26,12 @@ class DisplayMeetingGroupsViewController: UITableViewController, DisplayMeetingG
     var meetingGroupNames = [String]()
     var meetingGroupSelected = false
     
-    @IBOutlet weak var addMeetingGroupButton: UIBarButtonItem!
+    @IBOutlet private weak var addMeetingGroupButton: UIBarButtonItem!
     
     
     // MARK: - Storyboard actions
     
-    @IBAction func addMeetingGroup(_ sender: Any) {
+    @IBAction private func addMeetingGroup(_ sender: Any) {
         router?.routeToAddMeetingGroup()
     }
     
@@ -148,7 +148,7 @@ class DisplayMeetingGroupsViewController: UITableViewController, DisplayMeetingG
     
     // MARK: - VIP
     
-    func fetchMeetingGroups(entity: Entity?) {
+    private func fetchMeetingGroups(entity: Entity?) {
         let request = DisplayMeetingGroups.MeetingGroups.Request(entity: entity)
         interactor?.fetchMeetingGroups(request: request)
     }
@@ -163,6 +163,9 @@ class DisplayMeetingGroupsViewController: UITableViewController, DisplayMeetingG
         interactor?.setCurrentMeetingGroup(index: 0)
         router!.updateDetailVC()
     }
+    
+    
+    // MARK: - Methods
     
     func refreshAfterAddingMeetingGroup() {
         interactor!.refreshMeetingGroups()

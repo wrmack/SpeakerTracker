@@ -24,21 +24,20 @@ protocol EditEntityDataStore {
 
 
 class EditEntityInteractor: EditEntityBusinessLogic, EditEntityDataStore {
-    var presenter: EditEntityPresentationLogic?
     var entity: Entity?
 
     
     // MARK: VIP
+    
+    /*
+     If saved current entity is this one, then update the saved current entity.
+     Open the entity document and update the entity property, then close the document.
+     */
     func saveEntity(entity: Entity, callback: @escaping ()->()) {
-        let defaults = UserDefaults.standard
-        if let currentEntityData = defaults.data(forKey: "CurrentEntity") {
-            let savedEntity = try! JSONDecoder().decode(Entity.self, from: currentEntityData)
-            if savedEntity == self.entity {
-                let encodedEntity = try? JSONEncoder().encode(self.entity)
-                defaults.set(encodedEntity, forKey: "CurrentEntity")
-            }
+        let savedEntity = UserDefaultsManager.getCurrentEntity()
+        if savedEntity == self.entity {
+            UserDefaultsManager.saveCurrentEntity(entity: self.entity!)
         }
-
         guard let docDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else {
             print("EditEntityInteractor: saveEntity: error: Document directory not found")
             return

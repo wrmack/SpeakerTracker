@@ -19,7 +19,6 @@ protocol DisplayEventsPopUpBusinessLogic {
 }
 
 protocol DisplayEventsPopUpDataStore {
-  //var name: String { get set }
 }
 
 class DisplayEventsPopUpInteractor: DisplayEventsPopUpBusinessLogic, DisplayEventsPopUpDataStore {

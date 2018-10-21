@@ -12,13 +12,9 @@
 
 import UIKit
 
-protocol ConvertToPdfDisplayLogic: class {
-    func displaySomething(viewModel: ConvertToPdf.Something.ViewModel)
-}
 
 
-
-class ConvertToPdfController: NSObject, ConvertToPdfDisplayLogic {
+class ConvertToPdfController: NSObject {
     var interactor: ConvertToPdfBusinessLogic?
     var router: (NSObjectProtocol & ConvertToPdfRoutingLogic & ConvertToPdfDataPassing)?
     var sourceRouter: ShowReportRouter?
@@ -43,12 +39,9 @@ class ConvertToPdfController: NSObject, ConvertToPdfDisplayLogic {
     private func setup() {
         let controller = self
         let interactor = ConvertToPdfInteractor()
-        let presenter = ConvertToPdfPresenter()
         let router = ConvertToPdfRouter()
         controller.interactor = interactor
         controller.router = router
-        interactor.presenter = presenter
-        presenter.viewController = controller
         router.controller = controller
         router.dataStore = interactor
     }
@@ -62,8 +55,4 @@ class ConvertToPdfController: NSObject, ConvertToPdfDisplayLogic {
         }) 
     }
 
-
-    func displaySomething(viewModel: ConvertToPdf.Something.ViewModel) {
-    //nameTextField.text = viewModel.name
-    }
 }

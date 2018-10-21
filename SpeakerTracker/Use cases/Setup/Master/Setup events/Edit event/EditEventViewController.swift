@@ -12,13 +12,9 @@
 
 import UIKit
 
-protocol EditEventDisplayLogic: class {
-//    func displaySomething(viewModel: EditEvent.Something.ViewModel)
-}
 
 
-
-class EditEventViewController: UIViewController, EditEventDisplayLogic {
+class EditEventViewController: UIViewController {
     var interactor: EditEventBusinessLogic?
     var router: (NSObjectProtocol & EditEventRoutingLogic & EditEventDataPassing)?
     var editView: EditEventView?
@@ -48,12 +44,9 @@ class EditEventViewController: UIViewController, EditEventDisplayLogic {
     private func setup() {
         let viewController = self
         let interactor = EditEventInteractor()
-        let presenter = EditEventPresenter()
         let router = EditEventRouter()
         viewController.interactor = interactor
         viewController.router = router
-        interactor.presenter = presenter
-        presenter.viewController = viewController
         router.viewController = viewController
         router.dataStore = interactor
     }
@@ -118,12 +111,12 @@ class EditEventViewController: UIViewController, EditEventDisplayLogic {
     }
     
     
-    @objc func cancelButtonTapped() {
+    @objc private func cancelButtonTapped() {
         router?.returnToSource(source: sourceVC!)
     }
     
     
-    @objc func deleteButtonTapped() {
+    @objc private func deleteButtonTapped() {
         interactor!.addEventToBeDeletedToDataStore(event: editView!.event!)
         self.router!.navigateToRemoveEvent() 
     }

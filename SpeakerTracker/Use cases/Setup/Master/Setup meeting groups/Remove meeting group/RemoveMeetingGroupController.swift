@@ -12,13 +12,9 @@
 
 import UIKit
 
-protocol RemoveMeetingGroupDisplayLogic: class {
-//    func displaySomething(viewModel: RemoveMeetingGroup.Something.ViewModel)
-}
 
 
-
-class RemoveMeetingGroupController: NSObject, RemoveMeetingGroupDisplayLogic {
+class RemoveMeetingGroupController: NSObject {
     var interactor: RemoveMeetingGroupBusinessLogic?
     var router: (NSObjectProtocol & RemoveMeetingGroupRoutingLogic & RemoveMeetingGroupDataPassing)?
     var sourceVC: EditMeetingGroupViewController?
@@ -47,12 +43,9 @@ class RemoveMeetingGroupController: NSObject, RemoveMeetingGroupDisplayLogic {
     private func setup() {
         let controller = self
         let interactor = RemoveMeetingGroupInteractor()
-        let presenter = RemoveMeetingGroupPresenter()
         let router = RemoveMeetingGroupRouter()
         controller.interactor = interactor
         controller.router = router
-        interactor.presenter = presenter
-        presenter.controller = controller
         router.controller = controller
         router.dataStore = interactor
     }

@@ -8,7 +8,9 @@
 
 import Foundation
 
-
+/*
+ Entity: such as a council, company, society
+ */
 struct Entity: Codable {
     let name: String?
     var members: [Member]?

@@ -93,7 +93,7 @@ class EditMeetingGroupViewController: UIViewController, EditMeetingGroupDisplayL
     }
 
     
-    // MARK: - VIP
+    // MARK: - Methods
     
     func populateEditView() {
         let meetingGroup = interactor?.getMeetingGroup()
@@ -113,7 +113,7 @@ class EditMeetingGroupViewController: UIViewController, EditMeetingGroupDisplayL
     
     // MARK: - Button actions
     
-    @objc func saveButtonTapped() {
+    @objc private func saveButtonTapped() {
         var id: UUID?
         
         let meetingGroup = editView?.meetingGroup
@@ -128,13 +128,14 @@ class EditMeetingGroupViewController: UIViewController, EditMeetingGroupDisplayL
     }
     
     
-    @objc func cancelButtonTapped() {
+    @objc private func cancelButtonTapped() {
         self.router?.returnToSource(source: self.sourceVC!)
     }
     
-    func deleteButtonTapped(meetingGroup: MeetingGroup) {
-        print("This delegate method is implemented when editing a member")
-    }
+    
+//    func deleteButtonTapped(meetingGroup: MeetingGroup) {
+//        print("This delegate method is implemented when editing a member")
+//    }
     
     
     // MARK: - EditMeetingGroupViewDelegate methods

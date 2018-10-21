@@ -33,7 +33,7 @@ class EditMemberView: WMEditView {
     }
     
         
-    func setup() {
+    private func setup() {
        
         // =======  Member title
         let titleLabel = UILabel(frame: CGRect.zero)
@@ -125,7 +125,7 @@ class EditMemberView: WMEditView {
     
     // MARK: - Button actions
     
-    @objc func addAnotherButtonTapped() {
+    @objc private func addAnotherButtonTapped() {
         let id = UUID()
         let member = Member(title: titleBox?.text, firstName: firstNameBox?.text, lastName: lastNameBox?.text, id: id)
         titleBox!.text = ""

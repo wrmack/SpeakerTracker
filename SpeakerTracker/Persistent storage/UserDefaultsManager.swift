@@ -8,6 +8,13 @@
 
 import Foundation
 
+
+
+/*
+ This class provides utilities for saving and retrieving the current entity or meeting group.
+ When a user selects an entity it is stored as the current entity.
+ The current entity is retrieved whenever the user is required to select an entity as the default entity.
+ */
 class UserDefaultsManager {
     
     static func saveCurrentEntity(entity: Entity) {
@@ -15,6 +22,7 @@ class UserDefaultsManager {
         let encodedEntity = try? JSONEncoder().encode(entity)
         defaults.set(encodedEntity, forKey: "CurrentEntity")
     }
+    
     
     static func getCurrentEntity()->Entity? {
         let defaults = UserDefaults.standard
@@ -24,7 +32,21 @@ class UserDefaultsManager {
         }
         return nil
     }
+    
+    
+    static func removeCurrentEntity() {
+        let defaults = UserDefaults.standard
+        defaults.removeObject(forKey: "CurrentEntity")
+    }
 
+    
+    static func saveCurrentMeetingGropu(meetingGroup: MeetingGroup) {
+        let defaults = UserDefaults.standard
+        let encodedEntity = try? JSONEncoder().encode(meetingGroup)
+        defaults.set(encodedEntity, forKey: "CurrentMeetingGroup")
+    }
+    
+    
     static func getCurrentMeetingGroup()->MeetingGroup? {
         let defaults = UserDefaults.standard
         if let currentMeetingGroupData = defaults.data(forKey: "CurrentMeetingGroup") {
@@ -33,4 +55,7 @@ class UserDefaultsManager {
         }
         return nil
     }
+    
+    
+    
 }

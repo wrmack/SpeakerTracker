@@ -12,13 +12,9 @@
 
 import UIKit
 
-protocol RemoveEventDisplayLogic: class {
-
-}
 
 
-
-class RemoveEventController: NSObject, RemoveEventDisplayLogic {
+class RemoveEventController: NSObject {
     var interactor: RemoveEventBusinessLogic?
     var router: (NSObjectProtocol & RemoveEventRoutingLogic & RemoveEventDataPassing)?
     var sourceVC: EditEventViewController?
@@ -48,12 +44,9 @@ class RemoveEventController: NSObject, RemoveEventDisplayLogic {
     private func setup() {
         let controller = self
         let interactor = RemoveEventInteractor()
-        let presenter = RemoveEventPresenter()
         let router = RemoveEventRouter()
         controller.interactor = interactor
         controller.router = router
-        interactor.presenter = presenter
-        presenter.controller = controller
         router.controller = controller
         router.dataStore = interactor
     }

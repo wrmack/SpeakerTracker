@@ -21,7 +21,6 @@ protocol RemoveEventDataStore {
 }
 
 class RemoveEventInteractor: RemoveEventBusinessLogic, RemoveEventDataStore {
-    var presenter: RemoveEventPresentationLogic?
     var event: Event?
 
     

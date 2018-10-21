@@ -12,13 +12,9 @@
 
 import UIKit
 
-protocol EditMemberDisplayLogic: class {
-//    func displaySomething(viewModel: EditMember.Something.ViewModel)
-}
 
 
-
-class EditMemberViewController: UIViewController, EditMemberDisplayLogic {
+class EditMemberViewController: UIViewController {
     var interactor: EditMemberBusinessLogic?
     var router: (NSObjectProtocol & EditMemberRoutingLogic & EditMemberDataPassing)?
     var sourceVC: DisplayMembersViewController?
@@ -55,12 +51,9 @@ class EditMemberViewController: UIViewController, EditMemberDisplayLogic {
     private func setup() {
         let viewController = self
         let interactor = EditMemberInteractor()
-        let presenter = EditMemberPresenter()
         let router = EditMemberRouter()
         viewController.interactor = interactor
         viewController.router = router
-        interactor.presenter = presenter
-        presenter.viewController = viewController
         router.viewController = viewController
         router.dataStore = interactor
     }
@@ -93,7 +86,7 @@ class EditMemberViewController: UIViewController, EditMemberDisplayLogic {
     }
 
     
-    // MARK: - VIP
+    // MARK: - Methods
     
     func populateEditView() {
         let member = interactor?.getMember()
@@ -103,12 +96,12 @@ class EditMemberViewController: UIViewController, EditMemberDisplayLogic {
     
     // MARK: - EditMemberViewDelegate methods
     
-    @objc func cancelButtonTapped() {
+    @objc private func cancelButtonTapped() {
         self.router?.returnToSource(source: self.sourceVC!)
     }
     
     
-    @objc func saveButtonTapped() {
+    @objc private func saveButtonTapped() {
         var id: UUID?
         if editView!.member != nil {
             id = editView!.member?.id
@@ -124,7 +117,7 @@ class EditMemberViewController: UIViewController, EditMemberDisplayLogic {
      Removing a member has its own use-case instead of simply being handled by this interactor.
      Having a separate removal use-case allows the use-case to be used from elsewhere - eg from the master view table.
      */
-    @objc func deleteButtonTapped() {
+    @objc private func deleteButtonTapped() {
         interactor!.addMemberToBeDeletedToDataStore(member: editView!.member!)
         self.router!.navigateToRemoveMember()
     }

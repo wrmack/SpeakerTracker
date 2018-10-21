@@ -23,18 +23,15 @@ protocol RemoveEntityDataStore {
 
 
 class RemoveEntityInteractor: RemoveEntityBusinessLogic, RemoveEntityDataStore { 
-    var presenter: RemoveEntityPresentationLogic?
     var entity: Entity?
     
     
     func removeEntity(callback: @escaping ()->()) {
-        let defaults = UserDefaults.standard
-        if let currentEntityData = defaults.data(forKey: "CurrentEntity") {
-            let savedEntity = try! JSONDecoder().decode(Entity.self, from: currentEntityData)
-            if savedEntity == self.entity {
-                defaults.removeObject(forKey: "CurrentEntity")
-            }
+        let savedEntity = UserDefaultsManager.getCurrentEntity()
+        if savedEntity == self.entity {
+           UserDefaultsManager.removeCurrentEntity()
         }
+        
         guard let docDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else {
             print("RemoveEntityInteractor: removEntity: error: Document directory not found")
             return

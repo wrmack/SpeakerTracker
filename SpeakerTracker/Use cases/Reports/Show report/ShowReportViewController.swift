@@ -25,9 +25,9 @@ class ShowReportViewController: UIViewController, ShowReportDisplayLogic, UIActi
     var attText: NSAttributedString?
     
 
-    @IBOutlet weak var attributedTextView: UITextView!
+    @IBOutlet private weak var attributedTextView: UITextView!
     
-    @IBOutlet weak var shareButton: UIBarButtonItem!
+    @IBOutlet private weak var shareButton: UIBarButtonItem!
     
     
     // MARK: - Object lifecycle
@@ -86,7 +86,7 @@ class ShowReportViewController: UIViewController, ShowReportDisplayLogic, UIActi
      When share icon pressed, the attributed text is converted and saved to a pdf file.
      When saving is completed, the router calls the showSharePopUp method.
      */
-    @IBAction func shareButtonPressed(_ sender: UIBarButtonItem) {
+    @IBAction private func shareButtonPressed(_ sender: UIBarButtonItem) {
         interactor!.setAttText(attText: attText!)
         router!.routeToConvertToPdf()
     }
@@ -94,7 +94,7 @@ class ShowReportViewController: UIViewController, ShowReportDisplayLogic, UIActi
     
     // MARK: - VIP
 
-    func fetchText() {
+    private func fetchText() {
         let request = ShowReport.Report.Request()
         interactor?.fetchText(request: request)
     }
@@ -105,6 +105,7 @@ class ShowReportViewController: UIViewController, ShowReportDisplayLogic, UIActi
         attributedTextView.attributedText = attText
     }
     
+    // MARK: - Methods
     
     func showSharePopUp() {
         let items = [self]

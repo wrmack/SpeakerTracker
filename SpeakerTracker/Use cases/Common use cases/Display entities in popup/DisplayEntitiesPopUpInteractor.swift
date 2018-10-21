@@ -17,7 +17,6 @@ protocol DisplayEntitiesPopUpBusinessLogic {
 }
 
 protocol DisplayEntitiesPopUpDataStore {
-    //var name: String { get set }
 }
 
 

@@ -93,7 +93,7 @@ class DisplayEntitiesRouter: NSObject, DisplayEntitiesRoutingLogic, DisplayEntit
     
     // MARK: Helpers
     
-    func disableOtherTabBarItems() {
+    private func disableOtherTabBarItems() {
         let splitVC = viewController!.splitViewController
         let masterTabBar = (splitVC?.viewControllers[0] as! UITabBarController).tabBar
         for item in masterTabBar.items! {
@@ -107,7 +107,7 @@ class DisplayEntitiesRouter: NSObject, DisplayEntitiesRoutingLogic, DisplayEntit
         }
     }
     
-    func enableAllTabBarItems() {
+    private func enableAllTabBarItems() {
         let splitVC = viewController!.splitViewController
         let masterTabBar = (splitVC?.viewControllers[0] as! UITabBarController).tabBar
         for item in masterTabBar.items! {

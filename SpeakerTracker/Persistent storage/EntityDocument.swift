@@ -7,8 +7,8 @@
 //
 
 /*
- Used for persisting data.
- Only one document for the entity.
+ Used for persisting entity data.
+ One document for each entity.
  For example, if the entity is a council, this document contains all info about members and committees.
  Create a new document when council changes after an election.
  */
@@ -42,6 +42,11 @@ class EntityDocument: UIDocument {
     
     // MARK: Loading and saving
     
+    /*
+     Gets the package directory filewrapper.
+     There is one file in the package, with a key "Entity".
+     Gets the file contents and stores in entity property.
+     */
     override func load(fromContents contents: Any, ofType typeName: String?) throws {
         // The 'contents' that are passed in will be a package directory filewrapper containing filewrappers for the files in the directory
         directoryFileWrapper = contents as? FileWrapper // The package directory
@@ -62,21 +67,22 @@ class EntityDocument: UIDocument {
     }
     
     
+    /*
+     Creates a new filewrapper for the directory package (or, if already exists, removes any existing filewrappers for regular-files).
+     Adds a regular-file filewrapper for data in entity stored property.
+     */
     override func contents(forType typeName: String) throws -> Any {
-        // Create an empty directory filewrapper if it does not exist
         if directoryFileWrapper == nil  {
             let tempWrapperDict =  [String : FileWrapper]()
             directoryFileWrapper = FileWrapper(directoryWithFileWrappers: tempWrapperDict)
         }
         else {
-            // Remove existing filewrappers so can create anew
             let fileWrappers: Dictionary = directoryFileWrapper!.fileWrappers!
             for myFileWrapper in fileWrappers.values {
                 directoryFileWrapper!.removeFileWrapper(myFileWrapper)
             }
         }
         
-        // Create a filewrapper for the entity data and add it to the directory filewrapper
         do {
             let entityData = try PropertyListEncoder().encode(entity)
             directoryFileWrapper?.addRegularFile(withContents:entityData as Data, preferredFilename: "Entity")

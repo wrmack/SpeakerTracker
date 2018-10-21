@@ -22,95 +22,95 @@ protocol TrackSpeakersDisplayLogic: class {
 class TrackSpeakersViewController: UIViewController, TrackSpeakersDisplayLogic,  UITableViewDelegate, UITableViewDataSource, EntitiesPopUpViewControllerDelegate, MeetingGroupsPopUpViewControllerDelegate, EventsPopUpViewControllerDelegate  {
     
     var interactor: TrackSpeakersBusinessLogic?
-    var router: (NSObjectProtocol & TrackSpeakersRoutingLogic & TrackSpeakersDataPassing)?
+    
 
     // MARK: - Properties
     
     /// Tables are stored as an array of 3 tuples.  Each tuple contains the UITableView reference and an array of members' names.
-    var tableCollection = [(UITableView, [String])]()
+    private var tableCollection = [(UITableView, [String])]()
     
     /// Stores the total list of members as presented initially in first table.  The default names are overwritten if user has saved a list to user defaults.
-    var baseNames = [String?]()
+    private var baseNames = [String?]()
     
     /// Tracks whether the timer is visible.
-    var timerVisible = false
+    private var timerVisible = false
     
     /// A reference to the timer.
-    var timer: Timer?
+    private var timer: Timer?
     
     /// Stores the start time when timer is started.
-    var startTime: Date?
+    private var startTime: Date?
     
     /// Tracks the pause toggle
-    var pausePressed = false
+    private var pausePressed = false
     
     /// Stores time when pause is pressed
-    var secondsElapsedWhenTimerPaused = 0
+    private var secondsElapsedWhenTimerPaused = 0
     
     /// Tracks the reorder toggle on speaker list
-    var reorderOn = false
+    private var reorderOn = false
     
     /// The undo stack is an array of tuples.  Each tuple holds: source table index, name position in source table, destination table index, name position in destination table and name of member.
-    var undoStack = [(Int, Int, Int, Int, String)]()
+    private var undoStack = [(Int, Int, Int, Int, String)]()
     
-    var speakerRecording = SpeakerRecording(row: nil, button: nil)
+    private var speakerRecording = SpeakerRecording(row: nil, button: nil)
     
-    var sideBarIsHidden = true
+    private var sideBarIsHidden = true
     
-    var eventRecordingIsOn = false
+    private var eventRecordingIsOn = false
 
     // MARK: - Storyboard outlets
 
     // MARK: Table views
     /// There are three table views with lists of speakers.  This is the left table view, containing the starting list of names.
-    @IBOutlet weak var baseList: UITableView!
+    @IBOutlet private weak var baseList: UITableView!
     
     /// There are three table views with lists of speakers.  This is the middle table view, containing the list of those wanting to speak.
-    @IBOutlet weak var speakerList: UITableView!
+    @IBOutlet private weak var speakerList: UITableView!
     
     /// There are three table views with lists of speakers.  This is the right table view, containing the speaker and the list of those who have spoken.
-    @IBOutlet weak var doneList: UITableView!
+    @IBOutlet private weak var doneList: UITableView!
     
     // References to labels for purposes of tweaking appearance
-    @IBOutlet weak var remainingLabel: UILabel!
-    @IBOutlet weak var speakerLabel: UILabel!
-    @IBOutlet weak var doneLabel: UILabel!
+    @IBOutlet private weak var remainingLabel: UILabel!
+    @IBOutlet private weak var speakerLabel: UILabel!
+    @IBOutlet private weak var doneLabel: UILabel!
 
     
     // MARK: Timer buttons and labels
-    @IBOutlet weak var timerLabel: UILabel!
-    @IBOutlet weak var startButton: UIButton!
-    @IBOutlet weak var pauseButton: UIButton!
-    @IBOutlet weak var stopButton: UIButton!
-    @IBOutlet weak var smTimerLabel: UILabel!
-    @IBOutlet weak var smStartButton: UIButton!
-    @IBOutlet weak var smPauseButton: UIButton!
-    @IBOutlet weak var smStopButton: UIButton!
+    @IBOutlet private weak var timerLabel: UILabel!
+    @IBOutlet private weak var startButton: UIButton!
+    @IBOutlet private weak var pauseButton: UIButton!
+    @IBOutlet private weak var stopButton: UIButton!
+    @IBOutlet private weak var smTimerLabel: UILabel!
+    @IBOutlet private weak var smStartButton: UIButton!
+    @IBOutlet private weak var smPauseButton: UIButton!
+    @IBOutlet private weak var smStopButton: UIButton!
     
     // The view that dims the background when the large timer is displayed
-    @IBOutlet weak var dimmerView: UIView!
+    @IBOutlet private weak var dimmerView: UIView!
     
     /// Holds start, pause and stop buttons for large timer
-    @IBOutlet weak var stackView: UIStackView!
+    @IBOutlet private weak var stackView: UIStackView!
     
     // MARK: Buttons on right side of screen
-    @IBOutlet weak var expandButton: UIButton!
-    @IBOutlet weak var undoButton: UIButton!
-    @IBOutlet weak var resetButton: UIButton!    
-    @IBOutlet weak var recordingOnLabel: UILabel!
+    @IBOutlet private weak var expandButton: UIButton!
+    @IBOutlet private weak var undoButton: UIButton!
+    @IBOutlet private weak var resetButton: UIButton!
+    @IBOutlet private weak var recordingOnLabel: UILabel!
     
     // MARK: Sidebar, views and buttons
-    @IBOutlet weak var sideBarView: UIView!
-    @IBOutlet weak var sideBarLeadingConstraint: NSLayoutConstraint!
-    @IBOutlet weak var disclosureSideBarButtonView: UIView!
-    @IBOutlet weak var discloseSideBarButton: UIButton!
-    @IBOutlet weak var selectEntityButton: UIButton!
-    @IBOutlet weak var selectMeetingGroupButton: UIButton!
-    @IBOutlet weak var eventView: UIView!
-    @IBOutlet weak var recordSwitch: UISwitch!
-    @IBOutlet weak var selectEventButton: UIButton!
-    @IBOutlet weak var debateNote: UITextField!
-    @IBOutlet weak var meetingGroupLabel: UILabel!
+    @IBOutlet private weak var sideBarView: UIView!
+    @IBOutlet private weak var sideBarLeadingConstraint: NSLayoutConstraint!
+    @IBOutlet private weak var disclosureSideBarButtonView: UIView!
+    @IBOutlet private weak var discloseSideBarButton: UIButton!
+    @IBOutlet private weak var selectEntityButton: UIButton!
+    @IBOutlet private weak var selectMeetingGroupButton: UIButton!
+    @IBOutlet private weak var eventView: UIView!
+    @IBOutlet private weak var recordSwitch: UISwitch!
+    @IBOutlet private weak var selectEventButton: UIButton!
+    @IBOutlet private weak var debateNote: UITextField!
+    @IBOutlet private weak var meetingGroupLabel: UILabel!
     
     
     // MARK: - Object lifecycle
@@ -144,25 +144,11 @@ class TrackSpeakersViewController: UIViewController, TrackSpeakersDisplayLogic, 
         let viewController = self
         let interactor = TrackSpeakersInteractor()
         let presenter = TrackSpeakersPresenter()
-        let router = TrackSpeakersRouter()
         viewController.interactor = interactor
-        viewController.router = router
         interactor.presenter = presenter
         presenter.viewController = viewController
-        router.viewController = viewController
-        router.dataStore = interactor
     }
 
-    // MARK: - Routing
-
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let scene = segue.identifier {
-            let selector = NSSelectorFromString("routeTo\(scene)WithSegue:")
-            if let router = router, router.responds(to: selector) {
-                router.perform(selector, with: segue)
-            }
-        }
-    }
 
     
     // MARK: - View lifecycle
@@ -274,7 +260,7 @@ class TrackSpeakersViewController: UIViewController, TrackSpeakersDisplayLogic, 
     // MARK: - Storyboard actions
     
     // MARK: Sidebar buttons
-    @IBAction func discloseSideBarPressed(_ sender: UIButton) {
+    @IBAction private func discloseSideBarPressed(_ sender: UIButton) {
         if sideBarIsHidden == true {
             sideBarIsHidden = false
             sender.setTitle("◀︎", for: .normal)
@@ -293,7 +279,7 @@ class TrackSpeakersViewController: UIViewController, TrackSpeakersDisplayLogic, 
         }
     }
     
-    @IBAction func selectEntityPressed(_ button: UIButton) {
+    @IBAction private func selectEntityPressed(_ button: UIButton) {
         let entityPopUpController = DisplayEntitiesPopUpViewController(nibName: nil, bundle: nil)
         entityPopUpController.modalPresentationStyle = .popover
         present(entityPopUpController, animated: true, completion: nil)
@@ -307,7 +293,7 @@ class TrackSpeakersViewController: UIViewController, TrackSpeakersDisplayLogic, 
         entityPopUpController.reloadData()
     }
     
-    @IBAction func selectMeetingGroupPressed(_ sender: UIButton) {
+    @IBAction private func selectMeetingGroupPressed(_ sender: UIButton) {
         let currentEntity = getCurrentEntity()
         if currentEntity == nil {
             let alert = UIAlertController(title: "Meeting group not found", message: "Select an entity first", preferredStyle: .alert)
@@ -331,7 +317,7 @@ class TrackSpeakersViewController: UIViewController, TrackSpeakersDisplayLogic, 
     }
     
     
-    @IBAction func selectEventPressed(_ button: UIButton) {
+    @IBAction private func selectEventPressed(_ button: UIButton) {
         let entity = getCurrentEntity()
         let meetingGroup = getCurrentMeetingGroup()
         let eventPopUpController = DisplayEventsPopUpViewController(entity: entity!, meetingGroup: meetingGroup!)
@@ -347,7 +333,7 @@ class TrackSpeakersViewController: UIViewController, TrackSpeakersDisplayLogic, 
     }
     
     
-    @IBAction func recordSwitchPressed(_ sender: UISwitch) {
+    @IBAction private func recordSwitchPressed(_ sender: UISwitch) {
         if sender.isOn == true {
             eventView.isHidden = false
         }
@@ -367,7 +353,7 @@ class TrackSpeakersViewController: UIViewController, TrackSpeakersDisplayLogic, 
      Gets name of member and passes this to helper function which moves name to table on right.
      */
         
-    @IBAction func baseRightButtonPressed(_ sender: UIButton, forEvent event: UIEvent) {
+    @IBAction private func baseRightButtonPressed(_ sender: UIButton, forEvent event: UIEvent) {
         let touch = event.allTouches?.first
         let pointInTable = touch?.location(in: baseList)
         let index = baseList.indexPathForRow(at: pointInTable!)
@@ -381,7 +367,7 @@ class TrackSpeakersViewController: UIViewController, TrackSpeakersDisplayLogic, 
      */
     
     
-    @IBAction func speakerLeftButtonPressed(_ sender: UIButton, forEvent event: UIEvent) {
+    @IBAction private func speakerLeftButtonPressed(_ sender: UIButton, forEvent event: UIEvent) {
         let touch = event.allTouches?.first
         let pointInTable = touch?.location(in: speakerList)
         let index = speakerList.indexPathForRow(at: pointInTable!)
@@ -394,7 +380,7 @@ class TrackSpeakersViewController: UIViewController, TrackSpeakersDisplayLogic, 
      * Gets name of member and passes this to helper function which moves name to table on right.
      */
     
-    @IBAction func speakerRightButtonPressed(_ sender: UIButton, forEvent event: UIEvent) {
+    @IBAction private func speakerRightButtonPressed(_ sender: UIButton, forEvent event: UIEvent) {
         let touch = event.allTouches?.first
         let pointInTable = touch?.location(in: speakerList)
         let index = speakerList.indexPathForRow(at: pointInTable!)
@@ -407,7 +393,7 @@ class TrackSpeakersViewController: UIViewController, TrackSpeakersDisplayLogic, 
      * Gets name of member and passes this to helper function which moves name to table on left.
      */
     
-    @IBAction func doneLeftButtonPressed(_ sender: UIButton, forEvent event: UIEvent) {
+    @IBAction private func doneLeftButtonPressed(_ sender: UIButton, forEvent event: UIEvent) {
         let touch = event.allTouches?.first
         let pointInTable = touch?.location(in: doneList)
         let index = doneList.indexPathForRow(at: pointInTable!)
@@ -428,7 +414,7 @@ class TrackSpeakersViewController: UIViewController, TrackSpeakersDisplayLogic, 
      If current speaker is this speaker:
      - stop this speaker
      */
-    @IBAction func doneRightButtonPressed(_ sender: UIButton, forEvent event: UIEvent) {
+    @IBAction private func doneRightButtonPressed(_ sender: UIButton, forEvent event: UIEvent) {
 
         let touch = event.allTouches?.first
         let pointInTable = touch?.location(in: doneList)
@@ -453,7 +439,7 @@ class TrackSpeakersViewController: UIViewController, TrackSpeakersDisplayLogic, 
         }
     }
     
-    @IBAction func reorderButton(_ sender: UIButton) {
+    @IBAction private func reorderButton(_ sender: UIButton) {
         
         if reorderOn == false {
             let (_, speakerArray) = tableCollection[1]
@@ -490,7 +476,7 @@ class TrackSpeakersViewController: UIViewController, TrackSpeakersDisplayLogic, 
      Resets all lists and the undo stack.
      */
     
-    @IBAction func resetAll(_ sender: UIButton) {
+    @IBAction private func resetAll(_ sender: UIButton) {
         var (_, nameArray): (UITableView, [String])
         (_,nameArray) = tableCollection[2]
         let numRows = nameArray.count
@@ -519,7 +505,7 @@ class TrackSpeakersViewController: UIViewController, TrackSpeakersDisplayLogic, 
      When the undo button is pressed, the last tuple in the array is popped off the array and the action reversed.
      */
     
-    @IBAction func undoPressed(_ sender: UIButton) {
+    @IBAction private func undoPressed(_ sender: UIButton) {
         undoLastAction()
     }
     
@@ -528,7 +514,7 @@ class TrackSpeakersViewController: UIViewController, TrackSpeakersDisplayLogic, 
     /**
      * A storyboard button action.  When the button is pressed, the large timer is toggled on and off.
      */
-    @IBAction func showLargeTimer(_ sender: UIButton) {
+    @IBAction private func showLargeTimer(_ sender: UIButton) {
         
         if timerVisible == false {
             dimmerView.isHidden = false
@@ -567,7 +553,7 @@ class TrackSpeakersViewController: UIViewController, TrackSpeakersDisplayLogic, 
      * A storyboard button action.  The large timer's start button was pressed.
      */
     
-    @IBAction func startTimer(_ sender: UIButton) {
+    @IBAction private func startTimer(_ sender: UIButton) {
         handleStartTimer()
     }
     
@@ -575,97 +561,97 @@ class TrackSpeakersViewController: UIViewController, TrackSpeakersDisplayLogic, 
     /**
      * A storyboard button action.  The small timer's start button was pressed.
      */
-    @IBAction func startSmTimer(_ sender: UIButton) {
+    @IBAction private func startSmTimer(_ sender: UIButton) {
         handleStartTimer()
     }
     
-    @IBAction func pauseTimer(_ sender: UIButton) {
+    @IBAction private func pauseTimer(_ sender: UIButton) {
         handlePauseTimer()
     }
     
-    @IBAction func pauseSmTimer(_ sender: UIButton) {
+    @IBAction private func pauseSmTimer(_ sender: UIButton) {
         handlePauseTimer()
     }
     
-    @IBAction func stopTimer(_ sender: UIButton) {
+    @IBAction private func stopTimer(_ sender: UIButton) {
         _ = handleStopTimer()
     }
     
-    @IBAction func stopSmTimer(_ sender: UIButton) {
+    @IBAction private func stopSmTimer(_ sender: UIButton) {
         _ = handleStopTimer()
     }
     
     
     // MARK: - Datastore
 
-    func setCurrentEntity(entity: Entity) {
+    private func setCurrentEntity(entity: Entity) {
          interactor?.setCurrentEntity(entity: entity)
     }
     
-    func getCurrentEntity() -> Entity? {
+    private func getCurrentEntity() -> Entity? {
         return interactor!.getCurrentEntity()
     }
     
-    func setCurrentMeetingGroup(meetingGroup: MeetingGroup) {
+    private func setCurrentMeetingGroup(meetingGroup: MeetingGroup) {
         interactor?.setCurrentMeetingGroup(meetingGroup: meetingGroup)
     }
     
-    func getCurrentMeetingGroup()-> MeetingGroup? {
+    private func getCurrentMeetingGroup()-> MeetingGroup? {
         return interactor?.getCurrentMeetingGroup()
     }
     
-    func meetingGroupBelongsToCurrentEntity(meetingGroup: MeetingGroup) -> Bool {
+    private func meetingGroupBelongsToCurrentEntity(meetingGroup: MeetingGroup) -> Bool {
         return interactor!.meetingGroupBelongsToCurrentEntity(meetingGroup: meetingGroup)
     }
 
-    func setCurrentSpeaker(row: Int) {
+    private func setCurrentSpeaker(row: Int) {
         interactor!.setCurrentSpeaker(row: row)
     }
     
-    func addCurrentSpeakerToDebate(debateNote: String, startTime: Date, speakingTime: Int) {
+    private func addCurrentSpeakerToDebate(debateNote: String, startTime: Date, speakingTime: Int) {
         interactor!.addCurrentSpeakerToDebate(debateNote: debateNote, startTime: startTime, speakingTime: speakingTime)
     }
     
-    func setCurrentEvent(event: Event?) {
+    private func setCurrentEvent(event: Event?) {
         interactor!.setCurrentEvent(event: event)
     }
     
-    func addCurrentDebateToEvent() {
+    private func addCurrentDebateToEvent() {
         interactor?.addCurrentDebateToEvent()
+    }
+    
+    
+    private func moveNameRight(from tablePosition: TablePosition ) {
+        interactor!.moveNameRight(from: tablePosition)
+    }
+    
+    private func moveNameLeft(from tablePosition: TablePosition ) {
+        interactor!.moveNameLeft(from: tablePosition)
+    }
+    
+    private func resetAllNames() {
+        interactor!.resetAllNames()
+    }
+    
+    private func undoLastAction() {
+        interactor!.undoLastAction()
     }
     
     
     // MARK: - VIP
     
-    func fetchNames() {
+    private func fetchNames() {
         interactor!.fetchNames()
     }
     
-    func moveNameRight(from tablePosition: TablePosition ) {
-        interactor!.moveNameRight(from: tablePosition)
-    }
-    
-    func moveNameLeft(from tablePosition: TablePosition ) {
-        interactor!.moveNameLeft(from: tablePosition) 
-    }
-    
-    func resetAllNames() {
-        interactor!.resetAllNames()
-    }
-    
-    func undoLastAction() {
-        interactor!.undoLastAction()
-    }
-    
-    func displayNames(viewModel: TrackSpeakers.Speakers.ViewModel) {
+   func displayNames(viewModel: TrackSpeakers.Speakers.ViewModel) {
         tableCollection = [(baseList, viewModel.baseNames!), (speakerList, viewModel.speakerNames!), (doneList, viewModel.doneNames!)]
         baseList.reloadData()
         speakerList.reloadData()
         doneList.reloadData()
     }
     
-    
-    
+  
     //MARK: - UITableViewDataSource protocols
     
     
@@ -791,12 +777,9 @@ class TrackSpeakersViewController: UIViewController, TrackSpeakersDisplayLogic, 
         meetingGroupLabel.text = meetingGroup.name
         meetingGroupLabel.textColor = UIColor(white: 0.94, alpha: 1.0)
         fetchNames()
-        let defaults = UserDefaults.standard
         let entity = getCurrentEntity()
-        let encodedEntity = try? JSONEncoder().encode(entity)
-        defaults.set(encodedEntity, forKey: "CurrentEntity")
-        let encodedMeetingGroup = try? JSONEncoder().encode(meetingGroup)
-        defaults.set(encodedMeetingGroup, forKey: "CurrentMeetingGroup")
+        UserDefaultsManager.saveCurrentEntity(entity: entity!)
+        UserDefaultsManager.saveCurrentMeetingGropu(meetingGroup: meetingGroup)
     }
     
     
@@ -819,7 +802,7 @@ class TrackSpeakersViewController: UIViewController, TrackSpeakersDisplayLogic, 
     // MARK: - Handle swipe gestures
     
     /// Get the member's name and index of table that was swiped and pass to functions to move name left or right.
-    @objc func handleSwipeGesture(_ recognizer: UISwipeGestureRecognizer) {
+    @objc private func handleSwipeGesture(_ recognizer: UISwipeGestureRecognizer) {
         guard recognizer.state == .ended else { return }
         guard recognizer.view is UITableView else { return }
         var currentTable: UITableView?
@@ -859,7 +842,7 @@ class TrackSpeakersViewController: UIViewController, TrackSpeakersDisplayLogic, 
      * Updates the timer displays.
      */
     
-    @objc func timerFireMethod(_ timer: Timer) {
+    @objc private func timerFireMethod(_ timer: Timer) {
         
         let secondsSinceStart: Int = abs(Int(startTime!.timeIntervalSinceNow))
         let minutes = secondsSinceStart / 60
@@ -884,7 +867,7 @@ class TrackSpeakersViewController: UIViewController, TrackSpeakersDisplayLogic, 
      On each fire, timerFireMethod(_: ) is called.
      */
     
-    func handleStartTimer() {
+    private func handleStartTimer() {
         if pausePressed != true {
             startTime = Date()
             timerLabel.text = "00:00"
@@ -915,7 +898,7 @@ class TrackSpeakersViewController: UIViewController, TrackSpeakersDisplayLogic, 
      Called when either pause button is pressed
      */
     
-    func handlePauseTimer() {
+    private func handlePauseTimer() {
         
         // Set pause toggle
         pausePressed = true
@@ -937,7 +920,7 @@ class TrackSpeakersViewController: UIViewController, TrackSpeakersDisplayLogic, 
     
     
     /// Called when either stop button is pressed
-    func handleStopTimer() -> Int {
+    private func handleStopTimer() -> Int {
         timer?.invalidate()
         startButton.isEnabled = true
         pauseButton.isEnabled = false

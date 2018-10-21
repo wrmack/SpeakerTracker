@@ -28,7 +28,7 @@ class DisplayMeetingGroupsHeaderView: UITableViewHeaderFooterView {
     
     // MARK: - Views
     
-    func setupViews() {
+    private func setupViews() {
         contentView.backgroundColor = UIColor(white: 0.95, alpha: 1.0)
         entityButton = UIButton(type: .custom)
         entityButton!.setTitle("Select an entity", for: .normal)
