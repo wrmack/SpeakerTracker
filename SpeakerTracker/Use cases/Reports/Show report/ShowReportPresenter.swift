@@ -31,6 +31,10 @@ class ShowReportPresenter: ShowReportPresentationLogic {
         var boldAtts = Attributes().normalBoldBase
         boldAtts[NSAttributedStringKey.paragraphStyle] = ParaStyle().leftWithSpacingBefore
         
+        var italicAtts = Attributes().normalItalicBase
+        italicAtts[NSAttributedStringKey.paragraphStyle] = ParaStyle().leftWithSpacingAfter
+        
+        
         // Entity
         var atts = Attributes().heading1Base
         atts[NSAttributedStringKey.paragraphStyle] = ParaStyle().centered
@@ -53,12 +57,12 @@ class ShowReportPresenter: ShowReportPresentationLogic {
         let timeStrg = formatter.string(from: (event?.date)!)
         atts = Attributes().heading3Base
         atts[NSAttributedStringKey.paragraphStyle] = ParaStyle().centered
-        let dateAttStrg = NSAttributedString(string: timeStrg + "\n" + dateStrg + "\n", attributes: atts)
+        let dateAttStrg = NSAttributedString(string: timeStrg + ", " + dateStrg + "\n", attributes: atts)
         attString.append(dateAttStrg)
         
         // Members
 
-        attString.append(NSAttributedString(string:  "\nMembers:\n", attributes: boldAtts))
+        attString.append(NSAttributedString(string:  "Members:\n", attributes: boldAtts))
         
         var membersStg = String()
         for member in (event?.meetingGroup?.members)! {
@@ -68,22 +72,31 @@ class ShowReportPresenter: ShowReportPresentationLogic {
             let fullName = member.title! + " " + member.firstName! +  " " + member.lastName!
             membersStg.append(fullName)
         }
-        let membersAttStrg = NSAttributedString(string: membersStg + "\n", attributes: normAtts)
+        let membersAttStrg = NSAttributedString(string: membersStg + "\n\n", attributes: normAtts)
         attString.append(membersAttStrg)
+        
+        attString.append(NSAttributedString(string:  "\tDuration\tStart-time\n", attributes: boldAtts))
+        
         
         // Debates
         atts = Attributes().normalBase
         atts[NSAttributedStringKey.paragraphStyle] = ParaStyle().left
-        attString.append(NSAttributedString(string: "Debates:\n", attributes: boldAtts))
         if event?.debates != nil {
             for debate in (event?.debates)! {
-                let refAttStg = NSAttributedString(string: debate.reference! + "\n", attributes: boldAtts)
-                attString.append(refAttStg)
+                let debateNumberAttStg = NSAttributedString(string: "Debate " +  String(debate.debateNumber!) + "\n", attributes: boldAtts)
+                attString.append(debateNumberAttStg)
+                if let note = debate.note {
+                    let refAttStg = NSAttributedString(string: note + "\n", attributes: italicAtts)
+                    attString.append(refAttStg)
+                }
                 var spkrEvtStrg = String()
                 for speakerEvt in debate.speakerEvents! {
-                    let lastNm = speakerEvt.member?.lastName
-                    let spkgTime = speakerEvt.elapsedSeconds
-                    spkrEvtStrg.append(lastNm! + "\t" + String(spkgTime!) + "\n")
+                    let fullName = speakerEvt.member!.title! + " " + speakerEvt.member!.firstName! +  " " +  speakerEvt.member!.lastName!
+                    let spkgTime = String(format: "%02d:%02d", speakerEvt.elapsedMinutes!, speakerEvt.elapsedSeconds!)
+                    formatter.dateStyle = .none
+                    formatter.timeStyle = .short
+                    let startTime = formatter.string(from: (speakerEvt.startTime)!)
+                    spkrEvtStrg.append(fullName + "\t" + String(spkgTime) + "\t" + startTime + "\n")
                 }
 
                 let spkrEvtAttStr = NSAttributedString(string: spkrEvtStrg, attributes: normAtts)
@@ -92,6 +105,7 @@ class ShowReportPresenter: ShowReportPresentationLogic {
         }
         
         attString.fixAttributes(in: NSRange(location: 0, length: attString.length))
+        print(attString)
         
         let viewModel = ShowReport.Report.ViewModel(attText: attString)
         viewController?.displayText(viewModel: viewModel)

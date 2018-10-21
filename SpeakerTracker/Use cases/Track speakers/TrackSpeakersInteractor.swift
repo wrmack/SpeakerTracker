@@ -16,6 +16,7 @@ protocol TrackSpeakersBusinessLogic {
     func setCurrentEntity(entity: Entity)
     func getCurrentEntity()-> Entity?
     func setCurrentMeetingGroup(meetingGroup: MeetingGroup)
+    func getCurrentMeetingGroup()->MeetingGroup?
     func setCurrentEvent(event: Event?) 
     func fetchNames()
     func moveNameRight(from tablePosition: TablePosition )
@@ -23,8 +24,9 @@ protocol TrackSpeakersBusinessLogic {
     func resetAllNames()
     func undoLastAction()
     func setCurrentSpeaker(row: Int)
-    func addCurrentSpeakerToDebate(debateReference: String, speakingTime: Int)
+    func addCurrentSpeakerToDebate(debateNote: String, startTime: Date, speakingTime: Int)
     func addCurrentDebateToEvent()
+    func meetingGroupBelongsToCurrentEntity(meetingGroup: MeetingGroup) ->Bool
 }
 
 protocol TrackSpeakersDataStore {
@@ -69,6 +71,9 @@ class TrackSpeakersInteractor: TrackSpeakersBusinessLogic, TrackSpeakersDataStor
         doneList = [Member]()
     }
     
+    func getCurrentMeetingGroup()->MeetingGroup? {
+        return currentMeetingGroup
+    }
     
     func setCurrentSpeaker(row: Int) {
         currentSpeaker = doneList[row]
@@ -77,14 +82,15 @@ class TrackSpeakersInteractor: TrackSpeakersBusinessLogic, TrackSpeakersDataStor
     
     func setCurrentEvent(event: Event?) {
         currentEvent = event
+        currentEvent?.debates = [Debate]()
     }
     
-    func addCurrentSpeakerToDebate(debateReference: String, speakingTime: Int) {
+    func addCurrentSpeakerToDebate(debateNote: String, startTime: Date, speakingTime: Int) {
         let minutes = speakingTime / 60
         let seconds = speakingTime - (minutes * 60)
-        let speakerEvent = SpeakerEvent(member: currentSpeaker, elapsedMinutes: minutes, elapsedSeconds: seconds, startTime: nil)
+        let speakerEvent = SpeakerEvent(member: currentSpeaker, elapsedMinutes: minutes, elapsedSeconds: seconds, startTime: startTime)
         if currentDebate == nil {
-            currentDebate = Debate(reference: debateReference, speakerEvents: [SpeakerEvent]())
+            currentDebate = Debate(debateNumber: (currentEvent?.debates!.count)! + 1, note: debateNote, speakerEvents: [SpeakerEvent]())
         }
         currentDebate?.speakerEvents?.append(speakerEvent) 
     }
@@ -97,9 +103,13 @@ class TrackSpeakersInteractor: TrackSpeakersBusinessLogic, TrackSpeakersDataStor
          if currentEvent?.debates == nil {
             currentEvent?.debates = [Debate]()
         }
-        currentEvent?.debates?.append(currentDebate!)
+        if currentDebate != nil {
+            currentEvent?.debates?.append(currentDebate!)
+        }
         currentDebate = nil
-        saveCurrentEvent()
+        if currentEvent != nil {
+            saveCurrentEvent()
+        }
     }
     
     
@@ -234,5 +244,21 @@ class TrackSpeakersInteractor: TrackSpeakersBusinessLogic, TrackSpeakersDataStor
             break
         }
         fetchNames()
+    }
+    
+    
+    func meetingGroupBelongsToCurrentEntity(meetingGroup: MeetingGroup) ->Bool {
+        var result = false
+        if let ent = currentEntity {
+            if let groups = ent.meetingGroups {
+                for mg in groups {
+                    if mg == meetingGroup {
+                        result = true
+                    }
+                }
+            }
+            return result
+        }
+        return false
     }
 }

@@ -33,6 +33,12 @@ class  DisplayMeetingGroupsPopUpInteractor:  DisplayMeetingGroupsPopUpBusinessLo
     func fetchMeetingGroups(request:  DisplayMeetingGroupsPopUp.MeetingGroups.Request) {
         if let mg = entity!.meetingGroups  {
             self.meetingGroups = mg
+            meetingGroups.sort(by: {
+                if $0.name! < $1.name! {
+                    return true
+                }
+                return false
+            })
         }
         let response = DisplayMeetingGroupsPopUp.MeetingGroups.Response(meetingGroups: self.meetingGroups)
         self.presenter?.presentMeetingGroups(response: response)

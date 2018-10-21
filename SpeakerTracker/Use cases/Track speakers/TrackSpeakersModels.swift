@@ -41,7 +41,7 @@ struct TablePosition {
 }
 
 struct SpeakerRecording {
-    var enabled = false
+//    var enabled = false
     var row: Int?
     var button: UIButton?
 }

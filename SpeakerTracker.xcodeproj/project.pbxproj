@@ -43,6 +43,11 @@
 		41323F992155D97C004098DC /* DisplayMeetingGroupsForReportsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41323F932155D97C004098DC /* DisplayMeetingGroupsForReportsViewController.swift */; };
 		41323F9A2155D97C004098DC /* DisplayMeetingGroupsForReportsInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41323F942155D97C004098DC /* DisplayMeetingGroupsForReportsInteractor.swift */; };
 		41323F9C2155EDBF004098DC /* WMCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41323F9B2155EDBF004098DC /* WMCollectionViewCell.swift */; };
+		417CD87421731DC000BAD145 /* RemoveEventPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 417CD86E21731DC000BAD145 /* RemoveEventPresenter.swift */; };
+		417CD87621731DC000BAD145 /* RemoveEventRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 417CD87021731DC000BAD145 /* RemoveEventRouter.swift */; };
+		417CD87721731DC000BAD145 /* RemoveEventModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 417CD87121731DC000BAD145 /* RemoveEventModels.swift */; };
+		417CD87821731DC000BAD145 /* RemoveEventController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 417CD87221731DC000BAD145 /* RemoveEventController.swift */; };
+		417CD87921731DC000BAD145 /* RemoveEventInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 417CD87321731DC000BAD145 /* RemoveEventInteractor.swift */; };
 		418098E6214B9E9300E24EB4 /* TrackSpeakersPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 418098E0214B9E9300E24EB4 /* TrackSpeakersPresenter.swift */; };
 		418098E8214B9E9300E24EB4 /* TrackSpeakersRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 418098E2214B9E9300E24EB4 /* TrackSpeakersRouter.swift */; };
 		418098E9214B9E9300E24EB4 /* TrackSpeakersModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 418098E3214B9E9300E24EB4 /* TrackSpeakersModels.swift */; };
@@ -104,6 +109,7 @@
 		41C4EC982144EDD800455266 /* EditMemberModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41C4EC922144EDD800455266 /* EditMemberModels.swift */; };
 		41C4EC992144EDD800455266 /* EditMemberViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41C4EC932144EDD800455266 /* EditMemberViewController.swift */; };
 		41C4EC9A2144EDD800455266 /* EditMemberInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41C4EC942144EDD800455266 /* EditMemberInteractor.swift */; };
+		41C6CFF9216C8B9800217599 /* SelectMembersHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41C6CFF8216C8B9800217599 /* SelectMembersHeaderView.swift */; };
 		41C6DA5B213B4F3200D73077 /* DisplayMembersPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41C6DA55213B4F3200D73077 /* DisplayMembersPresenter.swift */; };
 		41C6DA5D213B4F3200D73077 /* DisplayMembersRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41C6DA57213B4F3200D73077 /* DisplayMembersRouter.swift */; };
 		41C6DA5E213B4F3200D73077 /* DisplayMembersModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41C6DA58213B4F3200D73077 /* DisplayMembersModels.swift */; };
@@ -233,6 +239,11 @@
 		41323F932155D97C004098DC /* DisplayMeetingGroupsForReportsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayMeetingGroupsForReportsViewController.swift; sourceTree = "<group>"; };
 		41323F942155D97C004098DC /* DisplayMeetingGroupsForReportsInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayMeetingGroupsForReportsInteractor.swift; sourceTree = "<group>"; };
 		41323F9B2155EDBF004098DC /* WMCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WMCollectionViewCell.swift; sourceTree = "<group>"; };
+		417CD86E21731DC000BAD145 /* RemoveEventPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoveEventPresenter.swift; sourceTree = "<group>"; };
+		417CD87021731DC000BAD145 /* RemoveEventRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoveEventRouter.swift; sourceTree = "<group>"; };
+		417CD87121731DC000BAD145 /* RemoveEventModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoveEventModels.swift; sourceTree = "<group>"; };
+		417CD87221731DC000BAD145 /* RemoveEventController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoveEventController.swift; sourceTree = "<group>"; };
+		417CD87321731DC000BAD145 /* RemoveEventInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoveEventInteractor.swift; sourceTree = "<group>"; };
 		418098E0214B9E9300E24EB4 /* TrackSpeakersPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackSpeakersPresenter.swift; sourceTree = "<group>"; };
 		418098E2214B9E9300E24EB4 /* TrackSpeakersRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackSpeakersRouter.swift; sourceTree = "<group>"; };
 		418098E3214B9E9300E24EB4 /* TrackSpeakersModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackSpeakersModels.swift; sourceTree = "<group>"; };
@@ -294,6 +305,7 @@
 		41C4EC922144EDD800455266 /* EditMemberModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditMemberModels.swift; sourceTree = "<group>"; };
 		41C4EC932144EDD800455266 /* EditMemberViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditMemberViewController.swift; sourceTree = "<group>"; };
 		41C4EC942144EDD800455266 /* EditMemberInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditMemberInteractor.swift; sourceTree = "<group>"; };
+		41C6CFF8216C8B9800217599 /* SelectMembersHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectMembersHeaderView.swift; sourceTree = "<group>"; };
 		41C6DA55213B4F3200D73077 /* DisplayMembersPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayMembersPresenter.swift; sourceTree = "<group>"; };
 		41C6DA57213B4F3200D73077 /* DisplayMembersRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayMembersRouter.swift; sourceTree = "<group>"; };
 		41C6DA58213B4F3200D73077 /* DisplayMembersModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayMembersModels.swift; sourceTree = "<group>"; };
@@ -492,6 +504,7 @@
 			children = (
 				41C3C762214365A9004AD9D9 /* EditMeetingGroupView.swift */,
 				41D0E7F3216000C800BEB784 /* DisplayMeetingGroupsHeaderView.swift */,
+				41C6CFF8216C8B9800217599 /* SelectMembersHeaderView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -551,7 +564,7 @@
 			path = "Remove meeting group";
 			sourceTree = "<group>";
 		};
-		41C3C7432142F833004AD9D9 /* Edit meeting groups */ = {
+		41C3C7432142F833004AD9D9 /* Setup meeting groups */ = {
 			isa = PBXGroup;
 			children = (
 				418098EE214B9F1A00E24EB4 /* Views */,
@@ -561,16 +574,16 @@
 				41B4673C214ADDA700A8E284 /* Edit meeting group */,
 				41B46749214B067A00A8E284 /* Remove meeting group */,
 			);
-			path = "Edit meeting groups";
+			path = "Setup meeting groups";
 			sourceTree = "<group>";
 		};
 		41C3C7442142F85E004AD9D9 /* Master */ = {
 			isa = PBXGroup;
 			children = (
-				41F721802139F0E000AD98AA /* Edit entities */,
-				41C6DA54213B4EEC00D73077 /* Edit members */,
-				41C3C7432142F833004AD9D9 /* Edit meeting groups */,
-				41F721812139F10700AD98AA /* Edit events */,
+				41F721802139F0E000AD98AA /* Setup entities */,
+				41C6DA54213B4EEC00D73077 /* Setup members */,
+				41C3C7432142F833004AD9D9 /* Setup meeting groups */,
+				41F721812139F10700AD98AA /* Setup events */,
 			);
 			path = Master;
 			sourceTree = "<group>";
@@ -629,7 +642,7 @@
 			path = "Persistent storage";
 			sourceTree = "<group>";
 		};
-		41C6DA54213B4EEC00D73077 /* Edit members */ = {
+		41C6DA54213B4EEC00D73077 /* Setup members */ = {
 			isa = PBXGroup;
 			children = (
 				418098EF214B9F3000E24EB4 /* Views */,
@@ -638,7 +651,7 @@
 				41C6DA8A213B8A6600D73077 /* Edit member */,
 				41C6DA89213B8A5A00D73077 /* Remove member */,
 			);
-			path = "Edit members";
+			path = "Setup members";
 			sourceTree = "<group>";
 		};
 		41C6DA61213B4F7100D73077 /* Display members */ = {
@@ -790,6 +803,17 @@
 			path = "Display entities in popup";
 			sourceTree = "<group>";
 		};
+		41DD00FD216B26250094E2E1 /* Archived */ = {
+			isa = PBXGroup;
+			children = (
+				5FCB017A1E299AC900FBCB06 /* MeetingChooserViewController.swift */,
+				5F83D6881D4D34E400120A7D /* EditMembersController.swift */,
+				5FF9E6001E2878CE008554EE /* EditMeetingsController.swift */,
+				5F1D83B01EFDF35200239F7A /* InfoViewController.swift */,
+			);
+			path = Archived;
+			sourceTree = "<group>";
+		};
 		41F721722139CA7900AD98AA /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -804,16 +828,15 @@
 		41F7217F2139F0CE00AD98AA /* Use cases */ = {
 			isa = PBXGroup;
 			children = (
-				4114D7C52167D710002DC056 /* UI sub-classes */,
-				41D167E62155942E004C1A5C /* Reports */,
 				419DCFDF214A3ED200574084 /* Common use cases */,
 				41F721822139F14000AD98AA /* Track speakers */,
 				4116B75E21410A81000553BA /* Setup */,
+				41D167E62155942E004C1A5C /* Reports */,
 			);
 			path = "Use cases";
 			sourceTree = "<group>";
 		};
-		41F721802139F0E000AD98AA /* Edit entities */ = {
+		41F721802139F0E000AD98AA /* Setup entities */ = {
 			isa = PBXGroup;
 			children = (
 				418098ED214B9EFC00E24EB4 /* Views */,
@@ -822,10 +845,10 @@
 				41F721852139F3B900AD98AA /* Remove entity */,
 				41F721862139F56B00AD98AA /* Edit an entity */,
 			);
-			path = "Edit entities";
+			path = "Setup entities";
 			sourceTree = "<group>";
 		};
-		41F721812139F10700AD98AA /* Edit events */ = {
+		41F721812139F10700AD98AA /* Setup events */ = {
 			isa = PBXGroup;
 			children = (
 				410AE670214C825A0031F09D /* Views */,
@@ -834,7 +857,7 @@
 				4114D7CA2167F508002DC056 /* Edit event */,
 				41F721892139F62F00AD98AA /* Remove event */,
 			);
-			path = "Edit events";
+			path = "Setup events";
 			sourceTree = "<group>";
 		};
 		41F721822139F14000AD98AA /* Track speakers */ = {
@@ -925,6 +948,11 @@
 		41F721892139F62F00AD98AA /* Remove event */ = {
 			isa = PBXGroup;
 			children = (
+				417CD87221731DC000BAD145 /* RemoveEventController.swift */,
+				417CD87321731DC000BAD145 /* RemoveEventInteractor.swift */,
+				417CD86E21731DC000BAD145 /* RemoveEventPresenter.swift */,
+				417CD87021731DC000BAD145 /* RemoveEventRouter.swift */,
+				417CD87121731DC000BAD145 /* RemoveEventModels.swift */,
 			);
 			path = "Remove event";
 			sourceTree = "<group>";
@@ -935,6 +963,7 @@
 				41C4EC8A21445CA500455266 /* Design.rtf */,
 				41C4EC8D2144679800455266 /* Models & storage.rtf */,
 				5F782E371D4B152F00144EA9 /* SpeakerTracker */,
+				41DD00FD216B26250094E2E1 /* Archived */,
 				5F782E4C1D4B153000144EA9 /* SpeakerTrackerTests */,
 				5F782E571D4B153000144EA9 /* SpeakerTrackerUITests */,
 				5F782E361D4B152F00144EA9 /* Products */,
@@ -961,11 +990,8 @@
 				5F782E3F1D4B152F00144EA9 /* Assets.xcassets */,
 				41F721722139CA7900AD98AA /* Models */,
 				41C4EC8C21445E9F00455266 /* Persistent storage */,
+				4114D7C52167D710002DC056 /* UI sub-classes */,
 				41F7217F2139F0CE00AD98AA /* Use cases */,
-				5FCB017A1E299AC900FBCB06 /* MeetingChooserViewController.swift */,
-				5F83D6881D4D34E400120A7D /* EditMembersController.swift */,
-				5FF9E6001E2878CE008554EE /* EditMeetingsController.swift */,
-				5F1D83B01EFDF35200239F7A /* InfoViewController.swift */,
 			);
 			path = SpeakerTracker;
 			sourceTree = "<group>";
@@ -1151,6 +1177,7 @@
 				41820C5C215CAAE1003F2768 /* ShowReportPresenter.swift in Sources */,
 				41D4F3E921427CD600DC848F /* DisplayEntitiesPopUpModels.swift in Sources */,
 				41C6DA5B213B4F3200D73077 /* DisplayMembersPresenter.swift in Sources */,
+				417CD87721731DC000BAD145 /* RemoveEventModels.swift in Sources */,
 				41C3C75F21436514004AD9D9 /* AddMeetingGroupModels.swift in Sources */,
 				41C4EC9A2144EDD800455266 /* EditMemberInteractor.swift in Sources */,
 				41D8A3D22161F18E0066FAE8 /* EditEntityRouter.swift in Sources */,
@@ -1174,6 +1201,7 @@
 				41253B30215EBA0100A5A062 /* DisplayMtgGpsForReportsHeaderView.swift in Sources */,
 				419DCFE7214A400700574084 /* DisplayMeetingGroupsPopUpPresenter.swift in Sources */,
 				41D167F2215594CC004C1A5C /* DisplayReportsViewController.swift in Sources */,
+				417CD87921731DC000BAD145 /* RemoveEventInteractor.swift in Sources */,
 				41F721922139F75400AD98AA /* DisplayEntitiesRouter.swift in Sources */,
 				41C6DA93213B8A8B00D73077 /* AddMemberRouter.swift in Sources */,
 				41C4EC992144EDD800455266 /* EditMemberViewController.swift in Sources */,
@@ -1226,8 +1254,10 @@
 				41D8A3DE2162002A0066FAE8 /* RemoveEntityRouter.swift in Sources */,
 				41C6DA76213B7EA800D73077 /* DisplayEventsPresenter.swift in Sources */,
 				41C6DA7A213B7EA800D73077 /* DisplayEventsViewController.swift in Sources */,
+				41C6CFF9216C8B9800217599 /* SelectMembersHeaderView.swift in Sources */,
 				41323F952155D97C004098DC /* DisplayMeetingGroupsForReportsPresenter.swift in Sources */,
 				4106BE47215DB0D20022443F /* ConvertToPdfRouter.swift in Sources */,
+				417CD87821731DC000BAD145 /* RemoveEventController.swift in Sources */,
 				41D0E7F821600B9A00BEB784 /* DisplayEventsHeaderView.swift in Sources */,
 				41C6DA5D213B4F3200D73077 /* DisplayMembersRouter.swift in Sources */,
 				41C3C75221435882004AD9D9 /* DisplayMeetingGroupsRouter.swift in Sources */,
@@ -1245,6 +1275,7 @@
 				41C3C76B2143A4AA004AD9D9 /* SelectMembersPresenter.swift in Sources */,
 				41C3C76D2143A4AA004AD9D9 /* SelectMembersRouter.swift in Sources */,
 				41C3C75C21436514004AD9D9 /* AddMeetingGroupPresenter.swift in Sources */,
+				417CD87621731DC000BAD145 /* RemoveEventRouter.swift in Sources */,
 				5F8BE5631D546F310040DD76 /* WMTableViewCell.swift in Sources */,
 				41D8A3D42161F18E0066FAE8 /* EditEntityViewController.swift in Sources */,
 				418098E8214B9E9300E24EB4 /* TrackSpeakersRouter.swift in Sources */,
@@ -1266,6 +1297,7 @@
 				410AE66C214C81650031F09D /* AddEventRouter.swift in Sources */,
 				419DCFE9214A400700574084 /* DisplayMeetingGroupsPopUpRouter.swift in Sources */,
 				41820C5E215CAAE1003F2768 /* ShowReportRouter.swift in Sources */,
+				417CD87421731DC000BAD145 /* RemoveEventPresenter.swift in Sources */,
 				41D167F1215594CC004C1A5C /* DisplayReportsModels.swift in Sources */,
 				41C3C76121436514004AD9D9 /* AddMeetingGroupInteractor.swift in Sources */,
 				418285DC213A938D00438325 /* AddEntityPresenter.swift in Sources */,

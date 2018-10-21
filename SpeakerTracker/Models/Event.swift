@@ -31,11 +31,12 @@ struct Event: Codable  {
 
 
 struct Debate: Codable {
-    let reference: String?
+    var debateNumber: Int?
+    var note: String?
     var speakerEvents: [(SpeakerEvent)]?
-    
-    init(reference: String?, speakerEvents: [(SpeakerEvent)]?) {
-        self.reference = reference
+    init(debateNumber: Int?, note: String?, speakerEvents: [(SpeakerEvent)]?) {
+        self.debateNumber = debateNumber
+        self.note = note
         self.speakerEvents = speakerEvents
     }
 }

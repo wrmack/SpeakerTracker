@@ -25,7 +25,7 @@ class WMTableViewCell: UITableViewCell {
     @IBOutlet var rightButton: UIButton?
     @IBOutlet var memberText: UILabel?
     @IBOutlet weak var memberTextLeadingAnchor: NSLayoutConstraint!
-
+    var isDoneListCell = false
 
     override func updateConstraints() {
         super.updateConstraints()
@@ -44,4 +44,13 @@ class WMTableViewCell: UITableViewCell {
             memberTextLeadingAnchor.isActive = true
         }
     }
+    
+    
+//    override func prepareForReuse() {
+//        if isDoneListCell {
+//            rightButton?.setTitle("▶︎", for: .normal)
+//            rightButton?.setTitleColor(UIColor.blue, for: .normal)
+//            rightButton?.titleLabel!.font = UIFont.boldSystemFont(ofSize: 22)
+//        }
+//    }
 }

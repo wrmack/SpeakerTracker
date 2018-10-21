@@ -28,8 +28,9 @@ class DisplayReportsInteractor: DisplayReportsBusinessLogic, DisplayReportsDataS
     var events: [Event]?
     var selectedItem: Event?
 
+    
     // MARK: - VIP
-    // TODO: Sends to presenter for each evt file. See 
+
     /*
      The meeting group was set through data-passing.
      Gets all events for the meeting group.
@@ -43,22 +44,34 @@ class DisplayReportsInteractor: DisplayReportsBusinessLogic, DisplayReportsDataS
             return
         }
         do {
+            var eventUrls = [URL]()
             let fileURLs = try fileManager.contentsOfDirectory(at: docDirectory, includingPropertiesForKeys: nil)
             for url in fileURLs {
                 if url.pathExtension == "evt" {
-                    let eventDoc = EventDocument(fileURL: url)
+                    eventUrls.append(url)
+                }
+            }
+            if eventUrls.count == 0 {
+                let response = DisplayReports.Reports.Response(events: self.events)
+                self.presenter?.presentReports(response: response)
+            }
+            
+            else {
+                for eventUrl in eventUrls {
+                    let eventDoc = EventDocument(fileURL: eventUrl)
                     eventDoc.open(completionHandler: { success in
                         if !success {
-                            print("DisplayReportsInteractor: getReports: error opening EntityDocument")
+                            print("DisplayReportsInteractor: getReports: error opening EventDocument")
+                            return
                         }
                         else {
-                            eventDoc.close(completionHandler: { success in
+                            eventDoc.close(completionHandler: {success in
                                 guard var event = eventDoc.event else {
                                     print("DisplayReportsInteractor: getReports: event is nil")
                                     return
                                 }
                                 if event.filename == nil {
-                                    let urlWithoutExt = url.deletingPathExtension()
+                                    let urlWithoutExt = eventUrl.deletingPathExtension()
                                     event.filename = urlWithoutExt.lastPathComponent
                                 }
                                 if event.meetingGroup == self.meetingGroup {
@@ -69,6 +82,7 @@ class DisplayReportsInteractor: DisplayReportsBusinessLogic, DisplayReportsDataS
                                 })
                                 let response = DisplayReports.Reports.Response(events: self.events)
                                 self.presenter?.presentReports(response: response)
+
                             })
                         }
                     })
