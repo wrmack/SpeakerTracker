@@ -39,7 +39,7 @@ protocol DisplayDetailViewControllerEditEventDelegate: class {
 
 
 class DisplayDetailViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, DisplayDetailDisplayLogic {
-    
+    var router: (NSObjectProtocol & DisplayDetailDataPassing)?
     var interactor: DisplayDetailBusinessLogic?
     var fields = [(String, String)]()
     var selectMeetingGroupLabel: UILabel?
@@ -85,9 +85,13 @@ class DisplayDetailViewController: UIViewController, UITableViewDelegate, UITabl
         let viewController = self
         let interactor = DisplayDetailInteractor()
         let presenter = DisplayDetailPresenter()
+        let router = DisplayDetailRouter()
         viewController.interactor = interactor
+        viewController.router = router
         interactor.presenter = presenter
         presenter.viewController = viewController
+        router.viewController = viewController
+        router.dataStore = interactor
     }
 
 

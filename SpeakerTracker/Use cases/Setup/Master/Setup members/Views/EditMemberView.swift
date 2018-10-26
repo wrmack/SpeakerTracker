@@ -9,17 +9,18 @@
 import UIKit
 
 protocol EditMemberViewDelegate: class {
-    func addAnotherButtonTapped(member: Member?)
+    func addAnother(member: Member?)
 }
 
 
-class EditMemberView: WMEditView {
+class EditMemberView: WMEditView, UITextFieldDelegate {
 
     var member: Member?
     var titleBox: UITextField?
     var firstNameBox: UITextField?
     var lastNameBox: UITextField?
     var addAnotherButton: UIButton?
+    var infoLabel: UILabel?
     weak var delegate: EditMemberViewDelegate?
 
     
@@ -91,6 +92,7 @@ class EditMemberView: WMEditView {
         
         lastNameBox = WMTextField(frame: CGRect.zero)
         lastNameBox?.backgroundColor = UIColor.white
+        lastNameBox?.delegate = self
         containerView!.addSubview(lastNameBox!)
         lastNameBox?.translatesAutoresizingMaskIntoConstraints = false
         lastNameBox?.leadingAnchor.constraint(equalTo: containerView!.leadingAnchor, constant: LEADINGSPACE).isActive = true
@@ -110,6 +112,21 @@ class EditMemberView: WMEditView {
  //      addAnotherButton.trailingAnchor.constraint(equalTo: containerView!.trailingAnchor).isActive = true
         addAnotherButton!.topAnchor.constraint(equalTo: (lastNameBox?.bottomAnchor)!, constant: 50).isActive = true
 //        addAnotherButton.heightAnchor.constraint(equalToConstant: TEXTBOXHEIGHT).isActive = true
+        
+        // ========= Label for instructions
+        infoLabel = UILabel(frame: CGRect.zero)
+        infoLabel!.backgroundColor = UIColor.clear
+        infoLabel!.numberOfLines = 2
+        infoLabel!.text = "To move to next field: press Tab key \nTo add another member: on last field press Return key or press 'Add another'"
+        infoLabel!.textColor = TEXTCOLOR
+        infoLabel!.font =  UIFont.systemFont(ofSize: 12)
+        infoLabel!.isHidden = true
+        containerView!.addSubview(infoLabel!)
+        infoLabel!.translatesAutoresizingMaskIntoConstraints = false
+        infoLabel!.leadingAnchor.constraint(equalTo: containerView!.leadingAnchor).isActive = true
+        infoLabel!.trailingAnchor.constraint(equalTo: containerView!.trailingAnchor).isActive = true
+        infoLabel!.topAnchor.constraint(equalTo: (addAnotherButton?.bottomAnchor)!, constant: LARGESPACING).isActive = true
+        infoLabel!.heightAnchor.constraint(equalToConstant: 2 * LABELHEIGHT).isActive = true
     }
     
     
@@ -126,14 +143,25 @@ class EditMemberView: WMEditView {
     // MARK: - Button actions
     
     @objc private func addAnotherButtonTapped() {
+        addAnotherMember()
+    }
+    
+    
+    // MARK: - UITextfield delegate methods
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        addAnotherMember()
+        return false
+    }
+    
+    // MARK: - Helpers
+    
+    private func addAnotherMember() {
         let id = UUID()
         let member = Member(title: titleBox?.text, firstName: firstNameBox?.text, lastName: lastNameBox?.text, id: id)
         titleBox!.text = ""
         firstNameBox!.text = ""
         lastNameBox!.text = ""
         titleBox?.becomeFirstResponder()
-        delegate?.addAnotherButtonTapped(member: member)
+        delegate?.addAnother(member: member)
     }
-    
- 
 }

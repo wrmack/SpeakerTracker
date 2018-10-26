@@ -20,6 +20,7 @@ enum SelectMembers {
         }
         struct Response {
             var members: [Member]?
+            var selectedIndices: [Int]?
         }
         struct ViewModel {
             var memberNames: [String]

@@ -85,6 +85,7 @@ class EditMeetingGroupRouter: NSObject, EditMeetingGroupRoutingLogic, EditMeetin
     
     func passDataToSelectMembersDataStore(source: EditMeetingGroupDataStore, destination: inout SelectMembersDataStore) {
         destination.entity = source.entity
+        destination.meetingGroup = source.meetingGroup
     }
     
     

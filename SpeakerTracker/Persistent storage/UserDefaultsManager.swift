@@ -40,7 +40,7 @@ class UserDefaultsManager {
     }
 
     
-    static func saveCurrentMeetingGropu(meetingGroup: MeetingGroup) {
+    static func saveCurrentMeetingGroup(meetingGroup: MeetingGroup) {
         let defaults = UserDefaults.standard
         let encodedEntity = try? JSONEncoder().encode(meetingGroup)
         defaults.set(encodedEntity, forKey: "CurrentMeetingGroup")

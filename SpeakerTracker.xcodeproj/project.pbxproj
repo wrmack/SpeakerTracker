@@ -28,6 +28,11 @@
 		4116B75A21410A21000553BA /* DisplayDetailModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4116B75421410A21000553BA /* DisplayDetailModels.swift */; };
 		4116B75B21410A21000553BA /* DisplayDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4116B75521410A21000553BA /* DisplayDetailViewController.swift */; };
 		4116B75C21410A21000553BA /* DisplayDetailInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4116B75621410A21000553BA /* DisplayDetailInteractor.swift */; };
+		4121A678218185E7003D4244 /* AmendmentHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4121A677218185E7003D4244 /* AmendmentHeaderView.swift */; };
+		4121A68E2181A71F003D4244 /* SelectMeetingGroupAndEventRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4121A6882181A71F003D4244 /* SelectMeetingGroupAndEventRouter.swift */; };
+		4121A6902181A71F003D4244 /* SelectMeetingGroupAndEventController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4121A68A2181A71F003D4244 /* SelectMeetingGroupAndEventController.swift */; };
+		4121A6912181A71F003D4244 /* SelectMeetingGroupAndEventInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4121A68B2181A71F003D4244 /* SelectMeetingGroupAndEventInteractor.swift */; };
+		4121A6932181A8FE003D4244 /* TrackSpeakersRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4121A6922181A8FE003D4244 /* TrackSpeakersRouter.swift */; };
 		41253B30215EBA0100A5A062 /* DisplayMtgGpsForReportsHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41253B2F215EBA0100A5A062 /* DisplayMtgGpsForReportsHeaderView.swift */; };
 		41323F952155D97C004098DC /* DisplayMeetingGroupsForReportsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41323F8F2155D97C004098DC /* DisplayMeetingGroupsForReportsPresenter.swift */; };
 		41323F972155D97C004098DC /* DisplayMeetingGroupsForReportsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41323F912155D97C004098DC /* DisplayMeetingGroupsForReportsRouter.swift */; };
@@ -35,6 +40,7 @@
 		41323F992155D97C004098DC /* DisplayMeetingGroupsForReportsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41323F932155D97C004098DC /* DisplayMeetingGroupsForReportsViewController.swift */; };
 		41323F9A2155D97C004098DC /* DisplayMeetingGroupsForReportsInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41323F942155D97C004098DC /* DisplayMeetingGroupsForReportsInteractor.swift */; };
 		41323F9C2155EDBF004098DC /* WMCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41323F9B2155EDBF004098DC /* WMCollectionViewCell.swift */; };
+		414A4A79217D30DD001FD885 /* DisplayDetailRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 414A4A78217D30DD001FD885 /* DisplayDetailRouter.swift */; };
 		417CD87621731DC000BAD145 /* RemoveEventRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 417CD87021731DC000BAD145 /* RemoveEventRouter.swift */; };
 		417CD87821731DC000BAD145 /* RemoveEventController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 417CD87221731DC000BAD145 /* RemoveEventController.swift */; };
 		417CD87921731DC000BAD145 /* RemoveEventInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 417CD87321731DC000BAD145 /* RemoveEventInteractor.swift */; };
@@ -200,6 +206,11 @@
 		4116B75421410A21000553BA /* DisplayDetailModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayDetailModels.swift; sourceTree = "<group>"; };
 		4116B75521410A21000553BA /* DisplayDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayDetailViewController.swift; sourceTree = "<group>"; };
 		4116B75621410A21000553BA /* DisplayDetailInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayDetailInteractor.swift; sourceTree = "<group>"; };
+		4121A677218185E7003D4244 /* AmendmentHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AmendmentHeaderView.swift; sourceTree = "<group>"; };
+		4121A6882181A71F003D4244 /* SelectMeetingGroupAndEventRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectMeetingGroupAndEventRouter.swift; sourceTree = "<group>"; };
+		4121A68A2181A71F003D4244 /* SelectMeetingGroupAndEventController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectMeetingGroupAndEventController.swift; sourceTree = "<group>"; };
+		4121A68B2181A71F003D4244 /* SelectMeetingGroupAndEventInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectMeetingGroupAndEventInteractor.swift; sourceTree = "<group>"; };
+		4121A6922181A8FE003D4244 /* TrackSpeakersRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackSpeakersRouter.swift; sourceTree = "<group>"; };
 		41253B2F215EBA0100A5A062 /* DisplayMtgGpsForReportsHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayMtgGpsForReportsHeaderView.swift; sourceTree = "<group>"; };
 		41323F8F2155D97C004098DC /* DisplayMeetingGroupsForReportsPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayMeetingGroupsForReportsPresenter.swift; sourceTree = "<group>"; };
 		41323F912155D97C004098DC /* DisplayMeetingGroupsForReportsRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayMeetingGroupsForReportsRouter.swift; sourceTree = "<group>"; };
@@ -207,6 +218,7 @@
 		41323F932155D97C004098DC /* DisplayMeetingGroupsForReportsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayMeetingGroupsForReportsViewController.swift; sourceTree = "<group>"; };
 		41323F942155D97C004098DC /* DisplayMeetingGroupsForReportsInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayMeetingGroupsForReportsInteractor.swift; sourceTree = "<group>"; };
 		41323F9B2155EDBF004098DC /* WMCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WMCollectionViewCell.swift; sourceTree = "<group>"; };
+		414A4A78217D30DD001FD885 /* DisplayDetailRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DisplayDetailRouter.swift; sourceTree = "<group>"; };
 		417CD87021731DC000BAD145 /* RemoveEventRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoveEventRouter.swift; sourceTree = "<group>"; };
 		417CD87221731DC000BAD145 /* RemoveEventController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoveEventController.swift; sourceTree = "<group>"; };
 		417CD87321731DC000BAD145 /* RemoveEventInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoveEventInteractor.swift; sourceTree = "<group>"; };
@@ -407,6 +419,7 @@
 				4116B75521410A21000553BA /* DisplayDetailViewController.swift */,
 				4116B75621410A21000553BA /* DisplayDetailInteractor.swift */,
 				4116B75121410A21000553BA /* DisplayDetailPresenter.swift */,
+				414A4A78217D30DD001FD885 /* DisplayDetailRouter.swift */,
 				4116B75421410A21000553BA /* DisplayDetailModels.swift */,
 			);
 			path = "Display Detail";
@@ -421,6 +434,16 @@
 			path = Setup;
 			sourceTree = "<group>";
 		};
+		4121A6792181A62A003D4244 /* Select meeting group & event */ = {
+			isa = PBXGroup;
+			children = (
+				4121A68A2181A71F003D4244 /* SelectMeetingGroupAndEventController.swift */,
+				4121A68B2181A71F003D4244 /* SelectMeetingGroupAndEventInteractor.swift */,
+				4121A6882181A71F003D4244 /* SelectMeetingGroupAndEventRouter.swift */,
+			);
+			path = "Select meeting group & event";
+			sourceTree = "<group>";
+		};
 		41253B2E215EB9C100A5A062 /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -433,6 +456,7 @@
 			isa = PBXGroup;
 			children = (
 				5F8BE5611D546F310040DD76 /* WMTableViewCell.swift */,
+				4121A677218185E7003D4244 /* AmendmentHeaderView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -800,10 +824,12 @@
 		41F721822139F14000AD98AA /* Track speakers */ = {
 			isa = PBXGroup;
 			children = (
+				4121A6792181A62A003D4244 /* Select meeting group & event */,
 				418098EC214B9ED400E24EB4 /* Views */,
 				418098E4214B9E9300E24EB4 /* TrackSpeakersViewController.swift */,
 				418098E5214B9E9300E24EB4 /* TrackSpeakersInteractor.swift */,
 				418098E0214B9E9300E24EB4 /* TrackSpeakersPresenter.swift */,
+				4121A6922181A8FE003D4244 /* TrackSpeakersRouter.swift */,
 				418098E3214B9E9300E24EB4 /* TrackSpeakersModels.swift */,
 			);
 			path = "Track speakers";
@@ -1102,13 +1128,16 @@
 				41323F9A2155D97C004098DC /* DisplayMeetingGroupsForReportsInteractor.swift in Sources */,
 				41D8A3E02162002A0066FAE8 /* RemoveEntityController.swift in Sources */,
 				41820C5C215CAAE1003F2768 /* ShowReportPresenter.swift in Sources */,
+				4121A68E2181A71F003D4244 /* SelectMeetingGroupAndEventRouter.swift in Sources */,
 				41D4F3E921427CD600DC848F /* DisplayEntitiesPopUpModels.swift in Sources */,
+				4121A6932181A8FE003D4244 /* TrackSpeakersRouter.swift in Sources */,
 				41C6DA5B213B4F3200D73077 /* DisplayMembersPresenter.swift in Sources */,
 				41C3C75F21436514004AD9D9 /* AddMeetingGroupModels.swift in Sources */,
 				41C4EC9A2144EDD800455266 /* EditMemberInteractor.swift in Sources */,
 				41D8A3D22161F18E0066FAE8 /* EditEntityRouter.swift in Sources */,
 				41C4EC972144EDD800455266 /* EditMemberRouter.swift in Sources */,
 				41B46748214ADDE100A8E284 /* EditMeetingGroupInteractor.swift in Sources */,
+				4121A6902181A71F003D4244 /* SelectMeetingGroupAndEventController.swift in Sources */,
 				41C3C76F2143A4AA004AD9D9 /* SelectMembersViewController.swift in Sources */,
 				41820C61215CAAE1003F2768 /* ShowReportInteractor.swift in Sources */,
 				41B46746214ADDE100A8E284 /* EditMeetingGroupModels.swift in Sources */,
@@ -1116,6 +1145,7 @@
 				410AE67A214C9DF80031F09D /* DisplayEventsPopUpPresenter.swift in Sources */,
 				41D0E7F4216000C800BEB784 /* DisplayMeetingGroupsHeaderView.swift in Sources */,
 				418285DE213A938D00438325 /* AddEntityRouter.swift in Sources */,
+				4121A6912181A71F003D4244 /* SelectMeetingGroupAndEventInteractor.swift in Sources */,
 				41D8A3D52161F18E0066FAE8 /* EditEntityInteractor.swift in Sources */,
 				41C3C763214365A9004AD9D9 /* EditMeetingGroupView.swift in Sources */,
 				41C3C75321435882004AD9D9 /* DisplayMeetingGroupsModels.swift in Sources */,
@@ -1149,6 +1179,7 @@
 				410AE672214C82930031F09D /* EditEventView.swift in Sources */,
 				4116B75721410A21000553BA /* DisplayDetailPresenter.swift in Sources */,
 				410AE66F214C81650031F09D /* AddEventInteractor.swift in Sources */,
+				4121A678218185E7003D4244 /* AmendmentHeaderView.swift in Sources */,
 				418098E6214B9E9300E24EB4 /* TrackSpeakersPresenter.swift in Sources */,
 				41F7217A2139CEB900AD98AA /* Event.swift in Sources */,
 				418098EA214B9E9300E24EB4 /* TrackSpeakersViewController.swift in Sources */,
@@ -1158,6 +1189,7 @@
 				41F721782139CE7A00AD98AA /* Entity.swift in Sources */,
 				410AE67E214C9DF80031F09D /* DisplayEventsPopUpViewController.swift in Sources */,
 				41B46752214B06D000A8E284 /* RemoveMeetingGroupRouter.swift in Sources */,
+				414A4A79217D30DD001FD885 /* DisplayDetailRouter.swift in Sources */,
 				419DCFEC214A400700574084 /* DisplayMeetingGroupsPopUpInteractor.swift in Sources */,
 				4114D7C72167D78B002DC056 /* WMTextField.swift in Sources */,
 				4114D7D52167F54C002DC056 /* EditEventViewController.swift in Sources */,

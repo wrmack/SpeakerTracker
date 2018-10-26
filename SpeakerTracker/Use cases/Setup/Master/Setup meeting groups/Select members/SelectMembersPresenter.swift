@@ -29,7 +29,11 @@ class SelectMembersPresenter: SelectMembersPresentationLogic {
                 memberNames.append(name)
             }
         }
-        let viewModel = SelectMembers.Members.ViewModel(memberNames: memberNames, selectedRows: nil)
+        var selectedRows: [Int]?
+        if (response.selectedIndices != nil) {
+            selectedRows = response.selectedIndices
+        }
+        let viewModel = SelectMembers.Members.ViewModel(memberNames: memberNames, selectedRows: selectedRows)
         viewController?.displayMemberNames(viewModel: viewModel) 
     }
 }

@@ -68,6 +68,7 @@ class AddMemberViewController: UIViewController, EditMemberViewDelegate {
         super.viewDidLoad()
         editView = EditMemberView(frame: CGRect.zero)
         editView!.addAnotherButton!.isHidden = false
+        editView!.infoLabel!.isHidden = false
         view.addSubview(editView!)
         editView!.headingLabel?.text = "Create a new member"
         editView!.translatesAutoresizingMaskIntoConstraints = false
@@ -104,7 +105,7 @@ class AddMemberViewController: UIViewController, EditMemberViewDelegate {
     
     // MARK: - EditMemberViewDelegate methods
     
-    func addAnotherButtonTapped(member: Member?) {
+    func addAnother(member: Member?) {
         interactor!.addMemberToTempList(member: member!)
     }
     
