@@ -22,24 +22,36 @@ class TrackSpeakersPresenter: TrackSpeakersPresentationLogic {
     // MARK: - VIP
 
     func presentNames(response: TrackSpeakers.Speakers.Response) {
-        var baseNames = [String]()
-        var speakerNames = [String]()
-        var doneNames = [String]()
+        let names = [String]()
+        var remainingNames = [0 : names]
+        var waitingNames = [0 : names]
+        var speakingNames = [0 : names]
         
-        for member in response.baseList! {
-            let memberName = member.firstName! + " " + member.lastName!
-            baseNames.append(memberName)
+        for item in response.remainingList! {
+            let section = item.key
+            for member in item.value {
+                let memberName = member.firstName! + " " + member.lastName!
+                remainingNames[section]!.append(memberName)
+            }
         }
-        for member in response.speakerList! {
-            let memberName = member.firstName! + " " + member.lastName!
-            speakerNames.append(memberName)
-        }
-        for member in response.doneList! {
-            let memberName = member.firstName! + " " + member.lastName!
-            doneNames.append(memberName)
+        for item in response.waitingList! {
+            let section = item.key
+            for member in item.value {
+                let memberName = member.firstName! + " " + member.lastName!
+                waitingNames[section]!.append(memberName)
+            }
         }
         
-        let viewModel = TrackSpeakers.Speakers.ViewModel(baseNames: baseNames, speakerNames: speakerNames, doneNames: doneNames )
+        for item in response.speakingList! {
+            let section = item.key
+            speakingNames[section] = [String]()
+            for member in item.value {
+                let memberName = member.firstName! + " " + member.lastName!
+                speakingNames[section]!.append(memberName)
+            }
+        }
+        
+        let viewModel = TrackSpeakers.Speakers.ViewModel(remainingNames: remainingNames, waitingNames: waitingNames, speakingNames: speakingNames )
         viewController?.displayNames(viewModel: viewModel)
     }
 }

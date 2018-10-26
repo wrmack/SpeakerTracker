@@ -281,7 +281,7 @@
                                                                         <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                                     </state>
                                                                     <connections>
-                                                                        <action selector="baseRightButtonPressed:forEvent:" destination="BYZ-38-t0r" eventType="touchUpInside" id="mAc-JW-Lqf"/>
+                                                                        <action selector="remainingTableRightButtonPressed:forEvent:" destination="BYZ-38-t0r" eventType="touchUpInside" id="wag-xr-0LK"/>
                                                                     </connections>
                                                                 </button>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sRB-6X-ieO">
@@ -349,7 +349,7 @@
                                                                         <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                                     </state>
                                                                     <connections>
-                                                                        <action selector="speakerLeftButtonPressed:forEvent:" destination="BYZ-38-t0r" eventType="touchUpInside" id="QNY-5A-JvN"/>
+                                                                        <action selector="waitingTableLeftButtonPressed:forEvent:" destination="BYZ-38-t0r" eventType="touchUpInside" id="LkL-t6-5Zc"/>
                                                                     </connections>
                                                                 </button>
                                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vIr-Jx-q0m">
@@ -362,7 +362,7 @@
                                                                         <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                                     </state>
                                                                     <connections>
-                                                                        <action selector="speakerRightButtonPressed:forEvent:" destination="BYZ-38-t0r" eventType="touchUpInside" id="kSq-PF-buv"/>
+                                                                        <action selector="waitingTableRightButtonPressed:forEvent:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ein-I2-JQQ"/>
                                                                     </connections>
                                                                 </button>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X43-lu-cgc">
@@ -430,7 +430,7 @@
                                                                         <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                                     </state>
                                                                     <connections>
-                                                                        <action selector="doneLeftButtonPressed:forEvent:" destination="BYZ-38-t0r" eventType="touchUpInside" id="S5b-Wd-XAv"/>
+                                                                        <action selector="speakingTableLeftButtonPressed:forEvent:" destination="BYZ-38-t0r" eventType="touchUpInside" id="7eD-Xt-BwH"/>
                                                                     </connections>
                                                                 </button>
                                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uzM-B8-HTa">
@@ -443,7 +443,7 @@
                                                                         <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                     </state>
                                                                     <connections>
-                                                                        <action selector="doneRightButtonPressed:forEvent:" destination="BYZ-38-t0r" eventType="touchUpInside" id="g3W-U3-exe"/>
+                                                                        <action selector="speakingTableRightButtonPressed:forEvent:" destination="BYZ-38-t0r" eventType="touchUpInside" id="EbW-0H-1dp"/>
                                                                     </connections>
                                                                 </button>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mll-GP-Z9h">
@@ -874,13 +874,10 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="Speakers" id="oU0-l7-Ux2"/>
                     <connections>
-                        <outlet property="baseList" destination="M9q-6Q-d06" id="RqP-hr-an6"/>
                         <outlet property="debateNote" destination="GqD-lX-4oP" id="hdQ-9M-H9N"/>
                         <outlet property="dimmerView" destination="XKb-FW-hTi" id="fbs-0Q-OZY"/>
                         <outlet property="discloseSideBarButton" destination="ZWK-ht-EJz" id="ddX-Va-1Rf"/>
                         <outlet property="disclosureSideBarButtonView" destination="p9K-1h-NDK" id="keG-6p-WDZ"/>
-                        <outlet property="doneLabel" destination="y9b-9r-eeA" id="cNC-an-gaD"/>
-                        <outlet property="doneList" destination="1oh-A2-rjo" id="bKE-rM-BZp"/>
                         <outlet property="eventView" destination="c3f-Dk-tgw" id="cKs-Tj-P3D"/>
                         <outlet property="expandButton" destination="7Aj-La-rWp" id="C6Q-Te-nX7"/>
                         <outlet property="meetingGroupLabel" destination="QUA-de-m6v" id="f7U-Qn-aUI"/>
@@ -888,6 +885,7 @@
                         <outlet property="recordSwitch" destination="PgV-hc-x5e" id="v79-PY-nCF"/>
                         <outlet property="recordingOnLabel" destination="g2S-Qu-Fhp" id="aw1-uS-EdT"/>
                         <outlet property="remainingLabel" destination="hEh-Up-lVK" id="2rg-2J-dIB"/>
+                        <outlet property="remainingTable" destination="M9q-6Q-d06" id="gwQ-DT-ThI"/>
                         <outlet property="resetButton" destination="SH9-F0-SR5" id="2BN-EC-fbF"/>
                         <outlet property="selectEntityButton" destination="Iob-p0-oQ1" id="7a8-bF-GjH"/>
                         <outlet property="selectEventButton" destination="VDk-J1-m3D" id="8NQ-rm-aPc"/>
@@ -898,13 +896,15 @@
                         <outlet property="smStartButton" destination="ziI-1F-igG" id="Pig-iN-hr1"/>
                         <outlet property="smStopButton" destination="qL0-Vc-C8K" id="KwA-ih-NWP"/>
                         <outlet property="smTimerLabel" destination="hLA-y3-7cs" id="8PA-aV-W2f"/>
-                        <outlet property="speakerLabel" destination="uOE-0u-hO8" id="b06-md-lVA"/>
-                        <outlet property="speakerList" destination="VtB-eR-i0m" id="3ut-qc-1OU"/>
+                        <outlet property="speakingLabel" destination="y9b-9r-eeA" id="WPE-dr-rXy"/>
+                        <outlet property="speakingTable" destination="1oh-A2-rjo" id="7cc-VN-qA2"/>
                         <outlet property="stackView" destination="aSz-tK-Z07" id="QHx-pO-osv"/>
                         <outlet property="startButton" destination="gDw-MN-pVs" id="t6V-Lw-ZFS"/>
                         <outlet property="stopButton" destination="CN5-1D-vil" id="O81-oc-8WM"/>
                         <outlet property="timerLabel" destination="wnE-uG-0em" id="FNa-NU-Exp"/>
                         <outlet property="undoButton" destination="5ct-OP-JLg" id="OyE-Xt-oX4"/>
+                        <outlet property="waitingLabel" destination="uOE-0u-hO8" id="wr7-R5-pEH"/>
+                        <outlet property="waitingTable" destination="VtB-eR-i0m" id="hEa-Nm-8OF"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

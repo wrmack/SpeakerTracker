@@ -19,12 +19,14 @@ protocol SelectMembersBusinessLogic {
 
 protocol SelectMembersDataStore {
     var entity: Entity? {get set}
+    var meetingGroup: MeetingGroup?  {get set}
     var members: [Member]? {get set}
 }
 
 class SelectMembersInteractor: SelectMembersBusinessLogic, SelectMembersDataStore {
     var presenter: SelectMembersPresentationLogic?
     var entity: Entity?
+    var meetingGroup: MeetingGroup?
     var members: [Member]?
 
 
@@ -32,7 +34,13 @@ class SelectMembersInteractor: SelectMembersBusinessLogic, SelectMembersDataStor
     // MARK: VIP
 
     func fetchMembers(request: SelectMembers.Members.Request) {
-        let response = SelectMembers.Members.Response(members: entity!.members)
+        var selectedIndices = [Int]()
+        for member in (meetingGroup!.members)! {
+            if let idx = entity!.members!.firstIndex(where: {$0.id == member.id}) {
+                selectedIndices.append(idx)
+            }
+        }
+        let response = SelectMembers.Members.Response(members: entity!.members, selectedIndices: selectedIndices)
         self.presenter?.presentMembers(response: response) 
     }
     

@@ -188,7 +188,7 @@ class DisplayEntitiesPopUpViewController: UIViewController, UITableViewDelegate,
         }
         if entityNames!.count == 0 {
             cell!.textLabel!.textColor = UIColor.lightGray
-            cell!.textLabel!.text = "No entities set up"
+            cell!.textLabel!.text = "Create an entity in Setup"
             cell?.isUserInteractionEnabled = false
         } else {
             let entityName = entityNames![(indexPath).row]

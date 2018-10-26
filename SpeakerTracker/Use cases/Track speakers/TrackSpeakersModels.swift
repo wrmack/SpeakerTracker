@@ -19,23 +19,25 @@ enum TrackSpeakers {
         struct Request {
         }
         struct Response {
-            var baseList: [Member]?
-            var speakerList: [Member]?
-            var doneList: [Member]?
+            var remainingList: [Int : [Member]]?
+            var waitingList: [Int : [Member]]?
+            var speakingList: [Int : [Member]]?
         }
         struct ViewModel {
-            var baseNames: [String]?
-            var speakerNames: [String]?
-            var doneNames: [String]?
+            var remainingNames: [Int : [String]]?
+            var waitingNames: [Int : [String]]?
+            var speakingNames: [Int : [String]]?
         }
     }
 }
 
 struct TablePosition {
     var tableIndex: Int?
+    var tableSection: Int?
     var tableRow: Int?
-    init(tableIndex: Int?, tableRow: Int?) {
+    init(tableIndex: Int?, tableSection: Int?, tableRow: Int?) {
         self.tableIndex = tableIndex
+        self.tableSection = tableSection
         self.tableRow = tableRow
     }
 }

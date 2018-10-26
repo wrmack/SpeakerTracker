@@ -206,8 +206,18 @@ class  DisplayMeetingGroupsPopUpViewController: UIViewController, UITableViewDel
             cell!.textLabel!.textAlignment = NSTextAlignment.center
             cell!.selectionStyle = UITableViewCellSelectionStyle.gray
         }
-        let meetingGroupName = meetingGroupNames![(indexPath).row]
-        cell!.textLabel!.text = meetingGroupName
+        if meetingGroupNames!.count == 0 {
+            cell!.textLabel!.textColor = UIColor.lightGray
+            cell!.textLabel!.text = "Create a meeting group in Setup"
+            cell?.isUserInteractionEnabled = false
+        }
+        else {
+            let meetingGroupName = meetingGroupNames![(indexPath).row]
+            cell!.textLabel!.textColor = UIColor.black
+            cell!.textLabel!.text = meetingGroupName
+            cell?.isUserInteractionEnabled = true
+        }
+
         
         return cell!
     }
@@ -215,6 +225,9 @@ class  DisplayMeetingGroupsPopUpViewController: UIViewController, UITableViewDel
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section:Int) -> Int {
+        if meetingGroupNames!.count == 0 {
+            return 1
+        }
         return (meetingGroupNames!.count)
     }
     

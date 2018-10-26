@@ -66,6 +66,7 @@ class EditMemberViewController: UIViewController {
         super.viewDidLoad()
         editView = EditMemberView(frame: CGRect.zero)
         editView!.addAnotherButton!.isHidden = true
+        editView!.infoLabel!.isHidden = true
         view.addSubview(editView!)
         editView!.headingLabel?.text = "Edit member"
         editView!.translatesAutoresizingMaskIntoConstraints = false
