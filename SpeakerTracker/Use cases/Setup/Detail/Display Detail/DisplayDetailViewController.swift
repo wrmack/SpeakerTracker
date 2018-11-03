@@ -105,6 +105,9 @@ class DisplayDetailViewController: UIViewController, UITableViewDelegate, UITabl
         detailTableView.reloadData()
     }
 
+    override func viewDidAppear(_ animated: Bool) {
+        detailTableView.reloadData()
+    }
     
     // MARK: - Exposed methods
     
@@ -174,13 +177,20 @@ class DisplayDetailViewController: UIViewController, UITableViewDelegate, UITabl
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let myIdentifier = "DetailCellView"
-        let cell = tableView.dequeueReusableCell(withIdentifier: myIdentifier)
+        let cell = tableView.dequeueReusableCell(withIdentifier: myIdentifier) as! WMDisplayDetailCell
         let (title, detail) = fields[indexPath.row]
-        cell?.textLabel?.text = title
-        cell?.textLabel?.textColor = UIColor(white: 0.5, alpha: 1.0)
-        cell?.detailTextLabel?.text = detail
+        cell.titleLabel.text = title
+        cell.titleLabel?.textColor = UIColor(white: 0.5, alpha: 1.0)
+        cell.detailLabel?.text = detail
         
-        return cell!
+        return cell
     }
 
+//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+//        return UITableViewAutomaticDimension
+//    }
+//    
+//    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+//        return 44
+//    }
 }

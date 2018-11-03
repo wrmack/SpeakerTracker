@@ -21,6 +21,14 @@ class EditMemberView: WMEditView, UITextFieldDelegate {
     var lastNameBox: UITextField?
     var addAnotherButton: UIButton?
     var infoLabel: UILabel?
+    var infoText = """
+    To move to next field: press Tab key.
+    To add another member: on completing 'Last name' field press Return key, or press 'Add another'.
+    When finished press 'Save'.
+
+    Include any members who are appointed or co-opted.  The members of meeting groups are selected from this list of members.
+    """
+
     weak var delegate: EditMemberViewDelegate?
 
     
@@ -116,17 +124,17 @@ class EditMemberView: WMEditView, UITextFieldDelegate {
         // ========= Label for instructions
         infoLabel = UILabel(frame: CGRect.zero)
         infoLabel!.backgroundColor = UIColor.clear
-        infoLabel!.numberOfLines = 2
-        infoLabel!.text = "To move to next field: press Tab key \nTo add another member: on last field press Return key or press 'Add another'"
+        infoLabel!.numberOfLines = 0
+        infoLabel!.text = infoText
         infoLabel!.textColor = TEXTCOLOR
-        infoLabel!.font =  UIFont.systemFont(ofSize: 12)
+        infoLabel!.font =  UIFont.systemFont(ofSize: 14)
         infoLabel!.isHidden = true
         containerView!.addSubview(infoLabel!)
         infoLabel!.translatesAutoresizingMaskIntoConstraints = false
         infoLabel!.leadingAnchor.constraint(equalTo: containerView!.leadingAnchor).isActive = true
         infoLabel!.trailingAnchor.constraint(equalTo: containerView!.trailingAnchor).isActive = true
         infoLabel!.topAnchor.constraint(equalTo: (addAnotherButton?.bottomAnchor)!, constant: LARGESPACING).isActive = true
-        infoLabel!.heightAnchor.constraint(equalToConstant: 2 * LABELHEIGHT).isActive = true
+
     }
     
     

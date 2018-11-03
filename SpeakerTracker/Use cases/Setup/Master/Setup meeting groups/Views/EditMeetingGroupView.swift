@@ -18,6 +18,12 @@ class EditMeetingGroupView: WMEditView {
     var meetingGroup: MeetingGroup?
     var nameBox: UITextField?
     var membersDetailLabel: UILabel?
+    var infoLabel: UILabel?
+    var infoText = """
+    A meeting group may be all the members of the entity, such as the governing body of a council, or a smaller group, such as a committee.
+    For example, a company board might have a meeting group comprising all its members for full board meetings and separate meeting groups for each of its committees.
+    """
+    
     weak var delegate: EditMeetingGroupViewDelegate?
     
     
@@ -92,7 +98,20 @@ class EditMeetingGroupView: WMEditView {
         membersDisclosureButton.topAnchor.constraint(equalTo: (membersDetailLabel?.topAnchor)!).isActive = true
         membersDisclosureButton.heightAnchor.constraint(equalToConstant: 40).isActive = true
         membersDisclosureButton.widthAnchor.constraint(equalToConstant: 40).isActive = true
-
+        
+        // ========= Label for instructions
+        infoLabel = UILabel(frame: CGRect.zero)
+        infoLabel!.backgroundColor = UIColor.clear
+        infoLabel!.numberOfLines = 0
+        infoLabel!.text = infoText
+        infoLabel!.textColor = TEXTCOLOR
+        infoLabel!.font =  UIFont.systemFont(ofSize: 14)
+        infoLabel!.isHidden = true
+        containerView!.addSubview(infoLabel!)
+        infoLabel!.translatesAutoresizingMaskIntoConstraints = false
+        infoLabel!.leadingAnchor.constraint(equalTo: containerView!.leadingAnchor).isActive = true
+        infoLabel!.trailingAnchor.constraint(equalTo: containerView!.trailingAnchor).isActive = true
+        infoLabel!.topAnchor.constraint(equalTo: (membersDisclosureButton.bottomAnchor), constant: 50).isActive = true
     }
     
     

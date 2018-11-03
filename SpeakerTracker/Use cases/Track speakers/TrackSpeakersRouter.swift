@@ -18,6 +18,10 @@ import UIKit
     func routeToSelectEvent(button: UIButton)
     func returnFromSelectingMeetingGroup()
     func returnFromSelectingEvent()
+    func routeToShowHelpController()
+    func returnFromShowHelpController()
+    func routeToAddNoteToDebate()
+    func returnFromAddNoteToDebate()
 }
 
 protocol TrackSpeakersDataPassing {
@@ -28,10 +32,13 @@ class TrackSpeakersRouter: NSObject, TrackSpeakersRoutingLogic, TrackSpeakersDat
     weak var viewController: TrackSpeakersViewController?
     var dataStore: TrackSpeakersDataStore?
     var selectMGAndEvtController: SelectMeetingGroupAndEventController?
+    var addNoteVC: AddNoteToDebateViewController?
+    var dimmerView: UIView?
     
   
   // MARK: Routing
-  
+    
+    // Select an entity
     func routeToSelectEntity(button: UIButton) {
         if selectMGAndEvtController == nil {
             createSelectMtgAndEvtController()
@@ -39,29 +46,70 @@ class TrackSpeakersRouter: NSObject, TrackSpeakersRoutingLogic, TrackSpeakersDat
         selectMGAndEvtController?.displayEntityPopUp(button: button)
     }
     
+    // Select a meeting group
     func routeToSelectMeetingGroup(button: UIButton) {
         if selectMGAndEvtController == nil {
             createSelectMtgAndEvtController()
         }
         selectMGAndEvtController?.displayMeetingGroupPopUp(button: button)
     }
-
+    
+    func returnFromSelectingMeetingGroup() {
+        selectMGAndEvtController = nil
+        viewController!.updateAfterSelectingMeetingGroup()
+    }
+    
+    
+    // Select an event
     func routeToSelectEvent(button: UIButton) {
         if selectMGAndEvtController == nil {
             createSelectMtgAndEvtController()
         }
         selectMGAndEvtController?.displayEventPopUp(button: button)
     }
-    
-    func returnFromSelectingMeetingGroup() {
-         selectMGAndEvtController = nil
-        viewController!.updateAfterSelectingMeetingGroup()
-    }
-    
+ 
     func returnFromSelectingEvent() {
         selectMGAndEvtController = nil
         viewController!.updateAfterSelectingEvent()
     }
+    
+    
+    // Add a note to the debate
+    func routeToAddNoteToDebate() {
+        dimmerView = UIView(frame: (viewController?.view.bounds)!)
+        dimmerView!.backgroundColor = UIColor(white: 0.2, alpha: 0.5)
+        viewController!.view.addSubview(dimmerView!)
+        addNoteVC = AddNoteToDebateViewController(source: viewController!)
+        var destinationDS =  addNoteVC!.router?.dataStore
+        passDataToAddNoteToDebate(source: dataStore!, destination: &destinationDS!)
+        viewController?.addChildViewController(addNoteVC!)
+        viewController!.view.addSubview(addNoteVC!.view)
+        addNoteVC!.view.translatesAutoresizingMaskIntoConstraints = false
+        addNoteVC!.view.centerXAnchor.constraint(equalTo: viewController!.view.centerXAnchor).isActive = true
+        addNoteVC!.view.leadingAnchor.constraint(equalTo: viewController!.view.leadingAnchor, constant: 200).isActive = true
+        addNoteVC!.view.heightAnchor.constraint(equalToConstant: 200).isActive = true
+        addNoteVC!.view.centerYAnchor.constraint(equalTo: viewController!.view.centerYAnchor, constant: -50).isActive = true
+    }
+    
+    func returnFromAddNoteToDebate() {
+        dimmerView?.removeFromSuperview()
+        passDataToTrackSpeakers(source: addNoteVC!.router!.dataStore!, destination: &dataStore!)
+        addNoteVC!.view.removeFromSuperview()
+        addNoteVC?.removeFromParentViewController()
+        addNoteVC = nil
+    }
+    
+    // Show help
+    func routeToShowHelpController() {
+        let infoController = ShowHelpViewController(source: viewController!)
+        infoController.modalPresentationStyle = .pageSheet
+        viewController?.present(infoController, animated: true, completion: nil)
+    }
+    
+    func returnFromShowHelpController() {
+        viewController?.dismiss(animated: true, completion: nil)
+    }
+    
     
     // MARK: Data passing
     
@@ -69,6 +117,14 @@ class TrackSpeakersRouter: NSObject, TrackSpeakersRoutingLogic, TrackSpeakersDat
         destination.currentEntity = source.currentEntity
         destination.currentMeetingGroup = source.currentMeetingGroup
         destination.currentEvent = source.currentEvent
+    }
+    
+    func passDataToAddNoteToDebate(source: TrackSpeakersDataStore,  destination: inout AddNoteToDebateDataStore) {
+        destination.currentDebate = source.currentDebate
+    }
+    
+    func passDataToTrackSpeakers(source: AddNoteToDebateDataStore, destination: inout TrackSpeakersDataStore) {
+        destination.currentDebate = source.currentDebate
     }
     
     // MARK: Helpers

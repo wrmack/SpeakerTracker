@@ -19,62 +19,51 @@ protocol TrackSpeakersDisplayLogic: class {
 
 
 
-class TrackSpeakersViewController: UIViewController, TrackSpeakersDisplayLogic,  UITableViewDelegate, UITableViewDataSource {
+class TrackSpeakersViewController: UIViewController, TrackSpeakersDisplayLogic {
     
     var interactor: TrackSpeakersBusinessLogic?
     var router: (NSObjectProtocol & TrackSpeakersRoutingLogic & TrackSpeakersDataPassing)?
 
     // MARK: - Properties
     
-    /// Tables are stored as an array of 3 tuples.  Each tuple contains the UITableView reference and a dictionary giving members' names in each section.
-    private var tableCollection = [(UITableView, [Int : [String]]?)]()
+    // Table collection
+    var tableCollection = [MembersTable]()
+
+    // Timer properties
+    var timer: Timer?
+    var timerVisible = false
+    var startTime: Date?
+    var pausePressed = false
+    var secondsElapsedWhenTimerPaused = 0
     
-    /// Stores the total list of members as presented initially in first table.  The default names are overwritten if user has saved a list to user defaults.
-    private var remainingNames = [String?]()
-    
-    /// Tracks whether the timer is visible.
-    private var timerVisible = false
-    
-    /// A reference to the timer.
-    private var timer: Timer?
-    
-    /// Stores the start time when timer is started.
-    private var startTime: Date?
-    
-    /// Tracks the pause toggle
-    private var pausePressed = false
-    
-    /// Stores time when pause is pressed
-    private var secondsElapsedWhenTimerPaused = 0
-    
-    /// Tracks the reorder toggle on speaker list
-    private var reorderOn = false
-    
-    /// The undo stack is an array of tuples.  Each tuple holds: source table index, name position in source table, destination table index, name position in destination table and name of member.
-    private var undoStack = [(Int, Int, Int, Int, String)]()
-    
-    private var speakerRecording = SpeakerRecording(row: nil, button: nil)
-    
+    // Sidebar
     private var sideBarIsHidden = true
-    
     internal var eventRecordingIsOn = false
     
-    private var longPressTablePosition: TablePosition?
+    // Waiting list table
+     var reorderOn = false
     
-    private var speakingTableNumberOfSections = 1
-    private var speakingTableCurrentSection = 0
+    // Speaker list table
+    var speakerRecording: SpeakerRecording?
+    var longPressTablePosition: TablePosition?
+    var speakingTableNumberOfSections = 1
+    var debateMode = DebateMode.mainMotion
+    var speakingTableSections = [ 0 : SectionStatus()]
     
+    /// The undo stack is an array of tuples.  Each tuple holds: source table index, name position in source table, destination table index, name position in destination table and name of member.
+     var undoStack = [(Int, Int, Int, Int, MemberNameWithTime)]()
+    
+
 
     // MARK: - Storyboard outlets
 
-    // MARK: Table views
-    /// There are three table views with lists of speakers.  This is the left table view, containing the starting list of names.    
-       @IBOutlet weak var remainingTable: UITableView!
+    // The left table view, containing the starting list of names.
+    @IBOutlet weak var remainingTable: UITableView!
     
-    /// There are three table views with lists of speakers.  This is the middle table view, containing the list of those wanting to speak.
+    // The middle table view, containing the list of those wanting to speak.
     @IBOutlet weak var waitingTable: UITableView!
     
-    /// There are three table views with lists of speakers.  This is the right table view, containing the current speaker and the list of those who have spoken.
+    // The right table view, containing the current speaker and the list of those who have spoken.
     @IBOutlet weak var speakingTable: UITableView!
     
     // References to labels for purposes of tweaking appearance
@@ -82,29 +71,29 @@ class TrackSpeakersViewController: UIViewController, TrackSpeakersDisplayLogic, 
     @IBOutlet weak var waitingLabel: UILabel!
     @IBOutlet weak var speakingLabel: UILabel!
     
-    // MARK: Timer buttons and labels
-    @IBOutlet private weak var timerLabel: UILabel!
-    @IBOutlet private weak var startButton: UIButton!
-    @IBOutlet private weak var pauseButton: UIButton!
-    @IBOutlet private weak var stopButton: UIButton!
-    @IBOutlet private weak var smTimerLabel: UILabel!
-    @IBOutlet private weak var smStartButton: UIButton!
-    @IBOutlet private weak var smPauseButton: UIButton!
-    @IBOutlet private weak var smStopButton: UIButton!
+    // Timer buttons and labels
+    @IBOutlet  weak var timerLabel: UILabel!
+    @IBOutlet  weak var startButton: UIButton!
+    @IBOutlet  weak var pauseButton: UIButton!
+    @IBOutlet  weak var stopButton: UIButton!
+    @IBOutlet  weak var smTimerLabel: UILabel!
+    @IBOutlet  weak var smStartButton: UIButton!
+    @IBOutlet  weak var smPauseButton: UIButton!
+    @IBOutlet  weak var smStopButton: UIButton!
     
     // The view that dims the background when the large timer is displayed
     @IBOutlet private weak var dimmerView: UIView!
     
-    /// Holds start, pause and stop buttons for large timer
+    // Holds start, pause and stop buttons for large timer
     @IBOutlet private weak var stackView: UIStackView!
     
-    // MARK: Buttons on right side of screen
+    // Buttons on right side of screen
     @IBOutlet private weak var expandButton: UIButton!
     @IBOutlet private weak var undoButton: UIButton!
     @IBOutlet private weak var resetButton: UIButton!
     @IBOutlet internal weak var recordingOnLabel: UILabel!
     
-    // MARK: Sidebar, views and buttons
+    // Sidebar, views and buttons
     @IBOutlet private weak var sideBarView: UIView!
     @IBOutlet private weak var sideBarLeadingConstraint: NSLayoutConstraint!
     @IBOutlet private weak var disclosureSideBarButtonView: UIView!
@@ -115,28 +104,26 @@ class TrackSpeakersViewController: UIViewController, TrackSpeakersDisplayLogic, 
     @IBOutlet private weak var eventView: UIView!
     @IBOutlet internal weak var recordSwitch: UISwitch!
     @IBOutlet private weak var debateNote: UITextField!
-    @IBOutlet internal weak var meetingGroupLabel: UILabel!
     
-    
+    // Display - current meeting group and event
+    @IBOutlet internal weak var meetingGroupLabel: UILabel!    
+    @IBOutlet weak var meetingEventLabel: UILabel!
     // MARK: - Object lifecycle
 
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-        setup()
+        setupVIP()
     }
-
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        setup()
+        setupVIP()
     }
-
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
 
     deinit {
         print("TrackSpeakersViewController deinitialising")
@@ -145,7 +132,7 @@ class TrackSpeakersViewController: UIViewController, TrackSpeakersDisplayLogic, 
     
     // MARK: - Setup
 
-    private func setup() {
+    private func setupVIP() {
         let viewController = self
         let interactor = TrackSpeakersInteractor()
         let presenter = TrackSpeakersPresenter()
@@ -158,7 +145,13 @@ class TrackSpeakersViewController: UIViewController, TrackSpeakersDisplayLogic, 
         router.dataStore = interactor
     }
 
-
+    private func setupTableCollection() {
+        let memberTableRemaining = MembersTable(tableView: remainingTable, nameDictionary: nil)
+        let memberTableWaiting = MembersTable(tableView: waitingTable, nameDictionary: nil)
+        let memberTableSpeaking = MembersTable(tableView: speakingTable, nameDictionary: nil)
+    
+        tableCollection = [memberTableRemaining, memberTableWaiting, memberTableSpeaking]
+    }
     
     // MARK: - View lifecycle
 
@@ -183,7 +176,7 @@ class TrackSpeakersViewController: UIViewController, TrackSpeakersDisplayLogic, 
         waitingTable.delegate = self
         speakingTable.dataSource = self
         speakingTable.delegate = self
-        speakingTable.register(AmendmentHeaderView.self, forHeaderFooterViewReuseIdentifier: "AmendmentHeaderView")
+        speakingTable.register(DebateSectionHeaderView.self, forHeaderFooterViewReuseIdentifier: "DebateSectionHeaderView")
         
         // At start up, hide timer views, ensure stackview is at back so does not intercept touches, hide sidebar and the view containing the event selectors
         dimmerView.isHidden = true
@@ -210,7 +203,7 @@ class TrackSpeakersViewController: UIViewController, TrackSpeakersDisplayLogic, 
         selectMeetingGroupButton.isEnabled = (selectEntityButton.titleLabel?.text == "Select an entity") ? false : true
         recordSwitch.isEnabled = (selectMeetingGroupButton.titleLabel?.text == "Select a meeting group") ? false : true
         
-        let swipeGesture1 = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipeGesture(_:)))
+        let swipeGesture1 = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipeGesture(_:))) 
         swipeGesture1.direction = .right
         self.remainingTable.addGestureRecognizer(swipeGesture1)
         
@@ -227,8 +220,8 @@ class TrackSpeakersViewController: UIViewController, TrackSpeakersDisplayLogic, 
         
         let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPressGesture(_:)))
         self.speakingTable.addGestureRecognizer(longPressGesture)
-        let nameDictionary = [0 : ["test"]]
-        tableCollection = [(remainingTable, nameDictionary), (waitingTable, nameDictionary), (speakingTable, nameDictionary)]
+        
+        setupTableCollection()
 
     }
     
@@ -317,11 +310,9 @@ class TrackSpeakersViewController: UIViewController, TrackSpeakersDisplayLogic, 
     
     // MARK: Table view row buttons
     
-    /**
-     A storyboard button action.  The right button on a base-list table row was pressed.
-     Gets name of member and passes this to helper function which moves name to table on right.
-     */
-        
+
+    //  The right button on a remaining table row was pressed.
+    
     @IBAction func remainingTableRightButtonPressed(_ sender: UIButton, forEvent event: UIEvent) {
 
         let touch = event.allTouches?.first
@@ -332,10 +323,8 @@ class TrackSpeakersViewController: UIViewController, TrackSpeakersDisplayLogic, 
 
 
     
-    /**
-     * A storyboard button action.  The left button on a speaker-list table row was pressed.
-     * Gets name of member and passes this to helper function which moves name to table on left.
-     */
+
+     // The left button on a waiting table row was pressed.
     
     @IBAction func waitingTableLeftButtonPressed(_ sender: UIButton, forEvent event: UIEvent) {
         let touch = event.allTouches?.first
@@ -344,10 +333,8 @@ class TrackSpeakersViewController: UIViewController, TrackSpeakersDisplayLogic, 
         moveNameLeft(from: TablePosition(tableIndex: 1, tableSection: index?.section, tableRow: index?.row))
     }
     
-    /**
-     * A storyboard button action.  The right button on a speaker-list table row was pressed.
-     * Gets name of member and passes this to helper function which moves name to table on right.
-     */
+    
+     // The right button on a waiting table row was pressed.
     
     @IBAction func waitingTableRightButtonPressed(_ sender: UIButton, forEvent event: UIEvent) {
 
@@ -357,26 +344,25 @@ class TrackSpeakersViewController: UIViewController, TrackSpeakersDisplayLogic, 
         moveNameRight(from: TablePosition(tableIndex: 1, tableSection: index?.section, tableRow: index?.row))
     }
     
-    /**
-     * A storyboard button action.  The left button on a done-list table row was pressed.
-     * Gets name of member and passes this to helper function which moves name to table on left.
-     */
+
+     // The left button on a speaking table row was pressed.
     
     @IBAction func speakingTableLeftButtonPressed(_ sender: UIButton, forEvent event: UIEvent) {
         let touch = event.allTouches?.first
         let pointInTable = touch?.location(in: speakingTable)
-        let index = speakingTable.indexPathForRow(at: pointInTable!)
-        if speakerRecording.row == index!.row {
-            _ = handleStopTimer()
+        let indexPath = speakingTable.indexPathForRow(at: pointInTable!)
+        if speakerRecording != nil {
+            let spkrIndexPath = IndexPath(row: (speakerRecording?.row)!, section: (speakerRecording?.section)!)
+            if spkrIndexPath == indexPath {
+                _ = handleStopTimer()
+                speakerRecording = nil
+            }
         }
-        let cell = speakingTable.cellForRow(at: index!) as! WMTableViewCell
-        cell.rightButton?.setTitleColor(UIColor(red: 0, green: 0.48, blue: 1.0, alpha: 1.0), for: .normal)
-        cell.rightButton?.setTitle("▶︎", for: .normal)
-        cell.rightButton!.titleLabel!.font = UIFont.systemFont(ofSize: 22)
-        moveNameLeft(from: TablePosition(tableIndex: 2, tableSection: index?.section, tableRow: index?.row))
+        moveNameLeft(from: TablePosition(tableIndex: 2, tableSection: indexPath?.section, tableRow: indexPath?.row))
     }
     
     /*
+     The right button on a speaking table row was pressed.
      If current speaker is on different row:
      - turn off current speaker if still speaking (check status of start button)
      - start timer for this speaker.
@@ -384,35 +370,61 @@ class TrackSpeakersViewController: UIViewController, TrackSpeakersDisplayLogic, 
      - stop this speaker
      */
     
-    
     @IBAction func speakingTableRightButtonPressed(_ sender: UIButton, forEvent event: UIEvent) {
         let touch = event.allTouches?.first
         let pointInTable = touch?.location(in: speakingTable)
-        let index = speakingTable.indexPathForRow(at: pointInTable!)
-        if speakerRecording.row != index!.row {
-            if smStartButton.isEnabled == false {
-                _ = handleStopTimer()
+        let indexPath = speakingTable.indexPathForRow(at: pointInTable!)
+        let cell = speakingTable.cellForRow(at: indexPath!) as! WMTableViewCell
+        // Someone is speaking
+        if speakerRecording != nil {
+            // Not the row that was tapped,so shut them down so can start this row
+            let spkrIndexPath = IndexPath(row: (speakerRecording?.row)!, section: (speakerRecording?.section)!)
+            if spkrIndexPath != indexPath{
+                if smStartButton.isEnabled == false {
+                    let speakingTime = handleStopTimer()
+                    addCurrentSpeakerToDebate(debateNote: debateNote.text!, startTime: startTime!, speakingTime: speakingTime)
+                }
+                speakerRecording!.section = indexPath?.section
+                speakerRecording!.row = indexPath?.row
+                speakerRecording!.button = sender
+                sender.setTitleColor(UIColor.red, for: .normal)
+                sender.setTitle("00:00", for: .normal)
+                sender.titleLabel!.font = UIFont.systemFont(ofSize:14)
+                handleStartTimer()
+                setCurrentSpeaker(section: (indexPath?.section)! , row: indexPath!.row)
             }
-            speakerRecording.row = index?.row
-            speakerRecording.button = sender
+            else {
+                // Speaker is the row that was tapped so stop the speaker
+                if smStartButton.isEnabled == false {
+                    let speakingTime = handleStopTimer()
+                     addCurrentSpeakerToDebate(debateNote: debateNote.text!, startTime: startTime!, speakingTime: speakingTime)
+                }
+                speakerRecording = nil
+            }
+        }
+        else {
+            // No-one else speaking, so start timer for tapped row
+            speakerRecording = SpeakerRecording()
+            speakerRecording!.row = indexPath!.row
+            speakerRecording!.section = indexPath?.section
+            speakerRecording!.button = sender
             sender.setTitleColor(UIColor.red, for: .normal)
             sender.setTitle("00:00", for: .normal)
             sender.titleLabel!.font = UIFont.systemFont(ofSize:14)
+            cell.leftButton?.isEnabled = false
+            cell.selectionStyle = .none
             handleStartTimer()
-            setCurrentSpeaker(section: (index?.section)! , row: index!.row)
+            setCurrentSpeaker(section: (indexPath?.section)! , row: indexPath!.row)
         }
-        else {
-            if smStartButton.isEnabled == false {
-                _ = handleStopTimer()
-            }
-            speakerRecording = SpeakerRecording(row: nil, button: nil)
-        }
+        fetchNames()
     }
     
     @IBAction private func reorderButton(_ sender: UIButton) {
         
         if reorderOn == false {
-            let (_, speakerArray) = tableCollection[1]
+            let membersTableWaiting = tableCollection[1]
+            let nameDictionary = membersTableWaiting.nameDictionary
+            let speakerArray = nameDictionary![0]
             if speakerArray!.count > 1 {
                 waitingTable.isEditing = true
                 reorderOn = true
@@ -442,24 +454,16 @@ class TrackSpeakersViewController: UIViewController, TrackSpeakersDisplayLogic, 
     
     // MARK: Controls
     
-    /**
-     Resets all lists and the undo stack.
+    /*
+     Reset button pressed
      */
     @IBAction private func resetAll(_ sender: UIButton) {
-        var (_, nameDictionary): (UITableView, [Int : [String]]?)
-        (_, nameDictionary) = tableCollection[2]
-        for duple in nameDictionary! {
-            let namesArray = duple.value
-            for idx in 0..<namesArray.count {
-                let cell = speakingTable.cellForRow(at: IndexPath(row: idx, section: duple.key)) as! WMTableViewCell
-                cell.rightButton?.setTitleColor(UIColor(red: 0, green: 0.48, blue: 1.0, alpha: 1.0), for: .normal)
-                cell.rightButton?.setTitle("▶︎", for: .normal)
-                cell.rightButton!.titleLabel!.font = UIFont.systemFont(ofSize: 22)
-            }
-        }
         if smStartButton.isEnabled == false {
             _ = handleStopTimer()
         }
+        debateMode = .mainMotion
+        setupTableCollection()
+        speakerRecording = nil
         resetAllNames()
         if eventRecordingIsOn == true {
             addCurrentDebateToEvent()
@@ -467,13 +471,8 @@ class TrackSpeakersViewController: UIViewController, TrackSpeakersDisplayLogic, 
     }
     
     
-    /**
-     A storyboard button action:  the undo button was pressed.
-     
-     The undo stack comprises an array of tuples.
-     Each tuple holds: source table index, name position in source table, destination table index, name position in destination table and name of member.
-     
-     When the undo button is pressed, the last tuple in the array is popped off the array and the action reversed.
+    /*
+     The undo button was pressed.
      */
     @IBAction private func undoPressed(_ sender: UIButton) {
         undoLastAction()
@@ -481,8 +480,8 @@ class TrackSpeakersViewController: UIViewController, TrackSpeakersDisplayLogic, 
     
     
     // MARK: Timer buttons
-    /**
-     * A storyboard button action.  When the button is pressed, the large timer is toggled on and off.
+    /*
+     The large timer is toggled on and off.
      */
     @IBAction private func showLargeTimer(_ sender: UIButton) {
         
@@ -519,16 +518,16 @@ class TrackSpeakersViewController: UIViewController, TrackSpeakersDisplayLogic, 
     }
     
     
-    /**
-     * A storyboard button action.  The large timer's start button was pressed.
+    /*
+     The large timer's start button was pressed.
      */
     @IBAction private func startTimer(_ sender: UIButton) {
         handleStartTimer()
     }
     
     
-    /**
-     * A storyboard button action.  The small timer's start button was pressed.
+    /*
+     The small timer button actions
      */
     @IBAction private func startSmTimer(_ sender: UIButton) {
         handleStartTimer()
@@ -550,6 +549,9 @@ class TrackSpeakersViewController: UIViewController, TrackSpeakersDisplayLogic, 
         _ = handleStopTimer()
     }
     
+    @IBAction func infoButtonPressed(_ sender: UIButton) {
+        router!.routeToShowHelpController()
+    }
     
     // MARK: - Datastore
 
@@ -577,18 +579,21 @@ class TrackSpeakersViewController: UIViewController, TrackSpeakersDisplayLogic, 
         interactor!.setCurrentSpeaker(section: section, row: row)
     }
     
-    private func addCurrentSpeakerToDebate(debateNote: String, startTime: Date, speakingTime: Int) {
-        interactor!.addCurrentSpeakerToDebate(debateNote: debateNote, startTime: startTime, speakingTime: speakingTime)
-    }
-    
     private func setCurrentEvent(event: Event?) {
         interactor!.setCurrentEvent(event: event)
     }
     
     private func addCurrentDebateToEvent() {
-        interactor?.addCurrentDebateToEvent()
+        interactor?.addCurrentDebateToEvent(debateNote: debateNote.text!)
     }
     
+    private func addCurrentSpeakerToDebate(debateNote: String, startTime: Date, speakingTime: Int) {
+        interactor!.addCurrentSpeakerToDebateSection(startTime: startTime, speakingTime: speakingTime)
+    }
+    
+    private func getSpeakingListNumberOfSections() -> Int {
+        return interactor!.getSpeakingListNumberOfSections()
+    }
     
     // MARK: - VIP
     
@@ -597,23 +602,30 @@ class TrackSpeakersViewController: UIViewController, TrackSpeakersDisplayLogic, 
     }
     
    func displayNames(viewModel: TrackSpeakers.Speakers.ViewModel) {
-        tableCollection = [(remainingTable, viewModel.remainingNames!), (waitingTable, viewModel.waitingNames!), (speakingTable, viewModel.speakingNames!)]
+        let remainingNameDictionary = viewModel.remainingNames
+        let memberTableRemaining = MembersTable(tableView: remainingTable, nameDictionary: remainingNameDictionary)
+        let waitingNameDictionary = viewModel.waitingNames
+        let memberTableWaiting = MembersTable(tableView: waitingTable, nameDictionary: waitingNameDictionary)
+        let speakingNameDictionary = viewModel.speakingNames
+        let memberTableSpeaking = MembersTable(tableView: speakingTable, nameDictionary: speakingNameDictionary)
+        tableCollection = [memberTableRemaining, memberTableWaiting, memberTableSpeaking]
+        speakingTableNumberOfSections = getSpeakingListNumberOfSections()
         remainingTable.reloadData()
         waitingTable.reloadData()
         speakingTable.reloadData()
     }
     
-    private func moveNameRight(from tablePosition: TablePosition ) {
+     func moveNameRight(from tablePosition: TablePosition ) {
         interactor!.moveNameRight(from: tablePosition)
         fetchNames()
     }
     
-    private func moveNameLeft(from tablePosition: TablePosition ) {
+     func moveNameLeft(from tablePosition: TablePosition ) {
         interactor!.moveNameLeft(from: tablePosition)
         fetchNames()
     }
     
-    private func copyNameToEnd(from tablePosition: TablePosition ) {
+     func copyNameToEnd(from tablePosition: TablePosition ) {
         interactor!.copyNameToEnd(from: tablePosition)
         fetchNames()
     }
@@ -635,331 +647,36 @@ class TrackSpeakersViewController: UIViewController, TrackSpeakersDisplayLogic, 
   
     func updateAfterSelectingEvent() {
         interactor?.updateAfterSelectingEvent()
-//        fetchNames()
+        let event = interactor?.getCurrentEvent()
+        let formatter = DateFormatter()
+        formatter.dateStyle = .long
+        formatter.timeStyle = .none
+        let dateStrg = formatter.string(from: (event?.date)!)
+        formatter.dateStyle = .none
+        formatter.timeStyle = .short
+        let timeStrg = formatter.string(from: (event?.date)!)
+        meetingEventLabel.text = timeStrg + ", " + dateStrg
     }
     
     func beginAmendment() {
+        debateMode = .amendment
         speakingTableNumberOfSections += 1
+        let section = speakingTableNumberOfSections - 1
+        let status = SectionStatus(isCollapsed: false, isAmendment: true)
+        speakingTableSections[section] = status
         interactor!.beginAmendment()
         fetchNames()
     }
     
-    
-    //MARK: - UITableViewDataSource protocols
-    
-    func numberOfSections(in tableView: UITableView) -> Int {
-        switch tableView.tag {
-        case 1:
-            return 1
-        case 2:
-            return 1
-        case 3:
-            return speakingTableNumberOfSections
-        default:
-            return 0
-        }
+    func endAmendment() {
+        debateMode = .mainMotion
+        speakingTableNumberOfSections += 1
+        let section = speakingTableNumberOfSections - 1
+        let status = SectionStatus(isCollapsed: false, isAmendment: false)
+        speakingTableSections[section] = status
+        interactor!.endAmendment()
+        fetchNames()
     }
-    
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 
-            let tag = tableView.tag
-            var (_, nameDictionary): (UITableView, [Int : [String]]?)
-            var numRows: Int?
-            
-            switch tag {
-            case 1:
-                (_,nameDictionary) = tableCollection[0]
-                numRows = nameDictionary![section]!.count
-            case 2:
-                (_,nameDictionary) = tableCollection[1]
-                numRows = nameDictionary![section]!.count
-            case 3:
-                (_,nameDictionary) = tableCollection[2]
-                numRows = nameDictionary![section]!.count
-            default:
-                break
-            }
-            
-            return numRows!
-
-    }
-    
-    
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        var tvCell = tableView.dequeueReusableCell(withIdentifier: "wmcell", for: indexPath) as? WMTableViewCell
-        if tvCell == nil {
-            tvCell = WMTableViewCell(style: .default, reuseIdentifier: "wmcell")
-        }
-        
-        let tag = tableView.tag
-        
-        switch tag {
-        case 1:
-            var name = ""
-            var (_,nameDictionary) = tableCollection[0]
-            if nameDictionary!.count > 0  {
-                name = nameDictionary![indexPath.section]![indexPath.row]
-            }
-            tvCell!.isSpeakingTableCell = false
-            tvCell?.memberText?.text = name
-            if self.view.frame.size.width > 1300 {tvCell?.memberText?.font = UIFont(name: "Arial", size: 28)} // if iPad Pro 12"
-            
-        case 2:
-            var name = ""
-            var (_,nameDictionary) = tableCollection[1]
-            if nameDictionary!.count > 0  {
-                name = nameDictionary![indexPath.section]![indexPath.row]
-            }
-            tvCell!.isSpeakingTableCell = false
-            tvCell?.memberText!.text = name
-            if self.view.frame.size.width > 1300 {tvCell?.memberText?.font = UIFont(name: "Arial", size: 28)} // if iPad Pro 12"
-            
-        case 3:
-            var name = ""
-            var (_,nameDictionary) = tableCollection[2]
-            if nameDictionary!.count > 0  {
-                name = nameDictionary![indexPath.section]![indexPath.row]
-            }
-            tvCell!.isSpeakingTableCell = true
-            tvCell?.memberText!.text = name
-            if self.view.frame.size.width > 1300 {tvCell?.memberText?.font = UIFont(name: "Arial", size: 28)} // if iPad Pro 12"
-
-        default:
-            break
-        }
-        
-        return tvCell!
-    }
-    
-    
-    func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-        
-        var (_, waitingNameDictionary) = tableCollection[1]
-        let nameToMove = waitingNameDictionary![sourceIndexPath.section]!.remove(at: sourceIndexPath.row)
-        waitingNameDictionary![destinationIndexPath.section]!.insert(nameToMove, at: destinationIndexPath.row)
-        tableCollection[1] = (waitingTable, waitingNameDictionary)
-        
-        undoStack.append((1, sourceIndexPath.row, 1, destinationIndexPath.row, waitingNameDictionary![destinationIndexPath.section]![destinationIndexPath.row]))
-        if undoStack.count > 10 {
-            let newStack = Array(undoStack.dropFirst())
-            undoStack = newStack
-        }
-    }
-    
-    
-    // MARK: - UITableView delegate methods
-    
-    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
-        // Don't want a delete or insert accessory
-        return .none
-    }
-    
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        if tableView.tag == 3 {
-            var header = tableView.dequeueReusableHeaderFooterView(withIdentifier: "AmendmentHeaderView") as? AmendmentHeaderView
-            if header == nil {
-                header = AmendmentHeaderView(reuseIdentifier: "AmendmentHeaderView")
-            }
-            if section % 2 == 1 {
-                header!.amendmentLabel?.text = "Amendment"
-            }
-            if section % 2 == 0 {
-                header!.amendmentLabel?.text = "Main motion"
-            }
-            return header
-        }
-        return nil
-    }
-    
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        if tableView.tag == 3 {
-            return 32
-        }
-        return 0
-    }
-    
-    
  
-    
-    // MARK: - Handle gestures
-    
-    
-    override var canBecomeFirstResponder: Bool {
-        get {
-            return true
-        }
-    }
-    
-    
-    /// Get the member's name and index of table that was swiped and pass to functions to move name left or right.
-    @objc private func handleSwipeGesture(_ recognizer: UISwipeGestureRecognizer) {
-        guard recognizer.state == .ended else { return }
-        guard recognizer.view is UITableView else { return }
-        var currentTable: UITableView?
-        var tableIndex = 0
-        
-        switch recognizer.view!.tag {
-        case 1:
-            guard recognizer.direction == .right else { return }
-            currentTable = remainingTable
-            tableIndex = 0
-        case 2:
-            currentTable = waitingTable
-            tableIndex = 1
-        case 3:
-            guard recognizer.direction == .left else { return }
-            currentTable = speakingTable
-            tableIndex = 2
-        default:
-            currentTable = nil
-        }
-        
-        let swipeLocation = recognizer.location(in: currentTable)
-        guard let swipedIndexPath = currentTable?.indexPathForRow(at: swipeLocation)  else { return }
-        if recognizer.direction == .left {
-            moveNameLeft(from: TablePosition(tableIndex: tableIndex, tableSection: swipedIndexPath.section, tableRow: swipedIndexPath.row))
-        }
-        if recognizer.direction == .right {
-            moveNameRight(from: TablePosition(tableIndex: tableIndex, tableSection: swipedIndexPath.section, tableRow: swipedIndexPath.row))
-        }
-    }
-    
-    
-    @objc func handleLongPressGesture(_ recognizer: UILongPressGestureRecognizer) {
-        becomeFirstResponder()
-        let pressLocation = recognizer.location(in: speakingTable)
-        guard let pressIndexPath = speakingTable?.indexPathForRow(at: pressLocation)  else { return }
-        let cell = speakingTable.cellForRow(at: pressIndexPath)
-        let menuController = UIMenuController.shared
-        menuController.setTargetRect((cell?.contentView.frame)!, in: (cell?.contentView)!)
-        var item: UIMenuItem?
-        if pressIndexPath.section == 0 && pressIndexPath.row == 0 {
-            longPressTablePosition = TablePosition(tableIndex: 2, tableSection: 0, tableRow: 0)
-            menuController.arrowDirection = .up
-            item = UIMenuItem(title: "Exercises right of reply", action: #selector(exerciseRightOfReply))
-            menuController.menuItems = [item!]
-            menuController.setMenuVisible(true, animated: true)
-        }
-        let (_,nameDictionary) = tableCollection[2]
-        if pressIndexPath.row == nameDictionary![pressIndexPath.section]!.count - 1 {
-            item = UIMenuItem(title: "Moves amendment", action: #selector(moveAmendment))
-            menuController.menuItems = [item!]
-            menuController.setMenuVisible(true, animated: true)
-        }
-    }
-    
-    
-    @objc func exerciseRightOfReply() {
-        copyNameToEnd(from: longPressTablePosition!)
-    }
- 
-    @objc func moveAmendment() {
-        beginAmendment()
-//        speakingTableNumberOfSections += 1
-//        var (_, nameDictionary) = tableCollection[2]
-//        nameDictionary![speakingTableNumberOfSections - 1] = [String]()
-//        tableCollection[2].1 = nameDictionary
-//        fetchNames()
-    }
-    
-    
-    // MARK: - Timer handlers
-    
-    /**
-     * Called every time the timer fires (every second).
-     * Updates the timer displays.
-     */
-    
-    @objc private func timerFireMethod(_ timer: Timer) {
-        
-        let secondsSinceStart: Int = abs(Int(startTime!.timeIntervalSinceNow))
-        let minutes = secondsSinceStart / 60
-        let seconds = secondsSinceStart - (minutes * 60)
-        let secondsString = String(format: "%02d", seconds)
-        let minutesString = String(format: "%02d", minutes)
-        timerLabel.text = "\(minutesString):\(secondsString)"
-        smTimerLabel.text = "\(minutesString):\(secondsString)"
-        speakerRecording.button?.setTitle("\(minutesString):\(secondsString)", for: .normal)
-    }
-    
-    
-    /**
-     Called when a timer's start button is pressed.
-     It resets the timer display and creates a new instance of a Timer class to fire at 1 second intervals.
-     On each fire, timerFireMethod(_: ) is called.
-     Note: either create a timer using Timer.scheduledTimer(), which will be automatically added to runloop or Time() and add to runloop.
-     https://www.hackingwithswift.com/articles/117/the-ultimate-guide-to-timer 
-     */
-    
-    private func handleStartTimer() {
-        if pausePressed != true {
-            startTime = Date()
-            timerLabel.text = "00:00"
-            smTimerLabel.text = "00:00"
-            
-        } else {
-            
-            // Reset pause toggle
-            pausePressed = false
-            
-            // New start time is 'now' less the number seconds showing when paused
-            startTime = Date() - TimeInterval(secondsElapsedWhenTimerPaused)
-        }
-        
-        startButton.isEnabled = false
-        stopButton.isEnabled = true
-        pauseButton.isEnabled = true
-        smStartButton.isEnabled = false
-        smStopButton.isEnabled = true
-        smPauseButton.isEnabled = true
-        
-        timer?.invalidate()
-        timer = Timer(timeInterval: 1.0, target: self, selector: #selector(timerFireMethod(_: )), userInfo: nil, repeats: true )
-        RunLoop.current.add(timer!, forMode: .commonModes)
-    }
-    
-    
-    /**
-     Called when either pause button is pressed
-     */
-    
-    private func handlePauseTimer() {
-        
-        // Set pause toggle
-        pausePressed = true
-        
-        // Stop firing timer events
-        timer?.invalidate()
-        
-        // Get seconds since timer started. Add this when restarting the timer so does not start from zero.
-        secondsElapsedWhenTimerPaused = abs(Int(startTime!.timeIntervalSinceNow))
-        
-        // Re-enable start button and disable pause button
-        startButton.isEnabled = true
-        pauseButton.isEnabled = false
-        stopButton.isEnabled = true
-        smStartButton.isEnabled = true
-        smPauseButton.isEnabled = false
-        smStopButton.isEnabled = true
-    }
-    
-    
-    /// Called when either stop button is pressed
-    private func handleStopTimer() -> Int {
-        timer?.invalidate()
-        startButton.isEnabled = true
-        pauseButton.isEnabled = false
-        stopButton.isEnabled = false
-        smStartButton.isEnabled = true
-        smPauseButton.isEnabled = false
-        smStopButton.isEnabled = false
-        let speakingTime = abs(Int(startTime!.timeIntervalSinceNow))
-        if eventRecordingIsOn == true {
-            addCurrentSpeakerToDebate(debateNote: debateNote.text!, startTime: startTime!, speakingTime: speakingTime)
-        }
-        return speakingTime
-    }
 }

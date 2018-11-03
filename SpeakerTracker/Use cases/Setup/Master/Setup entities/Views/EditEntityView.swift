@@ -15,6 +15,14 @@ class EditEntityView: WMEditView {
     var deleteButton: UIBarButtonItem?
     var entityNameBox: UITextField?
     var entity: Entity?
+    var infoLabel: UILabel?
+    var infoText = """
+    Enter just the name of the entity.
+    An entity is a body which has members and meeting groups.
+    Examples of entities are councils and companies.
+    This app allows you to create more than one entity, but you may need only one.
+    
+    """
     
     
     override init(frame: CGRect) {
@@ -51,6 +59,19 @@ class EditEntityView: WMEditView {
         entityNameBox?.centerYAnchor.constraint(equalTo: entityNameLabel.centerYAnchor).isActive = true
         entityNameBox?.heightAnchor.constraint(equalToConstant: TEXTBOXHEIGHT).isActive = true
         
+        // ========= Label for instructions
+        infoLabel = UILabel(frame: CGRect.zero)
+        infoLabel!.backgroundColor = UIColor.clear
+        infoLabel!.numberOfLines = 0
+        infoLabel!.text = infoText
+        infoLabel!.textColor = TEXTCOLOR
+        infoLabel!.font =  UIFont.systemFont(ofSize: 14)
+        infoLabel!.isHidden = true
+        containerView!.addSubview(infoLabel!)
+        infoLabel!.translatesAutoresizingMaskIntoConstraints = false
+        infoLabel!.leadingAnchor.constraint(equalTo: containerView!.leadingAnchor).isActive = true
+        infoLabel!.trailingAnchor.constraint(equalTo: containerView!.trailingAnchor).isActive = true
+        infoLabel!.topAnchor.constraint(equalTo: (entityNameBox?.bottomAnchor)!, constant: 50).isActive = true
     }
     
     

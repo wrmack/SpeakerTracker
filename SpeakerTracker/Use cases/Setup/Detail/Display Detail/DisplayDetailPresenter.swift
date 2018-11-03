@@ -83,10 +83,12 @@ class DisplayDetailPresenter: DisplayDetailPresentationLogic {
             labelDetailArray.append(("Entity:", (event.entity?.name)!))
             labelDetailArray.append(("Meeting group:", (event.meetingGroup?.name)!))
             let formatter = DateFormatter()
-            formatter.dateFormat = "dd MMM yyyy"
+            formatter.dateStyle = .long
+            formatter.timeStyle = .none
             let dateString = formatter.string(from: event.date!)
             labelDetailArray.append(("Date:", dateString))
-            formatter.dateFormat = "hh:mm"
+            formatter.dateStyle = .none
+            formatter.timeStyle = .short
             let timeString = formatter.string(from: event.date!)
             labelDetailArray.append(("Time:", timeString))
             if event.meetingGroup!.members != nil {

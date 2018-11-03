@@ -77,6 +77,7 @@ class AddEntityViewController: UIViewController, AddEntityDisplayLogic {
         editView = EditEntityView(frame: CGRect.zero)
         view.addSubview(editView!)
         editView!.headingLabel!.text = "Create new entity"
+        editView?.infoLabel?.isHidden = false
         editView!.translatesAutoresizingMaskIntoConstraints = false
         editView!.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         editView!.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true

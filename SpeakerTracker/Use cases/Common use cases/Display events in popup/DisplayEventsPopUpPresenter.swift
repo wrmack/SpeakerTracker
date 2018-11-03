@@ -25,11 +25,14 @@ class DisplayEventsPopUpPresenter: DisplayEventsPopUpPresentationLogic {
         var eventNames = [String]()
         for event in response.events! {
             let formatter = DateFormatter()
-            formatter.dateFormat = "YYYY-MM-dd"
+            formatter.dateStyle = .none
+            formatter.timeStyle = .short
+            let timeString = formatter.string(from: event.date!)
+            formatter.dateStyle = .long
+            formatter.timeStyle = .none
             let dateString = formatter.string(from: event.date!)
-            eventNames.append(dateString)
+            eventNames.append(timeString + ", " + dateString)
         }
-        
         let viewModel = DisplayEventsPopUp.Events.ViewModel(eventNames: eventNames)
         viewController?.displayEvents(viewModel: viewModel) 
     }
