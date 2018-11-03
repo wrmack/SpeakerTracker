@@ -25,7 +25,7 @@ class WMTableViewCell: UITableViewCell {
     @IBOutlet var rightButton: UIButton?
     @IBOutlet var memberText: UILabel?
     @IBOutlet weak var memberTextLeadingAnchor: NSLayoutConstraint!
-    var isSpeakingTableCell = false
+ //   var isSpeakingTableCell = false
 
     override func updateConstraints() {
         super.updateConstraints()

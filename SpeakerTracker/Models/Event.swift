@@ -10,9 +10,12 @@ import Foundation
 
 /*
  Event: such as a meeting
- Debate: one debate comprises a number of speeches (speaker events)
+ Debate: one debate comprises sections such as main debate, amendment debate
+ DebateSection: comprises speaker events (speeches)
  SpeakerEvent: a speech
  */
+
+
 struct Event: Codable  {
     var filename: String?
     var date: Date?
@@ -37,14 +40,24 @@ struct Event: Codable  {
 struct Debate: Codable {
     var debateNumber: Int?
     var note: String?
-    var speakerEvents: [(SpeakerEvent)]?
-    init(debateNumber: Int?, note: String?, speakerEvents: [(SpeakerEvent)]?) {
+    var debateSections: [(DebateSection)]?
+    init(debateNumber: Int?, note: String?, debateSections: [(DebateSection)]?) {
         self.debateNumber = debateNumber
         self.note = note
-        self.speakerEvents = speakerEvents
+        self.debateSections = debateSections
     }
 }
 
+struct DebateSection: Codable {
+    var sectionNumber: Int?
+    var sectionName: String?
+    var speakerEvents: [(SpeakerEvent)]?
+    init(sectionNumber: Int?, sectionName: String?, speakerEvents: [(SpeakerEvent)]?) {
+        self.sectionNumber = sectionNumber
+        self.sectionName = sectionName
+        self.speakerEvents = speakerEvents
+    }
+}
 
 struct SpeakerEvent: Codable {
     let member: Member?

@@ -167,9 +167,13 @@ class SelectMeetingGroupAndEventController: NSObject, EntitiesPopUpViewControlle
         setCurrentEvent(event: event)
         source!.dismiss(animated: false, completion: nil)
         let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd"
+        formatter.dateStyle = .none
+        formatter.timeStyle = .short
+        let timeString = formatter.string(from: event.date!)
+        formatter.dateStyle = .long
+        formatter.timeStyle = .none
         let dateString = formatter.string(from: event.date!)
-        source!.selectEventButton.setTitle(dateString, for: .normal)
+        source!.selectEventButton.setTitle(timeString + ", " + dateString, for: .normal)
         source!.selectEventButton.setTitleColor(UIColor.white, for: .normal)
         source!.selectEventButton.titleLabel?.textAlignment = .left
         source!.recordingOnLabel.textColor = UIColor.red

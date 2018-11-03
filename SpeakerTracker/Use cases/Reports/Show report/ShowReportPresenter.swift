@@ -89,18 +89,22 @@ class ShowReportPresenter: ShowReportPresentationLogic {
                     let refAttStg = NSAttributedString(string: note + "\n", attributes: italicAtts)
                     attString.append(refAttStg)
                 }
-                var spkrEvtStrg = String()
-                for speakerEvt in debate.speakerEvents! {
-                    let fullName = speakerEvt.member!.title! + " " + speakerEvt.member!.firstName! +  " " +  speakerEvt.member!.lastName!
-                    let spkgTime = String(format: "%02d:%02d", speakerEvt.elapsedMinutes!, speakerEvt.elapsedSeconds!)
-                    formatter.dateStyle = .none
-                    formatter.timeStyle = .short
-                    let startTime = formatter.string(from: (speakerEvt.startTime)!)
-                    spkrEvtStrg.append(fullName + "\t" + String(spkgTime) + "\t" + startTime + "\n")
-                }
+                for debateSection in debate.debateSections! {
+                    let debateSectionNameAttStg = NSAttributedString(string: debateSection.sectionName! + "\n", attributes: boldAtts)
+                    attString.append(debateSectionNameAttStg)
+                    var spkrEvtStrg = String()
+                    for speakerEvt in debateSection.speakerEvents! { 
+                        let fullName = speakerEvt.member!.title! + " " + speakerEvt.member!.firstName! +  " " +  speakerEvt.member!.lastName!
+                        let spkgTime = String(format: "%02d:%02d", speakerEvt.elapsedMinutes!, speakerEvt.elapsedSeconds!)
+                        formatter.dateStyle = .none
+                        formatter.timeStyle = .short
+                        let startTime = formatter.string(from: (speakerEvt.startTime)!)
+                        spkrEvtStrg.append(fullName + "\t" + String(spkgTime) + "\t" + startTime + "\n")
+                    }
 
-                let spkrEvtAttStr = NSAttributedString(string: spkrEvtStrg, attributes: normAtts)
-                attString.append(spkrEvtAttStr)
+                    let spkrEvtAttStr = NSAttributedString(string: spkrEvtStrg, attributes: normAtts)
+                    attString.append(spkrEvtAttStr)
+                }
             }
         }
         

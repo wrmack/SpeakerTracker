@@ -35,9 +35,11 @@ class SelectMembersInteractor: SelectMembersBusinessLogic, SelectMembersDataStor
 
     func fetchMembers(request: SelectMembers.Members.Request) {
         var selectedIndices = [Int]()
-        for member in (meetingGroup!.members)! {
-            if let idx = entity!.members!.firstIndex(where: {$0.id == member.id}) {
-                selectedIndices.append(idx)
+        if meetingGroup != nil {
+            for member in (meetingGroup!.members)! {
+                if let idx = entity!.members!.firstIndex(where: {$0.id == member.id}) {
+                    selectedIndices.append(idx)
+                }
             }
         }
         let response = SelectMembers.Members.Response(members: entity!.members, selectedIndices: selectedIndices)

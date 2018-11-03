@@ -22,36 +22,58 @@ class TrackSpeakersPresenter: TrackSpeakersPresentationLogic {
     // MARK: - VIP
 
     func presentNames(response: TrackSpeakers.Speakers.Response) {
-        let names = [String]()
-        var remainingNames = [0 : names]
-        var waitingNames = [0 : names]
-        var speakingNames = [0 : names]
+        var remainingNames = [Int : [MemberNameWithTime]]()
+        var waitingNames = [Int : [MemberNameWithTime]]()
+        var speakingNames = [Int : [MemberNameWithTime]]()
         
         for item in response.remainingList! {
             let section = item.key
             for member in item.value {
                 let memberName = member.firstName! + " " + member.lastName!
-                remainingNames[section]!.append(memberName)
+                let memberNameWithTime = MemberNameWithTime(name: memberName, time: nil)
+                if remainingNames[section] == nil {
+                    remainingNames[section] = [MemberNameWithTime]()
+                }
+                remainingNames[section]!.append(memberNameWithTime)
             }
         }
         for item in response.waitingList! {
             let section = item.key
             for member in item.value {
                 let memberName = member.firstName! + " " + member.lastName!
-                waitingNames[section]!.append(memberName)
+                let memberNameWithTime = MemberNameWithTime(name: memberName, time: nil)
+                if waitingNames[section] == nil {
+                    waitingNames[section] = [MemberNameWithTime]()
+                }
+                waitingNames[section]!.append(memberNameWithTime)
             }
         }
         
         for item in response.speakingList! {
             let section = item.key
-            speakingNames[section] = [String]()
             for member in item.value {
                 let memberName = member.firstName! + " " + member.lastName!
-                speakingNames[section]!.append(memberName)
+                var memberTime: String?
+                if let spkrEvts = response.currentDebate?.debateSections![section].speakerEvents {
+                    for event in spkrEvts {
+                        if event.member == member {
+                            let secondsString = String(format: "%02d", event.elapsedSeconds!)
+                            let minutesString = String(format: "%02d", event.elapsedMinutes!)
+                            memberTime = "\(minutesString):\(secondsString)"
+                        }
+                    }
+                }
+                let memberNameWithTime = MemberNameWithTime(name: memberName, time: memberTime)
+                if speakingNames[section] == nil {
+                    speakingNames[section] = [MemberNameWithTime]()
+                }
+                speakingNames[section]!.append(memberNameWithTime)
             }
+
         }
+
         
-        let viewModel = TrackSpeakers.Speakers.ViewModel(remainingNames: remainingNames, waitingNames: waitingNames, speakingNames: speakingNames )
+        let viewModel = TrackSpeakers.Speakers.ViewModel(remainingNames: remainingNames, waitingNames: waitingNames, speakingNames: speakingNames)
         viewController?.displayNames(viewModel: viewModel)
     }
 }

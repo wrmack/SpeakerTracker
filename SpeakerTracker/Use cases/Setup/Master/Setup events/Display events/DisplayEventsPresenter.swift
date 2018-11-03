@@ -23,11 +23,16 @@ class DisplayEventsPresenter: DisplayEventsPresentationLogic {
 
     func presentEvents(response: DisplayEvents.Events.Response) {
         var eventNames = [String]()
-        let formatter = DateFormatter()
-        formatter.dateFormat = "dd MMM yyyy"
+
         for event in response.events! {
+            let formatter = DateFormatter()
+            formatter.dateStyle = .none
+            formatter.timeStyle = .short
+            let timeString = formatter.string(from: event.date!)
+            formatter.dateStyle = .long
+            formatter.timeStyle = .none
             let dateString = formatter.string(from: event.date!)
-            eventNames.append(dateString)
+            eventNames.append(timeString + ", " + dateString)
         }
         
         let viewModel = DisplayEvents.Events.ViewModel(eventNames: eventNames)

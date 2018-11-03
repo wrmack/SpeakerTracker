@@ -22,11 +22,12 @@ enum TrackSpeakers {
             var remainingList: [Int : [Member]]?
             var waitingList: [Int : [Member]]?
             var speakingList: [Int : [Member]]?
+            var currentDebate: Debate?
         }
         struct ViewModel {
-            var remainingNames: [Int : [String]]?
-            var waitingNames: [Int : [String]]?
-            var speakingNames: [Int : [String]]?
+            var remainingNames: [Int : [MemberNameWithTime]]?
+            var waitingNames: [Int : [MemberNameWithTime]]?
+            var speakingNames: [Int : [MemberNameWithTime]]?
         }
     }
 }
@@ -42,9 +43,27 @@ struct TablePosition {
     }
 }
 
+struct MembersTable {
+    var tableView: UITableView?
+    var nameDictionary: [Int : [MemberNameWithTime]]?
+    init(tableView: UITableView?, nameDictionary: [Int : [MemberNameWithTime]]?) {
+        self.tableView = tableView
+        self.nameDictionary = nameDictionary
+    }
+}
+
+struct MemberNameWithTime {
+    var name: String?
+    var time: String?
+    init(name: String?, time: String?) {
+        self.name = name
+        self.time = time
+    }
+}
+
 
 struct SpeakerRecording {
-//    var enabled = false
+    var section: Int?
     var row: Int?
     var button: UIButton?
 }
@@ -57,4 +76,14 @@ struct SpeakerMovement {
     var sourceTablePosition: TablePosition?
     var destinationTablePosition: TablePosition?
     var member: Member?
+}
+
+struct SectionStatus {
+    var isCollapsed = false
+    var isAmendment = false
+}
+
+enum DebateMode {
+    case mainMotion
+    case amendment
 }
