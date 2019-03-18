@@ -12,9 +12,8 @@
 
 import UIKit
 
+// VIP model
 enum TrackSpeakers {
-  // MARK: Use cases
-  
     enum Speakers {
         struct Request {
         }
@@ -32,6 +31,48 @@ enum TrackSpeakers {
     }
 }
 
+
+// Used to represent each table.
+// Stores a reference to the table and a dictionary of members' names & recorded time (if any) where the key is the section number.
+struct MembersTable {
+    var tableView: UITableView?
+    var nameDictionary: [Int : [MemberNameWithTime]]?
+    init(tableView: UITableView?, nameDictionary: [Int : [MemberNameWithTime]]?) {
+        self.tableView = tableView
+        self.nameDictionary = nameDictionary
+    }
+}
+
+// Contains the member's name and recorded speaking time (if any). Speaking time will be nil, except for members in the speaking table.
+struct MemberNameWithTime {
+    var name: String?
+    var time: String?
+    init(name: String?, time: String?) {
+        self.name = name
+        self.time = time
+    }
+}
+
+// When a speaker is being timed, holds section, row and button reference.
+struct SpeakerRecording {
+    var section: Int?
+    var row: Int?
+    var button: UIButton?
+}
+
+// A stack of speaker movements
+struct UndoStack {
+    var speakerMovements: [SpeakerMovement]
+}
+
+// What we need to record when a speaker moves from one table to another.  These are stored in the UndoStack.
+struct SpeakerMovement {
+    var sourceTablePosition: TablePosition?
+    var destinationTablePosition: TablePosition?
+    var member: Member?
+}
+
+// Used in speaker movements.
 struct TablePosition {
     var tableIndex: Int?
     var tableSection: Int?
@@ -43,46 +84,13 @@ struct TablePosition {
     }
 }
 
-struct MembersTable {
-    var tableView: UITableView?
-    var nameDictionary: [Int : [MemberNameWithTime]]?
-    init(tableView: UITableView?, nameDictionary: [Int : [MemberNameWithTime]]?) {
-        self.tableView = tableView
-        self.nameDictionary = nameDictionary
-    }
-}
-
-struct MemberNameWithTime {
-    var name: String?
-    var time: String?
-    init(name: String?, time: String?) {
-        self.name = name
-        self.time = time
-    }
-}
-
-
-struct SpeakerRecording {
-    var section: Int?
-    var row: Int?
-    var button: UIButton?
-}
-
-struct UndoStack {
-    var speakerMovements: [SpeakerMovement]
-}
-
-struct SpeakerMovement {
-    var sourceTablePosition: TablePosition?
-    var destinationTablePosition: TablePosition?
-    var member: Member?
-}
-
+// Used for tracking collapsed status of a section in the speaking table
 struct SectionStatus {
     var isCollapsed = false
     var isAmendment = false
 }
 
+// Used for tracking whether a section of the speaking table is about the main motion or about an amendment
 enum DebateMode {
     case mainMotion
     case amendment

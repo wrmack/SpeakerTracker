@@ -69,14 +69,21 @@ class DisplayEventsInteractor: DisplayEventsBusinessLogic, DisplayEventsDataStor
                             return
                         }
                         else {
+                            guard var event = eventDoc.event else {
+                                print("DisplayEventsPopUpInteractor: fetchEvents: event is nil")
+                                return
+                            }
+                            if event.entity == self.entity && event.meetingGroup == self.meetingGroup {
+                                if event.meetingGroup?.members!.count != self.meetingGroup!.members!.count {
+                                    event.meetingGroup!.members = self.meetingGroup?.members
+                                    eventDoc.event = event
+                                    eventDoc.updateChangeCount(.done)
+                                }
+                                self.events!.append(event)
+                            }
+                            
                             eventDoc.close(completionHandler: {success in
-                                guard let event = eventDoc.event else {
-                                    print("DisplayEventsPopUpInteractor: fetchEvents: event is nil")
-                                    return
-                                }
-                                if event.entity == self.entity && event.meetingGroup == self.meetingGroup {
-                                    self.events!.append(event)
-                                }
+
                                 count += 1
                                 if count == eventUrls.count {
                                     let response = DisplayEvents.Events.Response(events: self.events)

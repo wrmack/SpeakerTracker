@@ -19,28 +19,42 @@ protocol ShowHelpPresentationLogic {
 class ShowHelpPresenter: ShowHelpPresentationLogic {
     weak var viewController: ShowHelpDisplayLogic?
 
-    // MARK: Do something
+    // MARK: - VIP
 
     func presentAttributedString(response: ShowHelp.Help.Response) {
         
         let attString = NSMutableAttributedString()
-
+        
+        var heading1Atts = HelpAttributes().heading1
+        heading1Atts[NSAttributedStringKey.paragraphStyle] = HelpParaStyle().leftWithSpacingBefore
+        
+        var heading2Atts = HelpAttributes().heading2
+        heading2Atts[NSAttributedStringKey.paragraphStyle] = HelpParaStyle().leftWithSpacingBefore
+        
         var normAtts = HelpAttributes().normal
         normAtts[NSAttributedStringKey.paragraphStyle] = HelpParaStyle().leftWithSpacingBefore
         
         var boldnormAtts = HelpAttributes().normalBold
         boldnormAtts[NSAttributedStringKey.paragraphStyle] = HelpParaStyle().leftWithSpacingBefore
         
+
+        
+        attString.append(NSAttributedString(string: "Quick info\n", attributes: heading1Atts))
+        attString.append(NSAttributedString(string: "The lists\n", attributes: heading2Atts))
         attString.append(NSAttributedString(string: "Remaining list:\n", attributes: boldnormAtts))
         attString.append(NSAttributedString(string: "All members start here, in alphabetical order of last name.\n", attributes: normAtts))
         attString.append(NSAttributedString(string: "Waiting list:\n", attributes: boldnormAtts))
-        attString.append(NSAttributedString(string: "Members who have signalled their wish to speak so meeting chair can see who is next to speak.  Members can be re-ordered by pressing the control at the top of the list and moving rows.\n", attributes: normAtts))
+        attString.append(NSAttributedString(string: "Members who have signalled their wish to speak are listed here. The meeting chair can see who is next to speak.  Members can be re-ordered by pressing the control at the top of the list and moving rows.\n", attributes: normAtts))
         attString.append(NSAttributedString(string: "Speaking list:\n", attributes: boldnormAtts))
-        attString.append(NSAttributedString(string: "Members who have spoken and the member currently speaking.\n", attributes: normAtts))
-        attString.append(NSAttributedString(string: "How to move members:\n", attributes: boldnormAtts))
+        attString.append(NSAttributedString(string: "Shows the members who have previously spoken in the debate and the member currently speaking.\n", attributes: normAtts))
+        attString.append(NSAttributedString(string: "Moving a member from one list another:\n", attributes: boldnormAtts))
         attString.append(NSAttributedString(string: "Either swipe the member name or press the arrow.\n", attributes: normAtts))
-        
-        
+        attString.append(NSAttributedString(string: "Debates\n", attributes: heading2Atts))
+        attString.append(NSAttributedString(string: "Amendments:\n", attributes: boldnormAtts))
+        attString.append(NSAttributedString(string: "If the member who is speaking moves an amendment, long press the member when finished speaking to commence a debate on the amendment. All other members may speak to the amendment and are returned to the Waiting list. Long press the final speaker to the amendment to close the amendment debate.  The main debate resumes. Those members who have not already spoken in the main debate may speak. \n", attributes: normAtts))
+        attString.append(NSAttributedString(string: "Timing speeches\n", attributes: heading2Atts))
+        attString.append(NSAttributedString(string: "Timer:\n", attributes: boldnormAtts))
+        attString.append(NSAttributedString(string: "Press the play button for the timer when the speaker commences.  The stop button stops the timer and when the play button is pressed again it starts from zero.  The pause button pauses the timer and when the play button is pressed again it resumes from where it was paused.\n", attributes: normAtts))
         
         let viewModel = ShowHelp.Help.ViewModel(attString: attString)
         viewController?.displayAttributedString(viewModel: viewModel)

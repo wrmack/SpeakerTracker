@@ -19,7 +19,7 @@ protocol DisplayEventsPopUpPresentationLogic {
 class DisplayEventsPopUpPresenter: DisplayEventsPopUpPresentationLogic {
     weak var viewController: DisplayEventsPopUpDisplayLogic?
 
-    // MARK: VIP
+    // MARK: - VIP
     
     func presentEvents(response: DisplayEventsPopUp.Events.Response) {
         var eventNames = [String]()

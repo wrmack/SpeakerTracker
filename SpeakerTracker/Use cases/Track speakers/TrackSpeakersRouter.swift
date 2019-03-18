@@ -28,12 +28,13 @@ protocol TrackSpeakersDataPassing {
     var dataStore: TrackSpeakersDataStore? { get }
 }
 
+
 class TrackSpeakersRouter: NSObject, TrackSpeakersRoutingLogic, TrackSpeakersDataPassing {
-    weak var viewController: TrackSpeakersViewController?
-    var dataStore: TrackSpeakersDataStore?
-    var selectMGAndEvtController: SelectMeetingGroupAndEventController?
-    var addNoteVC: AddNoteToDebateViewController?
-    var dimmerView: UIView?
+    weak internal var viewController: TrackSpeakersViewController?
+    internal var dataStore: TrackSpeakersDataStore?
+    private var selectMGAndEvtController: SelectMeetingGroupAndEventController?
+    private var addNoteVC: AddNoteToDebateViewController?
+    private var dimmerView: UIView?
     
   
   // MARK: Routing
@@ -129,7 +130,7 @@ class TrackSpeakersRouter: NSObject, TrackSpeakersRoutingLogic, TrackSpeakersDat
     
     // MARK: Helpers
     
-    func createSelectMtgAndEvtController() {
+    private func createSelectMtgAndEvtController() {
         selectMGAndEvtController = SelectMeetingGroupAndEventController(source: viewController!)
         var destinationDS = selectMGAndEvtController?.router?.dataStore
         passDataToSelectMeetingGroupAndEvent(source: dataStore!, destination: &destinationDS!)

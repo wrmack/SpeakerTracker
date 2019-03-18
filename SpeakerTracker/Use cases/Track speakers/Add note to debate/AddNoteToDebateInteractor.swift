@@ -15,6 +15,7 @@ import UIKit
 protocol AddNoteToDebateBusinessLogic {
     func setDebateNote(note: String?)
     func getDebateNote()-> String?
+    func getDebate()->Debate? 
 }
 
 protocol AddNoteToDebateDataStore {
@@ -30,5 +31,9 @@ class AddNoteToDebateInteractor: AddNoteToDebateBusinessLogic, AddNoteToDebateDa
     
     func getDebateNote()-> String? {
         return currentDebate?.note
+    }
+    
+    func getDebate()->Debate? {
+        return currentDebate
     }
 }

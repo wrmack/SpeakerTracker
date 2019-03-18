@@ -10,7 +10,7 @@
  Used for persisting entity data.
  One document for each entity.
  For example, if the entity is a council, this document contains all info about members and committees.
- Create a new document when council changes after an election.
+ Create a new document when council members change after an election.
  */
 
 import UIKit

@@ -55,7 +55,6 @@ class DebateSectionHeaderView: UITableViewHeaderFooterView {
         contentView.addSubview(disclosureButton!)
         disclosureButton!.translatesAutoresizingMaskIntoConstraints = false
         disclosureButton!.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10).isActive = true
-//        disclosureButton!.widthAnchor.constraint(equalToConstant: 30).isActive = true
         disclosureButton!.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 4).isActive = true
         disclosureButton!.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -4).isActive = true
         
@@ -73,12 +72,11 @@ class DebateSectionHeaderView: UITableViewHeaderFooterView {
         
         notesButton = UIButton(type: .system)
         notesButton?.setImage(UIImage(named: "Pencil"), for: .normal)
-        notesButton?.isHidden = false
+        notesButton?.isHidden = true
         notesButton!.addTarget(self, action: #selector(pencilButtonPressed(_:)), for: .touchUpInside)
         contentView.addSubview(notesButton!)
         notesButton!.translatesAutoresizingMaskIntoConstraints = false
         notesButton!.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10).isActive = true
-        //        notesButton!.widthAnchor.constraint(equalToConstant: 30).isActive = true
         notesButton!.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 4).isActive = true
         notesButton!.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -4).isActive = true
         

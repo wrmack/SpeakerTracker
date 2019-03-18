@@ -11,9 +11,9 @@ import Foundation
 
 
 /*
- This class provides utilities for saving and retrieving the current entity or meeting group.
+ This class provides utilities for saving and retrieving the current entity or current meeting group.
  When a user selects an entity it is stored as the current entity.
- The current entity is retrieved whenever the user is required to select an entity as the default entity.
+ The current entity is retrieved as the default entity whenever the user is required to select an entity.
  */
 class UserDefaultsManager {
     
