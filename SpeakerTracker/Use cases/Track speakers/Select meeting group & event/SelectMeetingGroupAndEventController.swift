@@ -90,6 +90,7 @@ class SelectMeetingGroupAndEventController: NSObject, EntitiesPopUpViewControlle
         let entity = getCurrentEntity()
         let meetingGroup = getCurrentMeetingGroup()
         let eventPopUpController = DisplayEventsPopUpViewController(entity: entity!, meetingGroup: meetingGroup!)
+//        eventPopUpController.includeTodayInEvents()
         eventPopUpController.modalPresentationStyle = .popover
         source!.present(eventPopUpController, animated: true, completion: nil)
         

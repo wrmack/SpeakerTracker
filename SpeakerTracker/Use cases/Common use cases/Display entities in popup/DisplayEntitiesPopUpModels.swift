@@ -13,7 +13,8 @@
 import UIKit
 
 enum DisplayEntitiesPopUp {
-  // MARK: Use cases
+  
+    // MARK: Use cases
   
     enum Entities {
         struct Request {

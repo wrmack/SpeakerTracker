@@ -24,7 +24,7 @@ class ShowHelpInteractor: ShowHelpBusinessLogic, ShowHelpDataStore {
     var presenter: ShowHelpPresentationLogic?
 
 
-    // MARK: Do something
+    // MARK: - VIP
 
     func fetchAttributedString(request: ShowHelp.Help.Request) {
 

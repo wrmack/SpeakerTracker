@@ -21,7 +21,7 @@ extension TrackSpeakersViewController: UITableViewDataSource, UITableViewDelegat
 
     // MARK: - UITableViewDataSource protocols
     
-    func numberOfSections(in tableView: UITableView) -> Int {
+    internal func numberOfSections(in tableView: UITableView) -> Int {
         switch tableView.tag {
         case 1:
             return 1
@@ -35,7 +35,7 @@ extension TrackSpeakersViewController: UITableViewDataSource, UITableViewDelegat
     }
     
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    internal func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         let tag = tableView.tag
         var numRows = 0
@@ -66,7 +66,7 @@ extension TrackSpeakersViewController: UITableViewDataSource, UITableViewDelegat
     
     
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    internal func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         var tvCell = tableView.dequeueReusableCell(withIdentifier: "wmcell", for: indexPath) as? WMTableViewCell
         if tvCell == nil {
@@ -157,33 +157,28 @@ extension TrackSpeakersViewController: UITableViewDataSource, UITableViewDelegat
     }
     
     
-    func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+    internal func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
         
         var waitingNameDictionary = tableCollection[1].nameDictionary
         let nameWithTimeToMove = waitingNameDictionary![sourceIndexPath.section]!.remove(at: sourceIndexPath.row)
         waitingNameDictionary![destinationIndexPath.section]!.insert(nameWithTimeToMove, at: destinationIndexPath.row)
         tableCollection[1].nameDictionary = waitingNameDictionary
-        
-        undoStack.append((1, sourceIndexPath.row, 1, destinationIndexPath.row, waitingNameDictionary![destinationIndexPath.section]![destinationIndexPath.row]))
-        if undoStack.count > 10 {
-            let newStack = Array(undoStack.dropFirst())
-            undoStack = newStack
-        }
     }
     
     // MARK: - UITableView delegate methods
     
-    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
+    internal func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
         // Don't want a delete or insert accessory
         return .none
     }
     
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    internal func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         if tableView.tag == 3 {
             var header = tableView.dequeueReusableHeaderFooterView(withIdentifier: "DebateSectionHeaderView") as? DebateSectionHeaderView
             if header == nil {
                 header = DebateSectionHeaderView(reuseIdentifier: "DebateSectionHeaderView")
             }
+            header?.notesButton?.isHidden = true
             if speakingTableSections[section]!.isAmendment == true {
                 header!.debateSectionLabel?.text = "Amendment debate"
                 header!.disclosureButton!.isHidden = false
@@ -198,6 +193,15 @@ extension TrackSpeakersViewController: UITableViewDataSource, UITableViewDelegat
             else {
                 header!.debateSectionLabel?.text = "Main debate"
                 header?.disclosureButton?.isHidden = true
+                if eventRecordingIsOn == true {
+                    if let debate = getCurrentDebate() {
+                        let debateNumber = debate.debateNumber
+                        header!.debateSectionLabel?.text = "Debate \(debateNumber!)"
+                    }
+                    if section == 0 {
+                        header?.notesButton?.isHidden = false
+                    }
+                }
             }
             header?.delegate = self
             header?.sectionNumber = section
@@ -206,7 +210,7 @@ extension TrackSpeakersViewController: UITableViewDataSource, UITableViewDelegat
         return nil
     }
     
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    internal func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         if tableView.tag == 3 {
             return 32
         }
@@ -216,7 +220,7 @@ extension TrackSpeakersViewController: UITableViewDataSource, UITableViewDelegat
     
     // MARK: - DebateSectionHeaderViewDelegate methods
     
-    func amendmentDisclosureButtonPressed(section: Int) {
+    internal func amendmentDisclosureButtonPressed(section: Int) {
         let header = speakingTable.headerView(forSection: section) as! DebateSectionHeaderView
         if speakingTableSections[section]!.isCollapsed == false {
             speakingTableSections[section]!.isCollapsed = true
@@ -230,7 +234,7 @@ extension TrackSpeakersViewController: UITableViewDataSource, UITableViewDelegat
         }
     }
     
-    func pencilButtonPressed() {
+    internal func pencilButtonPressed() {
         router!.routeToAddNoteToDebate()
     }
     
@@ -246,7 +250,7 @@ extension TrackSpeakersViewController: UITableViewDataSource, UITableViewDelegat
     
     
     /// Get the member's name and index of table that was swiped and pass to functions to move name left or right.
-    @objc func handleSwipeGesture(_ recognizer: UISwipeGestureRecognizer) {
+    @objc internal func handleSwipeGesture(_ recognizer: UISwipeGestureRecognizer) {
         guard recognizer.state == .ended else { return }
         guard recognizer.view is UITableView else { return }
         var currentTable: UITableView?
@@ -279,7 +283,7 @@ extension TrackSpeakersViewController: UITableViewDataSource, UITableViewDelegat
     }
     
     
-    @objc func handleLongPressGesture(_ recognizer: UILongPressGestureRecognizer) {
+    @objc internal func handleLongPressGesture(_ recognizer: UILongPressGestureRecognizer) {
         becomeFirstResponder()
         let pressLocation = recognizer.location(in: speakingTable)
         guard let pressIndexPath = speakingTable?.indexPathForRow(at: pressLocation)  else { return }
@@ -312,15 +316,15 @@ extension TrackSpeakersViewController: UITableViewDataSource, UITableViewDelegat
     }
     
     
-    @objc func exerciseRightOfReply() {
+    @objc private func exerciseRightOfReply() {
         copyNameToEnd(from: longPressTablePosition!)
     }
     
-    @objc func moveAmendment() {
+    @objc private func moveAmendment() {
         beginAmendment()
     }
     
-    @objc func closeAmendment() {
+    @objc private func closeAmendment() {
         endAmendment()
     }
     
@@ -332,7 +336,7 @@ extension TrackSpeakersViewController: UITableViewDataSource, UITableViewDelegat
      * Updates the timer displays.
      */
     
-    @objc func timerFireMethod(_ timer: Timer) {
+    @objc private func timerFireMethod(_ timer: Timer) {
         
         let secondsSinceStart: Int = abs(Int(startTime!.timeIntervalSinceNow))
         let minutes = secondsSinceStart / 60
@@ -353,7 +357,7 @@ extension TrackSpeakersViewController: UITableViewDataSource, UITableViewDelegat
      https://www.hackingwithswift.com/articles/117/the-ultimate-guide-to-timer
      */
     
-    func handleStartTimer() {
+    internal func handleStartTimer() {
         if pausePressed != true {
             startTime = Date()
             timerLabel.text = "00:00"
@@ -385,7 +389,7 @@ extension TrackSpeakersViewController: UITableViewDataSource, UITableViewDelegat
      Called when either pause button is pressed
      */
     
-    func handlePauseTimer() {
+    internal func handlePauseTimer() {
         
         // Set pause toggle
         pausePressed = true
@@ -407,7 +411,7 @@ extension TrackSpeakersViewController: UITableViewDataSource, UITableViewDelegat
     
     
     /// Called when either stop button is pressed
-    func handleStopTimer() -> Int {
+    internal func handleStopTimer() -> Int {
         timer?.invalidate()
         startButton.isEnabled = true
         pauseButton.isEnabled = false

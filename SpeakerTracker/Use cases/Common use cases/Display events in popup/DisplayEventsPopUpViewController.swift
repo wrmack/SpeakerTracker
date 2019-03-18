@@ -179,6 +179,9 @@ class DisplayEventsPopUpViewController: UIViewController, DisplayEventsPopUpDisp
         eventNames = [String]()
     }
     
+    func includeTodayInEvents() {
+        interactor!.includeTodayInEvents() 
+    }
     
     // MARK: UITableViewDelegate methods
     

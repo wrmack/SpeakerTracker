@@ -13,6 +13,7 @@
 import UIKit
 
 protocol DisplayEventsPopUpBusinessLogic {
+    func includeTodayInEvents()
     func fetchEvents(request: DisplayEventsPopUp.Events.Request)
     func setEntity(entity: Entity)
     func setMeetingGroup(meetingGroup: MeetingGroup)
@@ -20,6 +21,7 @@ protocol DisplayEventsPopUpBusinessLogic {
 
 protocol DisplayEventsPopUpDataStore {
 }
+
 
 class DisplayEventsPopUpInteractor: DisplayEventsPopUpBusinessLogic, DisplayEventsPopUpDataStore {
     var presenter: DisplayEventsPopUpPresentationLogic?
@@ -32,9 +34,23 @@ class DisplayEventsPopUpInteractor: DisplayEventsPopUpBusinessLogic, DisplayEven
     var currentMemberSpeaking: Member?
     
     
+    func includeTodayInEvents() {
+        if events == nil {
+            events = [Event]()
+            let id = UUID()
+            let df = DateFormatter()
+            df.dateFormat = "yyyy-MM-dd_hh-mm"
+            let newDateString = df.string(from: Date())
+            let event = Event(date: Date(), entity: currentEntity, meetingGroup: currentMeetingGroup, note: nil, debates: nil, id: id, filename: newDateString)
+            events?.append(event)
+        }
+    }
+    
 
     func fetchEvents(request: DisplayEventsPopUp.Events.Request) {
-        events = [Event]()
+        if events == nil {
+            events = [Event]()
+        }
         let fileManager = FileManager.default
         guard let docDirectory = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first else {
             print("DisplayEventsPopUpInteractor: fetchEvents: error: Document directory not found")
@@ -91,9 +107,11 @@ class DisplayEventsPopUpInteractor: DisplayEventsPopUpBusinessLogic, DisplayEven
         return events![index]
     }
     
+    
     func setEntity(entity: Entity) {
         self.currentEntity = entity
     }
+    
     
     func setMeetingGroup(meetingGroup: MeetingGroup) {
         self.currentMeetingGroup = meetingGroup

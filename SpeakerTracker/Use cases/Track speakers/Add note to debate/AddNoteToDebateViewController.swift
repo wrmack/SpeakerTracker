@@ -78,7 +78,8 @@ class AddNoteToDebateViewController: UIViewController {
         
         // Heading
         let heading = UILabel()
-        heading.text = "Add a note for this debate"
+        let debate = getDebate()
+        heading.text = "Add a note for debate \(debate!.debateNumber!)"
         heading.textAlignment = .center
         heading.textColor = UIColor.black
         heading.font = UIFont.boldSystemFont(ofSize: 20)
@@ -118,6 +119,9 @@ class AddNoteToDebateViewController: UIViewController {
         return interactor!.getDebateNote()
     }
     
+    func getDebate()->Debate? {
+        return interactor!.getDebate()
+    }
     
     
     
