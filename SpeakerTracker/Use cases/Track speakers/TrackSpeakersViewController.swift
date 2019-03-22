@@ -88,7 +88,7 @@ class TrackSpeakersViewController: UIViewController, TrackSpeakersDisplayLogic {
     // Buttons on right side of screen
     @IBOutlet private weak var expandButton: UIButton!
     @IBOutlet private weak var undoButton: UIButton!
-    @IBOutlet private weak var resetButton: UIButton!
+    @IBOutlet internal weak var resetButton: UIButton!
     @IBOutlet internal weak var recordingOnLabel: UILabel!
     
     // Sidebar, views and buttons
@@ -182,6 +182,7 @@ class TrackSpeakersViewController: UIViewController, TrackSpeakersDisplayLogic {
         startButton.isHidden = true
         pauseButton.isHidden = true
         stopButton.isHidden = true
+        handleStopTimer()
         view.sendSubview(toBack:stackView)
         sideBarLeadingConstraint.constant = -370
         eventView.isHidden = true
@@ -232,6 +233,10 @@ class TrackSpeakersViewController: UIViewController, TrackSpeakersDisplayLogic {
         let tabBarCont = UIApplication.shared.keyWindow?.rootViewController as! UITabBarController
         let tabBarRect = tabBarCont.tabBar.frame
         tabBarCont.tabBar.frame = CGRect(x: view.frame.origin.x, y: tabBarRect.origin.y, width: view.frame.size.width, height: tabBarRect.size.height)
+        for item in tabBarCont.tabBar.items! {
+            item.setTitleTextAttributes([NSAttributedStringKey.font : UIFont.systemFont(ofSize: 18)], for: .normal)
+        }
+
         
         // Get stored entities and meeting groups from user defaults
         if let entity = UserDefaultsManager.getCurrentEntity() {
@@ -300,6 +305,9 @@ class TrackSpeakersViewController: UIViewController, TrackSpeakersDisplayLogic {
         else {
             eventView.isHidden = true
             recordingOnLabel.textColor = UIColor.darkGray
+            let paraStyle = NSMutableParagraphStyle()
+            paraStyle.alignment = .center
+            let title = NSAttributedString(string: "Reset", attributes: [NSAttributedStringKey.foregroundColor : UIColor(red: 0.93, green: 0.93, blue: 0.95, alpha: 1.0), NSAttributedStringKey.paragraphStyle : paraStyle])
             eventRecordingIsOn = false
             addCurrentDebateToEvent()
         }
@@ -377,10 +385,10 @@ class TrackSpeakersViewController: UIViewController, TrackSpeakersDisplayLogic {
         if speakerRecording != nil {
             // Not the row that was tapped,so shut them down so can start this row
             let spkrIndexPath = IndexPath(row: (speakerRecording?.row)!, section: (speakerRecording?.section)!)
-            if spkrIndexPath != indexPath{
+            if spkrIndexPath != indexPath {
                 if smStartButton.isEnabled == false {
                     let speakingTime = handleStopTimer()
-                    addCurrentSpeakerToDebate(debateNote: debateNote.text!, startTime: startTime!, speakingTime: speakingTime)
+                    addCurrentSpeakerToDebate(startTime: startTime!, speakingTime: speakingTime)
                 }
                 speakerRecording!.section = indexPath?.section
                 speakerRecording!.row = indexPath?.row
@@ -395,7 +403,7 @@ class TrackSpeakersViewController: UIViewController, TrackSpeakersDisplayLogic {
                 // Speaker is the row that was tapped so stop the speaker
                 if smStartButton.isEnabled == false {
                     let speakingTime = handleStopTimer()
-                     addCurrentSpeakerToDebate(debateNote: debateNote.text!, startTime: startTime!, speakingTime: speakingTime)
+                     addCurrentSpeakerToDebate(startTime: startTime!, speakingTime: speakingTime)
                 }
                 speakerRecording = nil
             }
@@ -544,7 +552,11 @@ class TrackSpeakersViewController: UIViewController, TrackSpeakersDisplayLogic {
     }
     
     @IBAction private func stopSmTimer(_ sender: UIButton) {
-        _ = handleStopTimer()
+        let speakingTime = handleStopTimer()
+        if speakerRecording != nil {
+            addCurrentSpeakerToDebate(startTime: startTime!, speakingTime: speakingTime)
+            speakerRecording = nil
+        }
     }
     
     @IBAction private func infoButtonPressed(_ sender: UIButton) {
@@ -582,14 +594,14 @@ class TrackSpeakersViewController: UIViewController, TrackSpeakersDisplayLogic {
     }
     
     private func addCurrentDebateToEvent() {
-        interactor?.addCurrentDebateToEvent(debateNote: debateNote.text!)
+        interactor?.addCurrentDebateToEvent(debateNote: debateNote?.text)
     }
     
     internal func getCurrentDebate()-> Debate? {
         return interactor!.getCurrentDebate()
     }
     
-    private func addCurrentSpeakerToDebate(debateNote: String, startTime: Date, speakingTime: Int) {
+    private func addCurrentSpeakerToDebate(startTime: Date, speakingTime: Int) {
         interactor!.addCurrentSpeakerToDebateSection(startTime: startTime, speakingTime: speakingTime)
     }
     

@@ -60,7 +60,7 @@ class DisplayDetailViewController: UIViewController, UITableViewDelegate, UITabl
 
     
     
-    // MARK: Object lifecycle
+    // MARK: - Object lifecycle
 
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
@@ -79,7 +79,7 @@ class DisplayDetailViewController: UIViewController, UITableViewDelegate, UITabl
     }
     
     
-    // MARK: Setup
+    // MARK: - Setup
 
     private func setup() {
         let viewController = self
@@ -96,7 +96,7 @@ class DisplayDetailViewController: UIViewController, UITableViewDelegate, UITabl
 
 
     
-    // MARK: View lifecycle
+    // MARK: - View lifecycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -143,8 +143,7 @@ class DisplayDetailViewController: UIViewController, UITableViewDelegate, UITabl
     }
     
     
-    // Button actions
-    
+    // MARK: - User actions
     
     @IBAction private func editButtonPressed(_ sender: UIBarButtonItem) {
         let selectedItem = interactor?.getSelectedItem()

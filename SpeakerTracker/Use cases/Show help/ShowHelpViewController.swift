@@ -85,7 +85,12 @@ class ShowHelpViewController: UIViewController, ShowHelpDisplayLogic {
         
         fetchAttributedString()
     }
+    
+    override func viewDidLayoutSubviews() {
+        textView?.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
+    }
 
+    
     // MARK: VIP
 
     func fetchAttributedString() {

@@ -39,22 +39,148 @@ class ShowHelpPresenter: ShowHelpPresentationLogic {
         
 
         
-        attString.append(NSAttributedString(string: "Quick info\n", attributes: heading1Atts))
+        attString.append(NSAttributedString(string: "Info\n", attributes: heading1Atts))
         attString.append(NSAttributedString(string: "The lists\n", attributes: heading2Atts))
-        attString.append(NSAttributedString(string: "Remaining list:\n", attributes: boldnormAtts))
-        attString.append(NSAttributedString(string: "All members start here, in alphabetical order of last name.\n", attributes: normAtts))
-        attString.append(NSAttributedString(string: "Waiting list:\n", attributes: boldnormAtts))
-        attString.append(NSAttributedString(string: "Members who have signalled their wish to speak are listed here. The meeting chair can see who is next to speak.  Members can be re-ordered by pressing the control at the top of the list and moving rows.\n", attributes: normAtts))
-        attString.append(NSAttributedString(string: "Speaking list:\n", attributes: boldnormAtts))
-        attString.append(NSAttributedString(string: "Shows the members who have previously spoken in the debate and the member currently speaking.\n", attributes: normAtts))
-        attString.append(NSAttributedString(string: "Moving a member from one list another:\n", attributes: boldnormAtts))
-        attString.append(NSAttributedString(string: "Either swipe the member name or press the arrow.\n", attributes: normAtts))
-        attString.append(NSAttributedString(string: "Debates\n", attributes: heading2Atts))
-        attString.append(NSAttributedString(string: "Amendments:\n", attributes: boldnormAtts))
-        attString.append(NSAttributedString(string: "If the member who is speaking moves an amendment, long press the member when finished speaking to commence a debate on the amendment. All other members may speak to the amendment and are returned to the Waiting list. Long press the final speaker to the amendment to close the amendment debate.  The main debate resumes. Those members who have not already spoken in the main debate may speak. \n", attributes: normAtts))
-        attString.append(NSAttributedString(string: "Timing speeches\n", attributes: heading2Atts))
-        attString.append(NSAttributedString(string: "Timer:\n", attributes: boldnormAtts))
-        attString.append(NSAttributedString(string: "Press the play button for the timer when the speaker commences.  The stop button stops the timer and when the play button is pressed again it starts from zero.  The pause button pauses the timer and when the play button is pressed again it resumes from where it was paused.\n", attributes: normAtts))
+        attString.append(NSAttributedString(string: """
+Remaining list\n
+""", attributes: boldnormAtts))
+        
+        attString.append(NSAttributedString(string: """
+All members start here, in alphabetical order of last name.\n
+""", attributes: normAtts))
+        
+        attString.append(NSAttributedString(string: """
+Waiting list\n
+""", attributes: boldnormAtts))
+        
+        attString.append(NSAttributedString(string: """
+Members who have signalled their wish to speak are listed here.\
+The meeting chair can see who is next to speak.  \
+Members can be re-ordered by pressing the control at the top of the list and moving rows.\n
+""", attributes: normAtts))
+        
+        attString.append(NSAttributedString(string: """
+Speaking list\n
+""", attributes: boldnormAtts))
+        
+        attString.append(NSAttributedString(string: """
+Shows the members who have previously spoken in the debate and the member currently speaking.\n
+""", attributes: normAtts))
+        
+        attString.append(NSAttributedString(string: """
+Moving a member from one list another\n
+""", attributes: boldnormAtts))
+        
+        attString.append(NSAttributedString(string: """
+Either swipe the member name or press the arrow.\n
+""", attributes: normAtts))
+        
+        attString.append(NSAttributedString(string: """
+Debates\n
+""", attributes: heading2Atts))
+ 
+        attString.append(NSAttributedString(string:"""
+Speaking rules\n
+""", attributes: boldnormAtts))
+ 
+        attString.append(NSAttributedString(string:"""
+This app is based on the rule that speakers in a debate to a motion only speak once.  A speaker may propose an amendment to a motion \
+being debated.  All members, whether they have already spoken to the main (original) motion or not, may speak to the amendment.  \
+Once the amendment is dispensed with, only those speakers who have not already spoken to the main motion may continue to speak to it. \
+If your meeting rules allow speakers to speak more than once, and you wish to time a speaker who has already spoken once, \
+do a long-press on the speaker and select the menu option to speak again. \n
+""", attributes: normAtts))
+        
+        attString.append(NSAttributedString(string:"""
+Amendments\n
+""", attributes: boldnormAtts))
+        
+        attString.append(NSAttributedString(string:"""
+If the member who is speaking moves an amendment, long press the member when finished speaking to commence \
+a debate on the amendment. All other members may speak to the amendment and are returned to the Remaining list. \
+Long press the final speaker to the amendment to close the amendment debate.  The main debate resumes. \
+Those members who have not already spoken in the main debate may speak. \n
+""", attributes: normAtts))
+        
+        attString.append(NSAttributedString(string:"""
+Timing speeches\n
+""", attributes: heading2Atts))
+        
+        attString.append(NSAttributedString(string: """
+Timer\n
+""", attributes: boldnormAtts))
+        
+        attString.append(NSAttributedString(string: """
+There is a clock at the top of the screen.  Pressing the full screen button shows a larger clock.  Both clocks are synced.  They \
+display the same timing action.  When you press the play button next to a speaker's name, the play button is replaced by a clock.
+To time a speaker you have options.
+Press the play button for the top clock when the speaker commences.  The stop button stops the timer and when the play button \
+is pressed again it starts from zero.  The pause button pauses the timer and when the play button is pressed again it resumes \
+from where it was paused.
+To retain a display of each speaker's time, press the play button fnext to the speaker's name.  The play button will be replaced by the time.  \
+Press the clock next to speaker again to stop the timer, \
+or press the stop button of the top clock.  The clock next to the speaker's name retains the time and is disabled so it cannot be restarted.\n
+""", attributes: normAtts))
+
+        attString.append(NSAttributedString(string:"""
+Recording debates\n
+""", attributes: heading2Atts))
+        
+        attString.append(NSAttributedString(string: """
+Meeting events\n
+""", attributes: boldnormAtts))
+        
+        attString.append(NSAttributedString(string: """
+The term 'meeting' can be ambiguous.  We might say 'the meeting decided to ...'.  Here, 'meeting' refers to the group of people who are meeting. \
+We might say 'let's have a meeting'.  Here, 'meeting' refers to people coming together to have a meeting - a meeting event.  \
+To ensure clarity, when a group come together to have a meeting, we will call this a 'meeting event'.  For the purposes of this app, a meeting event \
+includes the name of the entity, the name of the group that is meeting (the 'meeting group'), the members of the meeting group and the date and \
+time of the meeting.
+You can record and save all debates that take place at a meeting event,
+
+""", attributes: normAtts))
+
+        attString.append(NSAttributedString(string: """
+Create the meeting event\n
+""", attributes: boldnormAtts))
+        
+        attString.append(NSAttributedString(string: """
+    • Go to 'Setup'
+    • Select the 'Events' tab
+    • Select the 'Entity'
+    • Select the 'Meeting group'
+    • Press the '+' button
+    • Set the date and time, press 'Save'
+
+""", attributes: normAtts))
+        
+        attString.append(NSAttributedString(string: """
+Setup the meeting to record the meeting event\n
+""", attributes: boldnormAtts))
+
+        attString.append(NSAttributedString(string: """
+    • Go to 'Speakers' (the main window for tracking speakers at a meeting)
+    • Open the slide-out panel 'Meeting setup'
+    • Ensure 'Entity' and 'Meeting group' are correct
+    • Enable 'Create a record of this meeting'
+    • Select the 'Meeting event' from the pop-up
+    • Close the slide-out panel
+Note: the pop-up will display only the meeting events for the selected Entity / Meeting group
+A red recording icon will now be visible.
+
+""", attributes: normAtts))
+        
+        attString.append(NSAttributedString(string: """
+Record the meeting event\n
+""", attributes: boldnormAtts))
+        
+        attString.append(NSAttributedString(string: """
+Press the pencil icon at the top of the 'Spoken / Speaking' table to add a note for the current debate, \
+for example to identify which item in the agenda the debate relates to.
+After each debate is completed, press the 'End debate' button to save the debate and start a new one.
+When the meeting event is over, end the final debate and, in the slide-out panel, disable the switch button 'Create a record of this meeting'.
+
+""", attributes: normAtts))
         
         let viewModel = ShowHelp.Help.ViewModel(attString: attString)
         viewController?.displayAttributedString(viewModel: viewModel)

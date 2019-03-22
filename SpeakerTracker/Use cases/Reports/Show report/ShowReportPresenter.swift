@@ -83,14 +83,18 @@ class ShowReportPresenter: ShowReportPresentationLogic {
         atts[NSAttributedStringKey.paragraphStyle] = ParaStyle().left
         if event?.debates != nil {
             for debate in (event?.debates)! {
-                let debateNumberAttStg = NSAttributedString(string: "Debate " +  String(debate.debateNumber!) + "\n", attributes: boldAtts)
+                (boldAtts[NSAttributedStringKey.paragraphStyle] as! NSMutableParagraphStyle).firstLineHeadIndent = 0
+                let debateNumberAttStg = NSAttributedString(string: "\nDebate " +  String(debate.debateNumber!) + "\n", attributes: boldAtts)
                 attString.append(debateNumberAttStg)
                 if let note = debate.note {
                     let refAttStg = NSAttributedString(string: note + "\n", attributes: italicAtts)
                     attString.append(refAttStg)
                 }
                 for debateSection in debate.debateSections! {
-                    let debateSectionNameAttStg = NSAttributedString(string: debateSection.sectionName! + "\n", attributes: boldAtts)
+                    var debateSectionNameAtts = Attributes().normalBoldBase
+                    debateSectionNameAtts[NSAttributedStringKey.paragraphStyle] = ParaStyle().leftWithSpacingBefore
+                    (debateSectionNameAtts[NSAttributedStringKey.paragraphStyle] as! NSMutableParagraphStyle).firstLineHeadIndent = 20
+                    let debateSectionNameAttStg = NSAttributedString(string: debateSection.sectionName! + "\n", attributes: debateSectionNameAtts)
                     attString.append(debateSectionNameAttStg)
                     var spkrEvtStrg = String()
                     for speakerEvt in debateSection.speakerEvents! { 
@@ -101,8 +105,10 @@ class ShowReportPresenter: ShowReportPresentationLogic {
                         let startTime = formatter.string(from: (speakerEvt.startTime)!)
                         spkrEvtStrg.append(fullName + "\t" + String(spkgTime) + "\t" + startTime + "\n")
                     }
-
-                    let spkrEvtAttStr = NSAttributedString(string: spkrEvtStrg, attributes: normAtts)
+                    var spkrAtts = Attributes().normalBase
+                    spkrAtts[NSAttributedStringKey.paragraphStyle] = ParaStyle().left
+                    (spkrAtts[NSAttributedStringKey.paragraphStyle] as! NSMutableParagraphStyle).firstLineHeadIndent = 20
+                    let spkrEvtAttStr = NSAttributedString(string: spkrEvtStrg, attributes: spkrAtts)
                     attString.append(spkrEvtAttStr)
                 }
             }

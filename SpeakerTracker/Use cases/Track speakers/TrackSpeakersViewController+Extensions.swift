@@ -110,6 +110,7 @@ extension TrackSpeakersViewController: UITableViewDataSource, UITableViewDelegat
             }
             tvCell?.memberText!.text = name
             var spkrIndexPath: IndexPath?
+            // A speaker is being recorded
             if speakerRecording != nil { 
                 spkrIndexPath = IndexPath(row: (speakerRecording?.row)!, section: (speakerRecording?.section)!)
             }
@@ -119,6 +120,7 @@ extension TrackSpeakersViewController: UITableViewDataSource, UITableViewDelegat
                 tvCell!.rightButton!.titleLabel!.font = UIFont.systemFont(ofSize:14)
                 tvCell!.rightButton!.setTitleColor(UIColor.red, for: .normal)
                 tvCell?.leftButton?.isEnabled = false
+                return tvCell!
             }
             else {
                 // Start with all enabled and all with play button
@@ -130,10 +132,10 @@ extension TrackSpeakersViewController: UITableViewDataSource, UITableViewDelegat
                 tvCell!.rightButton?.setTitle("▶︎", for: .normal)
                 tvCell!.rightButton!.titleLabel!.font = UIFont.systemFont(ofSize: 22)
             }
-            // Someone is speaking but not this row, so disable left button of this row
+            // Someone is speaking but not this row, so disable left and right buttons of this row
             if speakerRecording != nil && spkrIndexPath != indexPath {
                 tvCell?.leftButton?.isEnabled = false
-                //tvCell?.rightButton?.isEnabled = false
+                tvCell?.rightButton?.isEnabled = false
             }
             // Disable buttons in all rows of sections prior to last section
             if indexPath.section < (speakingTableNumberOfSections - 1) {
@@ -145,7 +147,9 @@ extension TrackSpeakersViewController: UITableViewDataSource, UITableViewDelegat
             if time != nil {
                 tvCell?.rightButton?.setTitle(time, for: .normal)
                 tvCell!.rightButton!.titleLabel!.font = UIFont.systemFont(ofSize:14)
-                tvCell!.rightButton!.setTitleColor(UIColor.red, for: .normal)
+                tvCell!.rightButton!.setTitleColor(UIColor(red: 0, green: 0.0, blue: 1.0, alpha: 1.0), for: .disabled)
+                tvCell?.rightButton?.isEnabled = false
+                
             }
             if self.view.frame.size.width > 1300 {tvCell?.memberText?.font = UIFont(name: "Arial", size: 28)} // if iPad Pro 12"
             
@@ -345,7 +349,7 @@ extension TrackSpeakersViewController: UITableViewDataSource, UITableViewDelegat
         let minutesString = String(format: "%02d", minutes)
         timerLabel.text = "\(minutesString):\(secondsString)"
         smTimerLabel.text = "\(minutesString):\(secondsString)"
-        speakerRecording!.button?.setTitle("\(minutesString):\(secondsString)", for: .normal)
+        speakerRecording?.button?.setTitle("\(minutesString):\(secondsString)", for: .normal)
     }
     
     
@@ -419,6 +423,7 @@ extension TrackSpeakersViewController: UITableViewDataSource, UITableViewDelegat
         smStartButton.isEnabled = true
         smPauseButton.isEnabled = false
         smStopButton.isEnabled = false
+        guard startTime != nil else { return 0}
         let speakingTime = abs(Int(startTime!.timeIntervalSinceNow))
         return speakingTime
     }

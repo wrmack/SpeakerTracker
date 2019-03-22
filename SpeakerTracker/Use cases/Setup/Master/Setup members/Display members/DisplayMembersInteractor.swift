@@ -14,6 +14,7 @@ import UIKit
 
 protocol DisplayMembersBusinessLogic {
     func fetchMembers(request: DisplayMembers.Members.Request)
+    func getCurrentMemberIndex()->Int?
     func setCurrentMember(index: Int)
     func refreshMembers()
     func checkEntitiesExist()->Bool?
@@ -51,6 +52,12 @@ class DisplayMembersInteractor: DisplayMembersBusinessLogic, DisplayMembersDataS
         self.presenter?.presentMembers(response: response)
     }
     
+    func getCurrentMemberIndex()->Int? {
+        if member != nil {
+            return members!.firstIndex(of: member!)
+        }
+        return 0
+    }
     
     func setCurrentMember(index: Int) {
         if members != nil && members!.count > 0 {
@@ -67,7 +74,9 @@ class DisplayMembersInteractor: DisplayMembersBusinessLogic, DisplayMembersDataS
      */
     func refreshMembers() {
         self.members = entity?.members
-        setCurrentMember(index: 0)
+        if member == nil {
+            setCurrentMember(index: 0)
+        }
         let response = DisplayMembers.Members.Response(members: self.members)
         self.presenter?.presentMembers(response: response)
     }

@@ -10,6 +10,12 @@
 //  see http://clean-swift.com
 //
 
+/*
+ https://pspdfkit.com/blog/2019/converting-attributed-string-to-pdf/
+ 
+ 
+ */
+
 import UIKit
 import CoreGraphics
 
@@ -23,28 +29,43 @@ protocol ConvertToPdfDataStore {
     var pdfUrl: URL? {get set}
 }
 
-class ConvertToPdfInteractor: ConvertToPdfBusinessLogic, ConvertToPdfDataStore {
+
+class ConvertToPdfInteractor: UIPrintPageRenderer, ConvertToPdfBusinessLogic, ConvertToPdfDataStore {
     var attText: NSAttributedString?
     var pdfUrl: URL?
+    let pageSize = CGSize(width: 595.2, height: 841.8)
+    
+    override var paperRect: CGRect {
+        return CGRect(origin: .zero, size: pageSize)
+    }
+    
+    override var printableRect: CGRect {
+        let pageMargin: CGFloat = 40
+        return paperRect.insetBy(dx: pageMargin, dy: pageMargin)
+    }
     
     
     
     func convertToPdf(callback: @escaping (()->())) {
         let tempDir = FileManager.default.temporaryDirectory
- 
         pdfUrl = tempDir.appendingPathComponent("Meeting.pdf")
-        let renderer = UIGraphicsPDFRenderer(bounds: CGRect(x: 0, y: 0, width: 595.2, height: 841.8))
+        let renderer = UIGraphicsPDFRenderer(bounds:paperRect)
+        prepare(forDrawingPages: NSMakeRange(0, numberOfPages))
         
         do {
             try renderer.writePDF(to: pdfUrl!, withActions: { context in
-                context.beginPage()
-                attText!.draw(in: CGRect(x: 40, y: 20, width: 515, height: 800))
+                let printFormatter = UISimpleTextPrintFormatter(attributedText: attText!)
+                addPrintFormatter(printFormatter, startingAtPageAt: 0)
+                
+                for pageIndex in 0..<numberOfPages {
+                    context.beginPage()
+                    drawPage(at: pageIndex, in: context.pdfContextBounds)
+                }
                 callback()
             })
         } catch {
             print(error)
         }
     }
-
-
 }
+

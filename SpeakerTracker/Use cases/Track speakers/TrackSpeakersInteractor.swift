@@ -35,7 +35,7 @@ protocol TrackSpeakersBusinessLogic {
     func setCurrentSpeaker(section:Int, row: Int)
     func addCurrentSpeakerToDebateSection(startTime: Date, speakingTime: Int)
 //    private func addCurrentDebateSectionToDebate()
-    func addCurrentDebateToEvent(debateNote: String)
+    func addCurrentDebateToEvent(debateNote: String?)
     func getCurrentDebate()->Debate?
     
     // Move members between tables
@@ -187,7 +187,7 @@ class TrackSpeakersInteractor: TrackSpeakersBusinessLogic, TrackSpeakersDataStor
     }
     
     
-    // MARK: Event, debates and speakers
+    // MARK: - Event, debates and speakers
     
     internal func setCurrentEvent(event: Event?) {
         currentEvent = event
@@ -217,7 +217,7 @@ class TrackSpeakersInteractor: TrackSpeakersBusinessLogic, TrackSpeakersDataStor
     /*
      Called when Reset is pressed
      */
-    internal func addCurrentDebateToEvent(debateNote: String) {
+    internal func addCurrentDebateToEvent(debateNote: String?) {
         if currentDebate != nil {
             currentEvent?.debates?.append(currentDebate!)
         }

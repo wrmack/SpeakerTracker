@@ -14,6 +14,7 @@ import UIKit
 
 protocol DisplayMeetingGroupsForReportsBusinessLogic {
     func fetchMeetingGroups(request: DisplayMeetingGroupsForReports.MeetingGroups.Request)
+    func getCurrentMeetingGroupIndex()->Int?
     func setCurrentMeetingGroup(index: Int)
 }
 
@@ -37,6 +38,14 @@ class DisplayMeetingGroupsForReportsInteractor: DisplayMeetingGroupsForReportsBu
         self.meetingGroups = request.entity?.meetingGroups
         let response = DisplayMeetingGroupsForReports.MeetingGroups.Response(meetingGroups: self.meetingGroups)
         self.presenter?.presentMeetingGroups(response: response)
+    }
+    
+    
+    func getCurrentMeetingGroupIndex()->Int? {
+        if meetingGroup != nil {
+            return meetingGroups!.firstIndex(of: meetingGroup!)
+        }
+        return 0
     }
     
     

@@ -572,11 +572,18 @@
                                             <action selector="undoPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="LeW-Gy-rr6"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SH9-F0-SR5">
-                                        <rect key="frame" x="0.0" y="241" width="76" height="39"/>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="22"/>
-                                        <state key="normal" title="Reset">
-                                            <color key="titleColor" red="0.93725490570000003" green="0.93725490570000003" blue="0.95686274770000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SH9-F0-SR5">
+                                        <rect key="frame" x="0.0" y="242" width="76" height="37.5"/>
+                                        <state key="normal">
+                                            <attributedString key="attributedTitle">
+                                                <fragment content="Reset">
+                                                    <attributes>
+                                                        <color key="NSColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803915" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <font key="NSFont" size="22" name=".SFNSDisplay"/>
+                                                        <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                    </attributes>
+                                                </fragment>
+                                            </attributedString>
                                         </state>
                                         <connections>
                                             <action selector="resetAll:" destination="BYZ-38-t0r" eventType="touchUpInside" id="IFj-cn-qX9"/>
@@ -750,26 +757,10 @@
                                                     <action selector="selectEventPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="RVd-v9-IpZ"/>
                                                 </connections>
                                             </button>
-                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="e.g. Item number" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="GqD-lX-4oP">
-                                                <rect key="frame" x="20" y="137" width="330" height="30"/>
-                                                <accessibility key="accessibilityConfiguration" hint="test"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="width" constant="330" id="f0V-cr-Pug"/>
-                                                    <constraint firstAttribute="height" constant="30" id="xRi-WM-qrA"/>
-                                                </constraints>
-                                                <nil key="textColor"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits"/>
-                                            </textField>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Optional note for current debate" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nmG-IO-2lL">
-                                                <rect key="frame" x="20" y="100.5" width="260" height="21.5"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                                <color key="textColor" white="0.93578652220000003" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Ju-T5-AJU">
-                                                <rect key="frame" x="20" y="197" width="330" height="100.5"/>
-                                                <string key="text">Set-up the meeting as a meeting event then select it above. Speaking times for each debate are recorded. A new debate is created each time Reset is pressed or the Spoken/Speaking table is emptied. The report can be viewed in Reports.</string>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Ju-T5-AJU">
+                                                <rect key="frame" x="20" y="90" width="330" height="100.5"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <string key="text">Set-up a meeting event in 'Setup' then select it above. Speaking times for each debate are recorded. A debate is saved and a new one created after 'End debate' is pressed. The report can be viewed in 'Reports'.</string>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <color key="textColor" white="0.93578652220000003" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
@@ -777,21 +768,12 @@
                                         </subviews>
                                         <color key="backgroundColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
-                                            <constraint firstItem="4Ju-T5-AJU" firstAttribute="top" secondItem="GqD-lX-4oP" secondAttribute="bottom" constant="30" id="1NB-d6-VAG"/>
                                             <constraint firstItem="VDk-J1-m3D" firstAttribute="leading" secondItem="c3f-Dk-tgw" secondAttribute="leading" constant="20" id="Fko-ff-Qw5"/>
-                                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="nmG-IO-2lL" secondAttribute="trailing" constant="20" symbolic="YES" id="IX7-JG-yG0"/>
                                             <constraint firstItem="VDk-J1-m3D" firstAttribute="top" secondItem="kEY-ox-WAK" secondAttribute="bottom" constant="15" id="OBq-R1-Fmy"/>
-                                            <constraint firstAttribute="trailing" secondItem="GqD-lX-4oP" secondAttribute="trailing" constant="20" id="QMr-OW-Gdh"/>
-                                            <constraint firstItem="4Ju-T5-AJU" firstAttribute="leading" secondItem="GqD-lX-4oP" secondAttribute="leading" id="SF6-1y-AOZ"/>
-                                            <constraint firstItem="GqD-lX-4oP" firstAttribute="leading" secondItem="c3f-Dk-tgw" secondAttribute="leading" constant="20" id="YQY-Ag-cwy"/>
                                             <constraint firstItem="kEY-ox-WAK" firstAttribute="leading" secondItem="c3f-Dk-tgw" secondAttribute="leading" constant="20" id="agw-aI-Ssi"/>
                                             <constraint firstItem="kEY-ox-WAK" firstAttribute="top" secondItem="c3f-Dk-tgw" secondAttribute="top" id="cFn-Vm-iXc"/>
-                                            <constraint firstItem="GqD-lX-4oP" firstAttribute="top" secondItem="nmG-IO-2lL" secondAttribute="bottom" constant="15" id="gjb-F0-7UH"/>
                                             <constraint firstAttribute="trailing" secondItem="VDk-J1-m3D" secondAttribute="trailing" constant="20" id="jfA-J5-z0R"/>
                                             <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="kEY-ox-WAK" secondAttribute="trailing" constant="20" symbolic="YES" id="qDB-bl-yFu"/>
-                                            <constraint firstItem="nmG-IO-2lL" firstAttribute="top" secondItem="VDk-J1-m3D" secondAttribute="bottom" constant="30" id="qpU-jv-ApB"/>
-                                            <constraint firstItem="4Ju-T5-AJU" firstAttribute="trailing" secondItem="GqD-lX-4oP" secondAttribute="trailing" id="tjH-hC-yv1"/>
-                                            <constraint firstItem="nmG-IO-2lL" firstAttribute="leading" secondItem="c3f-Dk-tgw" secondAttribute="leading" constant="20" id="xcd-HN-Gef"/>
                                         </constraints>
                                     </view>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Turn off when meeting event completed" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zvC-9G-Bmt">
@@ -902,7 +884,6 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="Speakers" id="oU0-l7-Ux2"/>
                     <connections>
-                        <outlet property="debateNote" destination="GqD-lX-4oP" id="hdQ-9M-H9N"/>
                         <outlet property="dimmerView" destination="XKb-FW-hTi" id="fbs-0Q-OZY"/>
                         <outlet property="discloseSideBarButton" destination="ZWK-ht-EJz" id="ddX-Va-1Rf"/>
                         <outlet property="disclosureSideBarButtonView" destination="p9K-1h-NDK" id="keG-6p-WDZ"/>

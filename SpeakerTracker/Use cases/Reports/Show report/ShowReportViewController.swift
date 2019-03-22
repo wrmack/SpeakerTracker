@@ -12,13 +12,15 @@
 
 import UIKit
 
+
+
 protocol ShowReportDisplayLogic: class {
     func displayText(viewModel: ShowReport.Report.ViewModel)
 }
 
 
 
-class ShowReportViewController: UIViewController, ShowReportDisplayLogic, UIActivityItemSource  {
+class ShowReportViewController: UIViewController, ShowReportDisplayLogic  {
     
     var interactor: ShowReportBusinessLogic?
     var router: (NSObjectProtocol & ShowReportRoutingLogic & ShowReportDataPassing)?
@@ -108,7 +110,8 @@ class ShowReportViewController: UIViewController, ShowReportDisplayLogic, UIActi
     // MARK: - Methods
     
     func showSharePopUp() {
-        let items = [self]
+        let pdfUrl = interactor!.getPdfUrl()
+        let items = [pdfUrl] as [Any]
         let ac = UIActivityViewController(activityItems: items, applicationActivities: nil)
         present(ac, animated: true)
         let popoverController = ac.popoverPresentationController
@@ -121,22 +124,5 @@ class ShowReportViewController: UIViewController, ShowReportDisplayLogic, UIActi
         }
     }
     
-    
-    
-    // MARK: - UIActivityItemSource protocol methods
- 
-    func activityViewControllerPlaceholderItem(_ activityViewController: UIActivityViewController) -> Any {
-        let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
-        return documentsDirectory as Any
-    }
-    
-    
-    func activityViewController(_ activityViewController: UIActivityViewController, itemForActivityType activityType: UIActivityType?) -> Any? {
-        return interactor!.getPdfUrl()
-    }
-    
-    func activityViewController(_  activityViewController:UIActivityViewController, subjectForActivityType: UIActivity.ActivityType?) -> String {
-        return "Subject line"
-    }
 }
  
