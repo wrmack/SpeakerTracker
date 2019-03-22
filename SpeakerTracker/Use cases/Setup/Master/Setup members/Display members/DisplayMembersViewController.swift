@@ -160,10 +160,11 @@ class DisplayMembersViewController: UITableViewController, DisplayMembersDisplay
     func displayMembers(viewModel: DisplayMembers.Members.ViewModel) {
         memberNames = viewModel.memberNames!
         tableView.reloadData()
+        let selectedMemberIndex = interactor!.getCurrentMemberIndex()
         if memberNames.count > 0 {
-            tableView.selectRow(at: IndexPath(row: 0, section: 0), animated: false, scrollPosition: .top)
+            tableView.selectRow(at: IndexPath(row: selectedMemberIndex!, section: 0), animated: false, scrollPosition: .top)
         }
-        interactor?.setCurrentMember(index: 0)
+        interactor?.setCurrentMember(index: selectedMemberIndex!)
         router!.updateDetailVC()
     }
     

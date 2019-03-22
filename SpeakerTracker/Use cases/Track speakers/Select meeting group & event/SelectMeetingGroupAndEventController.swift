@@ -178,6 +178,10 @@ class SelectMeetingGroupAndEventController: NSObject, EntitiesPopUpViewControlle
         source!.selectEventButton.setTitleColor(UIColor.white, for: .normal)
         source!.selectEventButton.titleLabel?.textAlignment = .left
         source!.recordingOnLabel.textColor = UIColor.red
+        let paraStyle = NSMutableParagraphStyle()
+        paraStyle.alignment = .center
+        let title = NSAttributedString(string: "Save debate", attributes: [NSAttributedStringKey.foregroundColor : UIColor(red: 0.93, green: 0.93, blue: 0.95, alpha: 1.0), NSAttributedStringKey.paragraphStyle : paraStyle])
+        source!.resetButton.setAttributedTitle(title, for: .normal)
         source!.eventRecordingIsOn = true
         returnToTrackSpeakersAfterSelectingEvent()
     }

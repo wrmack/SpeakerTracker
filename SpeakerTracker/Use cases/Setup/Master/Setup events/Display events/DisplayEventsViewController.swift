@@ -161,10 +161,11 @@ class DisplayEventsViewController: UITableViewController, DisplayEventsDisplayLo
     func displayEvents(viewModel: DisplayEvents.Events.ViewModel) {
         eventNames = viewModel.eventNames!
         tableView.reloadData()
+        let selectedEventIndex = interactor!.getCurrentEventIndex()
         if eventNames.count > 0 {
-            tableView.selectRow(at: IndexPath(row: 0, section: 0), animated: false, scrollPosition: .top)
+            tableView.selectRow(at: IndexPath(row: selectedEventIndex!, section: 0), animated: false, scrollPosition: .top)
         }
-        interactor?.setCurrentEvent(index: 0)
+        interactor?.setCurrentEvent(index:selectedEventIndex!)
         router!.updateDetailVC()
     }
     

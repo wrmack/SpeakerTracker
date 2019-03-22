@@ -119,10 +119,11 @@ class DisplayEntitiesViewController: UITableViewController, DisplayEntitiesDispl
     func displayEntities(viewModel: DisplayEntities.Entities.ViewModel) {
         entityNames = viewModel.entityNames!
         tableView.reloadData()
+        let selectedEntityIndex = interactor!.getCurrentEntityIndex()
         if entityNames.count > 0 {
-            tableView.selectRow(at: IndexPath(row: 0, section: 0), animated: false, scrollPosition: .top)
+            tableView.selectRow(at: IndexPath(row: selectedEntityIndex!, section: 0), animated: false, scrollPosition: .top)
         }
-        interactor?.setCurrentEntity(index: 0)
+        interactor?.setCurrentEntity(index: selectedEntityIndex!)
         router!.updateDetailVC()
     }
     

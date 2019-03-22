@@ -14,6 +14,7 @@ import UIKit
 
 protocol DisplayMeetingGroupsBusinessLogic {
     func fetchMeetingGroups(request: DisplayMeetingGroups.MeetingGroups.Request)
+    func getCurrentMeetingGroupIndex()->Int?
     func setCurrentMeetingGroup(index: Int)
     func refreshMeetingGroups()
      func checkEntitySelected() ->Bool?
@@ -49,6 +50,15 @@ class DisplayMeetingGroupsInteractor: DisplayMeetingGroupsBusinessLogic, Display
         let response = DisplayMeetingGroups.MeetingGroups.Response(meetingGroups: self.meetingGroups)
         self.presenter?.presentMeetingGroups(response: response)
     }
+    
+    
+    func getCurrentMeetingGroupIndex()->Int? {
+        if meetingGroup != nil {
+            return meetingGroups!.firstIndex(of: meetingGroup!)
+        }
+        return 0
+    }
+    
     
     /*
      Meeting group has to be set, even if nil (so a previous value does not persist)

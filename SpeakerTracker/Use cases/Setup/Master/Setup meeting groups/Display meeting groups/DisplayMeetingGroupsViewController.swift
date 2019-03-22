@@ -157,10 +157,11 @@ class DisplayMeetingGroupsViewController: UITableViewController, DisplayMeetingG
     func displayMeetingGroups(viewModel: DisplayMeetingGroups.MeetingGroups.ViewModel) {
         meetingGroupNames = viewModel.meetingGroupNames!
         tableView.reloadData()
+        let selectedMeetingGroupIndex = interactor!.getCurrentMeetingGroupIndex()
         if meetingGroupNames.count > 0 {
-            tableView.selectRow(at: IndexPath(row: 0, section: 0), animated: false, scrollPosition: .top)
+            tableView.selectRow(at: IndexPath(row: selectedMeetingGroupIndex!, section: 0), animated: false, scrollPosition: .top)
         }
-        interactor?.setCurrentMeetingGroup(index: 0)
+        interactor?.setCurrentMeetingGroup(index: selectedMeetingGroupIndex!)
         router!.updateDetailVC()
     }
     

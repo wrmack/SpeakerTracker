@@ -14,6 +14,7 @@ import UIKit
 
 protocol DisplayEntitiesBusinessLogic {
     func fetchEntities(request: DisplayEntities.Entities.Request)
+    func getCurrentEntityIndex()->Int? 
     func setCurrentEntity(index: Int)
 }
 
@@ -92,6 +93,13 @@ class DisplayEntitiesInteractor: DisplayEntitiesBusinessLogic, DisplayEntitiesDa
     
     
     // MARK: - Datastore
+    
+    func getCurrentEntityIndex()->Int? {
+        if entity != nil {
+            return entities!.firstIndex(of: entity!)
+        }
+        return 0
+    }
     
     func setCurrentEntity(index: Int) {
         if entities!.count > 0 {

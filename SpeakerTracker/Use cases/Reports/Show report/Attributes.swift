@@ -30,10 +30,11 @@ struct ParaStyle {
         get {
             let style = NSMutableParagraphStyle()
             style.alignment = NSTextAlignment.left
-            style.tabStops = [NSTextTab(textAlignment: .right, location: 150, options: [:]), NSTextTab(textAlignment: .left, location: 200, options: [:])]
+            style.tabStops = [NSTextTab(textAlignment: .right, location: 180, options: [:]), NSTextTab(textAlignment: .right, location: 270, options: [:])]
             style.defaultTabInterval = 40.0
             style.paragraphSpacing = 0
             style.paragraphSpacingBefore = 0
+            style.firstLineHeadIndent = 0
             return style
         }
     }
@@ -41,10 +42,11 @@ struct ParaStyle {
         get {
             let style = NSMutableParagraphStyle()
             style.alignment = NSTextAlignment.left
-            style.tabStops = [NSTextTab(textAlignment: .right, location: 150, options: [:]), NSTextTab(textAlignment: .left, location: 200, options: [:])]
+            style.tabStops = [NSTextTab(textAlignment: .right, location: 180, options: [:]), NSTextTab(textAlignment: .right, location: 270, options: [:])]
             style.defaultTabInterval = 28.0
             style.paragraphSpacing = 20
             style.paragraphSpacingBefore = 20
+            style.firstLineHeadIndent = 0
             return style
         }
     }
@@ -53,10 +55,11 @@ struct ParaStyle {
         get {
             let style = NSMutableParagraphStyle()
             style.alignment = NSTextAlignment.left
-            style.tabStops = [NSTextTab(textAlignment: .right, location: 150, options: [:]), NSTextTab(textAlignment: .left, location: 200, options: [:])]
+            style.tabStops = [NSTextTab(textAlignment: .right, location: 180, options: [:]), NSTextTab(textAlignment: .right, location: 270, options: [:])]
             style.defaultTabInterval = 28.0
             style.paragraphSpacing = 6
             style.paragraphSpacingBefore = 0
+            style.firstLineHeadIndent = 0
             return style
         }
     }
@@ -65,10 +68,11 @@ struct ParaStyle {
         get {
             let style = NSMutableParagraphStyle()
             style.alignment = NSTextAlignment.left
-            style.tabStops = [NSTextTab(textAlignment: .right, location: 150, options: [:]), NSTextTab(textAlignment: .left, location: 200, options: [:])]
+            style.tabStops = [NSTextTab(textAlignment: .right, location: 180, options: [:]), NSTextTab(textAlignment: .right, location: 270, options: [:])]
             style.defaultTabInterval = 28.0
             style.paragraphSpacing = 0
-            style.paragraphSpacingBefore = 12
+            style.paragraphSpacingBefore = 6
+            style.firstLineHeadIndent = 0
             return style
         }
     }
