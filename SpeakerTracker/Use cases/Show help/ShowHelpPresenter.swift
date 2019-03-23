@@ -26,16 +26,16 @@ class ShowHelpPresenter: ShowHelpPresentationLogic {
         let attString = NSMutableAttributedString()
         
         var heading1Atts = HelpAttributes().heading1
-        heading1Atts[NSAttributedStringKey.paragraphStyle] = HelpParaStyle().leftWithSpacingBefore
+        heading1Atts[NSAttributedString.Key.paragraphStyle] = HelpParaStyle().leftWithSpacingBefore
         
         var heading2Atts = HelpAttributes().heading2
-        heading2Atts[NSAttributedStringKey.paragraphStyle] = HelpParaStyle().leftWithSpacingBefore
+        heading2Atts[NSAttributedString.Key.paragraphStyle] = HelpParaStyle().leftWithSpacingBefore
         
         var normAtts = HelpAttributes().normal
-        normAtts[NSAttributedStringKey.paragraphStyle] = HelpParaStyle().leftWithSpacingBefore
+        normAtts[NSAttributedString.Key.paragraphStyle] = HelpParaStyle().leftWithSpacingBefore
         
         var boldnormAtts = HelpAttributes().normalBold
-        boldnormAtts[NSAttributedStringKey.paragraphStyle] = HelpParaStyle().leftWithSpacingBefore
+        boldnormAtts[NSAttributedString.Key.paragraphStyle] = HelpParaStyle().leftWithSpacingBefore
         
 
         

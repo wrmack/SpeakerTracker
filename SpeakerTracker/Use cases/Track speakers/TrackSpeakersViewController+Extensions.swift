@@ -172,7 +172,7 @@ extension TrackSpeakersViewController: UITableViewDataSource, UITableViewDelegat
     
     // MARK: - UITableView delegate methods
     
-    internal func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
+    internal func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
         // Don't want a delete or insert accessory
         return .none
     }
@@ -386,7 +386,7 @@ extension TrackSpeakersViewController: UITableViewDataSource, UITableViewDelegat
         
         timer?.invalidate()
         timer = Timer(timeInterval: 1.0, target: self, selector: #selector(timerFireMethod(_: )), userInfo: nil, repeats: true )
-        RunLoop.current.add(timer!, forMode: .commonModes)
+        RunLoop.current.add(timer!, forMode: RunLoop.Mode.common)
     }
     
     

@@ -67,7 +67,7 @@ class DisplayReportsViewController: UICollectionViewController, DisplayReportsDi
     
     
     @IBAction func unwindToDisplayReports(sender: UIStoryboardSegue) {
-        let sourceViewController = sender.source
+        //let sourceViewController = sender.source
         // Pull any data from the view controller which initiated the unwind segue.
     }
     

@@ -83,7 +83,7 @@ class TrackSpeakersRouter: NSObject, TrackSpeakersRoutingLogic, TrackSpeakersDat
         addNoteVC = AddNoteToDebateViewController(source: viewController!)
         var destinationDS =  addNoteVC!.router?.dataStore
         passDataToAddNoteToDebate(source: dataStore!, destination: &destinationDS!)
-        viewController?.addChildViewController(addNoteVC!)
+        viewController?.addChild(addNoteVC!)
         viewController!.view.addSubview(addNoteVC!.view)
         addNoteVC!.view.translatesAutoresizingMaskIntoConstraints = false
         addNoteVC!.view.centerXAnchor.constraint(equalTo: viewController!.view.centerXAnchor).isActive = true
@@ -96,7 +96,7 @@ class TrackSpeakersRouter: NSObject, TrackSpeakersRoutingLogic, TrackSpeakersDat
         dimmerView?.removeFromSuperview()
         passDataToTrackSpeakers(source: addNoteVC!.router!.dataStore!, destination: &dataStore!)
         addNoteVC!.view.removeFromSuperview()
-        addNoteVC?.removeFromParentViewController()
+        addNoteVC?.removeFromParent()
         addNoteVC = nil
     }
     

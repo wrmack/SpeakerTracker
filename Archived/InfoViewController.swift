@@ -21,18 +21,18 @@ class InfoViewController: UIViewController {
       let leftStyle = NSMutableParagraphStyle()
       leftStyle.alignment = NSTextAlignment.left
       
-      let heading1Attributes = [NSAttributedStringKey.font : UIFont(name: "Arial-BoldMT", size: 20)!,
-                               NSAttributedStringKey.foregroundColor : UIColor.black,
-                               NSAttributedStringKey.paragraphStyle: leftStyle] as [NSAttributedStringKey : Any]
-      let heading2Attributes = [NSAttributedStringKey.font : UIFont(name: "Arial-BoldMT", size: 18)!,
-                                NSAttributedStringKey.foregroundColor : UIColor.black,
-                                NSAttributedStringKey.paragraphStyle: leftStyle] as [NSAttributedStringKey : Any]
-      let normalAttributes = [NSAttributedStringKey.font : UIFont(name: "Arial", size: 14)!,
-                              NSAttributedStringKey.foregroundColor : UIColor.black,
-                              NSAttributedStringKey.paragraphStyle: leftStyle] as [NSAttributedStringKey : Any]
-      let normalBoldAttributes = [NSAttributedStringKey.font : UIFont(name: "Arial-BoldMT", size: 14)!,
-                              NSAttributedStringKey.foregroundColor : UIColor.black] as [NSAttributedStringKey : Any]
-      let centeredAttributes = [NSAttributedStringKey.paragraphStyle: centeredStyle]
+      let heading1Attributes = [NSAttributedString.Key.font : UIFont(name: "Arial-BoldMT", size: 20)!,
+                               NSAttributedString.Key.foregroundColor : UIColor.black,
+                               NSAttributedString.Key.paragraphStyle: leftStyle] as [NSAttributedString.Key : Any]
+      let heading2Attributes = [NSAttributedString.Key.font : UIFont(name: "Arial-BoldMT", size: 18)!,
+                                NSAttributedString.Key.foregroundColor : UIColor.black,
+                                NSAttributedString.Key.paragraphStyle: leftStyle] as [NSAttributedString.Key : Any]
+      let normalAttributes = [NSAttributedString.Key.font : UIFont(name: "Arial", size: 14)!,
+                              NSAttributedString.Key.foregroundColor : UIColor.black,
+                              NSAttributedString.Key.paragraphStyle: leftStyle] as [NSAttributedString.Key : Any]
+      let normalBoldAttributes = [NSAttributedString.Key.font : UIFont(name: "Arial-BoldMT", size: 14)!,
+                              NSAttributedString.Key.foregroundColor : UIColor.black] as [NSAttributedString.Key : Any]
+      let centeredAttributes = [NSAttributedString.Key.paragraphStyle: centeredStyle]
       
       let attStg = NSMutableAttributedString(string: "Set up Speaker Tracker", attributes: heading1Attributes)
       attStg.append(NSAttributedString(string: "\n\nThe app initially has one fictitious meeting: Committee 1.", attributes: normalAttributes))
@@ -110,10 +110,10 @@ class InfoViewController: UIViewController {
       attStg.append(NSAttributedString(string: "\n\n---------------------------", attributes: centeredAttributes))
       attStg.append(NSAttributedString(string: "\n\nThe code for this app is open source so others can improve it.  The code is here:\n", attributes: normalAttributes))
       var link = NSURL(string: "https://github.com/wrmack/SpeakerTracker")
-      attStg.append(NSAttributedString(string: "https://github.com/wrmack/SpeakerTracker", attributes: [NSAttributedStringKey.link : link!, NSAttributedStringKey.font : UIFont(name: "Arial-BoldMT", size: 14)!]))
+      attStg.append(NSAttributedString(string: "https://github.com/wrmack/SpeakerTracker", attributes: [NSAttributedString.Key.link : link!, NSAttributedString.Key.font : UIFont(name: "Arial-BoldMT", size: 14)!]))
       attStg.append(NSAttributedString(string: "\n\nThese 'How to...' notes are also here:\n", attributes: normalAttributes))
       link = NSURL(string: "https://github.com/wrmack/SpeakerTracker/wiki")
-      attStg.append(NSAttributedString(string: "https://github.com/wrmack/SpeakerTracker/wiki", attributes: [NSAttributedStringKey.link : link!, NSAttributedStringKey.font : UIFont(name: "Arial-BoldMT", size: 14)!]))
+      attStg.append(NSAttributedString(string: "https://github.com/wrmack/SpeakerTracker/wiki", attributes: [NSAttributedString.Key.link : link!, NSAttributedString.Key.font : UIFont(name: "Arial-BoldMT", size: 14)!]))
       attStg.append(NSAttributedString(string: "\n\nPrivacy statement:\nPersonal information entered into this app is stored only on the device which contains the app" +
          " and only for the purposes of the app. No personal information is transmitted outside the app or the device.", attributes: normalAttributes))
       

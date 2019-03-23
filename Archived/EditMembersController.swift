@@ -126,8 +126,8 @@ class EditMembersController: UIViewController, EditMeetingsControllerDelegate {
         
         // Notifications
         
-        NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardShowNotification(_:)), name: .UIKeyboardDidShow, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardHideNotification(_:)), name: .UIKeyboardDidHide, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardShowNotification(_:)), name: UIResponder.keyboardDidShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardHideNotification(_:)), name: UIResponder.keyboardDidHideNotification, object: nil)
     }
 
     
@@ -149,7 +149,7 @@ class EditMembersController: UIViewController, EditMeetingsControllerDelegate {
         memberListHeight = memberListTextView.frame.size.height
         
         // Get top of keyboard
-        let y_kbTop = (notification.userInfo![UIKeyboardFrameEndUserInfoKey]! as! NSValue).cgRectValue.origin.y
+        let y_kbTop = (notification.userInfo![UIResponder.keyboardFrameEndUserInfoKey]! as! NSValue).cgRectValue.origin.y
         
         // Get top of memberlist
         let y_listTop = memberListTextView.frame.origin.y

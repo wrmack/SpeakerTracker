@@ -182,15 +182,15 @@ class TrackSpeakersViewController: UIViewController, TrackSpeakersDisplayLogic {
         startButton.isHidden = true
         pauseButton.isHidden = true
         stopButton.isHidden = true
-        handleStopTimer()
-        view.sendSubview(toBack:stackView)
+        _ = handleStopTimer() 
+        view.sendSubviewToBack(stackView)
         sideBarLeadingConstraint.constant = -370
         eventView.isHidden = true
         
         // If iPad Pro 12.9" make adjustments to row height
         let iPadScreenWidth = self.view.frame.size.width
         if iPadScreenWidth > 1300 {
-            remainingTable.rowHeight = UITableViewAutomaticDimension
+            remainingTable.rowHeight = UITableView.automaticDimension
             remainingTable.rowHeight = 60
             remainingLabel.font = UIFont(name: "Arial", size: 20)
             waitingTable.rowHeight = 60
@@ -234,7 +234,7 @@ class TrackSpeakersViewController: UIViewController, TrackSpeakersDisplayLogic {
         let tabBarRect = tabBarCont.tabBar.frame
         tabBarCont.tabBar.frame = CGRect(x: view.frame.origin.x, y: tabBarRect.origin.y, width: view.frame.size.width, height: tabBarRect.size.height)
         for item in tabBarCont.tabBar.items! {
-            item.setTitleTextAttributes([NSAttributedStringKey.font : UIFont.systemFont(ofSize: 18)], for: .normal)
+            item.setTitleTextAttributes([NSAttributedString.Key.font : UIFont.systemFont(ofSize: 18)], for: .normal)
         }
 
         
@@ -307,7 +307,7 @@ class TrackSpeakersViewController: UIViewController, TrackSpeakersDisplayLogic {
             recordingOnLabel.textColor = UIColor.darkGray
             let paraStyle = NSMutableParagraphStyle()
             paraStyle.alignment = .center
-            let title = NSAttributedString(string: "Reset", attributes: [NSAttributedStringKey.foregroundColor : UIColor(red: 0.93, green: 0.93, blue: 0.95, alpha: 1.0), NSAttributedStringKey.paragraphStyle : paraStyle])
+            let title = NSAttributedString(string: "Reset", attributes: [NSAttributedString.Key.foregroundColor : UIColor(red: 0.93, green: 0.93, blue: 0.95, alpha: 1.0), NSAttributedString.Key.paragraphStyle : paraStyle])
             resetButton.setAttributedTitle(title, for: .normal)
             eventRecordingIsOn = false
             addCurrentDebateToEvent()
@@ -502,12 +502,12 @@ class TrackSpeakersViewController: UIViewController, TrackSpeakersDisplayLogic {
             stopButton.isHidden = false
             stopButton.isEnabled = true
             timerVisible = true
-            view.bringSubview(toFront: dimmerView)
-            view.bringSubview(toFront: timerLabel)
-            view.bringSubview(toFront: stackView)
-            view.bringSubview(toFront: startButton)
-            view.bringSubview(toFront: pauseButton)
-            view.bringSubview(toFront: stopButton)
+            view.bringSubviewToFront(dimmerView)
+            view.bringSubviewToFront(timerLabel)
+            view.bringSubviewToFront(stackView)
+            view.bringSubviewToFront(startButton)
+            view.bringSubviewToFront(pauseButton)
+            view.bringSubviewToFront(stopButton)
             expandButton.setImage(UIImage(named: "shrink2"), for: .normal)
         } else {
             dimmerView.isHidden = true
@@ -519,7 +519,7 @@ class TrackSpeakersViewController: UIViewController, TrackSpeakersDisplayLogic {
             stopButton.isHidden = true
             stopButton.isEnabled = false
             timerVisible = false
-            view.sendSubview(toBack:stackView)
+            view.sendSubviewToBack(stackView)
             expandButton.setImage(UIImage(named: "expand2"), for: .normal)
         }
     }

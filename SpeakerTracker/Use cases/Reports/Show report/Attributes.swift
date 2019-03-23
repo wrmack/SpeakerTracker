@@ -132,33 +132,33 @@ struct ParaStyle {
 struct Attributes {
     
     var heading1Base = [
-        NSAttributedStringKey.font : heading1Font!,
-        NSAttributedStringKey.foregroundColor : heading1Color,
-        ] as [NSAttributedStringKey : Any]
+        NSAttributedString.Key.font : heading1Font!,
+        NSAttributedString.Key.foregroundColor : heading1Color,
+        ] as [NSAttributedString.Key : Any]
     
     var heading2Base = [
-        NSAttributedStringKey.font : heading2Font!,
-        NSAttributedStringKey.foregroundColor : heading2Color,
-        ] as [NSAttributedStringKey : Any]
+        NSAttributedString.Key.font : heading2Font!,
+        NSAttributedString.Key.foregroundColor : heading2Color,
+        ] as [NSAttributedString.Key : Any]
     
     var heading3Base = [
-        NSAttributedStringKey.font : heading3Font!,
-        NSAttributedStringKey.foregroundColor : heading3Color,
-        ] as [NSAttributedStringKey : Any]
+        NSAttributedString.Key.font : heading3Font!,
+        NSAttributedString.Key.foregroundColor : heading3Color,
+        ] as [NSAttributedString.Key : Any]
     
     var normalBase = [
-        NSAttributedStringKey.font : UIFont(name: "Arial", size: 11.5)!,
-        NSAttributedStringKey.foregroundColor : UIColor.black,
-        ] as [NSAttributedStringKey : Any]
+        NSAttributedString.Key.font : UIFont(name: "Arial", size: 11.5)!,
+        NSAttributedString.Key.foregroundColor : UIColor.black,
+        ] as [NSAttributedString.Key : Any]
     
     var normalBoldBase = [
-        NSAttributedStringKey.font : UIFont(name: "Arial-BoldMT", size: 11.5)!,
-        NSAttributedStringKey.foregroundColor : UIColor.black,
-        ] as [NSAttributedStringKey : Any]
+        NSAttributedString.Key.font : UIFont(name: "Arial-BoldMT", size: 11.5)!,
+        NSAttributedString.Key.foregroundColor : UIColor.black,
+        ] as [NSAttributedString.Key : Any]
     
     var normalItalicBase = [
-        NSAttributedStringKey.font : UIFont(name: "Arial-ItalicMT", size: 11.5)!,
-        NSAttributedStringKey.foregroundColor : UIColor.black,
-        ] as [NSAttributedStringKey : Any]
+        NSAttributedString.Key.font : UIFont(name: "Arial-ItalicMT", size: 11.5)!,
+        NSAttributedString.Key.foregroundColor : UIColor.black,
+        ] as [NSAttributedString.Key : Any]
 }
 

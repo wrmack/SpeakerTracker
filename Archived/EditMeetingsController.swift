@@ -72,8 +72,8 @@ class EditMeetingsController: UIViewController, UITableViewDelegate, UITableView
         let tableRect = CGRect(x: 0, y: TOOLBAR_HEIGHT, width: view.bounds.size.width, height: view.bounds.size.height - TOOLBAR_HEIGHT)
         
         theTableView = UITableView(frame:tableRect) // Rest of view
-        theTableView!.autoresizingMask = [UIViewAutoresizing.flexibleWidth, UIViewAutoresizing.flexibleHeight]
-        theTableView!.rowHeight = UITableViewAutomaticDimension
+        theTableView!.autoresizingMask = [UIView.AutoresizingMask.flexibleWidth, UIView.AutoresizingMask.flexibleHeight]
+        theTableView!.rowHeight = UITableView.automaticDimension
         theTableView!.estimatedRowHeight = TABLE_CELL_HEIGHT
         theTableView!.allowsSelection = true
         theTableView!.dataSource = self
@@ -114,7 +114,7 @@ class EditMeetingsController: UIViewController, UITableViewDelegate, UITableView
         let myIdentifier = "MyReuseIdentifier"
         var tvCell = tableView.dequeueReusableCell(withIdentifier: myIdentifier)
         if tvCell == nil{
-            tvCell = UITableViewCell(style: UITableViewCellStyle.default, reuseIdentifier:myIdentifier)
+            tvCell = UITableViewCell(style: UITableViewCell.CellStyle.default, reuseIdentifier:myIdentifier)
             tvCell!.backgroundColor = UIColor.white
             tvCell!.textLabel!.numberOfLines = 0
             tvCell!.textLabel!.lineBreakMode = NSLineBreakMode.byWordWrapping
@@ -136,7 +136,7 @@ class EditMeetingsController: UIViewController, UITableViewDelegate, UITableView
     
     
     
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         
         /* -------------------  Adding a meeting ------------------ */
         
@@ -264,7 +264,7 @@ class EditMeetingsController: UIViewController, UITableViewDelegate, UITableView
    }
    
     
-   func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
+   func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
       
         if (indexPath.row < meetingsArray.count) {
             return .delete

@@ -15,34 +15,34 @@ import UIKit
 struct HelpAttributes {
     
     var heading1 = [
-        NSAttributedStringKey.font : UIFont(name: "Arial-BoldMT", size: 22)!,
-        NSAttributedStringKey.foregroundColor : UIColor(red: 0.12, green: 0.28, blue: 0.49, alpha: 1.0),
-        ] as [NSAttributedStringKey : Any]
+        NSAttributedString.Key.font : UIFont(name: "Arial-BoldMT", size: 22)!,
+        NSAttributedString.Key.foregroundColor : UIColor(red: 0.12, green: 0.28, blue: 0.49, alpha: 1.0),
+        ] as [NSAttributedString.Key : Any]
     
     var heading2 = [
-        NSAttributedStringKey.font : UIFont(name: "Arial-BoldMT", size: 18)!,
-        NSAttributedStringKey.foregroundColor : UIColor(red: 0.33, green: 0.55, blue: 0.8, alpha: 1.0),
-        ] as [NSAttributedStringKey : Any]
+        NSAttributedString.Key.font : UIFont(name: "Arial-BoldMT", size: 18)!,
+        NSAttributedString.Key.foregroundColor : UIColor(red: 0.33, green: 0.55, blue: 0.8, alpha: 1.0),
+        ] as [NSAttributedString.Key : Any]
     
     var heading3 = [
-        NSAttributedStringKey.font : UIFont(name: "Arial-BoldMT", size: 16)!,
-        NSAttributedStringKey.foregroundColor : UIColor.black,
-        ] as [NSAttributedStringKey : Any]
+        NSAttributedString.Key.font : UIFont(name: "Arial-BoldMT", size: 16)!,
+        NSAttributedString.Key.foregroundColor : UIColor.black,
+        ] as [NSAttributedString.Key : Any]
     
     var normal = [
-        NSAttributedStringKey.font : UIFont(name: "Arial", size: 14)!,
-        NSAttributedStringKey.foregroundColor : UIColor.black,
-        ] as [NSAttributedStringKey : Any]
+        NSAttributedString.Key.font : UIFont(name: "Arial", size: 14)!,
+        NSAttributedString.Key.foregroundColor : UIColor.black,
+        ] as [NSAttributedString.Key : Any]
     
     var normalBold = [
-        NSAttributedStringKey.font : UIFont(name: "Arial-BoldMT", size: 14)!,
-        NSAttributedStringKey.foregroundColor : UIColor.black,
-        ] as [NSAttributedStringKey : Any]
+        NSAttributedString.Key.font : UIFont(name: "Arial-BoldMT", size: 14)!,
+        NSAttributedString.Key.foregroundColor : UIColor.black,
+        ] as [NSAttributedString.Key : Any]
     
     var normalItalic = [
-        NSAttributedStringKey.font : UIFont(name: "Arial-ItalicMT", size: 14)!,
-        NSAttributedStringKey.foregroundColor : UIColor.black,
-        ] as [NSAttributedStringKey : Any]
+        NSAttributedString.Key.font : UIFont(name: "Arial-ItalicMT", size: 14)!,
+        NSAttributedString.Key.foregroundColor : UIColor.black,
+        ] as [NSAttributedString.Key : Any]
 }
 
 /*
