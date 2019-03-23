@@ -21,6 +21,7 @@ protocol DisplayDetailBusinessLogic {
 
 protocol DisplayDetailDataStore {
     var selectedItem: AnyObject? {get set }
+    var currentEntity: Entity? {get set}
 }
 
 class DisplayDetailInteractor: DisplayDetailBusinessLogic, DisplayDetailDataStore {
@@ -36,6 +37,19 @@ class DisplayDetailInteractor: DisplayDetailBusinessLogic, DisplayDetailDataStor
      Passes the selected item to the presenter for presenting as an array of title-detail tuples.
      */
     func getSelectedItemFields(request: DisplayDetail.Detail.Request) {
+        if selectedItem! is MeetingGroup {
+            var mtgGrp = selectedItem as! MeetingGroup
+            var members = [Member]()
+            if mtgGrp.memberIDs != nil {
+                for id in mtgGrp.memberIDs! {
+                    if let mmbr = currentEntity!.members?.first(where: {$0.id == id}) {
+                        members.append(mmbr)
+                    }
+                }
+            }
+            mtgGrp.members = members
+            selectedItem = mtgGrp as AnyObject
+        }
         let response = DisplayDetail.Detail.Response(selectedItem: selectedItem)
         presenter?.presentDetailFields(response: response)
     }

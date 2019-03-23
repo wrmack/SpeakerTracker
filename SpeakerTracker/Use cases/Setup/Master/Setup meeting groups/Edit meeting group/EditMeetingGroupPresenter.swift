@@ -24,7 +24,7 @@ class EditMeetingGroupPresenter: EditMeetingGroupPresentationLogic {
 
     func presentMembers(response: EditMeetingGroup.MeetingGroup.Response) {
         var memberString: String?
-        let members = response.members
+        let members = response.members 
         if members != nil {
             memberString = String()
             for member in members! {

@@ -9,17 +9,19 @@
 import Foundation
 
 /*
- MeetingGroup: such as a full council, board, committee, sub-committee, working party
+ MeetingGroup: such as a full council, board, committee, sub-committee, working party.
+ Initiated using UUIDs for members.  Full 'Members' are computed values.
  */
 struct MeetingGroup: Codable {
     let name: String?
-    var members: [Member]?
+    var memberIDs: [UUID]?
     var fileName: String?
     var id: UUID?
+    var members: [Member]?
     
-    init(name: String?, members: [Member]?, fileName: String?, id: UUID? ) {
+    init(name: String?, memberIDs: [UUID]?, fileName: String?, id: UUID? ) {
         self.name = name
-        self.members = members
+        self.memberIDs = memberIDs
         self.id = id
     }
 }

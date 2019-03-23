@@ -22,7 +22,7 @@ protocol EditMeetingGroupBusinessLogic {
 protocol EditMeetingGroupDataStore {
     var entity: Entity? {get set}
     var meetingGroup: MeetingGroup? {get set}
-    var members: [Member]? {get set}
+    var memberIDs: [UUID]? {get set}
 }
 
 
@@ -30,7 +30,7 @@ class EditMeetingGroupInteractor: EditMeetingGroupBusinessLogic, EditMeetingGrou
     var presenter: EditMeetingGroupPresentationLogic?
     var entity: Entity?
     var meetingGroup: MeetingGroup?
-    var members: [Member]?
+    var memberIDs: [UUID]?
     
     
     // MARK: VIP
@@ -45,7 +45,7 @@ class EditMeetingGroupInteractor: EditMeetingGroupBusinessLogic, EditMeetingGrou
             entity!.meetingGroups = [MeetingGroup]()
         }
         self.meetingGroup = meetingGroup
-        self.meetingGroup?.members = members
+        self.meetingGroup?.memberIDs = memberIDs
         if let idx = entity!.meetingGroups?.firstIndex(where: {$0.id == meetingGroup.id}) {
             entity?.meetingGroups![idx] = self.meetingGroup!
         }
@@ -82,8 +82,13 @@ class EditMeetingGroupInteractor: EditMeetingGroupBusinessLogic, EditMeetingGrou
     
     
     func fetchMembers(request: EditMeetingGroup.MeetingGroup.Request) {
-        meetingGroup?.members = members
-        let response = EditMeetingGroup.MeetingGroup.Response(members: self.members)
+        meetingGroup?.memberIDs = memberIDs
+        meetingGroup?.members = [Member]()
+        for memberID in (meetingGroup?.memberIDs)! {
+            let mmbr = entity?.members?.first(where: {$0.id == memberID })
+            meetingGroup?.members?.append(mmbr!)
+        }
+        let response = EditMeetingGroup.MeetingGroup.Response(members: meetingGroup?.members)
         self.presenter?.presentMembers(response: response)
     }
     
@@ -91,6 +96,11 @@ class EditMeetingGroupInteractor: EditMeetingGroupBusinessLogic, EditMeetingGrou
     // MARK: - Datastore
     
     func getMeetingGroup() -> MeetingGroup? {
+        meetingGroup?.members = [Member]()
+        for memberID in (meetingGroup?.memberIDs)! {
+            let mmbr = entity?.members?.first(where: {$0.id == memberID })
+            meetingGroup?.members?.append(mmbr!)
+        }
         return self.meetingGroup
     }
     

@@ -50,7 +50,10 @@ class UserDefaultsManager {
     static func getCurrentMeetingGroup()->MeetingGroup? {
         let defaults = UserDefaults.standard
         if let currentMeetingGroupData = defaults.data(forKey: "CurrentMeetingGroup") {
-            let meetingGroup = try! JSONDecoder().decode(MeetingGroup.self, from: currentMeetingGroupData)
+            var meetingGroup = try! JSONDecoder().decode(MeetingGroup.self, from: currentMeetingGroupData)
+            if meetingGroup.memberIDs == nil {
+                meetingGroup.memberIDs = [UUID]()
+            }
             return meetingGroup
         }
         return nil
