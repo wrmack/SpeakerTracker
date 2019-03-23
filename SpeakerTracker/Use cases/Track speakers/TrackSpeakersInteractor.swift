@@ -88,6 +88,13 @@ class TrackSpeakersInteractor: TrackSpeakersBusinessLogic, TrackSpeakersDataStor
     // MARK: Setups, updates and undo
     
     internal func setUpForNewDebate() {
+        currentMeetingGroup!.members = [Member]()
+        if (currentMeetingGroup!.memberIDs!.count) > 0 {
+            for memberID in currentMeetingGroup!.memberIDs! {
+                let mmbr = currentEntity!.members?.first(where: {$0.id == memberID})
+                currentMeetingGroup?.members?.append(mmbr!)
+            }
+        }
         remainingList[0] = currentMeetingGroup!.members!
         waitingList[0] = [Member]()
         speakingList[0] = [Member]()
@@ -104,10 +111,15 @@ class TrackSpeakersInteractor: TrackSpeakersBusinessLogic, TrackSpeakersDataStor
         }
         currentDebate = Debate(debateNumber: debateNumber, note: nil, debateSections: [debateSection])
     }
-        
+    
+    
     internal func updateAfterSelectingMeetingGroup() {
-        if currentMeetingGroup?.members == nil {
-            currentMeetingGroup?.members = [Member]()
+        currentMeetingGroup!.members = [Member]()
+        if (currentMeetingGroup!.memberIDs!.count) > 0 {
+            for memberID in currentMeetingGroup!.memberIDs! {
+                let mmbr = currentEntity!.members?.first(where: {$0.id == memberID})
+                currentMeetingGroup?.members?.append(mmbr!)
+            }
         }
         remainingList[0] = currentMeetingGroup!.members!
         waitingList[0] = [Member]()

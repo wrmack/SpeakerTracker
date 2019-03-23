@@ -13,7 +13,7 @@
 import UIKit
 
 protocol SelectMembersRoutingLogic {
-    func returnToSource(members: [Member]?)
+    func returnToSource(memberIDs: [UUID]?)
 }
 
 protocol SelectMembersDataPassing {
@@ -28,29 +28,29 @@ class SelectMembersRouter: NSObject, SelectMembersRoutingLogic, SelectMembersDat
   
     // MARK: Routing
     
-    func returnToSource(members: [Member]?) {
-        if members != nil {
-            dataStore!.members = members
+    func returnToSource(memberIDs: [UUID]?) {
+        if memberIDs != nil {
+            dataStore!.memberIDs = memberIDs
         }
             if  viewController?.sourceAddVC != nil {
                 var destinationDS = viewController?.sourceAddVC!.router?.dataStore
                 passDataToAddMeetingGroupDataStore(source: dataStore!, destination: &destinationDS! )
-                 viewController!.sourceAddVC!.router!.returnFromSelectMembers(members: members)
+                 viewController!.sourceAddVC!.router!.returnFromSelectMembers(memberIDs: memberIDs)
             }
             else if  viewController?.sourceEditVC != nil {
                 var destinationDS = viewController?.sourceEditVC!.router?.dataStore
                 passDataToEditMeetingGroupDataStore(source: dataStore!, destination: &destinationDS! )
-                viewController!.sourceEditVC!.router!.returnFromSelectMembers(members: members)
+                viewController!.sourceEditVC!.router!.returnFromSelectMembers(memberIDs: memberIDs)
             }
             
 
     }
     
     func passDataToAddMeetingGroupDataStore(source: SelectMembersDataStore, destination: inout AddMeetingGroupDataStore ) {
-        destination.members = source.members 
+        destination.memberIDs = source.memberIDs
     }
     
     func passDataToEditMeetingGroupDataStore(source: SelectMembersDataStore, destination: inout EditMeetingGroupDataStore ) {
-        destination.members = source.members
+        destination.memberIDs = source.memberIDs
     }
 }

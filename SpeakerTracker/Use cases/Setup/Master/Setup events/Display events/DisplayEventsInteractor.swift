@@ -39,6 +39,12 @@ class DisplayEventsInteractor: DisplayEventsBusinessLogic, DisplayEventsDataStor
     
     // MARK: - VIP
     
+    /*
+     Initialises 'events' for storing events for the given entity and meeting group.
+     Gets the urls for all event docs.
+     Opens each event doc and gets its event.
+     If the event's entity and meeting group match what we want, the event is added to 'events' and the event doc is closed.
+     */
     func fetchEvents(request: DisplayEvents.Events.Request) {
         events = [Event]()
         let fileManager = FileManager.default
@@ -75,8 +81,11 @@ class DisplayEventsInteractor: DisplayEventsBusinessLogic, DisplayEventsDataStor
                                 return
                             }
                             if event.entity == self.entity && event.meetingGroup == self.meetingGroup {
-                                if event.meetingGroup?.members!.count != self.meetingGroup!.members!.count {
-                                    event.meetingGroup!.members = self.meetingGroup?.members
+                                if event.meetingGroup?.memberIDs == nil {
+                                    event.meetingGroup?.memberIDs = [UUID]()
+                                }
+                                if event.meetingGroup?.memberIDs!.count != self.meetingGroup!.memberIDs!.count {
+                                    event.meetingGroup!.memberIDs = self.meetingGroup?.memberIDs
                                     eventDoc.event = event
                                     eventDoc.updateChangeCount(.done)
                                 }
@@ -96,7 +105,8 @@ class DisplayEventsInteractor: DisplayEventsBusinessLogic, DisplayEventsDataStor
                 }
             }
             
-        } catch {
+        }
+        catch {
             print("Error while enumerating files \(docDirectory.path): \(error.localizedDescription)")
         }
         

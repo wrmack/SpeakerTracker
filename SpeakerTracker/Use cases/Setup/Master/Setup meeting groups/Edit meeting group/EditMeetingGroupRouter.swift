@@ -17,7 +17,7 @@ protocol EditMeetingGroupRoutingLogic {
     func navigateToRemoveMeetingGroup()
     func returnFromRemovingMeetingGroup()
     func routeToSelectMembers()
-    func returnFromSelectMembers(members: [Member]?)
+    func returnFromSelectMembers(memberIDs: [UUID]?)
 }
 
 protocol EditMeetingGroupDataPassing {
@@ -67,8 +67,8 @@ class EditMeetingGroupRouter: NSObject, EditMeetingGroupRoutingLogic, EditMeetin
         selectMembersVC?.fetchMemberNames()
     }
     
-    func returnFromSelectMembers(members: [Member]?) {
-        if members != nil {
+    func returnFromSelectMembers(memberIDs: [UUID]?) {
+        if memberIDs != nil {
             viewController!.refreshAfterSelectingMembers()
         }
         displayNavC?.popViewController(animated: true)

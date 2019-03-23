@@ -15,7 +15,7 @@ import UIKit
 protocol AddMeetingGroupRoutingLogic {
     func returnToSource(source: DisplayMeetingGroupsViewController)
     func routeToSelectMembers()
-    func returnFromSelectMembers(members: [Member]?)
+    func returnFromSelectMembers(memberIDs: [UUID]?)
 }
 
 protocol AddMeetingGroupDataPassing {
@@ -51,8 +51,8 @@ class AddMeetingGroupRouter: NSObject, AddMeetingGroupRoutingLogic, AddMeetingGr
     }
     
     
-    func returnFromSelectMembers(members: [Member]?) {
-        if members != nil {
+    func returnFromSelectMembers(memberIDs: [UUID]?) {
+        if memberIDs != nil {
             viewController!.refreshAfterSelectingMembers()
         }
         displayNavC?.popViewController(animated: true)

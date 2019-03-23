@@ -118,6 +118,7 @@ class DisplayMeetingGroupsRouter: NSObject, DisplayMeetingGroupsRoutingLogic, Di
     
     func passDataToDisplayDetail(source: DisplayMeetingGroupsDataStore, destination: inout DisplayDetailDataStore) {
         destination.selectedItem = source.meetingGroup as AnyObject
+        destination.currentEntity = source.entity
     }
     
     // MARK: Helpers

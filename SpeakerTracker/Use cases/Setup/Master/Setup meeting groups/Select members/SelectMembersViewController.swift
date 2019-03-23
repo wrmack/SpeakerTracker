@@ -30,7 +30,7 @@ class SelectMembersViewController: UIViewController, SelectMembersDisplayLogic, 
     var sourceEditVC: EditMeetingGroupViewController?
     
 
-    // MARK: Object lifecycle
+    // MARK: - Object lifecycle
 
     convenience init(source: AnyObject) {
         self.init(nibName: nil, bundle: nil)
@@ -53,7 +53,7 @@ class SelectMembersViewController: UIViewController, SelectMembersDisplayLogic, 
         setup()
     }
 
-    // MARK: Setup
+    // MARK: - Setup
 
     private func setup() {
         let viewController = self
@@ -68,18 +68,9 @@ class SelectMembersViewController: UIViewController, SelectMembersDisplayLogic, 
         router.dataStore = interactor
     }
 
-    // MARK: Routing
 
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        if let scene = segue.identifier {
-//            let selector = NSSelectorFromString("routeTo\(scene)WithSegue:")
-//            if let router = router, router.responds(to: selector) {
-//                router.perform(selector, with: segue)
-//            }
-//        }
-//    }
 
-    // MARK: View lifecycle
+    // MARK: - View lifecycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -117,21 +108,21 @@ class SelectMembersViewController: UIViewController, SelectMembersDisplayLogic, 
     }
     
     
-    // MARK: Button actions
+    // MARK: - User actions
     
     @objc private func saveButtonTapped() {
         if selectedRows != nil {
-            let selectedMembers = (interactor?.getMembers(indices: selectedRows!))!
-            router?.returnToSource(members: selectedMembers)
+            let selectedMemberIDs = (interactor?.getMemberIDs(indices: selectedRows!))!
+            router?.returnToSource(memberIDs: selectedMemberIDs)
         }
     }
     
     
     @objc private func cancelButtonTapped() {
-        router!.returnToSource(members: nil)
+        router!.returnToSource(memberIDs: nil)
     }
     
-    // MARK: UITableViewDataSource methods
+    // MARK: - UITableViewDataSource methods
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if memberNames.count == 0 {
@@ -168,7 +159,7 @@ class SelectMembersViewController: UIViewController, SelectMembersDisplayLogic, 
     }
     
     
-    // MARK: UITableViewDelegate methods
+    // MARK: - UITableViewDelegate methods
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)

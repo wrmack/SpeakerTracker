@@ -120,7 +120,7 @@ class EditMeetingGroupViewController: UIViewController, EditMeetingGroupDisplayL
         if meetingGroup != nil {
             id = meetingGroup?.id
         }
-        let editedMeetingGroup = MeetingGroup(name: editView!.nameBox?.text, members: nil, fileName: nil, id: id)
+        let editedMeetingGroup = MeetingGroup(name: editView!.nameBox?.text, memberIDs: nil, fileName: nil, id: id)
         
         interactor?.saveMeetingGroupToEntity(meetingGroup: editedMeetingGroup, callback: {
             self.router?.returnToSource(source: self.sourceVC!)

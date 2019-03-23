@@ -19,27 +19,35 @@ protocol AddMeetingGroupBusinessLogic {
 
 protocol AddMeetingGroupDataStore {
     var entity: Entity? { get set }
-    var members: [Member]? {get set}
+    var memberIDs: [UUID]? {get set}
+    var meetingGroup: MeetingGroup? {get set}
 }
 
 
 class AddMeetingGroupInteractor: AddMeetingGroupBusinessLogic, AddMeetingGroupDataStore {
     var presenter: AddMeetingGroupPresentationLogic?
     var entity: Entity?
-    var members: [Member]?
+    var memberIDs: [UUID]?
+    var meetingGroup: MeetingGroup?
     
     
     // MARK: VIP
     
     func fetchMembers(request: AddMeetingGroup.MeetingGroup.Request) {
-        let response = AddMeetingGroup.MeetingGroup.Response(members: self.members)
+        meetingGroup?.memberIDs = memberIDs
+        meetingGroup?.members = [Member]()
+        for memberID in (meetingGroup?.memberIDs)! {
+            let mmbr = entity?.members?.first(where: {$0.id == memberID })
+            meetingGroup?.members?.append(mmbr!)
+        }
+        let response = AddMeetingGroup.MeetingGroup.Response(members: meetingGroup?.members)
         self.presenter?.presentMembers(response: response)
     }
     
     
     func saveMeetingGroupToEntity(meetingGroup: MeetingGroup, callback: @escaping ()->()) {
         var meetingGroup = meetingGroup
-        meetingGroup.members = self.members
+        meetingGroup.memberIDs = self.memberIDs
         if entity!.meetingGroups == nil {
             entity!.meetingGroups = [MeetingGroup]()
         }

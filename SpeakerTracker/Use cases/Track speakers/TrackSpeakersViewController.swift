@@ -308,6 +308,7 @@ class TrackSpeakersViewController: UIViewController, TrackSpeakersDisplayLogic {
             let paraStyle = NSMutableParagraphStyle()
             paraStyle.alignment = .center
             let title = NSAttributedString(string: "Reset", attributes: [NSAttributedStringKey.foregroundColor : UIColor(red: 0.93, green: 0.93, blue: 0.95, alpha: 1.0), NSAttributedStringKey.paragraphStyle : paraStyle])
+            resetButton.setAttributedTitle(title, for: .normal)
             eventRecordingIsOn = false
             addCurrentDebateToEvent()
         }
@@ -383,8 +384,8 @@ class TrackSpeakersViewController: UIViewController, TrackSpeakersDisplayLogic {
         let cell = speakingTable.cellForRow(at: indexPath!) as! WMTableViewCell
         // Someone is speaking
         if speakerRecording != nil {
-            // Not the row that was tapped,so shut them down so can start this row
             let spkrIndexPath = IndexPath(row: (speakerRecording?.row)!, section: (speakerRecording?.section)!)
+            // Not the row that was tapped,so shut them down so can start this row
             if spkrIndexPath != indexPath {
                 if smStartButton.isEnabled == false {
                     let speakingTime = handleStopTimer()

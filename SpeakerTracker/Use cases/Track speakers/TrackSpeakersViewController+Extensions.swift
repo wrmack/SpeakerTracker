@@ -146,6 +146,7 @@ extension TrackSpeakersViewController: UITableViewDataSource, UITableViewDelegat
             // If there is a time associated with the member for the row
             if time != nil {
                 tvCell?.rightButton?.setTitle(time, for: .normal)
+                tvCell?.rightButton?.setTitle(time, for: .disabled)
                 tvCell!.rightButton!.titleLabel!.font = UIFont.systemFont(ofSize:14)
                 tvCell!.rightButton!.setTitleColor(UIColor(red: 0, green: 0.0, blue: 1.0, alpha: 1.0), for: .disabled)
                 tvCell?.rightButton?.isEnabled = false

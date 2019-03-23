@@ -109,7 +109,7 @@ class AddMeetingGroupViewController: UIViewController, AddMeetingGroupDisplayLog
     
     @objc private func saveButtonTapped() {
         let id = UUID()
-        let addedMeetingGroup = MeetingGroup(name: editView!.nameBox?.text, members: nil, fileName: nil, id: id)
+        let addedMeetingGroup = MeetingGroup(name: editView!.nameBox?.text, memberIDs: nil, fileName: nil, id: id)
 
         interactor?.saveMeetingGroupToEntity(meetingGroup: addedMeetingGroup, callback: {
             self.router?.returnToSource(source: self.sourceVC!)
