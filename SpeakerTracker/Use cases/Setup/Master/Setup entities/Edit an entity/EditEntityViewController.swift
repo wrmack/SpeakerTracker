@@ -70,7 +70,7 @@ class EditEntityViewController: UIViewController {
         editView!.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
         editView!.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         
-        let space = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.fixedSpace, target: nil, action: nil)
+        let space = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.fixedSpace, target: nil, action: nil)
         space.width = 100
         
         let trashItem = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(deleteButtonTapped))

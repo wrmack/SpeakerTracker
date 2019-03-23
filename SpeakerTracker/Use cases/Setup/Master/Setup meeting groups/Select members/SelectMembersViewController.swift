@@ -148,10 +148,10 @@ class SelectMembersViewController: UIViewController, SelectMembersDisplayLogic, 
             cell!.isUserInteractionEnabled = true
             if selectedRows != nil {
                 if (selectedRows?.contains(indexPath.row))! {
-                    cell?.accessoryType = UITableViewCellAccessoryType.checkmark
+                    cell?.accessoryType = UITableViewCell.AccessoryType.checkmark
                 }
                 else {
-                    cell?.accessoryType = UITableViewCellAccessoryType.none
+                    cell?.accessoryType = UITableViewCell.AccessoryType.none
                 }
             }
         }
@@ -164,14 +164,14 @@ class SelectMembersViewController: UIViewController, SelectMembersDisplayLogic, 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         let selectedCell = tableView.cellForRow(at: indexPath)
-        if (selectedCell?.accessoryType ==  UITableViewCellAccessoryType.none ) {
-            selectedCell?.accessoryType = UITableViewCellAccessoryType.checkmark
+        if (selectedCell?.accessoryType ==  UITableViewCell.AccessoryType.none ) {
+            selectedCell?.accessoryType = UITableViewCell.AccessoryType.checkmark
             if selectedRows == nil { selectedRows = [Int]()}
             selectedRows?.append(indexPath.row)
             print("Selected rows: \(selectedRows!)")
         }
-        else if (selectedCell?.accessoryType ==  UITableViewCellAccessoryType.checkmark ) {
-            selectedCell?.accessoryType = UITableViewCellAccessoryType.none
+        else if (selectedCell?.accessoryType ==  UITableViewCell.AccessoryType.checkmark ) {
+            selectedCell?.accessoryType = UITableViewCell.AccessoryType.none
             let idx = selectedRows?.index(of: indexPath.row)
             selectedRows?.remove(at: idx!)
         }

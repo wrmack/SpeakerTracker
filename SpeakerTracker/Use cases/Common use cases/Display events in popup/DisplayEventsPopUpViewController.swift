@@ -114,7 +114,7 @@ class DisplayEventsPopUpViewController: UIViewController, DisplayEventsPopUpDisp
         theTitleLabel!.font = UIFont.systemFont(ofSize: 19.0)
         theTitleLabel!.textColor = UIColor(white:0.0, alpha:1.0)
         theTitleLabel!.shadowColor = UIColor(white:0.65, alpha:1.0)
-        theTitleLabel!.autoresizingMask = UIViewAutoresizing.flexibleWidth
+        theTitleLabel!.autoresizingMask = UIView.AutoresizingMask.flexibleWidth
         theTitleLabel!.backgroundColor = UIColor.clear
         theTitleLabel!.shadowOffset = CGSize(width: 0.0, height: 1.0)
         theTitleLabel!.text = NSLocalizedString("Events", comment:"title")
@@ -124,7 +124,7 @@ class DisplayEventsPopUpViewController: UIViewController, DisplayEventsPopUpDisp
         tableRect.origin.y += TOOLBAR_HEIGHT
         tableRect.size.height -= TOOLBAR_HEIGHT
         theTableView = UITableView(frame:tableRect)
-        theTableView!.autoresizingMask = [UIViewAutoresizing.flexibleWidth, UIViewAutoresizing.flexibleHeight]
+        theTableView!.autoresizingMask = [UIView.AutoresizingMask.flexibleWidth, UIView.AutoresizingMask.flexibleHeight]
         theTableView!.dataSource = self
         theTableView!.delegate = self
         theTableView!.rowHeight = TABLE_CELL_HEIGHT
@@ -199,10 +199,10 @@ class DisplayEventsPopUpViewController: UIViewController, DisplayEventsPopUpDisp
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell = tableView.dequeueReusableCell(withIdentifier: "EventPopupCell")
         if cell == nil {
-            cell = UITableViewCell(style:UITableViewCellStyle.default, reuseIdentifier:"EventPopupCell")
+            cell = UITableViewCell(style:UITableViewCell.CellStyle.default, reuseIdentifier:"EventPopupCell")
             cell!.textLabel!.font = UIFont.systemFont(ofSize: 17.0)
             cell!.textLabel!.textAlignment = NSTextAlignment.center
-            cell!.selectionStyle = UITableViewCellSelectionStyle.gray
+            cell!.selectionStyle = UITableViewCell.SelectionStyle.gray
         }
         let eventName = eventNames![(indexPath).row]
         cell!.textLabel!.text = eventName

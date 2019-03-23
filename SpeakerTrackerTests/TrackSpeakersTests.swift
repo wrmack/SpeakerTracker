@@ -14,7 +14,7 @@ class TrackSpeakersTests: XCTestCase {
     
     override func setUp() {
         super.setUp()
-        controllerUnderTest = (UIApplication.shared.keyWindow?.rootViewController as! UITabBarController).childViewControllers[0] as? TrackSpeakersViewController
+        controllerUnderTest = (UIApplication.shared.keyWindow?.rootViewController as! UITabBarController).children[0] as? TrackSpeakersViewController
     }
 
     override func tearDown() {

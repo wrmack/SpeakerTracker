@@ -67,8 +67,8 @@ class MeetingChooserViewController: UIViewController, UITableViewDelegate, UITab
         let tableRect = CGRect(x: 0, y: 40, width: view.bounds.size.width, height: view.bounds.size.height - 40)
         
         theTableView = UITableView(frame:tableRect) // Rest of view
-        theTableView!.autoresizingMask = [UIViewAutoresizing.flexibleWidth, UIViewAutoresizing.flexibleHeight]
-        theTableView!.rowHeight = UITableViewAutomaticDimension
+        theTableView!.autoresizingMask = [UIView.AutoresizingMask.flexibleWidth, UIView.AutoresizingMask.flexibleHeight]
+        theTableView!.rowHeight = UITableView.automaticDimension
         theTableView!.estimatedRowHeight = TABLE_CELL_HEIGHT
         theTableView!.allowsSelection = true
         theTableView!.dataSource = self
@@ -101,7 +101,7 @@ class MeetingChooserViewController: UIViewController, UITableViewDelegate, UITab
         let myIdentifier = "MyReuseIdentifier"
         var tvCell = tableView.dequeueReusableCell(withIdentifier: myIdentifier)
         if tvCell == nil{
-            tvCell = UITableViewCell(style: UITableViewCellStyle.default, reuseIdentifier:myIdentifier)
+            tvCell = UITableViewCell(style: UITableViewCell.CellStyle.default, reuseIdentifier:myIdentifier)
             tvCell!.textLabel!.font = UIFont.boldSystemFont(ofSize: 17.0)
             tvCell!.textLabel!.textColor = UIColor.black
             tvCell!.backgroundColor = UIColor.white

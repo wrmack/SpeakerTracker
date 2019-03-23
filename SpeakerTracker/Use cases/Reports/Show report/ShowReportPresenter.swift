@@ -26,24 +26,24 @@ class ShowReportPresenter: ShowReportPresentationLogic {
         let attString = NSMutableAttributedString()
         
         var normAtts = Attributes().normalBase
-        normAtts[NSAttributedStringKey.paragraphStyle] = ParaStyle().left
+        normAtts[NSAttributedString.Key.paragraphStyle] = ParaStyle().left
         
         var boldAtts = Attributes().normalBoldBase
-        boldAtts[NSAttributedStringKey.paragraphStyle] = ParaStyle().leftWithSpacingBefore
+        boldAtts[NSAttributedString.Key.paragraphStyle] = ParaStyle().leftWithSpacingBefore
         
         var italicAtts = Attributes().normalItalicBase
-        italicAtts[NSAttributedStringKey.paragraphStyle] = ParaStyle().leftWithSpacingAfter
+        italicAtts[NSAttributedString.Key.paragraphStyle] = ParaStyle().leftWithSpacingAfter
         
         
         // Entity
         var atts = Attributes().heading1Base
-        atts[NSAttributedStringKey.paragraphStyle] = ParaStyle().centered
+        atts[NSAttributedString.Key.paragraphStyle] = ParaStyle().centered
         let entityAttStrg = NSAttributedString(string: "\n" + ((event?.entity?.name)! + "\n"), attributes: atts)
         attString.append(entityAttStrg)
         
         // Meeting group
         atts = Attributes().heading2Base
-        atts[NSAttributedStringKey.paragraphStyle] = ParaStyle().centeredWithSpacingBeforeAfter
+        atts[NSAttributedString.Key.paragraphStyle] = ParaStyle().centeredWithSpacingBeforeAfter
         let meetingGroupAttStrg = NSAttributedString(string: (event?.meetingGroup?.name)! + "\n", attributes: atts)
         attString.append(meetingGroupAttStrg)
         
@@ -56,7 +56,7 @@ class ShowReportPresenter: ShowReportPresentationLogic {
         formatter.timeStyle = .short
         let timeStrg = formatter.string(from: (event?.date)!)
         atts = Attributes().heading3Base
-        atts[NSAttributedStringKey.paragraphStyle] = ParaStyle().centered
+        atts[NSAttributedString.Key.paragraphStyle] = ParaStyle().centered
         let dateAttStrg = NSAttributedString(string: timeStrg + ", " + dateStrg + "\n", attributes: atts)
         attString.append(dateAttStrg)
         
@@ -80,10 +80,10 @@ class ShowReportPresenter: ShowReportPresentationLogic {
         
         // Debates
         atts = Attributes().normalBase
-        atts[NSAttributedStringKey.paragraphStyle] = ParaStyle().left
+        atts[NSAttributedString.Key.paragraphStyle] = ParaStyle().left
         if event?.debates != nil {
             for debate in (event?.debates)! {
-                (boldAtts[NSAttributedStringKey.paragraphStyle] as! NSMutableParagraphStyle).firstLineHeadIndent = 0
+                (boldAtts[NSAttributedString.Key.paragraphStyle] as! NSMutableParagraphStyle).firstLineHeadIndent = 0
                 let debateNumberAttStg = NSAttributedString(string: "\nDebate " +  String(debate.debateNumber!) + "\n", attributes: boldAtts)
                 attString.append(debateNumberAttStg)
                 if let note = debate.note {
@@ -92,8 +92,8 @@ class ShowReportPresenter: ShowReportPresentationLogic {
                 }
                 for debateSection in debate.debateSections! {
                     var debateSectionNameAtts = Attributes().normalBoldBase
-                    debateSectionNameAtts[NSAttributedStringKey.paragraphStyle] = ParaStyle().leftWithSpacingBefore
-                    (debateSectionNameAtts[NSAttributedStringKey.paragraphStyle] as! NSMutableParagraphStyle).firstLineHeadIndent = 20
+                    debateSectionNameAtts[NSAttributedString.Key.paragraphStyle] = ParaStyle().leftWithSpacingBefore
+                    (debateSectionNameAtts[NSAttributedString.Key.paragraphStyle] as! NSMutableParagraphStyle).firstLineHeadIndent = 20
                     let debateSectionNameAttStg = NSAttributedString(string: debateSection.sectionName! + "\n", attributes: debateSectionNameAtts)
                     attString.append(debateSectionNameAttStg)
                     var spkrEvtStrg = String()
@@ -106,8 +106,8 @@ class ShowReportPresenter: ShowReportPresentationLogic {
                         spkrEvtStrg.append(fullName + "\t" + String(spkgTime) + "\t" + startTime + "\n")
                     }
                     var spkrAtts = Attributes().normalBase
-                    spkrAtts[NSAttributedStringKey.paragraphStyle] = ParaStyle().left
-                    (spkrAtts[NSAttributedStringKey.paragraphStyle] as! NSMutableParagraphStyle).firstLineHeadIndent = 20
+                    spkrAtts[NSAttributedString.Key.paragraphStyle] = ParaStyle().left
+                    (spkrAtts[NSAttributedString.Key.paragraphStyle] as! NSMutableParagraphStyle).firstLineHeadIndent = 20
                     let spkrEvtAttStr = NSAttributedString(string: spkrEvtStrg, attributes: spkrAtts)
                     attString.append(spkrEvtAttStr)
                 }
