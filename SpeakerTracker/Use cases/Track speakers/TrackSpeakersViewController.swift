@@ -155,31 +155,6 @@ class TrackSpeakersViewController: UIViewController, TrackSpeakersDisplayLogic {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        if UserDefaults.standard.object(forKey: "MeetingNames") != nil {
-            // This app is replacing original version so try to retrieve member data
-            let alert = UIAlertController(title: "Version upgrade", message: "The app will try to import your old version's committees.", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .default, handler: { _ in
-                NSLog("The \"OK\" alert occured.")
-                Utilities.updateFromOriginalVersion(callback: {success in
-                    if success {
-                        self.setupViewOnLoad()
-                    }
-                    else {
-                        print("Problem importing original data")
-                    }
-                })
-            }))
-            self.present(alert, animated: true, completion: nil)
-
-        }
-        else {
-            setupViewOnLoad()
-        }
-    }
-    
-    
-    func setupViewOnLoad() {
-        
         // Appearance tweaks
         undoButton.layer.cornerRadius = 2
         resetButton.layer.cornerRadius = 2
@@ -243,22 +218,48 @@ class TrackSpeakersViewController: UIViewController, TrackSpeakersDisplayLogic {
         
         let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPressGesture(_:)))
         self.speakingTable.addGestureRecognizer(longPressGesture)
-        
+
         setupTableCollection()
     }
+    
+ 
     
     /*
      Adjust tab bar of original UITabBarController once views have loaded
      */
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        
+        if UserDefaults.standard.object(forKey: "MeetingNames")  != nil {
+            let alert = UIAlertController(title: "Version upgrade", message: "The app will try to import your old version's committees into a dummy entity. Go to Setup to check.", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .default, handler: { _ in
+                NSLog("The \"OK\" alert occured.")
+                Utilities.updateFromOriginalVersion(callback: {success in
+                    if success {
+                        self.setupAfterViewAppears()
+                    }
+                    else {
+                        print("Problem importing original data")
+                    }
+                })
+            }))
+            self.present(alert, animated: true, completion: nil)
+        }
+        else {
+            setupAfterViewAppears()
+        }
+ 
+    }
+        
+    
+    func setupAfterViewAppears() {
         let tabBarCont = UIApplication.shared.keyWindow?.rootViewController as! UITabBarController
         let tabBarRect = tabBarCont.tabBar.frame
         tabBarCont.tabBar.frame = CGRect(x: view.frame.origin.x, y: tabBarRect.origin.y, width: view.frame.size.width, height: tabBarRect.size.height)
         for item in tabBarCont.tabBar.items! {
             item.setTitleTextAttributes([NSAttributedString.Key.font : UIFont.systemFont(ofSize: 18)], for: .normal)
         }
-
+        
         
         // Get stored entities and meeting groups from user defaults
         if let entity = UserDefaultsManager.getCurrentEntity() {
@@ -284,7 +285,8 @@ class TrackSpeakersViewController: UIViewController, TrackSpeakersDisplayLogic {
             fetchNames()
         }
     }
-        
+    
+    
     
     // MARK: - Storyboard actions
     

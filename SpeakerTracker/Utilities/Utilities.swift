@@ -71,7 +71,7 @@ class Utilities {
             meetingGroups.append(meetingGroup)
         }
         
-        let entity = Entity(name: "Entity1", members: members, meetingGroups: meetingGroups, id: UUID())
+        let entity = Entity(name: "Dummy entity", members: members, meetingGroups: meetingGroups, id: UUID())
         
         guard let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else {
             print("Error: updateFromOriginalVersion: Document directory not found")
