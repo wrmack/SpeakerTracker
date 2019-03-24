@@ -30,7 +30,9 @@ class DisplayMembersPresenter: DisplayMembersPresentationLogic {
         var memberNames = [String]()
         if let members = response.members {
             for member in members {
-                let name = (member.title ?? "") + " " + member.firstName! + " " + member.lastName!
+                let title = member.title ?? ""
+                let firstName = member.firstName ?? ""
+                let name = title + " " + firstName + " " + member.lastName!
                 memberNames.append(name)
             }
         }

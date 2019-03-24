@@ -29,7 +29,7 @@ class TrackSpeakersPresenter: TrackSpeakersPresentationLogic {
         for item in response.remainingList! {
             let section = item.key
             for member in item.value {
-                let memberName = member.firstName! + " " + member.lastName!
+                let memberName = ((member.firstName) ?? "") + " " + member.lastName!
                 let memberNameWithTime = MemberNameWithTime(name: memberName, time: nil)
                 if remainingNames[section] == nil {
                     remainingNames[section] = [MemberNameWithTime]()

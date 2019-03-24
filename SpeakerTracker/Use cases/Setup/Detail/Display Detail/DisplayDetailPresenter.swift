@@ -32,8 +32,8 @@ class DisplayDetailPresenter: DisplayDetailPresentationLogic {
         switch selectedItem {
         case is Member:
             let member = selectedItem as! Member
-            labelDetailArray.append(("Title:", (member.title)!))
-            labelDetailArray.append(("First name:", (member.firstName)!))
+            labelDetailArray.append(("Title:", (member.title ?? "")))
+            labelDetailArray.append(("First name:", (member.firstName ?? "")))
             labelDetailArray.append(("Last name:", (member.lastName)!))
             
         case is Entity:
@@ -59,7 +59,7 @@ class DisplayDetailPresenter: DisplayDetailPresentationLogic {
                     if let title = member.title {
                         fullTitle = title + " "
                     }
-                    memberString.append((fullTitle ?? "") + member.firstName! + " " + member.lastName!)
+                    memberString.append((fullTitle ?? "") + (member.firstName ?? "") + " " + member.lastName!)
                 }
                 labelDetailArray.append(("Members:", memberString))
             }
@@ -73,7 +73,7 @@ class DisplayDetailPresenter: DisplayDetailPresentationLogic {
                     if memberString.count > 0 {
                         memberString.append(", ")
                     }
-                    memberString.append(member.firstName! + " " + member.lastName!)
+                    memberString.append((member.firstName ?? "") + " " + member.lastName!)
                 }
                 labelDetailArray.append(("Members:", memberString))
             }
@@ -97,7 +97,7 @@ class DisplayDetailPresenter: DisplayDetailPresentationLogic {
                     if memberString.count > 0 {
                         memberString.append(", ")
                     }
-                    memberString.append(member.firstName! + " " + member.lastName!)
+                    memberString.append((member.firstName ?? "") + " " + member.lastName!)
                 }
                 labelDetailArray.append(("Members:", memberString))
             }

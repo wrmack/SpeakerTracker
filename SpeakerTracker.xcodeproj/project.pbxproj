@@ -28,6 +28,7 @@
 		4116B75A21410A21000553BA /* DisplayDetailModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4116B75421410A21000553BA /* DisplayDetailModels.swift */; };
 		4116B75B21410A21000553BA /* DisplayDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4116B75521410A21000553BA /* DisplayDetailViewController.swift */; };
 		4116B75C21410A21000553BA /* DisplayDetailInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4116B75621410A21000553BA /* DisplayDetailInteractor.swift */; };
+		411EBAF82246DA22001D2EA5 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 411EBAF72246DA22001D2EA5 /* Utilities.swift */; };
 		4121A678218185E7003D4244 /* DebateSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4121A677218185E7003D4244 /* DebateSectionHeaderView.swift */; };
 		4121A68E2181A71F003D4244 /* SelectMeetingGroupAndEventRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4121A6882181A71F003D4244 /* SelectMeetingGroupAndEventRouter.swift */; };
 		4121A6902181A71F003D4244 /* SelectMeetingGroupAndEventController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4121A68A2181A71F003D4244 /* SelectMeetingGroupAndEventController.swift */; };
@@ -219,6 +220,7 @@
 		4116B75421410A21000553BA /* DisplayDetailModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayDetailModels.swift; sourceTree = "<group>"; };
 		4116B75521410A21000553BA /* DisplayDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayDetailViewController.swift; sourceTree = "<group>"; };
 		4116B75621410A21000553BA /* DisplayDetailInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayDetailInteractor.swift; sourceTree = "<group>"; };
+		411EBAF72246DA22001D2EA5 /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		4121A677218185E7003D4244 /* DebateSectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebateSectionHeaderView.swift; sourceTree = "<group>"; };
 		4121A6882181A71F003D4244 /* SelectMeetingGroupAndEventRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectMeetingGroupAndEventRouter.swift; sourceTree = "<group>"; };
 		4121A68A2181A71F003D4244 /* SelectMeetingGroupAndEventController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectMeetingGroupAndEventController.swift; sourceTree = "<group>"; };
@@ -460,6 +462,14 @@
 				41C3C7452142F87E004AD9D9 /* Detail */,
 			);
 			path = Setup;
+			sourceTree = "<group>";
+		};
+		411EBAF62246DA01001D2EA5 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				411EBAF72246DA22001D2EA5 /* Utilities.swift */,
+			);
+			path = Utilities;
 			sourceTree = "<group>";
 		};
 		4121A6792181A62A003D4244 /* Select meeting group & event */ = {
@@ -1014,6 +1024,7 @@
 				5F782E3C1D4B152F00144EA9 /* Main.storyboard */,
 				5F782E441D4B152F00144EA9 /* Info.plist */,
 				5F782E3F1D4B152F00144EA9 /* Assets.xcassets */,
+				411EBAF62246DA01001D2EA5 /* Utilities */,
 				412D5DF82183CCC40048AA8F /* Extensions */,
 				4114D7C52167D710002DC056 /* UI sub-classes */,
 				41F721722139CA7900AD98AA /* Models */,
@@ -1257,6 +1268,7 @@
 				4148653B21839CCF001A9EAF /* WMDisplayDetailCell.swift in Sources */,
 				41C3C76E2143A4AA004AD9D9 /* SelectMembersModels.swift in Sources */,
 				41C6DA7B213B7EA800D73077 /* DisplayEventsInteractor.swift in Sources */,
+				411EBAF82246DA22001D2EA5 /* Utilities.swift in Sources */,
 				5F1D83B11EFDF35200239F7A /* InfoViewController.swift in Sources */,
 				410AE672214C82930031F09D /* EditEventView.swift in Sources */,
 				4116B75721410A21000553BA /* DisplayDetailPresenter.swift in Sources */,

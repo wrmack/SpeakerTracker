@@ -155,6 +155,30 @@ class TrackSpeakersViewController: UIViewController, TrackSpeakersDisplayLogic {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        if UserDefaults.standard.object(forKey: "MeetingNames") != nil {
+            // This app is replacing original version so try to retrieve member data
+            let alert = UIAlertController(title: "Version upgrade", message: "The app will try to import your old version's committees.", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .default, handler: { _ in
+                NSLog("The \"OK\" alert occured.")
+                Utilities.updateFromOriginalVersion(callback: {success in
+                    if success {
+                        self.setupViewOnLoad()
+                    }
+                    else {
+                        print("Problem importing original data")
+                    }
+                })
+            }))
+            self.present(alert, animated: true, completion: nil)
+
+        }
+        else {
+            setupViewOnLoad()
+        }
+    }
+    
+    
+    func setupViewOnLoad() {
         
         // Appearance tweaks
         undoButton.layer.cornerRadius = 2
@@ -182,7 +206,7 @@ class TrackSpeakersViewController: UIViewController, TrackSpeakersDisplayLogic {
         startButton.isHidden = true
         pauseButton.isHidden = true
         stopButton.isHidden = true
-        _ = handleStopTimer() 
+        _ = handleStopTimer()
         view.sendSubviewToBack(stackView)
         sideBarLeadingConstraint.constant = -370
         eventView.isHidden = true
@@ -202,7 +226,7 @@ class TrackSpeakersViewController: UIViewController, TrackSpeakersDisplayLogic {
         selectMeetingGroupButton.isEnabled = (selectEntityButton.titleLabel?.text == "Select an entity") ? false : true
         recordSwitch.isEnabled = (selectMeetingGroupButton.titleLabel?.text == "Select a meeting group") ? false : true
         
-        let swipeGesture1 = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipeGesture(_:))) 
+        let swipeGesture1 = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipeGesture(_:)))
         swipeGesture1.direction = .right
         self.remainingTable.addGestureRecognizer(swipeGesture1)
         
@@ -221,9 +245,7 @@ class TrackSpeakersViewController: UIViewController, TrackSpeakersDisplayLogic {
         self.speakingTable.addGestureRecognizer(longPressGesture)
         
         setupTableCollection()
-
     }
-    
     
     /*
      Adjust tab bar of original UITabBarController once views have loaded
@@ -693,6 +715,5 @@ class TrackSpeakersViewController: UIViewController, TrackSpeakersDisplayLogic {
         interactor!.endAmendment()
         fetchNames()
     }
-
  
 }
