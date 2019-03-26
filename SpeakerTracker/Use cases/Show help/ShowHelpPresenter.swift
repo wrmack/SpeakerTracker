@@ -182,6 +182,50 @@ When the meeting event is over, end the final debate and, in the slide-out panel
 
 """, attributes: normAtts))
         
+        attString.append(NSAttributedString(string: "Setup\n", attributes: heading1Atts))
+        
+        attString.append(NSAttributedString(string: """
+Entities\n
+""", attributes: boldnormAtts))
+
+        attString.append(NSAttributedString(string: """
+Add an entity and give it a name.  Can also edit the name of an existing entity.\n
+""", attributes: normAtts))
+        
+        attString.append(NSAttributedString(string: """
+Members\n
+""", attributes: boldnormAtts))
+        
+        attString.append(NSAttributedString(string: """
+Select an entity and add members, or edit existing members.\n
+""", attributes: normAtts))
+        
+        attString.append(NSAttributedString(string: """
+Meeting groups\n
+""", attributes: boldnormAtts))
+        
+        attString.append(NSAttributedString(string: """
+Select an entity and add meeting groups.  For each meeting group assign members from the entity's members.  \
+Can also edit existing meeting groups.\n
+""", attributes: normAtts))
+        
+        
+        attString.append(NSAttributedString(string: """
+Events\n
+""", attributes: boldnormAtts))
+        
+        attString.append(NSAttributedString(string: """
+Select an entity and a meeting group and create a meeting event which can be used when recording debates.  \
+Can also edit existing events.\n
+""", attributes: normAtts))
+        
+        attString.append(NSAttributedString(string: "Reports\n", attributes: heading1Atts))
+        
+        attString.append(NSAttributedString(string: """
+Select an entity and meeting group to view reports of meeting events that have been recorded. \
+Select a report to view it.  You are able to airdrop it, email it, save it, print it or open it in another app.\n
+""", attributes: normAtts))
+        
         let viewModel = ShowHelp.Help.ViewModel(attString: attString)
         viewController?.displayAttributedString(viewModel: viewModel)
     }

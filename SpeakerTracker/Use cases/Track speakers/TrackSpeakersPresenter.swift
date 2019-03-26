@@ -40,7 +40,7 @@ class TrackSpeakersPresenter: TrackSpeakersPresentationLogic {
         for item in response.waitingList! {
             let section = item.key
             for member in item.value {
-                let memberName = member.firstName! + " " + member.lastName!
+                let memberName = (member.firstName ?? "") + " " + member.lastName!
                 let memberNameWithTime = MemberNameWithTime(name: memberName, time: nil)
                 if waitingNames[section] == nil {
                     waitingNames[section] = [MemberNameWithTime]()
