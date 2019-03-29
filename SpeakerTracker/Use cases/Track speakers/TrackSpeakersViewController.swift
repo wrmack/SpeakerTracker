@@ -489,16 +489,7 @@ class TrackSpeakersViewController: UIViewController, TrackSpeakersDisplayLogic {
      Reset button pressed
      */
     @IBAction private func resetAll(_ sender: UIButton) {
-        if smStartButton.isEnabled == false {
-            _ = handleStopTimer()
-        }
-        debateMode = .mainMotion
-        setupTableCollection()
-        speakerRecording = nil
-        if eventRecordingIsOn == true {
-            addCurrentDebateToEvent()
-        }
-        resetAllNames()
+		reset()
     }
     
     
@@ -636,7 +627,7 @@ class TrackSpeakersViewController: UIViewController, TrackSpeakersDisplayLogic {
     
     // MARK: - VIP
     
-    private func fetchNames() {
+    internal func fetchNames() {
         interactor!.fetchNames()
     }
     
@@ -681,6 +672,7 @@ class TrackSpeakersViewController: UIViewController, TrackSpeakersDisplayLogic {
     
    internal func updateAfterSelectingMeetingGroup() {
         interactor?.updateAfterSelectingMeetingGroup()
+    	reset()
         fetchNames()
     }
   
@@ -716,6 +708,22 @@ class TrackSpeakersViewController: UIViewController, TrackSpeakersDisplayLogic {
         speakingTableSections[section] = status
         interactor!.endAmendment()
         fetchNames()
+    }
+    
+    
+    // MARK: - Helpers
+    
+    func reset() {
+        if smStartButton.isEnabled == false {
+            _ = handleStopTimer()
+        }
+        debateMode = .mainMotion
+        setupTableCollection()
+        speakerRecording = nil
+        if eventRecordingIsOn == true {
+            addCurrentDebateToEvent()
+        }
+        resetAllNames()
     }
  
 }

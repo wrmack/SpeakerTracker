@@ -13,7 +13,7 @@
 import UIKit
 
 protocol AddMeetingGroupRoutingLogic {
-    func returnToSource(source: DisplayMeetingGroupsViewController)
+    func returnToCaller(caller: DisplayMeetingGroupsViewController)
     func routeToSelectMembers()
     func returnFromSelectMembers(memberIDs: [UUID]?)
 }
@@ -33,10 +33,10 @@ class AddMeetingGroupRouter: NSObject, AddMeetingGroupRoutingLogic, AddMeetingGr
     
   // MARK: Routing
   
-    func returnToSource(source: DisplayMeetingGroupsViewController) {
-        var destinationDS = source.router?.dataStore
+    func returnToCaller(caller: DisplayMeetingGroupsViewController) {
+        var destinationDS = caller.router?.dataStore
         passDataToDisplayMeetingGroupsDataStore(source: dataStore!, destination: &destinationDS!)
-        source.router?.returnFromAddingMeetingGroup()
+        caller.router?.returnFromAddingMeetingGroup()
     }
     
     

@@ -155,17 +155,13 @@
 		41F721932139F75400AD98AA /* DisplayEntitiesModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41F7218D2139F75400AD98AA /* DisplayEntitiesModels.swift */; };
 		41F721942139F75400AD98AA /* DisplayEntitiesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41F7218E2139F75400AD98AA /* DisplayEntitiesViewController.swift */; };
 		41F721952139F75400AD98AA /* DisplayEntitiesInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41F7218F2139F75400AD98AA /* DisplayEntitiesInteractor.swift */; };
-		5F1D83B11EFDF35200239F7A /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F1D83B01EFDF35200239F7A /* InfoViewController.swift */; };
 		5F782E391D4B152F00144EA9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F782E381D4B152F00144EA9 /* AppDelegate.swift */; };
 		5F782E3E1D4B152F00144EA9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5F782E3C1D4B152F00144EA9 /* Main.storyboard */; };
 		5F782E401D4B152F00144EA9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5F782E3F1D4B152F00144EA9 /* Assets.xcassets */; };
 		5F782E431D4B152F00144EA9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5F782E411D4B152F00144EA9 /* LaunchScreen.storyboard */; };
 		5F782E4E1D4B153000144EA9 /* SpeakerTrackerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F782E4D1D4B153000144EA9 /* SpeakerTrackerTests.swift */; };
 		5F782E591D4B153000144EA9 /* SpeakerTrackerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F782E581D4B153000144EA9 /* SpeakerTrackerUITests.swift */; };
-		5F83D6891D4D34E400120A7D /* EditMembersController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F83D6881D4D34E400120A7D /* EditMembersController.swift */; };
 		5F8BE5631D546F310040DD76 /* WMTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F8BE5611D546F310040DD76 /* WMTableViewCell.swift */; };
-		5FCB017B1E299AC900FBCB06 /* MeetingChooserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FCB017A1E299AC900FBCB06 /* MeetingChooserViewController.swift */; };
-		5FF9E6011E2878CE008554EE /* EditMeetingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FF9E6001E2878CE008554EE /* EditMeetingsController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -349,7 +345,6 @@
 		41F7218D2139F75400AD98AA /* DisplayEntitiesModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayEntitiesModels.swift; sourceTree = "<group>"; };
 		41F7218E2139F75400AD98AA /* DisplayEntitiesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayEntitiesViewController.swift; sourceTree = "<group>"; };
 		41F7218F2139F75400AD98AA /* DisplayEntitiesInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayEntitiesInteractor.swift; sourceTree = "<group>"; };
-		5F1D83B01EFDF35200239F7A /* InfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
 		5F782E351D4B152F00144EA9 /* SpeakerTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SpeakerTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5F782E381D4B152F00144EA9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5F782E3D1D4B152F00144EA9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -362,10 +357,7 @@
 		5F782E541D4B153000144EA9 /* SpeakerTrackerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SpeakerTrackerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5F782E581D4B153000144EA9 /* SpeakerTrackerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeakerTrackerUITests.swift; sourceTree = "<group>"; };
 		5F782E5A1D4B153000144EA9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		5F83D6881D4D34E400120A7D /* EditMembersController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditMembersController.swift; sourceTree = "<group>"; };
 		5F8BE5611D546F310040DD76 /* WMTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WMTableViewCell.swift; sourceTree = "<group>"; };
-		5FCB017A1E299AC900FBCB06 /* MeetingChooserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeetingChooserViewController.swift; sourceTree = "<group>"; };
-		5FF9E6001E2878CE008554EE /* EditMeetingsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditMeetingsController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -843,17 +835,6 @@
 			path = "Display entities in popup";
 			sourceTree = "<group>";
 		};
-		41DD00FD216B26250094E2E1 /* Archived */ = {
-			isa = PBXGroup;
-			children = (
-				5FCB017A1E299AC900FBCB06 /* MeetingChooserViewController.swift */,
-				5F83D6881D4D34E400120A7D /* EditMembersController.swift */,
-				5FF9E6001E2878CE008554EE /* EditMeetingsController.swift */,
-				5F1D83B01EFDF35200239F7A /* InfoViewController.swift */,
-			);
-			path = Archived;
-			sourceTree = "<group>";
-		};
 		41F721722139CA7900AD98AA /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -999,7 +980,6 @@
 				41EDB163223B35C600B9895C /* Design.md */,
 				416D3582223B36E5009FB1E1 /* Models & storage.md */,
 				5F782E371D4B152F00144EA9 /* SpeakerTracker */,
-				41DD00FD216B26250094E2E1 /* Archived */,
 				5F782E4C1D4B153000144EA9 /* SpeakerTrackerTests */,
 				5F782E571D4B153000144EA9 /* SpeakerTrackerUITests */,
 				5F782E361D4B152F00144EA9 /* Products */,
@@ -1118,21 +1098,21 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1000;
-				LastUpgradeCheck = 0930;
+				LastUpgradeCheck = 1020;
 				ORGANIZATIONNAME = "Warwick McNaughton";
 				TargetAttributes = {
 					5F782E341D4B152F00144EA9 = {
 						CreatedOnToolsVersion = 8.0;
 						DevelopmentTeam = C4XR3G25JL;
 						DevelopmentTeamName = "W McNaughton";
-						LastSwiftMigration = 1010;
+						LastSwiftMigration = 1020;
 						ProvisioningStyle = Automatic;
 					};
 					5F782E481D4B153000144EA9 = {
 						CreatedOnToolsVersion = 8.0;
 						DevelopmentTeam = C4XR3G25JL;
 						DevelopmentTeamName = "W McNaughton";
-						LastSwiftMigration = 1010;
+						LastSwiftMigration = 1020;
 						ProvisioningStyle = Automatic;
 						TestTargetID = 5F782E341D4B152F00144EA9;
 					};
@@ -1140,7 +1120,7 @@
 						CreatedOnToolsVersion = 8.0;
 						DevelopmentTeam = C4XR3G25JL;
 						DevelopmentTeamName = "W McNaughton";
-						LastSwiftMigration = 1010;
+						LastSwiftMigration = 1020;
 						ProvisioningStyle = Automatic;
 						TestTargetID = 5F782E341D4B152F00144EA9;
 					};
@@ -1148,7 +1128,7 @@
 			};
 			buildConfigurationList = 5F782E301D4B152F00144EA9 /* Build configuration list for PBXProject "SpeakerTracker" */;
 			compatibilityVersion = "Xcode 10.0";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
@@ -1207,7 +1187,6 @@
 				41C3C7702143A4AA004AD9D9 /* SelectMembersInteractor.swift in Sources */,
 				41C6DA98213B8C0300D73077 /* EditMemberView.swift in Sources */,
 				41CDDA6C21855FF700400D1B /* ShowHelpViewController.swift in Sources */,
-				5FCB017B1E299AC900FBCB06 /* MeetingChooserViewController.swift in Sources */,
 				41323F982155D97C004098DC /* DisplayMeetingGroupsForReportsModels.swift in Sources */,
 				41323F972155D97C004098DC /* DisplayMeetingGroupsForReportsRouter.swift in Sources */,
 				4116B75A21410A21000553BA /* DisplayDetailModels.swift in Sources */,
@@ -1269,7 +1248,6 @@
 				41C3C76E2143A4AA004AD9D9 /* SelectMembersModels.swift in Sources */,
 				41C6DA7B213B7EA800D73077 /* DisplayEventsInteractor.swift in Sources */,
 				411EBAF82246DA22001D2EA5 /* Utilities.swift in Sources */,
-				5F1D83B11EFDF35200239F7A /* InfoViewController.swift in Sources */,
 				410AE672214C82930031F09D /* EditEventView.swift in Sources */,
 				4116B75721410A21000553BA /* DisplayDetailPresenter.swift in Sources */,
 				410AE66F214C81650031F09D /* AddEventInteractor.swift in Sources */,
@@ -1278,7 +1256,6 @@
 				41F7217A2139CEB900AD98AA /* Event.swift in Sources */,
 				418098EA214B9E9300E24EB4 /* TrackSpeakersViewController.swift in Sources */,
 				41B967A621464E8F0077A854 /* RemoveMemberInteractor.swift in Sources */,
-				5F83D6891D4D34E400120A7D /* EditMembersController.swift in Sources */,
 				418098EB214B9E9300E24EB4 /* TrackSpeakersInteractor.swift in Sources */,
 				41F721782139CE7A00AD98AA /* Entity.swift in Sources */,
 				410AE67E214C9DF80031F09D /* DisplayEventsPopUpViewController.swift in Sources */,
@@ -1307,7 +1284,6 @@
 				41D0E7F821600B9A00BEB784 /* DisplayEventsHeaderView.swift in Sources */,
 				41C6DA5D213B4F3200D73077 /* DisplayMembersRouter.swift in Sources */,
 				41C3C75221435882004AD9D9 /* DisplayMeetingGroupsRouter.swift in Sources */,
-				5FF9E6011E2878CE008554EE /* EditMeetingsController.swift in Sources */,
 				4116B75B21410A21000553BA /* DisplayDetailViewController.swift in Sources */,
 				41D8A3E12162002A0066FAE8 /* RemoveEntityInteractor.swift in Sources */,
 				418285DF213A938D00438325 /* AddEntityModels.swift in Sources */,
@@ -1410,6 +1386,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -1454,7 +1431,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -1469,6 +1446,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -1507,7 +1485,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
@@ -1525,14 +1503,14 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = SpeakerTracker/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.wm.SpeakerTracker;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 2;
 			};
 			name = Debug;
@@ -1544,14 +1522,14 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = SpeakerTracker/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.wm.SpeakerTracker;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 2;
 			};
 			name = Release;
@@ -1568,7 +1546,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.wm.SpeakerTrackerTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SpeakerTracker.app/SpeakerTracker";
 			};
 			name = Debug;
@@ -1585,7 +1563,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.wm.SpeakerTrackerTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SpeakerTracker.app/SpeakerTracker";
 			};
 			name = Release;
@@ -1601,7 +1579,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.wm.SpeakerTrackerUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TEST_TARGET_NAME = SpeakerTracker;
 			};
 			name = Debug;
@@ -1617,7 +1595,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.wm.SpeakerTrackerUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TEST_TARGET_NAME = SpeakerTracker;
 			};
 			name = Release;

@@ -80,6 +80,7 @@ class AddMemberViewController: UIViewController, EditMemberViewDelegate {
         
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancelButtonTapped))
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(saveButtonTapped))
+        navigationItem.rightBarButtonItem?.isEnabled = false
     }
 
     
@@ -107,6 +108,10 @@ class AddMemberViewController: UIViewController, EditMemberViewDelegate {
     
     func addAnother(member: Member?) {
         interactor!.addMemberToTempList(member: member!)
+    }
+    
+    func enableSaveButton(enable: Bool) {
+        navigationItem.rightBarButtonItem?.isEnabled = enable
     }
     
 }

@@ -13,7 +13,7 @@
 import UIKit
 
 protocol SelectMembersRoutingLogic {
-    func returnToSource(memberIDs: [UUID]?)
+    func returnToCaller(memberIDs: [UUID]?)
 }
 
 protocol SelectMembersDataPassing {
@@ -28,7 +28,7 @@ class SelectMembersRouter: NSObject, SelectMembersRoutingLogic, SelectMembersDat
   
     // MARK: Routing
     
-    func returnToSource(memberIDs: [UUID]?) {
+    func returnToCaller(memberIDs: [UUID]?) {
         if memberIDs != nil {
             dataStore!.memberIDs = memberIDs
         }

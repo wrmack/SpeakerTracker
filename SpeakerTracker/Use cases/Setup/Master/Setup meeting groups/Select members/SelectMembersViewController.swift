@@ -10,6 +10,18 @@
 //  see http://clean-swift.com
 //
 
+/*
+ Module abstract
+ 
+ Use case:		User wants to select members for a meeting group.
+ Callers:		AddMeetingGroup and EditMeetingGroup modules when user presses disclosure button.
+ Calls: 		None
+ Features:    User can select members from a table list of all memnbers.  Current members, if any, are already selected.
+ VIP: 			Fetches members and displays them.
+				Router passes the meeting group's selected member IDs to caller's datastore when flow returns to caller.
+ */
+
+
 import UIKit
 
 protocol SelectMembersDisplayLogic: class {
@@ -94,7 +106,7 @@ class SelectMembersViewController: UIViewController, SelectMembersDisplayLogic, 
     
 
 
-    // MARK: VIP
+    // MARK: - VIP
     
     internal func fetchMemberNames() {
         let request = SelectMembers.Members.Request()
@@ -113,13 +125,13 @@ class SelectMembersViewController: UIViewController, SelectMembersDisplayLogic, 
     @objc private func saveButtonTapped() {
         if selectedRows != nil {
             let selectedMemberIDs = (interactor?.getMemberIDs(indices: selectedRows!))!
-            router?.returnToSource(memberIDs: selectedMemberIDs)
+            router?.returnToCaller(memberIDs: selectedMemberIDs)
         }
     }
     
     
     @objc private func cancelButtonTapped() {
-        router!.returnToSource(memberIDs: nil)
+        router!.returnToCaller(memberIDs: nil)
     }
     
     // MARK: - UITableViewDataSource methods
@@ -172,7 +184,7 @@ class SelectMembersViewController: UIViewController, SelectMembersDisplayLogic, 
         }
         else if (selectedCell?.accessoryType ==  UITableViewCell.AccessoryType.checkmark ) {
             selectedCell?.accessoryType = UITableViewCell.AccessoryType.none
-            let idx = selectedRows?.index(of: indexPath.row)
+            let idx = selectedRows?.firstIndex(of: indexPath.row)
             selectedRows?.remove(at: idx!)
         }
     }

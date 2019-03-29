@@ -18,7 +18,7 @@ protocol AddEntityDisplayLogic: class {
 
 
 
-class AddEntityViewController: UIViewController, AddEntityDisplayLogic {
+class AddEntityViewController: UIViewController, AddEntityDisplayLogic, EditEntityViewDelegate {
     
     var interactor: AddEntityBusinessLogic?
     var router: (NSObjectProtocol & AddEntityRoutingLogic & AddEntityDataPassing)?
@@ -75,6 +75,7 @@ class AddEntityViewController: UIViewController, AddEntityDisplayLogic {
     override func viewDidLoad() {
         super.viewDidLoad()
         editView = EditEntityView(frame: CGRect.zero)
+        editView?.delegate = self
         view.addSubview(editView!)
         editView!.headingLabel!.text = "Create new entity"
         editView?.infoLabel?.isHidden = false
@@ -86,6 +87,7 @@ class AddEntityViewController: UIViewController, AddEntityDisplayLogic {
         
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancelButtonTapped))
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(saveButtonTapped))
+        navigationItem.rightBarButtonItem?.isEnabled = false
     }
     
     
@@ -110,5 +112,9 @@ class AddEntityViewController: UIViewController, AddEntityDisplayLogic {
         self.router?.returnToSource(source: self.sourceVC!)
     }
 
- 
+    // MARK: - EditEntityViewDelegate methods
+    
+    func enableSaveButton(enable: Bool) {
+        navigationItem.rightBarButtonItem?.isEnabled = enable
+    }
 }

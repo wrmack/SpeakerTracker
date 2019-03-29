@@ -13,7 +13,7 @@
 import UIKit
 
 
-class EditEntityViewController: UIViewController {
+class EditEntityViewController: UIViewController, EditEntityViewDelegate {
     var interactor: EditEntityBusinessLogic?
     var router: (NSObjectProtocol & EditEntityRoutingLogic & EditEntityDataPassing)?
     var sourceVC: DisplayEntitiesViewController?
@@ -62,6 +62,7 @@ class EditEntityViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         editView = EditEntityView(frame: CGRect.zero)
+        editView?.delegate = self
         view.addSubview(editView!)
         editView!.headingLabel?.text = "Edit entity"
         editView!.translatesAutoresizingMaskIntoConstraints = false
@@ -116,4 +117,10 @@ class EditEntityViewController: UIViewController {
         self.router?.returnToSource(source: self.sourceVC!)
     }
     
+    
+    // MARK: - EditEntityViewDelegate methods
+    
+    func enableSaveButton(enable: Bool) {
+        navigationItem.rightBarButtonItem?.isEnabled = enable
+    }
 }

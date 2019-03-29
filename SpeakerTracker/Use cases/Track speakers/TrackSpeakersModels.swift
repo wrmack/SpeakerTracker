@@ -20,8 +20,7 @@ enum TrackSpeakers {
         struct Response {
             var remainingList: [Int : [Member]]?
             var waitingList: [Int : [Member]]?
-            var speakingList: [Int : [Member]]?
-            var currentDebate: Debate?
+            var speakingList: [Int : [SpeakingListMember]]?
         }
         struct ViewModel {
             var remainingNames: [Int : [MemberNameWithTime]]?
@@ -43,14 +42,34 @@ struct MembersTable {
     }
 }
 
+struct SpeakingListMember {
+    var member: Member?
+    var elapsedMinutes: Int?
+    var elapsedSeconds: Int?
+    var speakingStatus = SpeakingStatus.notYetSpoken
+    init(member: Member?, elapsedMinutes: Int?, elapsedSeconds: Int? ) {
+        self.member = member
+        self.elapsedMinutes = elapsedMinutes
+        self.elapsedSeconds = elapsedSeconds
+    }
+}
+
 // Contains the member's name and recorded speaking time (if any). Speaking time will be nil, except for members in the speaking table.
+// Used by Presenter when creating view model and by view controller for storing table data for tableview delegate methods.
 struct MemberNameWithTime {
     var name: String?
     var time: String?
+    var speakingStatus = SpeakingStatus.notYetSpoken
     init(name: String?, time: String?) {
         self.name = name
         self.time = time
     }
+}
+
+enum SpeakingStatus {
+    case notYetSpoken
+    case isSpeaking
+    case hasSpoken
 }
 
 // When a speaker is being timed, holds section, row and button reference.

@@ -14,7 +14,7 @@ import UIKit
 
 
 
-class EditMemberViewController: UIViewController {
+class EditMemberViewController: UIViewController, EditMemberViewDelegate  {
     var interactor: EditMemberBusinessLogic?
     var router: (NSObjectProtocol & EditMemberRoutingLogic & EditMemberDataPassing)?
     var sourceVC: DisplayMembersViewController?
@@ -67,6 +67,7 @@ class EditMemberViewController: UIViewController {
         editView = EditMemberView(frame: CGRect.zero)
         editView!.addAnotherButton!.isHidden = true
         editView!.infoLabel!.isHidden = true
+        editView!.delegate = self
         view.addSubview(editView!)
         editView!.headingLabel?.text = "Edit member"
         editView!.translatesAutoresizingMaskIntoConstraints = false
@@ -95,7 +96,7 @@ class EditMemberViewController: UIViewController {
     }
     
     
-    // MARK: - EditMemberViewDelegate methods
+    //MARK: - Button actions
     
     @objc private func cancelButtonTapped() {
         self.router?.returnToSource(source: self.sourceVC!)
@@ -121,6 +122,17 @@ class EditMemberViewController: UIViewController {
     @objc private func deleteButtonTapped() {
         interactor!.addMemberToBeDeletedToDataStore(member: editView!.member!)
         self.router!.navigateToRemoveMember()
+    }
+    
+    
+    // MARK: - EditMemberViewDelegate methods
+    
+    func addAnother(member: Member?) {
+
+    }
+    
+    func enableSaveButton(enable: Bool) {
+        navigationItem.rightBarButtonItem?.isEnabled = enable
     }
 
 }

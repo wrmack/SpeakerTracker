@@ -19,7 +19,7 @@ protocol SelectMembersPresentationLogic {
 class SelectMembersPresenter: SelectMembersPresentationLogic {
     weak var viewController: SelectMembersDisplayLogic?
 
-    // MARK: Do something
+    // MARK: - VIP
 
     func presentMembers(response: SelectMembers.Members.Response) {
         var memberNames = [String]()

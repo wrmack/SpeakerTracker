@@ -101,29 +101,20 @@ extension TrackSpeakersViewController: UITableViewDataSource, UITableViewDelegat
         case 3:
             var name: String?
             var time: String?
+            var status = SpeakingStatus.notYetSpoken
             var nameDictionary = tableCollection[2].nameDictionary
             if nameDictionary!.count > 0  {
                 let memberNameWithTimeArray = nameDictionary![indexPath.section]
                 let memberNameWithTime = memberNameWithTimeArray![indexPath.row]
                 name = memberNameWithTime.name
                 time = memberNameWithTime.time
+                status = memberNameWithTime.speakingStatus
             }
             tvCell?.memberText!.text = name
-            var spkrIndexPath: IndexPath?
-            // A speaker is being recorded
-            if speakerRecording != nil { 
-                spkrIndexPath = IndexPath(row: (speakerRecording?.row)!, section: (speakerRecording?.section)!)
-            }
-            
-            // If this cell is recording
-            if spkrIndexPath != nil && spkrIndexPath == indexPath {
-                tvCell!.rightButton!.titleLabel!.font = UIFont.systemFont(ofSize:14)
-                tvCell!.rightButton!.setTitleColor(UIColor.red, for: .normal)
-                tvCell?.leftButton?.isEnabled = false
-                return tvCell!
-            }
-            else {
-                // Start with all enabled and all with play button
+			
+            switch status {
+               
+            case .notYetSpoken:
                 tvCell?.leftButton?.isEnabled = true
                 tvCell?.rightButton?.isEnabled = true
                 tvCell?.isUserInteractionEnabled = true
@@ -131,27 +122,25 @@ extension TrackSpeakersViewController: UITableViewDataSource, UITableViewDelegat
                 tvCell!.rightButton?.setTitleColor(UIColor(red: 0, green: 0.48, blue: 1.0, alpha: 1.0), for: .normal)
                 tvCell!.rightButton?.setTitle("▶︎", for: .normal)
                 tvCell!.rightButton!.titleLabel!.font = UIFont.systemFont(ofSize: 22)
-            }
-            // Someone is speaking but not this row, so disable left and right buttons of this row
-            if speakerRecording != nil && spkrIndexPath != indexPath {
+            
+            case .isSpeaking:
+                tvCell!.rightButton!.titleLabel!.font = UIFont.systemFont(ofSize:14)
+                tvCell!.rightButton!.setTitleColor(UIColor.red, for: .normal)
                 tvCell?.leftButton?.isEnabled = false
-                tvCell?.rightButton?.isEnabled = false
-            }
-            // Disable buttons in all rows of sections prior to last section
-            if indexPath.section < (speakingTableNumberOfSections - 1) {
+            
+            case .hasSpoken:
                 tvCell?.leftButton?.isEnabled = false
                 tvCell?.rightButton?.isEnabled = false
                 tvCell?.isUserInteractionEnabled = false
+                if time != nil {
+                    tvCell?.rightButton?.setTitle(time, for: .normal)
+                    tvCell?.rightButton?.setTitle(time, for: .disabled)
+                    tvCell!.rightButton!.titleLabel!.font = UIFont.systemFont(ofSize:14)
+                    tvCell!.rightButton!.setTitleColor(UIColor(red: 0.5, green: 0.5, blue: 1.0, alpha: 1.0), for: .disabled)
+                    tvCell?.rightButton?.isEnabled = false
+                }
             }
-            // If there is a time associated with the member for the row
-            if time != nil {
-                tvCell?.rightButton?.setTitle(time, for: .normal)
-                tvCell?.rightButton?.setTitle(time, for: .disabled)
-                tvCell!.rightButton!.titleLabel!.font = UIFont.systemFont(ofSize:14)
-                tvCell!.rightButton!.setTitleColor(UIColor(red: 0, green: 0.0, blue: 1.0, alpha: 1.0), for: .disabled)
-                tvCell?.rightButton?.isEnabled = false
-                
-            }
+ 
             if self.view.frame.size.width > 1300 {tvCell?.memberText?.font = UIFont(name: "Arial", size: 28)} // if iPad Pro 12"
             
         default:
@@ -295,26 +284,30 @@ extension TrackSpeakersViewController: UITableViewDataSource, UITableViewDelegat
         let cell = speakingTable.cellForRow(at: pressIndexPath)
         let menuController = UIMenuController.shared
         menuController.setTargetRect((cell?.contentView.frame)!, in: (cell?.contentView)!)
-        var item: UIMenuItem?
         if pressIndexPath.section == 0 && pressIndexPath.row == 0 {
             longPressTablePosition = TablePosition(tableIndex: 2, tableSection: 0, tableRow: 0)
             menuController.arrowDirection = .up
-            item = UIMenuItem(title: "Exercises right of reply", action: #selector(exerciseRightOfReply))
-            menuController.menuItems = [item!]
+            let item = UIMenuItem(title: "Exercises right of reply", action: #selector(exerciseRightOfReply))
+            menuController.menuItems = [item]
             menuController.setMenuVisible(true, animated: true)
         }
         let nameDictionary = tableCollection[2].nameDictionary
         if debateMode == .mainMotion {
+            var items = [UIMenuItem]()
             if pressIndexPath.row == nameDictionary![pressIndexPath.section]!.count - 1 {
-                item = UIMenuItem(title: "Moves amendment", action: #selector(moveAmendment))
-                menuController.menuItems = [item!]
-                menuController.setMenuVisible(true, animated: true)
+                let item1 = UIMenuItem(title: "Moves amendment", action: #selector(moveAmendment))
+                items.append(item1)
             }
+            longPressTablePosition = TablePosition(tableIndex: 2, tableSection: pressIndexPath.section, tableRow: pressIndexPath.row)
+            let item2 = UIMenuItem(title: "Speak again", action: #selector(speakAgain))
+            items.append(item2)
+            menuController.menuItems = items
+            menuController.setMenuVisible(true, animated: true)
         }
         if debateMode == .amendment {
             if pressIndexPath.row == nameDictionary![pressIndexPath.section]!.count - 1 {
-                item = UIMenuItem(title: "Final speaker for amendment", action: #selector(closeAmendment))
-                menuController.menuItems = [item!]
+                let item = UIMenuItem(title: "Final speaker for amendment", action: #selector(closeAmendment))
+                menuController.menuItems = [item]
                 menuController.setMenuVisible(true, animated: true)
             }
         }
@@ -331,6 +324,10 @@ extension TrackSpeakersViewController: UITableViewDataSource, UITableViewDelegat
     
     @objc private func closeAmendment() {
         endAmendment()
+    }
+    
+    @objc private func speakAgain() {
+        copyNameToEnd(from: longPressTablePosition!)
     }
     
     

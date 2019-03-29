@@ -26,6 +26,12 @@ class TrackSpeakersTests: XCTestCase {
         XCTAssert(controllerUnderTest!.tableCollection.count > 0)
         XCTAssert(controllerUnderTest!.speakingTableNumberOfSections > 0)
     }
+    
+    // VIP
+    func testFetchNamesLoadsTables() {
+        controllerUnderTest!.fetchNames() 
+        print(controllerUnderTest!.tableCollection)
+    }
 
     func testPerformanceExample() {
         // This is an example of a performance test case.

@@ -51,19 +51,13 @@ class TrackSpeakersPresenter: TrackSpeakersPresentationLogic {
         
         for item in response.speakingList! {
             let section = item.key
-            for member in item.value {
-                let memberName = member.firstName! + " " + member.lastName!
-                var memberTime: String?
-                if let spkrEvts = response.currentDebate?.debateSections![section].speakerEvents {
-                    for event in spkrEvts {
-                        if event.member == member {
-                            let secondsString = String(format: "%02d", event.elapsedSeconds!)
-                            let minutesString = String(format: "%02d", event.elapsedMinutes!)
-                            memberTime = "\(minutesString):\(secondsString)"
-                        }
-                    }
-                }
-                let memberNameWithTime = MemberNameWithTime(name: memberName, time: memberTime)
+            for spkListMbr in item.value {
+                let memberName = spkListMbr.member!.firstName! + " " + spkListMbr.member!.lastName!
+                let secondsString = String(format: "%02d", spkListMbr.elapsedSeconds!)
+                let minutesString = String(format: "%02d", spkListMbr.elapsedMinutes!)
+                let memberTime = "\(minutesString):\(secondsString)"
+                var memberNameWithTime = MemberNameWithTime(name: memberName, time: memberTime)
+                memberNameWithTime.speakingStatus = spkListMbr.speakingStatus
                 if speakingNames[section] == nil {
                     speakingNames[section] = [MemberNameWithTime]()
                 }

@@ -62,12 +62,13 @@ class TrackSpeakersInteractor: TrackSpeakersBusinessLogic, TrackSpeakersDataStor
     internal var presenter: TrackSpeakersPresentationLogic?
     internal var currentEntity: Entity?
     internal var currentMeetingGroup: MeetingGroup?
-    private var currentSpeaker: Member?
+    private var currentSpeaker: SpeakingListMember?
+    private var currentIndexPath: IndexPath?
     internal var currentEvent: Event?
     internal var currentDebate: Debate?
     private var remainingList = [Int : [Member]]()
     private var waitingList = [Int : [Member]]()
-    private var speakingList = [Int : [Member]]()
+    private var speakingList = [Int : [SpeakingListMember]]()
     private var mainMotionRemainingList = [Int : [Member]]()
     private var mainMotionWaitingList = [Int : [Member]]()
     private var speakingListNumberOfDebates = 1
@@ -78,7 +79,7 @@ class TrackSpeakersInteractor: TrackSpeakersBusinessLogic, TrackSpeakersDataStor
     // MARK: - VIP
     
     internal func fetchNames() {
-        let response = TrackSpeakers.Speakers.Response(remainingList: remainingList, waitingList: waitingList, speakingList: speakingList,   currentDebate: currentDebate)
+        let response = TrackSpeakers.Speakers.Response(remainingList: remainingList, waitingList: waitingList, speakingList: speakingList)
         presenter?.presentNames(response: response)
     }
     
@@ -97,7 +98,7 @@ class TrackSpeakersInteractor: TrackSpeakersBusinessLogic, TrackSpeakersDataStor
         }
         remainingList[0] = currentMeetingGroup!.members!
         waitingList[0] = [Member]()
-        speakingList[0] = [Member]()
+        speakingList[0] = [SpeakingListMember]()
         if speakingListNumberOfSections > 0 {
             for section in 1..<speakingListNumberOfSections {
                 speakingList[section] = nil
@@ -123,7 +124,7 @@ class TrackSpeakersInteractor: TrackSpeakersBusinessLogic, TrackSpeakersDataStor
         }
         remainingList[0] = currentMeetingGroup!.members!
         waitingList[0] = [Member]()
-        speakingList[0] = [Member]()
+        speakingList[0] = [SpeakingListMember]()
         UserDefaultsManager.saveCurrentEntity(entity: self.currentEntity!)
         UserDefaultsManager.saveCurrentMeetingGroup(meetingGroup: self.currentMeetingGroup!)
     }
@@ -153,7 +154,8 @@ class TrackSpeakersInteractor: TrackSpeakersBusinessLogic, TrackSpeakersDataStor
         case 1:
             waitingList[0]!.insert(member!, at: (speakerMvt?.sourceTablePosition?.tableRow)!)
         case 2:
-            speakingList[(speakerMvt?.sourceTablePosition?.tableSection)!]!.insert(member!, at: (speakerMvt?.sourceTablePosition?.tableRow)!)
+            let speakingListMbr = SpeakingListMember(member: member, elapsedMinutes: 0, elapsedSeconds: 0)
+            speakingList[(speakerMvt?.sourceTablePosition?.tableSection)!]!.insert(speakingListMbr, at: (speakerMvt?.sourceTablePosition?.tableRow)!)
         default:
             break
         }
@@ -215,13 +217,18 @@ class TrackSpeakersInteractor: TrackSpeakersBusinessLogic, TrackSpeakersDataStor
     }
     
     internal func setCurrentSpeaker(section:Int, row: Int) {
+        speakingList[section]![row].speakingStatus = .isSpeaking
         currentSpeaker = speakingList[section]![row]
+        currentIndexPath = IndexPath(row: row, section: section)
     }
     
     internal func addCurrentSpeakerToDebateSection(startTime: Date, speakingTime: Int) {
         let minutes = speakingTime / 60
         let seconds = speakingTime - (minutes * 60)
-        let speakerEvent = SpeakerEvent(member: currentSpeaker, elapsedMinutes: minutes, elapsedSeconds: seconds, startTime: startTime)
+        speakingList[currentIndexPath!.section]![currentIndexPath!.row].speakingStatus = .hasSpoken
+        speakingList[currentIndexPath!.section]![currentIndexPath!.row].elapsedMinutes = minutes
+        speakingList[currentIndexPath!.section]![currentIndexPath!.row].elapsedSeconds = seconds
+        let speakerEvent = SpeakerEvent(member: currentSpeaker?.member, elapsedMinutes: minutes, elapsedSeconds: seconds, startTime: startTime)
         currentDebate?.debateSections![speakingListNumberOfSections - 1].speakerEvents?.append(speakerEvent)
     }
     
@@ -283,13 +290,13 @@ class TrackSpeakersInteractor: TrackSpeakersBusinessLogic, TrackSpeakersDataStor
         mainMotionRemainingList = remainingList
         mainMotionWaitingList = waitingList
         var speakers = speakingList[speakingListNumberOfSections - 1]
-        let finalSpeaker = speakers![speakers!.count - 1]
+        let finalSpeaker = speakers![speakers!.count - 1].member
         let allMembers = currentMeetingGroup?.members
         let membersNotIncluding = allMembers!.filter {$0 != finalSpeaker }
         remainingList[0] = membersNotIncluding
         waitingList[0] = [Member]()
         speakingListNumberOfSections += 1
-        speakingList[speakingListNumberOfSections - 1] = [Member]()
+        speakingList[speakingListNumberOfSections - 1] = [SpeakingListMember]()
         let debateSection = DebateSection(sectionNumber: speakingListNumberOfSections - 1, sectionName: "Amendment debate", speakerEvents: [SpeakerEvent]())
         currentDebate?.debateSections?.append(debateSection)
     }
@@ -298,7 +305,7 @@ class TrackSpeakersInteractor: TrackSpeakersBusinessLogic, TrackSpeakersDataStor
         remainingList = mainMotionRemainingList
         waitingList = mainMotionWaitingList
         speakingListNumberOfSections += 1
-        speakingList[speakingListNumberOfSections - 1] = [Member]()
+        speakingList[speakingListNumberOfSections - 1] = [SpeakingListMember]()
         let debateSection = DebateSection(sectionNumber: speakingListNumberOfSections - 1, sectionName: "Main debate", speakerEvents: [SpeakerEvent]())
         currentDebate?.debateSections?.append(debateSection)
     }
@@ -319,7 +326,8 @@ class TrackSpeakersInteractor: TrackSpeakersBusinessLogic, TrackSpeakersDataStor
             undoStack.speakerMovements.append(speakerMvt)
         case 1:
             let member = waitingList[0]!.remove(at: tablePosition.tableRow!)
-            speakingList[speakingListNumberOfSections - 1]!.append(member)
+            let spkgListMbr = SpeakingListMember(member: member, elapsedMinutes: 0, elapsedSeconds: 0)
+            speakingList[speakingListNumberOfSections - 1]!.append(spkgListMbr)
             var speakerMvt = SpeakerMovement()
             speakerMvt.sourceTablePosition = tablePosition
             speakerMvt.destinationTablePosition = TablePosition(tableIndex: 2, tableSection: speakingListNumberOfSections - 1, tableRow: speakingList[speakingListNumberOfSections - 1]!.count - 1)
@@ -356,13 +364,13 @@ class TrackSpeakersInteractor: TrackSpeakersBusinessLogic, TrackSpeakersDataStor
             speakerMvt.member = member
             undoStack.speakerMovements.append(speakerMvt)
         case 2:
-            let member = speakingList[speakingListNumberOfSections - 1]!.remove(at: tablePosition.tableRow!)
-            waitingList[0]!.append(member)
+            let spkgListMbr = speakingList[speakingListNumberOfSections - 1]!.remove(at: tablePosition.tableRow!)
+            waitingList[0]!.append(spkgListMbr.member!)
             var speakerMvt = SpeakerMovement()
             speakerMvt.sourceTablePosition = tablePosition
             speakerMvt.destinationTablePosition = TablePosition(tableIndex: 1, tableSection: speakingListNumberOfSections - 1,tableRow: waitingList[0]!.count - 1)
-            speakerMvt.member = member
-            currentDebate!.debateSections![speakingListNumberOfSections - 1].speakerEvents?.removeAll(where: {$0.member == member })
+            speakerMvt.member = spkgListMbr.member!
+            currentDebate!.debateSections![speakingListNumberOfSections - 1].speakerEvents?.removeAll(where: {$0.member == spkgListMbr.member! })
             undoStack.speakerMovements.append(speakerMvt)
         default:
             print("TrackSpeakersInteractor: moveNameRight: case not covered")

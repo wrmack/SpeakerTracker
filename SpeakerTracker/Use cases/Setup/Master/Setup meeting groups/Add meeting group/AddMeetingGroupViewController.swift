@@ -10,6 +10,18 @@
 //  see http://clean-swift.com
 //
 
+/*
+ Module abstract
+ 
+ Use case:		User wants to add a meeting group to the selected entity.
+ Callers:  	DisplayMeetingGroup module when user presses '+' button.
+ Calls:    	SelectMembers module when user presses the disclosure arrow to select members.
+ Features:	User can enter the name of the meeting group, select its members, save the new meeting group or cancel.
+ VIP:			Updates models for refreshing the display after members are selected.
+				Interactor updates entity models (in memory, current entity in user defaults, persistent entity document) after user presses Save.
+				Router passes updated entity model to caller's datastore when flow returns to caller.
+ */
+
 import UIKit
 
 protocol AddMeetingGroupDisplayLogic: class {
@@ -22,15 +34,15 @@ class AddMeetingGroupViewController: UIViewController, AddMeetingGroupDisplayLog
     
     var interactor: AddMeetingGroupBusinessLogic?
     var router: (NSObjectProtocol & AddMeetingGroupRoutingLogic & AddMeetingGroupDataPassing)?
-    var sourceVC: DisplayMeetingGroupsViewController?
+    var callerVC: DisplayMeetingGroupsViewController?
     var editView: EditMeetingGroupView?
 
     
     // MARK: Object lifecycle
     
-    convenience init(sourceVC: DisplayMeetingGroupsViewController) {
+    convenience init(callerVC: DisplayMeetingGroupsViewController) {
         self.init(nibName:nil, bundle: nil)
-        self.sourceVC = sourceVC
+        self.callerVC = callerVC
     }
 
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
@@ -88,10 +100,11 @@ class AddMeetingGroupViewController: UIViewController, AddMeetingGroupDisplayLog
         
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancelButtonTapped))
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(saveButtonTapped))
+        navigationItem.rightBarButtonItem?.isEnabled = false
      }
  
     
-    // MARK: - Methods
+    // MARK: - VIP
     
     internal func refreshAfterSelectingMembers() {
         let request = AddMeetingGroup.MeetingGroup.Request()
@@ -112,13 +125,13 @@ class AddMeetingGroupViewController: UIViewController, AddMeetingGroupDisplayLog
         let addedMeetingGroup = MeetingGroup(name: editView!.nameBox?.text, memberIDs: nil, fileName: nil, id: id)
 
         interactor?.saveMeetingGroupToEntity(meetingGroup: addedMeetingGroup, callback: {
-            self.router?.returnToSource(source: self.sourceVC!)
+            self.router?.returnToCaller(caller: self.callerVC!)
         })
     }
     
     
     @objc private func cancelButtonTapped() {
-        self.router?.returnToSource(source: self.sourceVC!)
+        self.router?.returnToCaller(caller: self.callerVC!)
     }
     
     
@@ -126,6 +139,10 @@ class AddMeetingGroupViewController: UIViewController, AddMeetingGroupDisplayLog
     
     func membersDisclosureButtonTapped() {
         self.router?.routeToSelectMembers()
+    }
+    
+    func enableSaveButton(enable: Bool) {
+        navigationItem.rightBarButtonItem?.isEnabled = enable
     }
 
 }

@@ -143,4 +143,8 @@ class EditMeetingGroupViewController: UIViewController, EditMeetingGroupDisplayL
     func membersDisclosureButtonTapped() {
         self.router?.routeToSelectMembers()
     }
+    
+    func enableSaveButton(enable: Bool) {
+        navigationItem.rightBarButtonItem?.isEnabled = enable
+    }
 }

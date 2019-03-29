@@ -9,8 +9,12 @@
 import UIKit
 
 
+protocol EditEntityViewDelegate: class {
+    func enableSaveButton(enable: Bool)
+}
 
-class EditEntityView: WMEditView {
+
+class EditEntityView: WMEditView, UITextFieldDelegate {
 
     var deleteButton: UIBarButtonItem?
     var entityNameBox: UITextField?
@@ -23,6 +27,7 @@ class EditEntityView: WMEditView {
     This app allows you to create more than one entity, but you may need only one.
     
     """
+    weak var delegate: EditEntityViewDelegate?
     
     
     override init(frame: CGRect) {
@@ -52,6 +57,7 @@ class EditEntityView: WMEditView {
         entityNameBox = WMTextField(frame: CGRect.zero)
         entityNameBox?.backgroundColor = UIColor.white
         entityNameBox?.placeholder = "eg Some Council, or Some Board"
+        entityNameBox!.delegate = self
         containerView!.addSubview(entityNameBox!)
         entityNameBox?.translatesAutoresizingMaskIntoConstraints = false
         entityNameBox?.leadingAnchor.constraint(equalTo: containerView!.leadingAnchor, constant: LEADINGSPACE).isActive = true
@@ -82,4 +88,21 @@ class EditEntityView: WMEditView {
          }
     }
     
+    
+    // MARK: - UITextFielDelegate methods
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        var enable = false
+        
+        // All existing text will be removed
+        if string.count == 0 && range.length == textField.text!.count {
+            enable = false
+        }
+        else if textField.text!.count + string.count > 0 {
+            enable = true
+        }
+        delegate?.enableSaveButton(enable: enable)
+
+        return true
+    }
 }

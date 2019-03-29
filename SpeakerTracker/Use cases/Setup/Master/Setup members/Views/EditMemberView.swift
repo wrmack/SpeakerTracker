@@ -10,6 +10,7 @@ import UIKit
 
 protocol EditMemberViewDelegate: class {
     func addAnother(member: Member?)
+    func enableSaveButton(enable: Bool)
 }
 
 
@@ -161,6 +162,24 @@ class EditMemberView: WMEditView, UITextFieldDelegate {
         return false
     }
     
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        if textField != lastNameBox {return true}
+        
+        var enable = false
+        
+        // All existing text will be removed
+        if string.count == 0 && range.length == textField.text!.count {
+            enable = false
+        }
+        else if textField.text!.count + string.count > 0 {
+            enable = true
+        }
+        delegate?.enableSaveButton(enable: enable)
+        
+        return true
+    }
+    
+    
     // MARK: - Helpers
     
     private func addAnotherMember() {
@@ -170,6 +189,7 @@ class EditMemberView: WMEditView, UITextFieldDelegate {
         firstNameBox!.text = ""
         lastNameBox!.text = ""
         titleBox?.becomeFirstResponder()
+        delegate?.enableSaveButton(enable: false)
         delegate?.addAnother(member: member)
     }
 }

@@ -10,10 +10,11 @@ import UIKit
 
 protocol EditMeetingGroupViewDelegate: class {
     func membersDisclosureButtonTapped()
+    func enableSaveButton(enable: Bool)
 }
 
 
-class EditMeetingGroupView: WMEditView {
+class EditMeetingGroupView: WMEditView, UITextFieldDelegate {
 
     var meetingGroup: MeetingGroup?
     var nameBox: UITextField?
@@ -54,6 +55,7 @@ class EditMeetingGroupView: WMEditView {
         nameBox = WMTextField(frame: CGRect.zero)
         nameBox?.backgroundColor = UIColor.white
         nameBox?.placeholder = "eg Some Committee"
+        nameBox!.delegate = self
         containerView!.addSubview(nameBox!)
         nameBox?.translatesAutoresizingMaskIntoConstraints = false
         nameBox?.leadingAnchor.constraint(equalTo: containerView!.leadingAnchor, constant: LEADINGSPACE).isActive = true
@@ -136,10 +138,26 @@ class EditMeetingGroupView: WMEditView {
     
     
     
-    // MARK: Button actions
+    // MARK: - Button actions
  
     @objc private func membersSelectButtonTapped(_: UIButton) {
         delegate?.membersDisclosureButtonTapped()
+    }
+    
+    // MARK: - UITextFielDelegate methods
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        if textField == nameBox {
+            var enable = false
+            // All existing text will be removed
+            if string.count == 0 && range.length == nameBox?.text!.count {
+                enable = false
+            }
+            else if (nameBox?.text!.count)! + string.count > 0 {
+             	enable = true
+            }
+            delegate?.enableSaveButton(enable: enable)
+        }
+        return true
     }
 
 }

@@ -54,7 +54,7 @@ class DisplayMeetingGroupsRouter: NSObject, DisplayMeetingGroupsRoutingLogic, Di
     
     
     func routeToAddMeetingGroup() {
-        addMeetingGroupVC = AddMeetingGroupViewController(sourceVC: viewController!)
+        addMeetingGroupVC = AddMeetingGroupViewController(callerVC: viewController!)
         let splitVC = viewController!.splitViewController
         displayDetailNavC = splitVC?.viewControllers[1] as? UINavigationController
         var destinationDS = addMeetingGroupVC?.router?.dataStore
