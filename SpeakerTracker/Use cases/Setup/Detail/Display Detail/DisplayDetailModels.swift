@@ -20,10 +20,27 @@ enum DisplayDetail {
         struct Request {
         }
         struct Response {
-            var selectedItem: AnyObject?
+            var selectedItem: SelectedItem?
         }
         struct ViewModel {
             var detailFields: [(String, String)]?
         }
     }
+
+}
+
+
+struct SelectedItem {
+    var type: SelectedItemType?
+    var entity: Entity?
+    var member: Member?
+    var meetingGroup: MeetingGroup?
+    var event: Event?
+}
+
+enum SelectedItemType {
+    case entity
+    case member
+    case meetingGroup
+    case event
 }

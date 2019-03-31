@@ -63,9 +63,13 @@ class ShowReportPresenter: ShowReportPresentationLogic {
         // Members
 
         attString.append(NSAttributedString(string:  "Members:\n", attributes: boldAtts))
-        
+        var meetingGroupMembers = [Member]()
+        for memberID in event!.meetingGroup!.memberIDs! {
+            let mmbr = event!.entity!.members!.first(where: {$0.id == memberID })
+            meetingGroupMembers.append(mmbr!)
+        }
         var membersStg = String()
-        for member in (event?.meetingGroup?.members)! {
+        for member in meetingGroupMembers {
             if membersStg.count > 0 {
                 membersStg.append(", ")
             }

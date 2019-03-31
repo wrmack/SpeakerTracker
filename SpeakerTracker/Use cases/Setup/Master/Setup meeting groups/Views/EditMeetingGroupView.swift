@@ -15,7 +15,7 @@ protocol EditMeetingGroupViewDelegate: class {
 
 
 class EditMeetingGroupView: WMEditView, UITextFieldDelegate {
-
+    var entity: Entity?
     var meetingGroup: MeetingGroup?
     var nameBox: UITextField?
     var membersDetailLabel: UILabel?
@@ -117,13 +117,27 @@ class EditMeetingGroupView: WMEditView, UITextFieldDelegate {
     }
     
     
-    func populateFields(meetingGroup: MeetingGroup?) {
+    func populateFields(meetingGroup: MeetingGroup?, entity: Entity?) {
+        self.entity = entity
         self.meetingGroup = meetingGroup
         if meetingGroup != nil {
             nameBox!.text = meetingGroup?.name ?? ""
-            var memberNames = String()
-            if let members = meetingGroup?.members {
-                for member in members {
+            if meetingGroup?.memberIDs != nil {
+                var meetingGroupMembers = [Member]()
+                if (meetingGroup!.memberIDs!.count) > 0 {
+                    for memberID in meetingGroup!.memberIDs! {
+                        let mmbr = entity!.members?.first(where: {$0.id == memberID})
+                        meetingGroupMembers.append(mmbr!)
+                    }
+                }
+                meetingGroupMembers.sort(by: {
+                    if $0.lastName! < $1.lastName! {
+                        return true
+                    }
+                    return false
+                })
+                var memberNames = String()
+                for member in meetingGroupMembers {
                     if memberNames.count > 0 {
                         memberNames.append(", ")
                     }

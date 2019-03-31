@@ -182,8 +182,8 @@ class DisplayEntitiesViewController: UITableViewController, DisplayEntitiesDispl
     
     // MARK: - DisplayDetailViewControllerEditEntityDelegate methods
     
-    func didPressEditEntity(selectedItem: AnyObject?) {
-        if selectedItem is Entity {
+    func didPressEditEntity(selectedItem: SelectedItem?) {
+        if selectedItem!.type == .entity {
             router!.routeToEditEntity()
         }
     }

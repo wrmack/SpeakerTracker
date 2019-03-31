@@ -13,11 +13,10 @@ import Foundation
  Initiated using UUIDs for members.  Full 'Members' are computed values.
  */
 struct MeetingGroup: Codable {
-    let name: String?
+    var name: String?
     var memberIDs: [UUID]?
     var fileName: String?
     var id: UUID?
-    var members: [Member]?
     
     init(name: String?, memberIDs: [UUID]?, fileName: String?, id: UUID? ) {
         self.name = name

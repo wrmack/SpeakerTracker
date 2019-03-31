@@ -117,7 +117,8 @@ class DisplayMeetingGroupsRouter: NSObject, DisplayMeetingGroupsRoutingLogic, Di
     }
     
     func passDataToDisplayDetail(source: DisplayMeetingGroupsDataStore, destination: inout DisplayDetailDataStore) {
-        destination.selectedItem = source.meetingGroup as AnyObject
+        destination.selectedItem.meetingGroup = source.meetingGroup
+        destination.selectedItem.type = .meetingGroup
         destination.currentEntity = source.entity
     }
     

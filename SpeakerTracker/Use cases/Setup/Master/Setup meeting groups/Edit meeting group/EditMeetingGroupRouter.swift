@@ -80,6 +80,7 @@ class EditMeetingGroupRouter: NSObject, EditMeetingGroupRoutingLogic, EditMeetin
     
     func passDataToDisplayMeetingGroupsDataStore(source: EditMeetingGroupDataStore, destination: inout DisplayMeetingGroupsDataStore) {
         destination.entity = source.entity
+        destination.meetingGroup = source.meetingGroup
     }
     
     

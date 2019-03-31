@@ -50,9 +50,9 @@ class RemoveMemberInteractor: RemoveMemberBusinessLogic, RemoveMemberDataStore {
         }
         if entity?.meetingGroups != nil {
             for (i, group) in zip(entity!.meetingGroups!.indices, entity!.meetingGroups!) {
-                if group.members != nil {
-                    if let idx = group.members!.firstIndex(where:{$0.id == member!.id}) {
-                        entity!.meetingGroups![i].members?.remove(at: idx)
+                if group.memberIDs != nil {
+                    if let idx = group.memberIDs!.firstIndex(where:{$0 == member!.id}) {
+                        entity!.meetingGroups![i].memberIDs?.remove(at: idx)
                     }
                 }
             }
@@ -76,6 +76,7 @@ class RemoveMemberInteractor: RemoveMemberBusinessLogic, RemoveMemberDataStore {
                 entityDoc.entity = self.entity
                 entityDoc.updateChangeCount(.done)
                 entityDoc.close(completionHandler: { success in
+                    self.member = nil
                     print(entityDoc)
                     callback()
                 })

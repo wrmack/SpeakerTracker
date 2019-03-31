@@ -14,7 +14,7 @@ import UIKit
 
 protocol DisplayMeetingGroupsBusinessLogic {
     func fetchMeetingGroups(request: DisplayMeetingGroups.MeetingGroups.Request)
-    func getCurrentMeetingGroupIndex()->Int?
+    func getCurrentMeetingGroupIndex()->Int
     func setCurrentMeetingGroup(index: Int)
     func refreshMeetingGroups()
      func checkEntitySelected() ->Bool?
@@ -52,9 +52,9 @@ class DisplayMeetingGroupsInteractor: DisplayMeetingGroupsBusinessLogic, Display
     }
     
     
-    func getCurrentMeetingGroupIndex()->Int? {
+    func getCurrentMeetingGroupIndex()->Int {
         if meetingGroup != nil {
-            return meetingGroups!.firstIndex(of: meetingGroup!)
+            return meetingGroups!.firstIndex(of: meetingGroup!)!
         }
         return 0
     }

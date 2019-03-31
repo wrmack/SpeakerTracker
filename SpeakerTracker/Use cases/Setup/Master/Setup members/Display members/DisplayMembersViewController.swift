@@ -267,8 +267,8 @@ class DisplayMembersViewController: UITableViewController, DisplayMembersDisplay
 
     // MARK: - DisplayDetailViewControllerEditMemberDelegate methods
     
-    func didPressEditMember(selectedItem: AnyObject?) {
-        if selectedItem is Member {
+    func didPressEditMember(selectedItem: SelectedItem?) {
+        if selectedItem!.type == .member {
             router!.routeToEditMember()
         }
     }

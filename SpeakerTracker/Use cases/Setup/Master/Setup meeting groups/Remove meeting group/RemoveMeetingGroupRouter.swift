@@ -38,5 +38,6 @@ class RemoveMeetingGroupRouter: NSObject, RemoveMeetingGroupRoutingLogic, Remove
     
     func passDataToEditMeetingGroupDataStore(source: RemoveMeetingGroupDataStore, destination: inout EditMeetingGroupDataStore) {
         destination.entity = source.entity
+        destination.meetingGroup = source.meetingGroup
     }
 }

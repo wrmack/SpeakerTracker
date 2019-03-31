@@ -165,7 +165,7 @@ class DisplayEventsViewController: UITableViewController, DisplayEventsDisplayLo
         if eventNames.count > 0 {
             tableView.selectRow(at: IndexPath(row: selectedEventIndex!, section: 0), animated: false, scrollPosition: .top)
         }
-        interactor?.setCurrentEvent(index:selectedEventIndex!)
+        interactor?.setCurrentEvent(index:selectedEventIndex) 
         router!.updateDetailVC()
     }
     
@@ -279,8 +279,8 @@ class DisplayEventsViewController: UITableViewController, DisplayEventsDisplayLo
     
     //     MARK: - DisplayDetailViewControllerEditEventDelegate
     
-    func didPressEditEvent(selectedItem: AnyObject?) {
-        if selectedItem is Event {
+    func didPressEditEvent(selectedItem: SelectedItem?) {
+        if selectedItem!.type == .event {
             router!.routeToEditEvent()
         }
     }

@@ -82,7 +82,7 @@ class EditMeetingGroupViewController: UIViewController, EditMeetingGroupDisplayL
         let space = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.fixedSpace, target: nil, action: nil)
         space.width = 100
         
-        let trashItem = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(saveButtonTapped))
+        let trashItem = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(deleteButtonTapped))
         trashItem.tintColor = UIColor.red
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancelButtonTapped))
         navigationItem.rightBarButtonItems = [ UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(saveButtonTapped)), space,trashItem]
@@ -97,7 +97,8 @@ class EditMeetingGroupViewController: UIViewController, EditMeetingGroupDisplayL
     
     func populateEditView() {
         let meetingGroup = interactor?.getMeetingGroup()
-        editView?.populateFields(meetingGroup: meetingGroup)
+        let entity = interactor?.getEntity() 
+        editView?.populateFields(meetingGroup: meetingGroup, entity: entity)
     }
     
 
@@ -133,9 +134,10 @@ class EditMeetingGroupViewController: UIViewController, EditMeetingGroupDisplayL
     }
     
     
-//    func deleteButtonTapped(meetingGroup: MeetingGroup) {
-//        print("This delegate method is implemented when editing a member")
-//    }
+    @objc func deleteButtonTapped() {
+        interactor?.addMeetingGroupToBeDeletedToDataStore(meetingGroup: editView!.meetingGroup!)
+        router?.navigateToRemoveMeetingGroup()
+    }
     
     
     // MARK: - EditMeetingGroupViewDelegate methods

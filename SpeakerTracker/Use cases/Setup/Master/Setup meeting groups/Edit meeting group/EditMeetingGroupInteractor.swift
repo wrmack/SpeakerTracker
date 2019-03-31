@@ -13,6 +13,7 @@
 import UIKit
 
 protocol EditMeetingGroupBusinessLogic {
+    func getEntity() -> Entity?
     func getMeetingGroup() -> MeetingGroup?
     func saveMeetingGroupToEntity(meetingGroup: MeetingGroup, callback: @escaping ()->())
     func addMeetingGroupToBeDeletedToDataStore(meetingGroup: MeetingGroup)
@@ -33,19 +34,37 @@ class EditMeetingGroupInteractor: EditMeetingGroupBusinessLogic, EditMeetingGrou
     var memberIDs: [UUID]?
     
     
-    // MARK: VIP
+    // MARK: - VIP
+    
+    func fetchMembers(request: EditMeetingGroup.MeetingGroup.Request) {
+        meetingGroup?.memberIDs = memberIDs
+        var meetingGroupMembers = [Member]()
+        for memberID in (meetingGroup?.memberIDs)! {
+            let mmbr = entity?.members?.first(where: {$0.id == memberID })
+            meetingGroupMembers.append(mmbr!)
+        }
+        let response = EditMeetingGroup.MeetingGroup.Response(members: meetingGroupMembers)
+        self.presenter?.presentMembers(response: response)
+    }
+    
+    
+    
+    // MARK: - Datastore
     
     /*
-     The sub-entity from the editing form is passed in as a parameter.
-     The members propoerty was updated through data-passing after members were selected so members need to be added to the sub-entity.
+     The meeting group from the editing form is passed in as a parameter.
+     The members property was updated through data-passing after members were selected so members need to be added to the meeting group.
      
      */
     func saveMeetingGroupToEntity(meetingGroup: MeetingGroup, callback: @escaping ()->()) {
         if entity!.meetingGroups == nil {
             entity!.meetingGroups = [MeetingGroup]()
         }
-        self.meetingGroup = meetingGroup
-        self.meetingGroup?.memberIDs = memberIDs
+        self.meetingGroup?.name = meetingGroup.name
+        // New memberIDs from data-passing after selecting members, otherwise meetingGroup memberIDs don't change
+        if memberIDs != nil {
+            self.meetingGroup?.memberIDs = memberIDs
+        }
         if let idx = entity!.meetingGroups?.firstIndex(where: {$0.id == meetingGroup.id}) {
             entity?.meetingGroups![idx] = self.meetingGroup!
         }
@@ -68,7 +87,7 @@ class EditMeetingGroupInteractor: EditMeetingGroupBusinessLogic, EditMeetingGrou
                 if entityDoc.entity!.meetingGroups == nil {
                     entityDoc.entity!.meetingGroups = [MeetingGroup]()
                 }
-                if let idx = self.entity!.meetingGroups?.firstIndex(where: {$0.id == meetingGroup.id}) {
+                if let idx = entityDoc.entity!.meetingGroups?.firstIndex(where: {$0.id == meetingGroup.id}) {
                     entityDoc.entity?.meetingGroups![idx] = self.meetingGroup!
                 }
                 entityDoc.updateChangeCount(.done)
@@ -81,30 +100,15 @@ class EditMeetingGroupInteractor: EditMeetingGroupBusinessLogic, EditMeetingGrou
     }
     
     
-    func fetchMembers(request: EditMeetingGroup.MeetingGroup.Request) {
-        meetingGroup?.memberIDs = memberIDs
-        meetingGroup?.members = [Member]()
-        for memberID in (meetingGroup?.memberIDs)! {
-            let mmbr = entity?.members?.first(where: {$0.id == memberID })
-            meetingGroup?.members?.append(mmbr!)
-        }
-        let response = EditMeetingGroup.MeetingGroup.Response(members: meetingGroup?.members)
-        self.presenter?.presentMembers(response: response)
-    }
-    
-    
-    // MARK: - Datastore
-    
     func getMeetingGroup() -> MeetingGroup? {
-        meetingGroup?.members = [Member]()
-        for memberID in (meetingGroup?.memberIDs)! {
-            let mmbr = entity?.members?.first(where: {$0.id == memberID })
-            meetingGroup?.members?.append(mmbr!)
-        }
         return self.meetingGroup
     }
     
-    func addMeetingGroupToBeDeletedToDataStore(meetingGroup: MeetingGroup){
+    func getEntity() -> Entity? {
+        return self.entity
+    }
+    
+    func addMeetingGroupToBeDeletedToDataStore(meetingGroup: MeetingGroup) {
         self.meetingGroup = meetingGroup
     }
 }

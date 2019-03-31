@@ -13,20 +13,20 @@
 import UIKit
 
 protocol DisplayDetailBusinessLogic {
-    func getSelectedItemFields(request: DisplayDetail.Detail.Request)
-    func getSelectedItem() -> AnyObject?
+    func fetchSelectedItemFields(request: DisplayDetail.Detail.Request)
+    func getSelectedItem() -> SelectedItem?
     func getCurrentEntity()-> Entity
     func setCurrentEntity(entity: Entity)
 }
 
 protocol DisplayDetailDataStore {
-    var selectedItem: AnyObject? {get set }
+    var selectedItem: SelectedItem {get set }
     var currentEntity: Entity? {get set}
 }
 
-class DisplayDetailInteractor: DisplayDetailBusinessLogic, DisplayDetailDataStore {
+class DisplayDetailInteractor: DisplayDetailBusinessLogic, DisplayDetailDataStore { 
     var presenter: DisplayDetailPresentationLogic?
-    var selectedItem: AnyObject?
+    var selectedItem = SelectedItem()
     var currentEntity: Entity?
 
     
@@ -34,21 +34,14 @@ class DisplayDetailInteractor: DisplayDetailBusinessLogic, DisplayDetailDataStor
     
     /*
      The selected item was set through data-passing.
+     If it is a meeting group, check has updated entity data.
      Passes the selected item to the presenter for presenting as an array of title-detail tuples.
      */
-    func getSelectedItemFields(request: DisplayDetail.Detail.Request) {
-        if selectedItem! is MeetingGroup {
-            var mtgGrp = selectedItem as! MeetingGroup
-            var members = [Member]()
-            if mtgGrp.memberIDs != nil {
-                for id in mtgGrp.memberIDs! {
-                    if let mmbr = currentEntity!.members?.first(where: {$0.id == id}) {
-                        members.append(mmbr)
-                    }
-                }
+    func fetchSelectedItemFields(request: DisplayDetail.Detail.Request) {
+        if selectedItem.type == .meetingGroup {
+            if selectedItem.entity?.members?.count != currentEntity?.members?.count {
+                selectedItem.entity = currentEntity
             }
-            mtgGrp.members = members
-            selectedItem = mtgGrp as AnyObject
         }
         let response = DisplayDetail.Detail.Response(selectedItem: selectedItem)
         presenter?.presentDetailFields(response: response)
@@ -57,7 +50,7 @@ class DisplayDetailInteractor: DisplayDetailBusinessLogic, DisplayDetailDataStor
     
     // MARK: - Datastore
     
-    func getSelectedItem() -> AnyObject? {
+    func getSelectedItem() -> SelectedItem? {
         return selectedItem
     }
     

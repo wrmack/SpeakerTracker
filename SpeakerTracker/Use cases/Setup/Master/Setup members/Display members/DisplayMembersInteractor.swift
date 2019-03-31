@@ -74,6 +74,12 @@ class DisplayMembersInteractor: DisplayMembersBusinessLogic, DisplayMembersDataS
      */
     func refreshMembers() {
         self.members = entity?.members
+        self.members?.sort(by: {
+            if $0.lastName! < $1.lastName! {
+                return true
+            }
+            return false
+        })
         if member == nil {
             setCurrentMember(index: 0)
         }

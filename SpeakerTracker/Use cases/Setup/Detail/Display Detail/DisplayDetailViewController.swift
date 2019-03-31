@@ -19,21 +19,21 @@ protocol DisplayDetailDisplayLogic: class {
 
 
 protocol DisplayDetailViewControllerEditEntityDelegate: class {
-    func didPressEditEntity(selectedItem: AnyObject?)
+    func didPressEditEntity(selectedItem: SelectedItem?)
 }
 
 protocol DisplayDetailViewControllerEditMeetingGroupDelegate: class {
-    func didPressEditMeetingGroup(selectedItem: AnyObject?)
+    func didPressEditMeetingGroup(selectedItem: SelectedItem?)
 }
 
 
 protocol DisplayDetailViewControllerEditMemberDelegate: class {
-    func didPressEditMember(selectedItem: AnyObject?)
+    func didPressEditMember(selectedItem: SelectedItem?)
 }
 
 
 protocol DisplayDetailViewControllerEditEventDelegate: class {
-    func didPressEditEvent(selectedItem: AnyObject?)
+    func didPressEditEvent(selectedItem: SelectedItem?)
 }
 
 
@@ -112,15 +112,15 @@ class DisplayDetailViewController: UIViewController, UITableViewDelegate, UITabl
     // MARK: - Exposed methods
     
     func updateDetails() {
-        getFields()
+        fetchFields()
     }
 
     
     // MARK: - VIP
     
-    private func getFields() {
+    private func fetchFields() {
         let request = DisplayDetail.Detail.Request()
-        interactor?.getSelectedItemFields(request: request)
+        interactor?.fetchSelectedItemFields(request: request)
     }
     
     
@@ -147,17 +147,15 @@ class DisplayDetailViewController: UIViewController, UITableViewDelegate, UITabl
     
     @IBAction private func editButtonPressed(_ sender: UIBarButtonItem) {
         let selectedItem = interactor?.getSelectedItem()
-        switch selectedItem {
-        case is Entity:
+        switch selectedItem!.type! {
+        case SelectedItemType.entity:
             editEntityDelegate?.didPressEditEntity(selectedItem: selectedItem)
-        case is MeetingGroup:
+        case SelectedItemType.meetingGroup:
             editMeetingGroupDelegate?.didPressEditMeetingGroup(selectedItem: selectedItem)
-        case is Member:
+        case SelectedItemType.member:
             editMemberDelegate?.didPressEditMember(selectedItem: selectedItem)
-        case is Event:
+        case SelectedItemType.event:
             editEventDelegate?.didPressEditEvent(selectedItem: selectedItem)
-        default:
-            break
         }
     
     }

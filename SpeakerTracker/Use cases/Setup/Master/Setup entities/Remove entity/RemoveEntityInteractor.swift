@@ -31,7 +31,6 @@ class RemoveEntityInteractor: RemoveEntityBusinessLogic, RemoveEntityDataStore {
         if savedEntity == self.entity {
            UserDefaultsManager.removeCurrentEntity()
         }
-        
         guard let docDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else {
             print("RemoveEntityInteractor: removEntity: error: Document directory not found")
             return
@@ -40,6 +39,7 @@ class RemoveEntityInteractor: RemoveEntityBusinessLogic, RemoveEntityDataStore {
         let docFileURL = docDirectory.appendingPathComponent(file + ".ent") 
         do {
             try FileManager.default.removeItem(at: docFileURL)
+            self.entity = nil
             callback()
         }
         catch {

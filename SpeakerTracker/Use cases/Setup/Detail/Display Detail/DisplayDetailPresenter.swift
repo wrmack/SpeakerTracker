@@ -29,15 +29,17 @@ class DisplayDetailPresenter: DisplayDetailPresentationLogic {
     func presentDetailFields(response: DisplayDetail.Detail.Response) {
         let selectedItem = response.selectedItem
         var labelDetailArray = [(String, String)]()
-        switch selectedItem {
-        case is Member:
-            let member = selectedItem as! Member
+        
+        switch selectedItem!.type! {
+            
+        case SelectedItemType.member:
+            guard let member = selectedItem!.member else {break}
             labelDetailArray.append(("Title:", (member.title ?? "")))
             labelDetailArray.append(("First name:", (member.firstName ?? "")))
             labelDetailArray.append(("Last name:", (member.lastName)!))
             
-        case is Entity:
-            let entity = selectedItem as! Entity
+        case SelectedItemType.entity:
+            guard let entity = selectedItem!.entity else {break}
             labelDetailArray.append(("Name:", entity.name!))
             if entity.meetingGroups != nil {
                 var meetingGroupString = String()
@@ -64,12 +66,25 @@ class DisplayDetailPresenter: DisplayDetailPresentationLogic {
                 labelDetailArray.append(("Members:", memberString))
             }
             
-        case is MeetingGroup:
-            let meetingGroup = selectedItem as! MeetingGroup
+        case SelectedItemType.meetingGroup:
+            guard let meetingGroup = selectedItem!.meetingGroup else {break}
             labelDetailArray.append(("Name:", meetingGroup.name!))
-            if meetingGroup.members != nil {
+            var meetingGroupMembers = [Member]()
+            if meetingGroup.memberIDs != nil {
+                for memberID in (meetingGroup.memberIDs)! {
+                    let mmbr = selectedItem!.entity!.members!.first(where: {$0.id == memberID })
+                    meetingGroupMembers.append(mmbr!)
+                }
+            }
+            if meetingGroupMembers.count > 0 {
+                meetingGroupMembers.sort(by: {
+                    if $0.lastName! < $1.lastName! {
+                        return true
+                    }
+                    return false
+                })
                 var memberString = String()
-                for member in meetingGroup.members! {
+                for member in meetingGroupMembers {
                     if memberString.count > 0 {
                         memberString.append(", ")
                     }
@@ -78,8 +93,9 @@ class DisplayDetailPresenter: DisplayDetailPresentationLogic {
                 labelDetailArray.append(("Members:", memberString))
             }
             
-        case is Event:
-            let event = selectedItem as! Event
+        case SelectedItemType.event:
+            guard let event = selectedItem!.event else { break}
+            
             labelDetailArray.append(("Entity:", (event.entity?.name)!))
             labelDetailArray.append(("Meeting group:", (event.meetingGroup?.name)!))
             let formatter = DateFormatter()
@@ -91,9 +107,20 @@ class DisplayDetailPresenter: DisplayDetailPresentationLogic {
             formatter.timeStyle = .short
             let timeString = formatter.string(from: event.date!)
             labelDetailArray.append(("Time:", timeString))
-            if event.meetingGroup!.members != nil {
+            if event.meetingGroup!.memberIDs != nil {
+                var meetingGroupMembers = [Member]()
+                for memberID in (event.meetingGroup?.memberIDs)! {
+                    let mmbr = event.entity?.members?.first(where: {$0.id == memberID })
+                    meetingGroupMembers.append(mmbr!)
+                }
+                meetingGroupMembers.sort(by: {
+                    if $0.lastName! < $1.lastName! {
+                        return true
+                    }
+                    return false
+                })
                 var memberString = String()
-                for member in event.meetingGroup!.members! {
+                for member in meetingGroupMembers {
                     if memberString.count > 0 {
                         memberString.append(", ")
                     }
@@ -102,8 +129,6 @@ class DisplayDetailPresenter: DisplayDetailPresentationLogic {
                 labelDetailArray.append(("Members:", memberString))
             }
             labelDetailArray.append(("Note:", event.note!))
-        default:
-            break
         }
 
         let viewModel = DisplayDetail.Detail.ViewModel(detailFields: labelDetailArray)

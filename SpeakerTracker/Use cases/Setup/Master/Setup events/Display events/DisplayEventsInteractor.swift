@@ -15,7 +15,7 @@ import UIKit
 protocol DisplayEventsBusinessLogic {
     func fetchEvents(request: DisplayEvents.Events.Request)
     func getCurrentEventIndex()->Int?
-    func setCurrentEvent(index: Int)
+    func setCurrentEvent(index: Int?)
     func setMeetingGroup(meetingGroup: MeetingGroup)
     func setEntity(entity: Entity)
     func getCurrentEntity() -> Entity
@@ -116,16 +116,19 @@ class DisplayEventsInteractor: DisplayEventsBusinessLogic, DisplayEventsDataStor
     // MARK: - Datastore
     
     func getCurrentEventIndex()->Int? {
-        if event != nil {
-            return events!.firstIndex(where: { $0.id == event!.id}) 
+        if events != nil {
+            if event != nil {
+                return events!.firstIndex(where: { $0.id == event!.id})
+            }
+            else { return 0 }
         }
-        return 0
+        return nil
     }
     
     
-    func setCurrentEvent(index: Int) {
+    func setCurrentEvent(index: Int?) {
         if (events?.count)! > 0 {
-            event = events![index]
+            event = events![index!]
         }
         else {
             event = nil

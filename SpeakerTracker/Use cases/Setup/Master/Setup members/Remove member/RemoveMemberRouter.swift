@@ -38,5 +38,6 @@ class RemoveMemberRouter: NSObject, RemoveMemberRoutingLogic, RemoveMemberDataPa
   
     func passDataToEditMemberDataStore(source: RemoveMemberDataStore, destination: inout EditMemberDataStore) {
         destination.entity = source.entity
+        destination.member = source.member
     }
 }

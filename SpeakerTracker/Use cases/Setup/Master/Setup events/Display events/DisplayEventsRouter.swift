@@ -83,7 +83,8 @@ class DisplayEventsRouter: NSObject, DisplayEventsRoutingLogic, DisplayEventsDat
     
     
     func passDataToDisplayDetail(source: DisplayEventsDataStore, destination: inout DisplayDetailDataStore) {
-        destination.selectedItem = source.event as AnyObject
+        destination.selectedItem.event = source.event
+        destination.selectedItem.type = .event
     }
     
     func passDataToAddEvent(source: DisplayEventsDataStore, destination: inout AddEventDataStore) {

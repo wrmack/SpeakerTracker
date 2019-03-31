@@ -31,7 +31,7 @@ enum TrackSpeakers {
 }
 
 
-// Used to represent each table.
+// Used by view controller to represent each table.
 // Stores a reference to the table and a dictionary of members' names & recorded time (if any) where the key is the section number.
 struct MembersTable {
     var tableView: UITableView?

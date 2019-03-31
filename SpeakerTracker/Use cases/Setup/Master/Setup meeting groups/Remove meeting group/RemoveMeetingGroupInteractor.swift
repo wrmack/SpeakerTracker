@@ -71,6 +71,7 @@ class RemoveMeetingGroupInteractor: RemoveMeetingGroupBusinessLogic, RemoveMeeti
                 entityDoc.updateChangeCount(.done)
                 entityDoc.close(completionHandler: { success in
                     print(entityDoc)
+                    self.meetingGroup = nil
                     callback()
                 })
             }

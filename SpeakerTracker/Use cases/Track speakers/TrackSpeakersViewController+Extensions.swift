@@ -284,33 +284,31 @@ extension TrackSpeakersViewController: UITableViewDataSource, UITableViewDelegat
         let cell = speakingTable.cellForRow(at: pressIndexPath)
         let menuController = UIMenuController.shared
         menuController.setTargetRect((cell?.contentView.frame)!, in: (cell?.contentView)!)
+        var items = [UIMenuItem]()
         if pressIndexPath.section == 0 && pressIndexPath.row == 0 {
             longPressTablePosition = TablePosition(tableIndex: 2, tableSection: 0, tableRow: 0)
             menuController.arrowDirection = .up
             let item = UIMenuItem(title: "Exercises right of reply", action: #selector(exerciseRightOfReply))
-            menuController.menuItems = [item]
-            menuController.setMenuVisible(true, animated: true)
+			items.append(item)
         }
         let nameDictionary = tableCollection[2].nameDictionary
         if debateMode == .mainMotion {
-            var items = [UIMenuItem]()
             if pressIndexPath.row == nameDictionary![pressIndexPath.section]!.count - 1 {
-                let item1 = UIMenuItem(title: "Moves amendment", action: #selector(moveAmendment))
-                items.append(item1)
+                let item = UIMenuItem(title: "Moves amendment", action: #selector(moveAmendment))
+                items.append(item)
             }
             longPressTablePosition = TablePosition(tableIndex: 2, tableSection: pressIndexPath.section, tableRow: pressIndexPath.row)
-            let item2 = UIMenuItem(title: "Speak again", action: #selector(speakAgain))
-            items.append(item2)
-            menuController.menuItems = items
-            menuController.setMenuVisible(true, animated: true)
+            let item = UIMenuItem(title: "Speak again", action: #selector(speakAgain))
+            items.append(item)
         }
         if debateMode == .amendment {
             if pressIndexPath.row == nameDictionary![pressIndexPath.section]!.count - 1 {
                 let item = UIMenuItem(title: "Final speaker for amendment", action: #selector(closeAmendment))
-                menuController.menuItems = [item]
-                menuController.setMenuVisible(true, animated: true)
+                items.append(item)
             }
         }
+        menuController.menuItems = items
+        menuController.setMenuVisible(true, animated: true)
     }
     
     

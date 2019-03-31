@@ -89,14 +89,22 @@ class TrackSpeakersInteractor: TrackSpeakersBusinessLogic, TrackSpeakersDataStor
     // MARK: Setups, updates and undo
     
     internal func setUpForNewDebate() {
-        currentMeetingGroup!.members = [Member]()
+//        currentMeetingGroup!.members = [Member]()
+//        if (currentMeetingGroup!.memberIDs!.count) > 0 {
+//            for memberID in currentMeetingGroup!.memberIDs! {
+//                let mmbr = currentEntity!.members?.first(where: {$0.id == memberID})
+//                currentMeetingGroup?.members?.append(mmbr!)
+//            }
+//        }
+        
+        var currentMeetingGroupMembers = [Member]()
         if (currentMeetingGroup!.memberIDs!.count) > 0 {
             for memberID in currentMeetingGroup!.memberIDs! {
                 let mmbr = currentEntity!.members?.first(where: {$0.id == memberID})
-                currentMeetingGroup?.members?.append(mmbr!)
+                currentMeetingGroupMembers.append(mmbr!)
             }
         }
-        remainingList[0] = currentMeetingGroup!.members!
+        remainingList[0] = currentMeetingGroupMembers
         waitingList[0] = [Member]()
         speakingList[0] = [SpeakingListMember]()
         if speakingListNumberOfSections > 0 {
@@ -115,14 +123,14 @@ class TrackSpeakersInteractor: TrackSpeakersBusinessLogic, TrackSpeakersDataStor
     
     
     internal func updateAfterSelectingMeetingGroup() {
-        currentMeetingGroup!.members = [Member]()
+        var currentMeetingGroupMembers = [Member]()
         if (currentMeetingGroup!.memberIDs!.count) > 0 {
             for memberID in currentMeetingGroup!.memberIDs! {
                 let mmbr = currentEntity!.members?.first(where: {$0.id == memberID})
-                currentMeetingGroup?.members?.append(mmbr!)
+                currentMeetingGroupMembers.append(mmbr!)
             }
         }
-        remainingList[0] = currentMeetingGroup!.members!
+        remainingList[0] = currentMeetingGroupMembers
         waitingList[0] = [Member]()
         speakingList[0] = [SpeakingListMember]()
         UserDefaultsManager.saveCurrentEntity(entity: self.currentEntity!)
@@ -175,9 +183,9 @@ class TrackSpeakersInteractor: TrackSpeakersBusinessLogic, TrackSpeakersDataStor
  
     internal func setCurrentMeetingGroup(meetingGroup: MeetingGroup) {
         currentMeetingGroup = meetingGroup
-        if currentMeetingGroup?.members == nil {
-            currentMeetingGroup?.members = [Member]()
-        }
+//        if currentMeetingGroup?.members == nil {
+//            currentMeetingGroup?.members = [Member]()
+//        }
         setUpForNewDebate()
     }
     
@@ -287,12 +295,19 @@ class TrackSpeakersInteractor: TrackSpeakersBusinessLogic, TrackSpeakersDataStor
      Initialise the new speaking list section.
      */
     internal func beginAmendment() {
+        var currentMeetingGroupMembers = [Member]()
+        if (currentMeetingGroup!.memberIDs!.count) > 0 {
+            for memberID in currentMeetingGroup!.memberIDs! {
+                let mmbr = currentEntity!.members?.first(where: {$0.id == memberID})
+                currentMeetingGroupMembers.append(mmbr!)
+            }
+        }
         mainMotionRemainingList = remainingList
         mainMotionWaitingList = waitingList
         var speakers = speakingList[speakingListNumberOfSections - 1]
         let finalSpeaker = speakers![speakers!.count - 1].member
-        let allMembers = currentMeetingGroup?.members
-        let membersNotIncluding = allMembers!.filter {$0 != finalSpeaker }
+        let allMembers = currentMeetingGroupMembers
+        let membersNotIncluding = allMembers.filter {$0 != finalSpeaker }
         remainingList[0] = membersNotIncluding
         waitingList[0] = [Member]()
         speakingListNumberOfSections += 1
@@ -308,6 +323,15 @@ class TrackSpeakersInteractor: TrackSpeakersBusinessLogic, TrackSpeakersDataStor
         speakingList[speakingListNumberOfSections - 1] = [SpeakingListMember]()
         let debateSection = DebateSection(sectionNumber: speakingListNumberOfSections - 1, sectionName: "Main debate", speakerEvents: [SpeakerEvent]())
         currentDebate?.debateSections?.append(debateSection)
+    }
+    
+    
+    internal func copyNameToEnd(from tablePosition: TablePosition ) {
+        var member = speakingList[tablePosition.tableSection!]![tablePosition.tableRow!]
+        member.elapsedMinutes = 0
+        member.elapsedSeconds = 0
+        member.speakingStatus = .notYetSpoken
+        speakingList[speakingListNumberOfSections - 1]!.append(member)
     }
     
 
@@ -340,11 +364,18 @@ class TrackSpeakersInteractor: TrackSpeakersBusinessLogic, TrackSpeakersDataStor
     
     
     internal func moveNameLeft(from tablePosition: TablePosition ) {
+        var currentMeetingGroupMembers = [Member]()
+        if (currentMeetingGroup!.memberIDs!.count) > 0 {
+            for memberID in currentMeetingGroup!.memberIDs! {
+                let mmbr = currentEntity!.members?.first(where: {$0.id == memberID})
+                currentMeetingGroupMembers.append(mmbr!)
+            }
+        }
         switch tablePosition.tableIndex {
         case 1:
             let member = waitingList[0]!.remove(at: tablePosition.tableRow!)
-            let originalBaseList = currentMeetingGroup?.members
-            let indexOfMemberInOriginalBaseList = originalBaseList?.firstIndex(where: {$0 == member})
+            let originalBaseList = currentMeetingGroupMembers
+            let indexOfMemberInOriginalBaseList = originalBaseList.firstIndex(where: {$0 == member})
             if remainingList.count <= indexOfMemberInOriginalBaseList! {
                 remainingList[0]!.append(member)
             }
@@ -376,13 +407,5 @@ class TrackSpeakersInteractor: TrackSpeakersBusinessLogic, TrackSpeakersDataStor
             print("TrackSpeakersInteractor: moveNameRight: case not covered")
         }
     }
-    
-    internal func copyNameToEnd(from tablePosition: TablePosition ) {
-        let member = speakingList[tablePosition.tableSection!]![tablePosition.tableRow!]
-        speakingList[speakingListNumberOfSections - 1]!.append(member)
-    }
 
-    
-
- 
 }

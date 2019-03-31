@@ -95,7 +95,8 @@ class DisplayMembersRouter: NSObject, DisplayMembersRoutingLogic, DisplayMembers
     }
     
     func passDataToDisplayDetail(source: DisplayMembersDataStore, destination: inout DisplayDetailDataStore) {
-        destination.selectedItem = source.member as AnyObject
+        destination.selectedItem.member = source.member
+        destination.selectedItem.type = .member
     }
     
     // MARK: Helpers

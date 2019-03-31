@@ -84,7 +84,8 @@ class DisplayEntitiesRouter: NSObject, DisplayEntitiesRoutingLogic, DisplayEntit
     // MARK: Passing data
     
     func passDataToDisplayDetail(source: DisplayEntitiesDataStore, destination: inout DisplayDetailDataStore) {
-        destination.selectedItem = source.entity as AnyObject
+        destination.selectedItem.entity = source.entity
+        destination.selectedItem.type = .entity
     }
     
     func passDataToEditEntityDataStore(source: DisplayEntitiesDataStore, destination: inout EditEntityDataStore) {

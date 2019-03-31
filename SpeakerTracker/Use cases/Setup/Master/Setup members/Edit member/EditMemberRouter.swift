@@ -58,6 +58,7 @@ class EditMemberRouter: NSObject, EditMemberRoutingLogic, EditMemberDataPassing 
     
     func passDataToDisplayMembersDataStore(source: EditMemberDataStore, destination: inout DisplayMembersDataStore) {
         destination.entity = source.entity
+        destination.member = source.member
     }
     
     

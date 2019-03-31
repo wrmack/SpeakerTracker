@@ -35,14 +35,21 @@ class SelectMembersInteractor: SelectMembersBusinessLogic, SelectMembersDataStor
 
     func fetchMembers(request: SelectMembers.Members.Request) {
         var selectedIndices = [Int]()
+        var sortedMembers = entity?.members
+        sortedMembers?.sort(by: {
+            if $0.lastName! < $1.lastName! {
+                return true
+            }
+            return false
+        })
         if meetingGroup != nil && meetingGroup?.memberIDs != nil {
             for memberID in (meetingGroup!.memberIDs)! {
-                if let idx = entity!.members!.firstIndex(where: {$0.id == memberID}) {
+                if let idx = sortedMembers!.firstIndex(where: {$0.id == memberID}) {
                     selectedIndices.append(idx)
                 }
             }
         }
-        let response = SelectMembers.Members.Response(members: entity!.members, selectedIndices: selectedIndices) 
+        let response = SelectMembers.Members.Response(members:sortedMembers, selectedIndices: selectedIndices)
         self.presenter?.presentMembers(response: response) 
     }
     
