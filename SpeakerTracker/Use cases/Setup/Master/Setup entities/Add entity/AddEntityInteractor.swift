@@ -21,9 +21,6 @@ protocol AddEntityDataStore {
 }
 
 class AddEntityInteractor: AddEntityBusinessLogic, AddEntityDataStore {
-    var presenter: AddEntityPresentationLogic?
-
-
     
     func saveEntityToDisk(entity: Entity, callback: @escaping ()->()) {
         guard let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else {

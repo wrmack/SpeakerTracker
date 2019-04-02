@@ -10,6 +10,19 @@
 //  see http://clean-swift.com
 //
 
+
+/*
+ Module abstract
+ 
+ Use case:  	Displays all meeting groups of a selected entity.
+ Callers:    	Default when Meeting group tab is pressed.  Also displayed on return from adding or editing a meeting group.
+ Calls:      	Modules to add or edit a member.
+ Features:   	User can add a new meeting group or edit an existing meeting group.
+ VIP:        	Fetches all meeting groups from the selected stored entity and displays them.
+ 
+ */
+
+
 import UIKit
 
 protocol DisplayMeetingGroupsDisplayLogic: class {
@@ -148,7 +161,7 @@ class DisplayMeetingGroupsViewController: UITableViewController, DisplayMeetingG
     
     // MARK: - VIP
     
-    private func fetchMeetingGroups(entity: Entity?) {
+    func fetchMeetingGroups(entity: Entity?) {
         let request = DisplayMeetingGroups.MeetingGroups.Request(entity: entity)
         interactor?.fetchMeetingGroups(request: request)
     }

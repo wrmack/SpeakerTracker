@@ -10,6 +10,18 @@
 //  see http://clean-swift.com
 //
 
+/*
+ Module abstract
+ 
+ Use case:  	Displays all members of a selected entity.
+ Callers:    	Default when Members tab is pressed.  Also displayed on return from adding or editing members.
+ Calls:      	Modules to add or edit a member.
+ Features:  	User can add a new member or edit an existing member.
+ VIP:        	Fetches all members from the selected stored entity and displays them.
+ 
+ */
+
+
 import UIKit
 
 protocol DisplayMembersDisplayLogic: class {
@@ -151,7 +163,7 @@ class DisplayMembersViewController: UITableViewController, DisplayMembersDisplay
     
     // MARK: - VIP
     
-    private func fetchMembers(entity: Entity?) {
+    func fetchMembers(entity: Entity?) {
         let request = DisplayMembers.Members.Request(entity: entity)
         interactor?.fetchMembers(request: request)
     }

@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="ojY-fI-iAl">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="ojY-fI-iAl">
     <device id="ipad10_5" orientation="landscape">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -116,15 +117,15 @@
                                     <rect key="frame" x="0.0" y="0.0" width="150" height="200"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZEX-wA-2td">
-                                            <rect key="frame" x="16" y="47" width="119" height="21"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gmp-E6-g43">
+                                            <rect key="frame" x="8" y="100" width="136" height="17"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gmp-E6-g43">
-                                            <rect key="frame" x="8" y="84" width="136" height="32"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZEX-wA-2td">
+                                            <rect key="frame" x="8" y="55" width="136" height="17"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                             <nil key="textColor"/>
@@ -485,7 +486,7 @@
                                 </subviews>
                             </stackView>
                             <button autoresizesSubviews="NO" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="N2q-IA-YbO">
-                                <rect key="frame" x="635.5" y="124.5" width="30" height="35"/>
+                                <rect key="frame" x="635.5" y="120" width="30" height="44"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 <accessibility key="accessibilityConfiguration">
                                     <accessibilityTraits key="traits" button="YES" image="YES"/>
@@ -504,10 +505,10 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="infoLight" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QFR-K7-7s0">
-                                <rect key="frame" x="1060" y="742" width="22" height="22"/>
+                                <rect key="frame" x="1032" y="720" width="44" height="44"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="22" id="KfQ-In-2Et"/>
-                                    <constraint firstAttribute="width" constant="22" id="nzN-nY-vNW"/>
+                                    <constraint firstAttribute="height" constant="44" id="KfQ-In-2Et"/>
+                                    <constraint firstAttribute="width" constant="44" id="nzN-nY-vNW"/>
                                 </constraints>
                                 <color key="tintColor" red="0.87843137250000003" green="0.87843137250000003" blue="0.87843137250000003" alpha="1" colorSpace="calibratedRGB"/>
                                 <connections>
@@ -552,7 +553,7 @@
                                 <rect key="frame" x="1016" y="200" width="76" height="400"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7Aj-La-rWp">
-                                        <rect key="frame" x="0.0" y="0.0" width="76" height="48"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="76" height="41"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="34"/>
                                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <state key="normal" image="expand2">
@@ -563,7 +564,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="top" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5ct-OP-JLg">
-                                        <rect key="frame" x="0.0" y="94.5" width="76" height="96"/>
+                                        <rect key="frame" x="0.0" y="92" width="76" height="96"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="70"/>
                                         <state key="normal" title="⤺">
                                             <color key="titleColor" red="0.93725490570000003" green="0.93725490570000003" blue="0.95686274770000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -573,7 +574,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SH9-F0-SR5">
-                                        <rect key="frame" x="0.0" y="242" width="76" height="37.5"/>
+                                        <rect key="frame" x="0.0" y="241" width="76" height="37.5"/>
                                         <state key="normal">
                                             <attributedString key="attributedTitle">
                                                 <fragment content="Reset">
@@ -857,6 +858,7 @@
                             <constraint firstItem="bhg-lR-ChP" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="Jmb-Rh-XgV"/>
                             <constraint firstItem="euf-0t-FkZ" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="180" id="K8P-Df-voB"/>
                             <constraint firstAttribute="trailing" secondItem="q8i-9h-8OE" secondAttribute="trailing" constant="110" id="LjK-6C-ufh"/>
+                            <constraint firstItem="QFR-K7-7s0" firstAttribute="centerX" secondItem="g2S-Qu-Fhp" secondAttribute="centerX" id="LqL-ZA-mC9"/>
                             <constraint firstItem="N2q-IA-YbO" firstAttribute="centerY" secondItem="uOE-0u-hO8" secondAttribute="centerY" id="NlC-aq-K3M"/>
                             <constraint firstItem="MQY-wS-gUN" firstAttribute="trailing" secondItem="bhg-lR-ChP" secondAttribute="trailing" id="QyN-W1-5cV"/>
                             <constraint firstItem="q8i-9h-8OE" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="100" id="SD5-Tc-sax"/>
@@ -877,7 +879,6 @@
                             <constraint firstItem="QZ0-MZ-RWn" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="10" id="oST-Mu-tcj"/>
                             <constraint firstItem="UOt-NE-ntC" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="100" id="pyp-3t-h8x"/>
                             <constraint firstItem="q8i-9h-8OE" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="10" id="qkM-TR-dpx"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="QFR-K7-7s0" secondAttribute="trailing" constant="10" id="sX5-wa-Ae5"/>
                             <constraint firstAttribute="trailing" secondItem="euf-0t-FkZ" secondAttribute="trailing" constant="20" id="vDA-26-ovj"/>
                             <constraint firstItem="MQY-wS-gUN" firstAttribute="top" secondItem="p9K-1h-NDK" secondAttribute="top" id="xfP-04-QBk"/>
                         </constraints>
@@ -1002,7 +1003,7 @@
         <!--Entities-->
         <scene sceneID="kAs-5i-ODM">
             <objects>
-                <tableViewController clearsSelectionOnViewWillAppear="NO" id="8Oe-7Z-91e" customClass="DisplayEntitiesViewController" customModule="SpeakerTracker" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="DisplayEntitiesViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" clearsSelectionOnViewWillAppear="NO" id="8Oe-7Z-91e" customClass="DisplayEntitiesViewController" customModule="SpeakerTracker" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="tFT-ZE-kyR">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="714"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1096,7 +1097,7 @@
         <!--Entities-->
         <scene sceneID="mB7-rr-DSW">
             <objects>
-                <navigationController id="cJb-Wl-P9v" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="EntitiesNavController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="cJb-Wl-P9v" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Entities" image="icon-entity" id="hai-AD-vgc"/>
                     <splitViewMasterSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translucent="NO" id="rQu-Zn-pPu">
@@ -1115,7 +1116,7 @@
         <!--Setup-->
         <scene sceneID="gFj-LG-oM5">
             <objects>
-                <splitViewController extendedLayoutIncludesOpaqueBars="YES" id="vaH-C6-taz" sceneMemberID="viewController">
+                <splitViewController storyboardIdentifier="SplitViewController" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="vaH-C6-taz" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Setup" id="Z4U-pK-Y22"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
@@ -1244,7 +1245,7 @@
         <!--Tab Bar Controller-->
         <scene sceneID="loe-Gh-xcS">
             <objects>
-                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="QjM-io-sJd" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="TabBarController" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="QjM-io-sJd" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="PRi-Ff-uv7"/>
                     <splitViewMasterSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
@@ -1386,11 +1387,11 @@
         </scene>
     </scenes>
     <resources>
-        <image name="expand2" width="48" height="48"/>
-        <image name="icon-committee" width="60" height="60"/>
-        <image name="icon-entity" width="60" height="60"/>
-        <image name="icon-events" width="60" height="60"/>
-        <image name="icon-members" width="60" height="60"/>
-        <image name="reordertemplate" width="35.200000762939453" height="35.200000762939453"/>
+        <image name="expand2" width="32" height="32"/>
+        <image name="icon-committee" width="40" height="40"/>
+        <image name="icon-entity" width="40" height="40"/>
+        <image name="icon-events" width="40" height="40"/>
+        <image name="icon-members" width="40" height="40"/>
+        <image name="reordertemplate" width="44" height="44"/>
     </resources>
 </document>

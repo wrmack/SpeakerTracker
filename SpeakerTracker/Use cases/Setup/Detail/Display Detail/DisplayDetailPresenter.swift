@@ -52,8 +52,17 @@ class DisplayDetailPresenter: DisplayDetailPresentationLogic {
                 labelDetailArray.append(("Meeting groups:", meetingGroupString))
             }
             if entity.members != nil {
+                var members = entity.members
+                if members!.count > 0 {
+                    members!.sort(by: {
+                        if $0.lastName! < $1.lastName! {
+                            return true
+                        }
+                        return false
+                    })
+                }
                 var memberString = String()
-                for member in entity.members! {
+                for member in members! {
                     if memberString.count > 0 {
                         memberString.append(", ")
                     }

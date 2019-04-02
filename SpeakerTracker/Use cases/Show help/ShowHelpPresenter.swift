@@ -34,12 +34,26 @@ class ShowHelpPresenter: ShowHelpPresentationLogic {
         var normAtts = HelpAttributes().normal
         normAtts[NSAttributedString.Key.paragraphStyle] = HelpParaStyle().leftWithSpacingBefore
         
+        var normAttsWithoutSpacing = HelpAttributes().normal
+        normAttsWithoutSpacing[NSAttributedString.Key.paragraphStyle] = HelpParaStyle().left
+        
         var boldnormAtts = HelpAttributes().normalBold
         boldnormAtts[NSAttributedString.Key.paragraphStyle] = HelpParaStyle().leftWithSpacingBefore
         
-
+        attString.append(NSAttributedString(string: "First time using the app\n", attributes: heading1Atts))
+        attString.append(NSAttributedString(string: """
+Go to setup and create an entity.  Then create members and meeting groups for that entity.\n
+""", attributes: normAtts))
+         attString.append(NSAttributedString(string: """
+Example:\n
+""", attributes: boldnormAtts))
+        attString.append(NSAttributedString(string: """
+Entity:  My council
+Members:  Cr Member One, Cr Member Two, Cr Member Three
+Meeting groups:  Full council, Committee One, Committee Two\n
+""", attributes: normAttsWithoutSpacing))
         
-        attString.append(NSAttributedString(string: "Info\n", attributes: heading1Atts))
+        attString.append(NSAttributedString(string: "Main screen\n", attributes: heading1Atts))
         attString.append(NSAttributedString(string: "The lists\n", attributes: heading2Atts))
         attString.append(NSAttributedString(string: """
 Remaining list\n
@@ -177,7 +191,7 @@ Record the meeting event\n
         attString.append(NSAttributedString(string: """
 Press the pencil icon at the top of the 'Spoken / Speaking' table to add a note for the current debate, \
 for example to identify which item in the agenda the debate relates to.
-After each debate is completed, press the 'End debate' button to save the debate and start a new one.
+After each debate is completed, press the 'Save debate' button to save the debate and start a new one.
 When the meeting event is over, end the final debate and, in the slide-out panel, disable the switch button 'Create a record of this meeting'.
 
 """, attributes: normAtts))

@@ -10,6 +10,21 @@
 //  see http://clean-swift.com
 //
 
+/*
+ Module abstract
+ 
+ Use case: 	Displays all entities.
+ Callers:  	Default when Entities tab is pressed.  Also displayed on return from adding or editing entities.
+ Calls:      	Modules to add or edit an entity.
+ Features: 	User can add a new entity or edit an existing entity.
+ VIP:        	Fetches all stored entities and displays them.
+ DataStore:	Entity: the current (selected) entity.
+ 				- passed to the display detail module for displaying in the detail window.
+ 				- updated through datapassing after entity is edited.
+
+ */
+
+
 import UIKit
 
 protocol DisplayEntitiesDisplayLogic: class {
@@ -55,16 +70,6 @@ class DisplayEntitiesViewController: UITableViewController, DisplayEntitiesDispl
         router.dataStore = interactor
     }
 
-    // MARK: Routing
-
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        if let scene = segue.identifier {
-//            let selector = NSSelectorFromString("routeTo\(scene)WithSegue:")
-//            if let router = router, router.responds(to: selector) {
-//                router.perform(selector, with: segue)
-//            }
-//        }
-//    }
 
     // MARK: View lifecycle
 

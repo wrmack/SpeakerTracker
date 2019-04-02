@@ -68,6 +68,12 @@ class ShowReportPresenter: ShowReportPresentationLogic {
             let mmbr = event!.entity!.members!.first(where: {$0.id == memberID })
             meetingGroupMembers.append(mmbr!)
         }
+        meetingGroupMembers.sort(by: {
+            if $0.lastName! < $1.lastName! {
+                return true
+            }
+            return false
+        })
         var membersStg = String()
         for member in meetingGroupMembers {
             if membersStg.count > 0 {

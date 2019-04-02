@@ -10,6 +10,18 @@
 //  see http://clean-swift.com
 //
 
+/*
+ Module abstract
+ 
+ Use case:   	Displays all the meeting events of the selected entity and meeting group.
+ Callers:    	Default when Events tab is pressed.  Also displayed on return from adding or editing an event.
+ Calls:      	Modules to add or edit an event.
+ Features:   	User can add a new event or edit an existing event.
+ VIP:        	Fetches all events from stored events and displays those that match the selected entity and meeting group.
+ 
+ */
+
+
 import UIKit
 
 protocol DisplayEventsDisplayLogic: class {

@@ -89,13 +89,6 @@ class TrackSpeakersInteractor: TrackSpeakersBusinessLogic, TrackSpeakersDataStor
     // MARK: Setups, updates and undo
     
     internal func setUpForNewDebate() {
-//        currentMeetingGroup!.members = [Member]()
-//        if (currentMeetingGroup!.memberIDs!.count) > 0 {
-//            for memberID in currentMeetingGroup!.memberIDs! {
-//                let mmbr = currentEntity!.members?.first(where: {$0.id == memberID})
-//                currentMeetingGroup?.members?.append(mmbr!)
-//            }
-//        }
         
         var currentMeetingGroupMembers = [Member]()
         if (currentMeetingGroup!.memberIDs!.count) > 0 {
@@ -104,6 +97,12 @@ class TrackSpeakersInteractor: TrackSpeakersBusinessLogic, TrackSpeakersDataStor
                 currentMeetingGroupMembers.append(mmbr!)
             }
         }
+        currentMeetingGroupMembers.sort(by: {
+            if $0.lastName! < $1.lastName! {
+                return true
+            }
+            return false
+        })
         remainingList[0] = currentMeetingGroupMembers
         waitingList[0] = [Member]()
         speakingList[0] = [SpeakingListMember]()
@@ -130,6 +129,12 @@ class TrackSpeakersInteractor: TrackSpeakersBusinessLogic, TrackSpeakersDataStor
                 currentMeetingGroupMembers.append(mmbr!)
             }
         }
+        currentMeetingGroupMembers.sort(by: {
+            if $0.lastName! < $1.lastName! {
+                return true
+            }
+            return false
+        })
         remainingList[0] = currentMeetingGroupMembers
         waitingList[0] = [Member]()
         speakingList[0] = [SpeakingListMember]()
@@ -302,6 +307,12 @@ class TrackSpeakersInteractor: TrackSpeakersBusinessLogic, TrackSpeakersDataStor
                 currentMeetingGroupMembers.append(mmbr!)
             }
         }
+        currentMeetingGroupMembers.sort(by: {
+            if $0.lastName! < $1.lastName! {
+                return true
+            }
+            return false
+        })
         mainMotionRemainingList = remainingList
         mainMotionWaitingList = waitingList
         var speakers = speakingList[speakingListNumberOfSections - 1]
@@ -371,17 +382,23 @@ class TrackSpeakersInteractor: TrackSpeakersBusinessLogic, TrackSpeakersDataStor
                 currentMeetingGroupMembers.append(mmbr!)
             }
         }
+        currentMeetingGroupMembers.sort(by: {
+            if $0.lastName! < $1.lastName! {
+                return true
+            }
+            return false
+        })
         switch tablePosition.tableIndex {
         case 1:
             let member = waitingList[0]!.remove(at: tablePosition.tableRow!)
             let originalBaseList = currentMeetingGroupMembers
             let indexOfMemberInOriginalBaseList = originalBaseList.firstIndex(where: {$0 == member})
-            if remainingList.count <= indexOfMemberInOriginalBaseList! {
+            if remainingList[0]!.count <= indexOfMemberInOriginalBaseList! {
                 remainingList[0]!.append(member)
             }
             else {
                 var counter = 0
-                for _ in remainingList {
+                for _ in remainingList[0]! {
                     if counter >= indexOfMemberInOriginalBaseList! {
                         remainingList[0]!.insert(member, at: counter)
                         break
