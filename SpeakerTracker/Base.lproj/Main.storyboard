@@ -273,11 +273,11 @@
                                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="22"/>
                                                                 </button>
                                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="khH-dV-T01">
-                                                                    <rect key="frame" x="264.5" y="11" width="40" height="22"/>
+                                                                    <rect key="frame" x="264.5" y="11" width="50" height="22"/>
                                                                     <constraints>
-                                                                        <constraint firstAttribute="width" constant="40" id="hks-fy-Xfx"/>
+                                                                        <constraint firstAttribute="width" constant="50" id="hks-fy-Xfx"/>
                                                                     </constraints>
-                                                                    <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="40"/>
+                                                                    <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="50"/>
                                                                     <state key="normal" title="&gt;">
                                                                         <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                                     </state>
@@ -302,7 +302,7 @@
                                                                 <constraint firstAttribute="bottomMargin" secondItem="sRB-6X-ieO" secondAttribute="bottom" id="dzL-YY-ZzM"/>
                                                                 <constraint firstItem="sRB-6X-ieO" firstAttribute="leading" secondItem="1np-e8-S82" secondAttribute="trailing" id="jBb-Vt-Ydp"/>
                                                                 <constraint firstItem="1np-e8-S82" firstAttribute="top" secondItem="nQv-yo-bdh" secondAttribute="topMargin" id="qbb-Qu-PYV"/>
-                                                                <constraint firstAttribute="trailingMargin" secondItem="khH-dV-T01" secondAttribute="trailing" id="txP-rP-fSz"/>
+                                                                <constraint firstAttribute="trailing" secondItem="khH-dV-T01" secondAttribute="trailing" constant="5" id="qtZ-Yx-bhR"/>
                                                             </constraints>
                                                         </tableViewCellContentView>
                                                         <inset key="separatorInset" minX="9" minY="0.0" maxX="0.0" maxY="0.0"/>
@@ -340,12 +340,12 @@
                                                             <rect key="frame" x="0.0" y="0.0" width="319" height="43.5"/>
                                                             <autoresizingMask key="autoresizingMask"/>
                                                             <subviews>
-                                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JqL-gH-ZQo">
-                                                                    <rect key="frame" x="15" y="11" width="40" height="22"/>
+                                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JqL-gH-ZQo">
+                                                                    <rect key="frame" x="5" y="11" width="50" height="22"/>
                                                                     <constraints>
-                                                                        <constraint firstAttribute="width" constant="40" id="msk-O4-qfm"/>
+                                                                        <constraint firstAttribute="width" constant="50" id="msk-O4-qfm"/>
                                                                     </constraints>
-                                                                    <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="40"/>
+                                                                    <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="51"/>
                                                                     <state key="normal" title="&lt;">
                                                                         <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                                     </state>
@@ -354,11 +354,11 @@
                                                                     </connections>
                                                                 </button>
                                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vIr-Jx-q0m">
-                                                                    <rect key="frame" x="264" y="11" width="40" height="22"/>
+                                                                    <rect key="frame" x="264" y="11" width="50" height="22"/>
                                                                     <constraints>
-                                                                        <constraint firstAttribute="width" constant="40" id="0Rh-5S-ZPw"/>
+                                                                        <constraint firstAttribute="width" constant="50" id="0Rh-5S-ZPw"/>
                                                                     </constraints>
-                                                                    <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="40"/>
+                                                                    <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="50"/>
                                                                     <state key="normal" title="&gt;">
                                                                         <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                                     </state>
@@ -379,9 +379,9 @@
                                                                 <constraint firstItem="vIr-Jx-q0m" firstAttribute="leading" secondItem="X43-lu-cgc" secondAttribute="trailing" id="7T2-K0-PBg"/>
                                                                 <constraint firstAttribute="bottomMargin" secondItem="JqL-gH-ZQo" secondAttribute="bottom" id="9Ly-bc-MyW"/>
                                                                 <constraint firstAttribute="bottomMargin" secondItem="vIr-Jx-q0m" secondAttribute="bottom" id="DOQ-iq-Zap"/>
-                                                                <constraint firstItem="JqL-gH-ZQo" firstAttribute="leading" secondItem="CB0-BK-GuM" secondAttribute="leadingMargin" id="HJL-e6-Pd5"/>
+                                                                <constraint firstItem="JqL-gH-ZQo" firstAttribute="leading" secondItem="CB0-BK-GuM" secondAttribute="leading" constant="5" id="Eq8-Ci-438"/>
                                                                 <constraint firstItem="vIr-Jx-q0m" firstAttribute="top" secondItem="CB0-BK-GuM" secondAttribute="topMargin" id="IW3-MA-GWB"/>
-                                                                <constraint firstAttribute="trailingMargin" secondItem="vIr-Jx-q0m" secondAttribute="trailing" id="RCN-jc-A77"/>
+                                                                <constraint firstAttribute="trailing" secondItem="vIr-Jx-q0m" secondAttribute="trailing" constant="5" id="OmE-ZJ-czI"/>
                                                                 <constraint firstItem="JqL-gH-ZQo" firstAttribute="top" secondItem="CB0-BK-GuM" secondAttribute="topMargin" id="V9q-Lc-cFh"/>
                                                                 <constraint firstAttribute="bottomMargin" secondItem="X43-lu-cgc" secondAttribute="bottom" id="nOq-aC-VP9"/>
                                                             </constraints>
@@ -422,11 +422,11 @@
                                                             <autoresizingMask key="autoresizingMask"/>
                                                             <subviews>
                                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mE4-66-Icj">
-                                                                    <rect key="frame" x="15" y="11" width="40" height="22"/>
+                                                                    <rect key="frame" x="5" y="11" width="50" height="22"/>
                                                                     <constraints>
-                                                                        <constraint firstAttribute="width" constant="40" id="ed1-mF-224"/>
+                                                                        <constraint firstAttribute="width" constant="50" id="ed1-mF-224"/>
                                                                     </constraints>
-                                                                    <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="40"/>
+                                                                    <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="50"/>
                                                                     <state key="normal" title="&lt;">
                                                                         <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                                     </state>
@@ -468,8 +468,8 @@
                                                                 <constraint firstAttribute="trailingMargin" secondItem="uzM-B8-HTa" secondAttribute="trailing" id="RfK-p0-cNs"/>
                                                                 <constraint firstItem="Mll-GP-Z9h" firstAttribute="leading" secondItem="mE4-66-Icj" secondAttribute="trailing" id="WFR-jP-ha1"/>
                                                                 <constraint firstAttribute="bottomMargin" secondItem="Mll-GP-Z9h" secondAttribute="bottom" id="b5o-ma-SJD"/>
+                                                                <constraint firstItem="mE4-66-Icj" firstAttribute="leading" secondItem="dfs-fp-pgV" secondAttribute="leading" constant="5" id="bJd-FO-Pmj"/>
                                                                 <constraint firstItem="uzM-B8-HTa" firstAttribute="top" secondItem="dfs-fp-pgV" secondAttribute="topMargin" id="qYw-cu-lts"/>
-                                                                <constraint firstAttribute="leadingMargin" secondItem="mE4-66-Icj" secondAttribute="leading" id="u2e-4F-MVN"/>
                                                                 <constraint firstAttribute="bottomMargin" secondItem="uzM-B8-HTa" secondAttribute="bottom" id="w3u-Tn-11Y"/>
                                                             </constraints>
                                                         </tableViewCellContentView>
@@ -550,7 +550,7 @@
                                 </constraints>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalCentering" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="euf-0t-FkZ">
-                                <rect key="frame" x="1016" y="200" width="76" height="400"/>
+                                <rect key="frame" x="1016" y="200" width="76" height="300"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7Aj-La-rWp">
                                         <rect key="frame" x="0.0" y="0.0" width="76" height="41"/>
@@ -563,8 +563,8 @@
                                             <action selector="showLargeTimer:" destination="BYZ-38-t0r" eventType="touchUpInside" id="zwm-lT-71O"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="top" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5ct-OP-JLg">
-                                        <rect key="frame" x="0.0" y="92" width="76" height="96"/>
+                                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="top" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5ct-OP-JLg">
+                                        <rect key="frame" x="0.0" y="51" width="76" height="0.0"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="70"/>
                                         <state key="normal" title="⤺">
                                             <color key="titleColor" red="0.93725490570000003" green="0.93725490570000003" blue="0.95686274770000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -574,7 +574,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SH9-F0-SR5">
-                                        <rect key="frame" x="0.0" y="241" width="76" height="37.5"/>
+                                        <rect key="frame" x="0.0" y="131" width="76" height="37.5"/>
                                         <state key="normal">
                                             <attributedString key="attributedTitle">
                                                 <fragment content="Reset">
@@ -591,14 +591,14 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="●" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g2S-Qu-Fhp">
-                                        <rect key="frame" x="0.0" y="358" width="76" height="42"/>
+                                        <rect key="frame" x="0.0" y="258" width="76" height="42"/>
                                         <fontDescription key="fontDescription" name="HiraginoSans-W3" family="Hiragino Sans" pointSize="42"/>
                                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="400" id="fjF-wz-ly5"/>
+                                    <constraint firstAttribute="height" constant="300" id="fjF-wz-ly5"/>
                                 </constraints>
                             </stackView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UOt-NE-ntC">
@@ -761,7 +761,7 @@
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Ju-T5-AJU">
                                                 <rect key="frame" x="20" y="90" width="330" height="100.5"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <string key="text">Set-up a meeting event in 'Setup' then select it above. Speaking times for each debate are recorded. A debate is saved and a new one created after 'End debate' is pressed. The report can be viewed in 'Reports'.</string>
+                                                <string key="text">Set-up a meeting event in 'Setup' then select it above. Speaking times for each debate are recorded. A debate is saved and a new one created after 'Save debate' is pressed. The report can be viewed in 'Reports'.</string>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <color key="textColor" white="0.93578652220000003" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>

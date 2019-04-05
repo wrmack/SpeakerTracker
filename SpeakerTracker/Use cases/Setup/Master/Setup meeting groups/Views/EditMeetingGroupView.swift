@@ -127,7 +127,9 @@ class EditMeetingGroupView: WMEditView, UITextFieldDelegate {
                 if (meetingGroup!.memberIDs!.count) > 0 {
                     for memberID in meetingGroup!.memberIDs! {
                         let mmbr = entity!.members?.first(where: {$0.id == memberID})
-                        meetingGroupMembers.append(mmbr!)
+                        if mmbr != nil {
+                            meetingGroupMembers.append(mmbr!)
+                        }
                     }
                 }
                 meetingGroupMembers.sort(by: {
@@ -141,7 +143,7 @@ class EditMeetingGroupView: WMEditView, UITextFieldDelegate {
                     if memberNames.count > 0 {
                         memberNames.append(", ")
                     }
-                    let name = (member.firstName! + " " + member.lastName! )
+                    let name = (member.firstName ?? "") + " " + member.lastName!
                     memberNames.append(name)
                 }
                 membersDetailLabel?.text = memberNames

@@ -10,13 +10,14 @@ An example of an entity is a council.  It could also be a board of some kind. Th
 - Meeting groups: example - the full council could be one meeting group and each of its committees would be separate meeting groups
 
 ## Member
-Example: Councillor John Smith.
+Example: Cr John Smith.
 
 *Properties*
 
 - Title
 - First name
 - Last name
+- Member ID
 
 All members for a given entity are stored as a property of that entity.
 
@@ -27,7 +28,7 @@ Example: Finance Committee
 *Properties*
 
 - Name
-- Members
+- Member IDs
 
 The meeting groups of an entity are stored as a property of the entity.
 

@@ -117,7 +117,13 @@ class EditEventViewController: UIViewController {
     
     
     @objc private func deleteButtonTapped() {
-        interactor!.addEventToBeDeletedToDataStore(event: editView!.event!)
-        self.router!.navigateToRemoveEvent() 
+        let alert = UIAlertController(title: "Alert", message: "Deleting the event will also delete the associated report", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .default, handler: { _ in
+            self.interactor!.addEventToBeDeletedToDataStore(event: self.editView!.event!)
+            self.router!.navigateToRemoveEvent()
+        }))
+        alert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: "Cancel action"), style: .cancel, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+
     }
 }

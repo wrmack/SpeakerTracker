@@ -31,7 +31,10 @@ class AddMeetingGroupPresenter: AddMeetingGroupPresentationLogic {
                 if memberString!.count > 0 {
                     memberString!.append(", ")
                 }
-                let name = (member.title ?? "") + " " + member.firstName! + " " + member.lastName!
+                let title = member.title ?? ""
+                let firstName = member.firstName ?? ""
+                let lastName = member.lastName!
+                let name = title + " " + firstName + " " + lastName
                 memberString!.append(name)
             }
         }

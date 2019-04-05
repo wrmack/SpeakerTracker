@@ -198,7 +198,7 @@ class DisplayEventsViewController: UITableViewController, DisplayEventsDisplayLo
     }
     
     
-    // MARK: = Methods
+    // MARK: - Methods
     
     func refreshAfterAddingEvent() {
         fetchEvents()

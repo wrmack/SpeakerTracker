@@ -640,8 +640,8 @@
 			isa = PBXGroup;
 			children = (
 				41C3C7692143A4AA004AD9D9 /* SelectMembersViewController.swift */,
-				41C3C7652143A4A9004AD9D9 /* SelectMembersPresenter.swift */,
 				41C3C76A2143A4AA004AD9D9 /* SelectMembersInteractor.swift */,
+				41C3C7652143A4A9004AD9D9 /* SelectMembersPresenter.swift */,
 				41C3C7672143A4A9004AD9D9 /* SelectMembersRouter.swift */,
 				41C3C7682143A4AA004AD9D9 /* SelectMembersModels.swift */,
 			);

@@ -2,7 +2,6 @@
 
 ## Overview
 - The app design is based on use-cases, using the Viewcontroller-Interactor-Presenter (VIP) architecture pattern described in Clean-Swift.
-- Apps are built to do stuff.  It is logical to design an app based on the use-cases that are relevant to the user.
 - The VIP pattern separates responsibilities clearly and avoids the massive view-controller syndrome.
 - Clean-swift bases its VIP on storyboard scenes.   I have applied the VIP pattern to any use-case, whether a view controller is required or not.  If a view-controller is not required, a controller (sub-class of NSObject) is used.
 
@@ -27,7 +26,7 @@
 
 ## Presenter
 - Performs any manipulation necessary for display purposes on the model data provided by the Interactor.
-Passes the manipulated information to the viewcontroller for display.
+- Passes the manipulated information to the viewcontroller for display.
 
 ## Router
 - Manages routing / navigation between use-cases or storyboard scenes and segues

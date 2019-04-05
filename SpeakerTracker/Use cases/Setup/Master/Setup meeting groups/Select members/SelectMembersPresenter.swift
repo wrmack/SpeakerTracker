@@ -25,7 +25,10 @@ class SelectMembersPresenter: SelectMembersPresentationLogic {
         var memberNames = [String]()
         if let members = response.members {
             for member in members {
-                let name = (member.title ?? "") + " " + member.firstName! + " " + member.lastName!
+                let title = member.title ?? ""
+                let firstName = member.firstName ?? ""
+                let lastName = member.lastName!
+                let name = title + " " + firstName + " " + lastName
                 memberNames.append(name)
             }
         }

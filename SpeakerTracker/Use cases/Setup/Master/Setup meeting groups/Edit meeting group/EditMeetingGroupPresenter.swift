@@ -31,7 +31,7 @@ class EditMeetingGroupPresenter: EditMeetingGroupPresentationLogic {
                 if memberString!.count > 0 {
                     memberString!.append(", ")
                 }
-                memberString!.append(member.firstName! + member.lastName!)
+                memberString!.append((member.firstName ?? "") + " " + member.lastName!)
             }
         }
         let viewModel = EditMeetingGroup.MeetingGroup.ViewModel(memberNames: memberString)

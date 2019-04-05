@@ -86,7 +86,7 @@ Moving a member from one list another\n
 """, attributes: boldnormAtts))
         
         attString.append(NSAttributedString(string: """
-Either swipe the member name or press the arrow.\n
+Either swipe the member name or press the arrow. A member in the Speaking List cannot be moved between lists once the timer for the member is started.\n
 """, attributes: normAtts))
         
         attString.append(NSAttributedString(string: """
@@ -102,7 +102,7 @@ This app is based on the rule that speakers in a debate to a motion only speak o
 being debated.  All members, whether they have already spoken to the main (original) motion or not, may speak to the amendment.  \
 Once the amendment is dispensed with, only those speakers who have not already spoken to the main motion may continue to speak to it. \
 If your meeting rules allow speakers to speak more than once, and you wish to time a speaker who has already spoken once, \
-do a long-press on the speaker and select the menu option to speak again. \n
+long-press on the speaker and select the menu option to speak again. \n
 """, attributes: normAtts))
         
         attString.append(NSAttributedString(string:"""
@@ -145,12 +145,10 @@ Meeting events\n
 """, attributes: boldnormAtts))
         
         attString.append(NSAttributedString(string: """
-The term 'meeting' can be ambiguous.  We might say 'the meeting decided to ...'.  Here, 'meeting' refers to the group of people who are meeting. \
-We might say 'let's have a meeting'.  Here, 'meeting' refers to people coming together to have a meeting - a meeting event.  \
-To ensure clarity, when a group come together to have a meeting, we will call this a 'meeting event'.  For the purposes of this app, a meeting event \
+When a meeting group comes together to have a meeting, we call this a 'meeting event'.  For the purposes of this app, a meeting event \
 includes the name of the entity, the name of the group that is meeting (the 'meeting group'), the members of the meeting group and the date and \
 time of the meeting.
-You can record and save all debates that take place at a meeting event,
+You can record and save all debates that take place at a meeting event as below.
 
 """, attributes: normAtts))
 
@@ -192,7 +190,7 @@ Record the meeting event\n
 Press the pencil icon at the top of the 'Spoken / Speaking' table to add a note for the current debate, \
 for example to identify which item in the agenda the debate relates to.
 After each debate is completed, press the 'Save debate' button to save the debate and start a new one.
-When the meeting event is over, end the final debate and, in the slide-out panel, disable the switch button 'Create a record of this meeting'.
+When the meeting event is over, save the final debate and, in the slide-out panel, turn off the switch 'Create a record of this meeting'.
 
 """, attributes: normAtts))
         
@@ -203,7 +201,7 @@ Entities\n
 """, attributes: boldnormAtts))
 
         attString.append(NSAttributedString(string: """
-Add an entity and give it a name.  Can also edit the name of an existing entity.\n
+Add an entity and give it a name.  You can also edit the name of an existing entity.\n
 """, attributes: normAtts))
         
         attString.append(NSAttributedString(string: """
@@ -220,7 +218,7 @@ Meeting groups\n
         
         attString.append(NSAttributedString(string: """
 Select an entity and add meeting groups.  For each meeting group assign members from the entity's members.  \
-Can also edit existing meeting groups.\n
+You can also edit existing meeting groups.\n
 """, attributes: normAtts))
         
         
@@ -230,7 +228,7 @@ Events\n
         
         attString.append(NSAttributedString(string: """
 Select an entity and a meeting group and create a meeting event which can be used when recording debates.  \
-Can also edit existing events.\n
+You can also edit existing events.\n
 """, attributes: normAtts))
         
         attString.append(NSAttributedString(string: "Reports\n", attributes: heading1Atts))

@@ -28,12 +28,15 @@ class DisplayMeetingGroupsForReportsInteractor: DisplayMeetingGroupsForReportsBu
     var meetingGroup: MeetingGroup?
     var meetingGroups: [MeetingGroup]?
 
+    deinit {
+        print("Deinitializing:  DisplayMeetingGroupsForReportsInteractor")
+    }
 
     // MARK: VIP
     
     func fetchMeetingGroups(request: DisplayMeetingGroupsForReports.MeetingGroups.Request) {
         self.meetingGroups = [MeetingGroup]()
-        self.meetingGroup = nil
+//        self.meetingGroup = nil
         self.entity = request.entity
         self.meetingGroups = request.entity?.meetingGroups
         let response = DisplayMeetingGroupsForReports.MeetingGroups.Response(meetingGroups: self.meetingGroups)

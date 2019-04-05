@@ -147,6 +147,7 @@ class TrackSpeakersViewController: UIViewController, TrackSpeakersDisplayLogic {
         let memberTableRemaining = MembersTable(tableView: remainingTable, nameDictionary: nil)
         let memberTableWaiting = MembersTable(tableView: waitingTable, nameDictionary: nil)
         let memberTableSpeaking = MembersTable(tableView: speakingTable, nameDictionary: nil)
+        memberTableSpeaking.tableView?.estimatedSectionHeaderHeight = 32
     
         tableCollection = [memberTableRemaining, memberTableWaiting, memberTableSpeaking]
     }
@@ -229,26 +230,31 @@ class TrackSpeakersViewController: UIViewController, TrackSpeakersDisplayLogic {
      */
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
-        if UserDefaults.standard.object(forKey: "MeetingNames")  != nil {
-            let alert = UIAlertController(title: "Version upgrade", message: "The app will try to import your old version's committees into a dummy entity. Go to Setup to check.", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .default, handler: { _ in
-                NSLog("The \"OK\" alert occured.")
-                Utilities.updateFromOriginalVersion(callback: {success in
-                    if success {
-                        self.setupAfterViewAppears()
-                    }
-                    else {
-                        print("Problem importing original data")
-                    }
-                })
-            }))
-            self.present(alert, animated: true, completion: nil)
+        let appVersionString: String = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as! String
+        let appVersionFloat = Float(appVersionString)
+        if UserDefaults.standard.object(forKey: "Version") == nil {
+            // Must be upgrading version 1 because version was not stored
+            if UserDefaults.standard.object(forKey: "MeetingNames")  != nil {
+                let alert = UIAlertController(title: "Version upgrade", message: "The app will try to import your old version's committees into a dummy entity. Go to Setup to check.", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .default, handler: { _ in
+                    NSLog("The \"OK\" alert occured.")
+                    Utilities.updateFromOriginalVersion(callback: {success in
+                        if success {
+                             UserDefaults.standard.set(appVersionFloat, forKey: "Version")
+                            self.setupAfterViewAppears()
+                        }
+                        else {
+                            print("Problem importing original data")
+                        }
+                    })
+                }))
+                self.present(alert, animated: true, completion: nil)
+            }
         }
         else {
+             UserDefaults.standard.set(appVersionFloat, forKey: "Version")
             setupAfterViewAppears()
         }
- 
     }
         
     

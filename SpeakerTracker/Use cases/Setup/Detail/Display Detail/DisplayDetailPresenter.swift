@@ -82,7 +82,9 @@ class DisplayDetailPresenter: DisplayDetailPresentationLogic {
             if meetingGroup.memberIDs != nil {
                 for memberID in (meetingGroup.memberIDs)! {
                     let mmbr = selectedItem!.entity!.members!.first(where: {$0.id == memberID })
-                    meetingGroupMembers.append(mmbr!)
+                    if mmbr != nil {
+                        meetingGroupMembers.append(mmbr!)
+                    }
                 }
             }
             if meetingGroupMembers.count > 0 {
