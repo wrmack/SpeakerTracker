@@ -238,6 +238,22 @@ Select an entity and meeting group to view reports of meeting events that have b
 Select a report to view it.  You are able to airdrop it, email it, save it, print it or open it in another app.\n
 """, attributes: normAtts))
         
+        attString.append(NSAttributedString(string: "App info\n", attributes: heading1Atts))
+        
+        attString.append(NSAttributedString(string: """
+Source code: https://github.com/wrmack/SpeakerTracker
+Developer:  Warwick McNaughton, warwick.mcnaughton@gmail.com \n
+""", attributes: normAtts))
+
+        attString.append(NSAttributedString(string: """
+Privacy statement\n
+""", attributes: boldnormAtts))
+        
+        attString.append(NSAttributedString(string: """
+The app does not use personal information for any purpose other than the purpose of tracking speakers at meetings and keeping a record of this. \
+The personal information used for tacking speakers comprises members' names and speaking times.
+""", attributes: normAtts))
+        
         let viewModel = ShowHelp.Help.ViewModel(attString: attString)
         viewController?.displayAttributedString(viewModel: viewModel)
     }

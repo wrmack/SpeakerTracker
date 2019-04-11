@@ -66,6 +66,8 @@ class ShowHelpViewController: UIViewController, ShowHelpDisplayLogic {
         view.isOpaque = true
         view.backgroundColor = UIColor(white: 0.9, alpha: 1.0)
         textView = UITextView(frame: view.bounds)
+        textView?.isEditable = false
+        textView?.dataDetectorTypes = .link
         textView?.backgroundColor = UIColor.clear
         view.addSubview(textView!)
         textView!.translatesAutoresizingMaskIntoConstraints = false
