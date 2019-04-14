@@ -253,8 +253,8 @@ class TrackSpeakersViewController: UIViewController, TrackSpeakersDisplayLogic {
         }
         else {
              UserDefaults.standard.set(appVersionFloat, forKey: "Version")
-            setupAfterViewAppears()
         }
+        setupAfterViewAppears()
     }
         
     

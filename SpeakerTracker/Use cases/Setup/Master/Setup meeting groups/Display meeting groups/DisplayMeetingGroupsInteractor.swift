@@ -64,7 +64,7 @@ class DisplayMeetingGroupsInteractor: DisplayMeetingGroupsBusinessLogic, Display
      Meeting group has to be set, even if nil (so a previous value does not persist)
      */
     func setCurrentMeetingGroup(index: Int) {
-        if meetingGroups != nil {
+        if meetingGroups != nil && meetingGroups!.count > 0 {
             meetingGroup = meetingGroups![index]
         }
         else {
