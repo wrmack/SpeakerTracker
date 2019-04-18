@@ -20,6 +20,7 @@ enum  DisplayMeetingGroupsPopUp {
         }
         struct Response {
             var meetingGroups: [MeetingGroup]?
+            var includePreviousGroups: Bool?
         }
         struct ViewModel {
             var meetingGroupNames: [String]?

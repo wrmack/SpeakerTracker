@@ -10,7 +10,7 @@ import UIKit
 
 
 class WMCollectionViewCell: UICollectionViewCell {
-    
+    @IBOutlet weak var meetingGroupLabel: UILabel!
     @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
     

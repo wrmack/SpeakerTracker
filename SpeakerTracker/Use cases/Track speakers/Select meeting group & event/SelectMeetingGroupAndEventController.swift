@@ -73,7 +73,7 @@ class SelectMeetingGroupAndEventController: NSObject, EntitiesPopUpViewControlle
             source!.present(alert, animated: true, completion: nil)
         }
         else {
-            let meetingGroupPopUpController = DisplayMeetingGroupsPopUpViewController(entity: currentEntity!)
+            let meetingGroupPopUpController = DisplayMeetingGroupsPopUpViewController(entity: currentEntity!, includePreviousGroups: nil)
             meetingGroupPopUpController.modalPresentationStyle = .popover
             source!.present(meetingGroupPopUpController, animated: true, completion: nil)
             
@@ -161,6 +161,9 @@ class SelectMeetingGroupAndEventController: NSObject, EntitiesPopUpViewControlle
         returnToTrackSpeakersAfterSelectingMeetingGroup()
     }
     
+    func didSelectPreviousGroupsInPopUpViewController() {
+        
+    }
     
     // MARK: - EventsPopUpViewControllerDelegate methods
     

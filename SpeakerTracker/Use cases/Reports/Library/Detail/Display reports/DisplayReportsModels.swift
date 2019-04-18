@@ -28,6 +28,7 @@ enum DisplayReports {
 }
 
 struct ThumbFields {
+    var meetingGroup: String?
     var time: String?
     var date: String?
 }

@@ -16,17 +16,22 @@ protocol DisplayMeetingGroupsForReportsBusinessLogic {
     func fetchMeetingGroups(request: DisplayMeetingGroupsForReports.MeetingGroups.Request)
     func getCurrentMeetingGroupIndex()->Int?
     func setCurrentMeetingGroup(index: Int)
+    func setDisplayDeletedGroups()
 }
 
 protocol DisplayMeetingGroupsForReportsDataStore {
     var meetingGroup: MeetingGroup? {get set}
+    var displayDeletedGroups: Bool? {get set}
 }
+
 
 class DisplayMeetingGroupsForReportsInteractor: DisplayMeetingGroupsForReportsBusinessLogic, DisplayMeetingGroupsForReportsDataStore {
     var presenter: DisplayMeetingGroupsForReportsPresentationLogic?
     var entity: Entity?
     var meetingGroup: MeetingGroup?
     var meetingGroups: [MeetingGroup]?
+    var displayDeletedGroups: Bool?
+    
 
     deinit {
         print("Deinitializing:  DisplayMeetingGroupsForReportsInteractor")
@@ -56,6 +61,11 @@ class DisplayMeetingGroupsForReportsInteractor: DisplayMeetingGroupsForReportsBu
         if meetingGroups != nil {
             meetingGroup = meetingGroups![index]
         }
+        displayDeletedGroups = false
+    }
+    
+    func setDisplayDeletedGroups() {
+        displayDeletedGroups = true
     }
     
     

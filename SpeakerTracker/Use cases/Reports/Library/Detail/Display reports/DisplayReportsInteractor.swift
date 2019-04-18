@@ -20,6 +20,7 @@ protocol DisplayReportsBusinessLogic {
 protocol DisplayReportsDataStore {
     var meetingGroup: MeetingGroup? { get set}
     var selectedItem: Event? {get set}
+    var displayDeletedGroups: Bool? {get set}
 }
 
 class DisplayReportsInteractor: DisplayReportsBusinessLogic, DisplayReportsDataStore {
@@ -27,16 +28,27 @@ class DisplayReportsInteractor: DisplayReportsBusinessLogic, DisplayReportsDataS
     var meetingGroup: MeetingGroup?
     var events: [Event]?
     var selectedItem: Event?
+    var displayDeletedGroups: Bool?
 
     
     // MARK: - VIP
 
+    func getReports(request: DisplayReports.Reports.Request) {
+        if displayDeletedGroups == true {
+            getReportsForDeletedGroups(request: request)
+        }
+        else {
+        	getReportsForMeetingGroup(request: request)
+        }
+    }
+    
+    
     /*
      The meeting group was set through data-passing.
      Gets all events for the meeting group.
      Passes these to the presenter.
      */
-    func getReports(request: DisplayReports.Reports.Request) {
+    func getReportsForMeetingGroup(request: DisplayReports.Reports.Request) {
         events = [Event]()
         let fileManager = FileManager.default
         guard let docDirectory = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first else {
@@ -93,6 +105,66 @@ class DisplayReportsInteractor: DisplayReportsBusinessLogic, DisplayReportsDataS
             print("DisplayReportsInteractor: error while enumerating files \(docDirectory.path): \(error.localizedDescription)")
         }
     }
+    
+    
+    func getReportsForDeletedGroups(request: DisplayReports.Reports.Request) {
+        events = [Event]()
+        let fileManager = FileManager.default
+        guard let docDirectory = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first else {
+            print("DisplayReportsInteractor: getReportsForDeletedGroups: error: Document directory not found")
+            return
+        }
+        do {
+            var eventUrls = [URL]()
+            let fileURLs = try fileManager.contentsOfDirectory(at: docDirectory, includingPropertiesForKeys: nil)
+            for url in fileURLs {
+                if url.pathExtension == "evt" {
+                    eventUrls.append(url)
+                }
+            }
+            if eventUrls.count == 0 {
+                let response = DisplayReports.Reports.Response(events: self.events)
+                self.presenter?.presentReports(response: response)
+            }
+                
+            else {
+                for eventUrl in eventUrls {
+                    let eventDoc = EventDocument(fileURL: eventUrl)
+                    eventDoc.open(completionHandler: { success in
+                        if !success {
+                            print("DisplayReportsInteractor: getReportsForDeletedGroups: error opening EventDocument")
+                            return
+                        }
+                        else {
+                            eventDoc.close(completionHandler: {success in
+                                guard var event = eventDoc.event else {
+                                    print("DisplayReportsInteractor: getReportsForDeletedGroups: event is nil")
+                                    return
+                                }
+                                if event.filename == nil {
+                                    let urlWithoutExt = eventUrl.deletingPathExtension()
+                                    event.filename = urlWithoutExt.lastPathComponent
+                                }
+                                if event.meetingGroupStatus == MeetingGroupStatus.previous {
+                                    self.events!.append(event)
+                                }
+                                self.events?.sort(by: { evt1, evt2 in
+                                    return evt1.date! < evt2.date!
+                                })
+                                let response = DisplayReports.Reports.Response(events: self.events)
+                                self.presenter?.presentReports(response: response)
+                                
+                            })
+                        }
+                    })
+                }
+            }
+            
+        } catch {
+            print("DisplayReportsInteractor: error while enumerating files \(docDirectory.path): \(error.localizedDescription)")
+        }
+    }
+    
     
     func setSelectedItem(item: Int) {
         selectedItem = events![item]

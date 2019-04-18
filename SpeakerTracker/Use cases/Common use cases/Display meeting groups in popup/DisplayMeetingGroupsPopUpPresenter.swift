@@ -16,13 +16,15 @@ protocol  DisplayMeetingGroupsPopUpPresentationLogic {
     func presentMeetingGroups(response:  DisplayMeetingGroupsPopUp.MeetingGroups.Response)
 }
 
+
 class DisplayMeetingGroupsPopUpPresenter:  DisplayMeetingGroupsPopUpPresentationLogic {
     weak var viewController: DisplayMeetingGroupsPopUpDisplayLogic?
 
-    
-
     func presentMeetingGroups(response:  DisplayMeetingGroupsPopUp.MeetingGroups.Response) {
         var meetingGroupNames = [String]()
+        if response.includePreviousGroups != nil && response.includePreviousGroups! == true {
+            meetingGroupNames.append("Deleted groups")
+        }
         for meetingGroup in response.meetingGroups! {
             meetingGroupNames.append(meetingGroup.name!)
         }

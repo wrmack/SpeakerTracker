@@ -23,6 +23,7 @@ class DisplayMeetingGroupsForReportsPresenter: DisplayMeetingGroupsForReportsPre
     
     func presentMeetingGroups(response: DisplayMeetingGroupsForReports.MeetingGroups.Response) {
         var meetingGroupNames = [String]()
+        meetingGroupNames.append("Deleted groups")
         if let meetingGroups = response.meetingGroups {
             for meetingGroup in meetingGroups {
                 let name = (meetingGroup.name ?? "")

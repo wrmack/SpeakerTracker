@@ -22,6 +22,7 @@ class DisplayMeetingGroupsForReportsViewController: UITableViewController, Displ
     var router: (NSObjectProtocol & DisplayMeetingGroupsForReportsRoutingLogic & DisplayMeetingGroupsForReportsDataPassing)?
     var meetingGroupNames = [String]()
     var meetingGroupSelected = false
+    var selectedRow = 0
 
     
     
@@ -67,6 +68,7 @@ class DisplayMeetingGroupsForReportsViewController: UITableViewController, Displ
   
     override func viewDidLoad() {
         super.viewDidLoad()
+        interactor!.setDisplayDeletedGroups()
     }
 
     
@@ -117,11 +119,9 @@ class DisplayMeetingGroupsForReportsViewController: UITableViewController, Displ
     func displayMeetingGroups(viewModel: DisplayMeetingGroupsForReports.MeetingGroups.ViewModel) {
         meetingGroupNames = viewModel.meetingGroupNames!
         tableView.reloadData()
-        let selectedMeetingGroupIndex = interactor!.getCurrentMeetingGroupIndex()
         if meetingGroupNames.count > 0 {
-            tableView.selectRow(at: IndexPath(row:selectedMeetingGroupIndex!, section: 0), animated: false, scrollPosition: .top)
+            tableView.selectRow(at: IndexPath(row: selectedRow, section: 0), animated: true, scrollPosition: .top)
         }
-        interactor?.setCurrentMeetingGroup(index: selectedMeetingGroupIndex!)
         router!.updateDetailVC()
     }
     
@@ -168,7 +168,19 @@ class DisplayMeetingGroupsForReportsViewController: UITableViewController, Displ
     // MARK: - UITableViewDelegate methods
     
     override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
-        interactor?.setCurrentMeetingGroup(index: indexPath.row)
+        selectedRow = indexPath.row
+        let cell = tableView.cellForRow(at: indexPath)
+        if cell?.textLabel!.text == "Deleted groups" {
+            interactor!.setDisplayDeletedGroups()
+        }
+        else {
+            var idx = indexPath.row
+            let firstCell = tableView.cellForRow(at: IndexPath(row: 0, section: 0))
+            if firstCell?.textLabel?.text == "Deleted groups" {
+                idx -= 1
+            }
+            interactor?.setCurrentMeetingGroup(index: idx)
+        }
         router!.updateDetailVC()
         return indexPath
     }

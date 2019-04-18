@@ -112,6 +112,7 @@ class DisplayReportsViewController: UICollectionViewController, DisplayReportsDi
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ReportThumb", for: indexPath) as! WMCollectionViewCell
+        cell.meetingGroupLabel.text = thumbs[indexPath.item].meetingGroup
         cell.timeLabel.text = thumbs[indexPath.item].time
         cell.dateLabel.text = thumbs[indexPath.item].date        
         return cell

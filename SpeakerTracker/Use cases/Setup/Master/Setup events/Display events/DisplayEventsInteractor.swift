@@ -14,6 +14,7 @@ import UIKit
 
 protocol DisplayEventsBusinessLogic {
     func fetchEvents(request: DisplayEvents.Events.Request)
+    func fetchEventsForPreviousGroups()
     func getCurrentEventIndex()->Int?
     func setCurrentEvent(index: Int?)
     func setMeetingGroup(meetingGroup: MeetingGroup)
@@ -77,7 +78,7 @@ class DisplayEventsInteractor: DisplayEventsBusinessLogic, DisplayEventsDataStor
                         }
                         else {
                             guard var event = eventDoc.event else {
-                                print("DisplayEventsPopUpInteractor: fetchEvents: event is nil")
+                                print("DisplayEventsInteractor: fetchEvents: event is nil")
                                 return
                             }
                             if event.entity == self.entity && event.meetingGroup == self.meetingGroup {
@@ -113,12 +114,81 @@ class DisplayEventsInteractor: DisplayEventsBusinessLogic, DisplayEventsDataStor
     }
     
     
+    func fetchEventsForPreviousGroups() {
+        events = [Event]()
+        let fileManager = FileManager.default
+        guard let docDirectory = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first else {
+            print("DisplayEventsInteractor: fetchEventsForPreviousGroups: error: Document directory not found")
+            return
+        }
+        do {
+            var eventUrls = [URL]()
+            let fileURLs = try fileManager.contentsOfDirectory(at: docDirectory, includingPropertiesForKeys: nil)
+            for url in fileURLs {
+                if url.pathExtension == "evt" {
+                    eventUrls.append(url)
+                }
+            }
+            
+            if eventUrls.count == 0 {
+                self.event = nil
+                let response = DisplayEvents.Events.Response(events: self.events)
+                self.presenter?.presentEvents(response: response)
+            }
+            else {
+                var count = 0
+                for eventUrl in eventUrls {
+                    let eventDoc = EventDocument(fileURL: eventUrl)
+                    eventDoc.open(completionHandler: { success in
+                        if !success {
+                            print("DisplayEventsInteractor: fetchEventsForPreviousGroups: error opening EventDocument")
+                            return
+                        }
+                        else {
+                            guard var event = eventDoc.event else {
+                                print("DisplayEventsPopUpInteractor: fetchEventsForPreviousGroups: event is nil")
+                                return
+                            }
+                            if event.entity == self.entity && event.meetingGroupStatus == .previous {
+//                                if event.meetingGroup?.memberIDs == nil {
+//                                    event.meetingGroup?.memberIDs = [UUID]()
+//                                }
+//                                if event.meetingGroup?.memberIDs!.count != self.meetingGroup!.memberIDs!.count {
+//                                    event.meetingGroup!.memberIDs = self.meetingGroup?.memberIDs
+//                                    eventDoc.event = event
+//                                    eventDoc.updateChangeCount(.done)
+//                                }
+                                self.events!.append(event)
+                            }
+                            
+                            eventDoc.close(completionHandler: {success in
+                                
+                                count += 1
+                                if count == eventUrls.count {
+                                    let response = DisplayEvents.Events.Response(events: self.events)
+                                    self.presenter?.presentEvents(response: response)
+                                }
+                            })
+                        }
+                    })
+                }
+            }
+            
+        }
+        catch {
+            print("Error while enumerating files \(docDirectory.path): \(error.localizedDescription)")
+        }
+    }
+    
+    
+    
     // MARK: - Datastore
     
     func getCurrentEventIndex()->Int? {
         if events != nil {
             if event != nil {
-                return events!.firstIndex(where: { $0.id == event!.id})
+                let idx = events!.firstIndex(where: { $0.id == event!.id})
+                return idx ?? 0
             }
             else { return 0 }
         }
@@ -139,6 +209,7 @@ class DisplayEventsInteractor: DisplayEventsBusinessLogic, DisplayEventsDataStor
     func setMeetingGroup(meetingGroup: MeetingGroup) {
         self.meetingGroup = meetingGroup
     }
+    
     
     func setEntity(entity: Entity) {
         self.entity = entity

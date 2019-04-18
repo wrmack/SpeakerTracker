@@ -35,6 +35,7 @@ class DisplayMeetingGroupsForReportsRouter: NSObject, DisplayMeetingGroupsForRep
     
     
     func passDataToDisplayDetail(source: DisplayMeetingGroupsForReportsDataStore, destination: inout DisplayReportsDataStore) {
-        destination.meetingGroup = source.meetingGroup 
+        destination.meetingGroup = source.meetingGroup
+        destination.displayDeletedGroups = source.displayDeletedGroups
     }
 }

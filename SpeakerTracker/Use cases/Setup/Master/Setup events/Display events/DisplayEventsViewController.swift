@@ -85,7 +85,7 @@ class DisplayEventsViewController: UITableViewController, DisplayEventsDisplayLo
         let detailVC = detailNavC.viewControllers[0] as! DisplayDetailViewController
         detailVC.editEventDelegate = self
         
-         tableView.register(DisplayEventsHeaderView.self, forHeaderFooterViewReuseIdentifier: "EventsHeaderView")
+        tableView.register(DisplayEventsHeaderView.self, forHeaderFooterViewReuseIdentifier: "EventsHeaderView")
         guard let tabBarCont = UIApplication.shared.keyWindow?.rootViewController as? UITabBarController else {
             print("Could not get UITabBarController")
             return
@@ -138,7 +138,7 @@ class DisplayEventsViewController: UITableViewController, DisplayEventsDisplayLo
     
     
     @objc internal func meetingGroupButtonPressed(_ sender: UIButton) {
-        let meetingGroupPopUpController = DisplayMeetingGroupsPopUpViewController(entity: getCurrentEntity())
+        let meetingGroupPopUpController = DisplayMeetingGroupsPopUpViewController(entity: getCurrentEntity(), includePreviousGroups: true)
         meetingGroupPopUpController.modalPresentationStyle = .popover
         present(meetingGroupPopUpController, animated: true, completion: nil)
         
@@ -168,6 +168,10 @@ class DisplayEventsViewController: UITableViewController, DisplayEventsDisplayLo
         interactor?.fetchEvents(request: request)
     }
     
+    
+    func fetchEventsForPreviousGroups() {
+        interactor!.fetchEventsForPreviousGroups()
+    }
     
     
     func displayEvents(viewModel: DisplayEvents.Events.ViewModel) {
@@ -287,6 +291,16 @@ class DisplayEventsViewController: UITableViewController, DisplayEventsDisplayLo
         dismiss(animated: true, completion: nil)
     }
     
+    func didSelectPreviousGroupsInPopUpViewController() {
+        let header = tableView.headerView(forSection: 0) as! DisplayEventsHeaderView
+        header.meetinGroupButton?.setTitle("Deleted groups", for: .normal)
+        header.meetinGroupButton?.setTitleColor(UIColor.black, for: .normal)
+        header.meetinGroupButton?.titleLabel?.textAlignment = .center
+//        setMeetingGroup(meetingGroup: meetingGroup)
+        addEventButton.isEnabled = false
+        fetchEventsForPreviousGroups()
+        dismiss(animated: true, completion: nil)
+    }
     
     
     //     MARK: - DisplayDetailViewControllerEditEventDelegate

@@ -29,7 +29,7 @@ class RemoveMeetingGroupInteractor: RemoveMeetingGroupBusinessLogic, RemoveMeeti
     
     /*
      For the entity, remove the meeting group with same meetingGroup.id, or, if that is not available, with same meetingGroup.name
-     If the current entity saved in defaults is this entity, replace it with this one.
+     If the current entity saved in defaults is this entity, replace it with this updated one (which has the meeting group removed).
      Open the entity document and update its entity property with this one.
      */
     func removeMeetingGroup(callback: @escaping ()->()) {
@@ -71,10 +71,65 @@ class RemoveMeetingGroupInteractor: RemoveMeetingGroupBusinessLogic, RemoveMeeti
                 entityDoc.updateChangeCount(.done)
                 entityDoc.close(completionHandler: { success in
                     print(entityDoc)
-                    self.meetingGroup = nil
-                    callback()
+                    self.changeMeetingGroupStatusInEvents(callback: {
+                        self.meetingGroup = nil
+                        callback()
+                    })
                 })
             }
         })
     }
+    
+    
+    func changeMeetingGroupStatusInEvents(callback:@escaping ()->()) {
+        let fileManager = FileManager.default
+        guard let docDirectory = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first else {
+            print("RemoveMeetingGroupInteractor: changeMeetingGroupStatusInEvents: error: Document directory not found")
+            return
+        }
+        do {
+            var eventUrls = [URL]()
+            let fileURLs = try fileManager.contentsOfDirectory(at: docDirectory, includingPropertiesForKeys: nil)
+            for url in fileURLs {
+                if url.pathExtension == "evt" {
+                    eventUrls.append(url)
+                }
+            }
+            if eventUrls.count > 0 {
+                var count = 0
+                for eventUrl in eventUrls {
+                    let eventDoc = EventDocument(fileURL: eventUrl)
+                    eventDoc.open(completionHandler: { success in
+                        if !success {
+                            print("RemoveMeetingGroupInteractor: changeMeetingGroupStatusInEvents: error opening EventDocument")
+                            return
+                        }
+                        else {
+                            guard var event = eventDoc.event else {
+                                print("RemoveMeetingGroupInteractor: changeMeetingGroupStatusInEvents: event is nil")
+                                return
+                            }
+                            if event.meetingGroup == self.meetingGroup {
+                                event.meetingGroupStatus = .previous
+                                eventDoc.event = event
+                                eventDoc.updateChangeCount(.done)
+                            }
+                            
+                            eventDoc.close(completionHandler: {success in
+                                count += 1
+                                if count == eventUrls.count {
+									callback()
+                                }
+                            })
+                        }
+                    })
+                }
+            }
+        }
+        catch {
+            print("Error while enumerating files \(docDirectory.path): \(error.localizedDescription)")
+        }
+    }
+    
+    
 }

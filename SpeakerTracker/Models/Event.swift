@@ -23,6 +23,7 @@ struct Event: Codable  {
     var meetingGroup: MeetingGroup?
     var note: String?
     var debates: [Debate]?
+    var meetingGroupStatus: MeetingGroupStatus?
     let id: UUID?
     
     init(date: Date?, entity: Entity?, meetingGroup: MeetingGroup?, note: String?, debates: [Debate]?, id: UUID?, filename: String?) {
@@ -71,4 +72,9 @@ struct SpeakerEvent: Codable {
         self.elapsedSeconds = elapsedSeconds
         self.startTime = startTime
     }
+}
+
+enum MeetingGroupStatus: String, Codable {
+    case current
+    case previous
 }

@@ -14,6 +14,7 @@ import UIKit
 
 protocol MeetingGroupsPopUpViewControllerDelegate: class {
     func didSelectMeetingGroupInPopUpViewController(_ viewController: DisplayMeetingGroupsPopUpViewController, meetingGroup: MeetingGroup)
+    func didSelectPreviousGroupsInPopUpViewController()
 }
 
 protocol DisplayMeetingGroupsPopUpDisplayLogic: class {
@@ -54,8 +55,11 @@ class  DisplayMeetingGroupsPopUpViewController: UIViewController, UITableViewDel
     
     // MARK: Object lifecycle
     
-    convenience init(entity: Entity) {
+    convenience init(entity: Entity, includePreviousGroups: Bool?) {
         self.init(nibName: nil, bundle: nil)
+        if includePreviousGroups != nil {
+            interactor!.setIncludePrevious(previous: includePreviousGroups!) 
+        }
         interactor!.setEntity(entity: entity)
     }
 
@@ -188,8 +192,15 @@ class  DisplayMeetingGroupsPopUpViewController: UIViewController, UITableViewDel
     // MARK: UITableViewDelegate methods
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if true {
-            let meetingGroup = interactor!.getMeetingGroup(index: indexPath.row)
+        let selectedCell = tableView.cellForRow(at: indexPath)
+        if selectedCell?.textLabel?.text == "Deleted groups" {
+            delegate?.didSelectPreviousGroupsInPopUpViewController()
+        }
+        else {
+            var idx = indexPath.row
+            let firstCell = tableView.cellForRow(at: IndexPath(row: 0, section: 0))
+            if firstCell?.textLabel!.text == "Deleted groups" { idx -= 1}
+            let meetingGroup = interactor!.getMeetingGroup(index: idx)
             delegate!.didSelectMeetingGroupInPopUpViewController(self, meetingGroup:meetingGroup)
         }
     }

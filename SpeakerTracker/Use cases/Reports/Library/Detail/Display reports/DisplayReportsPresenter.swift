@@ -34,6 +34,7 @@ class DisplayReportsPresenter: DisplayReportsPresentationLogic {
             let timeStrg = formatter.string(from: event.date!)
             thumb.time = timeStrg
             thumb.date = dateStrg
+            thumb.meetingGroup = event.meetingGroup?.name
             thumbFields.append(thumb)
         }
         
