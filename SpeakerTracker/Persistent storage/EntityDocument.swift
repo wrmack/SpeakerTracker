@@ -52,7 +52,7 @@ class EntityDocument: UIDocument {
         directoryFileWrapper = contents as? FileWrapper // The package directory
         let fileWrappers: Dictionary  = directoryFileWrapper!.fileWrappers! // The filewrappers inside the package directory
         for (key, filewrapper) in fileWrappers {
-            print((key, filewrapper))
+//            print((key, filewrapper))
             
             if key == "Entity" {
                 let entityData = filewrapper.regularFileContents

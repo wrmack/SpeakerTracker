@@ -108,19 +108,10 @@ class DisplayMembersViewController: UITableViewController, DisplayMembersDisplay
         let splitVC = splitViewController
         let detailVC = (splitVC?.viewControllers[1] as! UINavigationController).viewControllers[0] as! DisplayDetailViewController
         detailVC.editMemberDelegate = self
+       let kw = UIApplication.shared.windows.first { $0.isKeyWindow }
+       let splitVCRect = splitVC?.viewControllers[0].view.frame
+       splitVC?.viewControllers[0].view.frame = CGRect(x: 0, y: 0, width: splitVCRect!.width, height: (kw!.frame.size.height) - 10)
         
-        guard let tabBarCont = UIApplication.shared.keyWindow?.rootViewController as? UITabBarController else {
-            print("DisplayMembersViewController: could not get UITabBarController")
-            return
-        }
-        
-        let tbFrame = tabBarCont.tabBar.frame
-        if tbFrame.origin.x == 0 {
-            let detailVCView = detailVC.view
-            let detailVCViewWidth = detailVCView!.frame.size.width
-            let tbFrameCurrentWidth = tbFrame.size.width
-            tabBarCont.tabBar.frame = CGRect(x: tbFrameCurrentWidth - detailVCViewWidth, y: tbFrame.origin.y, width: detailVCViewWidth, height: tbFrame.size.height)
-        }
  
         var entity: Entity?
         if let currentEntity = UserDefaultsManager.getCurrentEntity() {

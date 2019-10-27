@@ -79,7 +79,7 @@ class AddMeetingGroupInteractor: AddMeetingGroupBusinessLogic, AddMeetingGroupDa
                 entityDoc.entity?.meetingGroups?.append(meetingGroup)
                 entityDoc.updateChangeCount(.done)
                 entityDoc.close(completionHandler: { success in
-                    print(entityDoc)
+//                    print(entityDoc)
                     callback()
                 })
             }

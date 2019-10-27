@@ -86,18 +86,11 @@ class DisplayEventsViewController: UITableViewController, DisplayEventsDisplayLo
         detailVC.editEventDelegate = self
         
         tableView.register(DisplayEventsHeaderView.self, forHeaderFooterViewReuseIdentifier: "EventsHeaderView")
-        guard let tabBarCont = UIApplication.shared.keyWindow?.rootViewController as? UITabBarController else {
-            print("Could not get UITabBarController")
-            return
-        }
         
-        let tbFrame = tabBarCont.tabBar.frame
-        if tbFrame.origin.x == 0 {
-            let detailVCView = detailVC.view
-            let detailVCViewWidth = detailVCView!.frame.size.width
-            let tbFrameCurrentWidth = tbFrame.size.width
-            tabBarCont.tabBar.frame = CGRect(x: tbFrameCurrentWidth - detailVCViewWidth, y: tbFrame.origin.y, width: detailVCViewWidth, height: tbFrame.size.height)
-        }
+       let kw = UIApplication.shared.windows.first { $0.isKeyWindow }
+       let splitVCRect = splitVC?.viewControllers[0].view.frame
+       splitVC?.viewControllers[0].view.frame = CGRect(x: 0, y: 0, width: splitVCRect!.width, height: (kw!.frame.size.height) - 10)
+        
         interactor!.resetData()
         
         var entity: Entity?
@@ -138,7 +131,7 @@ class DisplayEventsViewController: UITableViewController, DisplayEventsDisplayLo
     
     
     @objc internal func meetingGroupButtonPressed(_ sender: UIButton) {
-        let meetingGroupPopUpController = DisplayMeetingGroupsPopUpViewController(entity: getCurrentEntity(), includePreviousGroups: true)
+        let meetingGroupPopUpController = DisplayMeetingGroupsPopUpViewController(entity: getCurrentEntity(), includeDeletedGroups: true)
         meetingGroupPopUpController.modalPresentationStyle = .popover
         present(meetingGroupPopUpController, animated: true, completion: nil)
         
@@ -169,8 +162,8 @@ class DisplayEventsViewController: UITableViewController, DisplayEventsDisplayLo
     }
     
     
-    func fetchEventsForPreviousGroups() {
-        interactor!.fetchEventsForPreviousGroups()
+    func fetchEventsForDeletedGroups() {
+        interactor!.fetchEventsForDeletedGroups()
     }
     
     
@@ -291,14 +284,14 @@ class DisplayEventsViewController: UITableViewController, DisplayEventsDisplayLo
         dismiss(animated: true, completion: nil)
     }
     
-    func didSelectPreviousGroupsInPopUpViewController() {
+    func didSelectDeletedGroupsInPopUpViewController() {
         let header = tableView.headerView(forSection: 0) as! DisplayEventsHeaderView
         header.meetinGroupButton?.setTitle("Deleted groups", for: .normal)
         header.meetinGroupButton?.setTitleColor(UIColor.black, for: .normal)
         header.meetinGroupButton?.titleLabel?.textAlignment = .center
 //        setMeetingGroup(meetingGroup: meetingGroup)
         addEventButton.isEnabled = false
-        fetchEventsForPreviousGroups()
+        fetchEventsForDeletedGroups()
         dismiss(animated: true, completion: nil)
     }
     

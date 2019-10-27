@@ -74,13 +74,13 @@ class DisplayMeetingGroupsForReportsViewController: UITableViewController, Displ
     
     override func viewDidAppear(_ animated: Bool) {
         tableView.register(DisplayMtgGpsForReportsHeaderView.self, forHeaderFooterViewReuseIdentifier: "ReportMeetingGroupHeaderView")
-        
-        guard let tabBarCont = UIApplication.shared.keyWindow?.rootViewController as? UITabBarController else {
+        let kw = UIApplication.shared.windows.first { $0.isKeyWindow }
+        guard let tabBarCont = kw?.rootViewController as? UITabBarController else {
             print("DisplayMeetingGroupsForReportsViewController: could not get UITabBarController")
             return
         }
         let tbFrame = tabBarCont.tabBar.frame
-        tabBarCont.tabBar.frame = CGRect(x:0, y: tbFrame.origin.y, width: (UIApplication.shared.keyWindow?.frame.size.width)!, height: tbFrame.size.height)
+        tabBarCont.tabBar.frame = CGRect(x:0, y: tbFrame.origin.y, width: (kw?.frame.size.width)!, height: tbFrame.size.height)
 
         if let savedEntity = UserDefaultsManager.getCurrentEntity() {
             let header = tableView.headerView(forSection: 0) as! DisplayMtgGpsForReportsHeaderView
@@ -192,7 +192,6 @@ class DisplayMeetingGroupsForReportsViewController: UITableViewController, Displ
             if header == nil {
                 header = DisplayMtgGpsForReportsHeaderView(reuseIdentifier: "ReportMeetingGroupHeaderView")
             }
-            print("viewForHeader")
             return header
         }
         else {

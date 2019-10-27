@@ -14,7 +14,7 @@ import UIKit
 
 protocol MeetingGroupsPopUpViewControllerDelegate: class {
     func didSelectMeetingGroupInPopUpViewController(_ viewController: DisplayMeetingGroupsPopUpViewController, meetingGroup: MeetingGroup)
-    func didSelectPreviousGroupsInPopUpViewController()
+    func didSelectDeletedGroupsInPopUpViewController()
 }
 
 protocol DisplayMeetingGroupsPopUpDisplayLogic: class {
@@ -55,10 +55,10 @@ class  DisplayMeetingGroupsPopUpViewController: UIViewController, UITableViewDel
     
     // MARK: Object lifecycle
     
-    convenience init(entity: Entity, includePreviousGroups: Bool?) {
+    convenience init(entity: Entity, includeDeletedGroups: Bool?) {
         self.init(nibName: nil, bundle: nil)
-        if includePreviousGroups != nil {
-            interactor!.setIncludePrevious(previous: includePreviousGroups!) 
+        if includeDeletedGroups != nil {
+            interactor!.setIncludeDeletedGroups(includeDeletedGroups: includeDeletedGroups!)
         }
         interactor!.setEntity(entity: entity)
     }
@@ -194,7 +194,7 @@ class  DisplayMeetingGroupsPopUpViewController: UIViewController, UITableViewDel
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let selectedCell = tableView.cellForRow(at: indexPath)
         if selectedCell?.textLabel?.text == "Deleted groups" {
-            delegate?.didSelectPreviousGroupsInPopUpViewController()
+            delegate?.didSelectDeletedGroupsInPopUpViewController()
         }
         else {
             var idx = indexPath.row

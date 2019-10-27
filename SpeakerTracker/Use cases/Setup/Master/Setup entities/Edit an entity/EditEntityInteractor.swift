@@ -52,7 +52,7 @@ class EditEntityInteractor: EditEntityBusinessLogic, EditEntityDataStore {
                 entityDoc.entity = entity
                 entityDoc.updateChangeCount(.done)
                 entityDoc.close(completionHandler: { success in
-                    print(entityDoc)
+//                    print(entityDoc)
                     callback()
                 })
             }

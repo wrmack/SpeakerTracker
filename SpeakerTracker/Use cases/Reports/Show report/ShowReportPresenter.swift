@@ -125,7 +125,7 @@ class ShowReportPresenter: ShowReportPresentationLogic {
         }
         
         attString.fixAttributes(in: NSRange(location: 0, length: attString.length))
-        print(attString)
+//        print(attString)
         
         let viewModel = ShowReport.Report.ViewModel(attText: attString)
         viewController?.displayText(viewModel: viewModel)

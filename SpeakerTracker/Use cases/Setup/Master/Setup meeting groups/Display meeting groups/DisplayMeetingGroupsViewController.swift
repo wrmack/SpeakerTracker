@@ -114,18 +114,11 @@ class DisplayMeetingGroupsViewController: UITableViewController, DisplayMeetingG
         let detailNavC = splitVC?.viewControllers[1] as! UINavigationController
         let detailVC = detailNavC.viewControllers[0] as! DisplayDetailViewController
         detailVC.editMeetingGroupDelegate = self
-  
-        guard let tabBarCont = UIApplication.shared.keyWindow?.rootViewController as? UITabBarController else {
-            print("DisplayMeetingGroupsViewController: could not get UITabBarController")
-            return
-        }
-        let tbFrame = tabBarCont.tabBar.frame
-        if tbFrame.origin.x == 0 {
-            let detailVCView = detailVC.view
-            let detailVCViewWidth = detailVCView!.frame.size.width
-            let tbFrameCurrentWidth = tbFrame.size.width
-            tabBarCont.tabBar.frame = CGRect(x: tbFrameCurrentWidth - detailVCViewWidth, y: tbFrame.origin.y, width: detailVCViewWidth, height: tbFrame.size.height)
-        }
+        
+       let kw = UIApplication.shared.windows.first { $0.isKeyWindow }
+       let splitVCRect = splitVC?.viewControllers[0].view.frame
+       splitVC?.viewControllers[0].view.frame = CGRect(x: 0, y: 0, width: splitVCRect!.width, height: (kw!.frame.size.height) - 10)
+        
         var entity: Entity?
         if let currentEntity = UserDefaultsManager.getCurrentEntity() {
             entity = currentEntity

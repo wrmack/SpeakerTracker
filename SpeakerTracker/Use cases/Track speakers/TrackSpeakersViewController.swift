@@ -156,6 +156,9 @@ class TrackSpeakersViewController: UIViewController, TrackSpeakersDisplayLogic {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+//    override func viewWillAppear(_ animated: Bool) {
+//        super.viewWillAppear(animated)
+    
         // Appearance tweaks
         undoButton.layer.cornerRadius = 2
         resetButton.layer.cornerRadius = 2
@@ -223,13 +226,21 @@ class TrackSpeakersViewController: UIViewController, TrackSpeakersDisplayLogic {
         setupTableCollection()
     }
     
- 
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+    }
+    
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+    }
     
     /*
      Adjust tab bar of original UITabBarController once views have loaded
      */
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+
         let appVersionString: String = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as! String
         let appVersionFloat = Float(appVersionString)
         if UserDefaults.standard.object(forKey: "Version") == nil {
@@ -259,7 +270,8 @@ class TrackSpeakersViewController: UIViewController, TrackSpeakersDisplayLogic {
         
     
     func setupAfterViewAppears() {
-        let tabBarCont = UIApplication.shared.keyWindow?.rootViewController as! UITabBarController
+        let kw = UIApplication.shared.windows.first { $0.isKeyWindow }
+        let tabBarCont = kw?.rootViewController as! UITabBarController
         let tabBarRect = tabBarCont.tabBar.frame
         tabBarCont.tabBar.frame = CGRect(x: view.frame.origin.x, y: tabBarRect.origin.y, width: view.frame.size.width, height: tabBarRect.size.height)
         for item in tabBarCont.tabBar.items! {

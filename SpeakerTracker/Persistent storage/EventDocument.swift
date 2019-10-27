@@ -50,7 +50,7 @@ class EventDocument: UIDocument {
         directoryFileWrapper = contents as? FileWrapper
         let fileWrappers: Dictionary  = directoryFileWrapper!.fileWrappers!
         for (key, filewrapper) in fileWrappers {
-            print((key, filewrapper))
+//            print((key, filewrapper))
             
             if key == "Event" {
                 let eventData = filewrapper.regularFileContents

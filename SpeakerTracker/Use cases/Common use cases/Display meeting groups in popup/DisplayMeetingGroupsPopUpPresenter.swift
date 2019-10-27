@@ -22,7 +22,7 @@ class DisplayMeetingGroupsPopUpPresenter:  DisplayMeetingGroupsPopUpPresentation
 
     func presentMeetingGroups(response:  DisplayMeetingGroupsPopUp.MeetingGroups.Response) {
         var meetingGroupNames = [String]()
-        if response.includePreviousGroups != nil && response.includePreviousGroups! == true {
+        if response.includeDeletedGroups != nil && response.includeDeletedGroups! == true {
             meetingGroupNames.append("Deleted groups")
         }
         for meetingGroup in response.meetingGroups! {

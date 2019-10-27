@@ -77,7 +77,7 @@ class RemoveMemberInteractor: RemoveMemberBusinessLogic, RemoveMemberDataStore {
                 entityDoc.updateChangeCount(.done)
                 entityDoc.close(completionHandler: { success in
                     self.member = nil
-                    print(entityDoc)
+//                    print(entityDoc)
                     callback()
                 })
             }

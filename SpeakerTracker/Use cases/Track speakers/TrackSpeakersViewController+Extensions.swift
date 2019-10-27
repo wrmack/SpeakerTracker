@@ -37,6 +37,8 @@ extension TrackSpeakersViewController: UITableViewDataSource, UITableViewDelegat
     
     internal func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
+        if tableCollection.count == 0 { return 0}
+        
         let tag = tableView.tag
         var numRows = 0
         
@@ -78,7 +80,7 @@ extension TrackSpeakersViewController: UITableViewDataSource, UITableViewDelegat
         switch tag {
         case 1:
             var name: String?
-            var nameDictionary = tableCollection[0].nameDictionary
+            let nameDictionary = tableCollection[0].nameDictionary
             if nameDictionary!.count > 0  {
                 let memberNameWithTimeArray = nameDictionary![indexPath.section]
                 let memberNameWithTime = memberNameWithTimeArray![indexPath.row]
@@ -89,7 +91,7 @@ extension TrackSpeakersViewController: UITableViewDataSource, UITableViewDelegat
             
         case 2:
             var name: String?
-            var nameDictionary = tableCollection[1].nameDictionary
+            let nameDictionary = tableCollection[1].nameDictionary
             if nameDictionary!.count > 0  {
                 let memberNameWithTimeArray = nameDictionary![indexPath.section]
                 let memberNameWithTime = memberNameWithTimeArray![indexPath.row]
@@ -102,7 +104,7 @@ extension TrackSpeakersViewController: UITableViewDataSource, UITableViewDelegat
             var name: String?
             var time: String?
             var status = SpeakingStatus.notYetSpoken
-            var nameDictionary = tableCollection[2].nameDictionary
+            let nameDictionary = tableCollection[2].nameDictionary
             if nameDictionary!.count > 0  {
                 let memberNameWithTimeArray = nameDictionary![indexPath.section]
                 let memberNameWithTime = memberNameWithTimeArray![indexPath.row]
@@ -283,7 +285,8 @@ extension TrackSpeakersViewController: UITableViewDataSource, UITableViewDelegat
         guard let pressIndexPath = speakingTable?.indexPathForRow(at: pressLocation)  else { return }
         let cell = speakingTable.cellForRow(at: pressIndexPath)
         let menuController = UIMenuController.shared
-        menuController.setTargetRect((cell?.contentView.frame)!, in: (cell?.contentView)!)
+        menuController.showMenu(from: (cell?.contentView)!, rect: (cell?.contentView.frame)!)
+//        menuController.setTargetRect((cell?.contentView.frame)!, in: (cell?.contentView)!)
         var items = [UIMenuItem]()
         if pressIndexPath.section == 0 && pressIndexPath.row == 0 {
             longPressTablePosition = TablePosition(tableIndex: 2, tableSection: 0, tableRow: 0)
@@ -308,7 +311,7 @@ extension TrackSpeakersViewController: UITableViewDataSource, UITableViewDelegat
             }
         }
         menuController.menuItems = items
-        menuController.setMenuVisible(true, animated: true)
+//        menuController.setMenuVisible(true, animated: true)
     }
     
     

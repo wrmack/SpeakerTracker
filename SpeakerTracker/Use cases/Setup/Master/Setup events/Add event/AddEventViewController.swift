@@ -92,7 +92,6 @@ class AddEventViewController: UIViewController {
         let df = DateFormatter()
         df.dateFormat = "yyyy-MM-dd_hh-mm"
         let newDateString = df.string(from: newDateWithTime!)
-        print(newDateString)
         let id = UUID()
         let event = Event(date: newDateWithTime, entity: nil, meetingGroup: nil, note: editView!.eventNoteBox?.text, debates: nil, id: id, filename: newDateString)
         interactor?.saveEventToDisk(event: event, callback: {

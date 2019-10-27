@@ -130,11 +130,14 @@
 		41D0E7F4216000C800BEB784 /* DisplayMeetingGroupsHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41D0E7F3216000C800BEB784 /* DisplayMeetingGroupsHeaderView.swift */; };
 		41D0E7F62160070F00BEB784 /* DisplayMembersHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41D0E7F52160070F00BEB784 /* DisplayMembersHeaderView.swift */; };
 		41D0E7F821600B9A00BEB784 /* DisplayEventsHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41D0E7F721600B9A00BEB784 /* DisplayEventsHeaderView.swift */; };
+		41D10EA323487A5F0040804C /* Launch.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 41D10EA223487A5F0040804C /* Launch.storyboard */; };
+		41D10EA4234884BB0040804C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5F782E3F1D4B152F00144EA9 /* Assets.xcassets */; };
 		41D167EE215594CC004C1A5C /* DisplayReportsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41D167E8215594CC004C1A5C /* DisplayReportsPresenter.swift */; };
 		41D167F0215594CC004C1A5C /* DisplayReportsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41D167EA215594CC004C1A5C /* DisplayReportsRouter.swift */; };
 		41D167F1215594CC004C1A5C /* DisplayReportsModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41D167EB215594CC004C1A5C /* DisplayReportsModels.swift */; };
 		41D167F2215594CC004C1A5C /* DisplayReportsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41D167EC215594CC004C1A5C /* DisplayReportsViewController.swift */; };
 		41D167F3215594CC004C1A5C /* DisplayReportsInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41D167ED215594CC004C1A5C /* DisplayReportsInteractor.swift */; };
+		41D333F5234B194800790F1F /* WMTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41D333F4234B194800790F1F /* WMTabBar.swift */; };
 		41D4F3E0214268C800DC848F /* DisplayEntitiesPopUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41D4F3DF214268C800DC848F /* DisplayEntitiesPopUpViewController.swift */; };
 		41D4F3E521427C1100DC848F /* DisplayEntitiesPopUpPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41D4F3E421427C1100DC848F /* DisplayEntitiesPopUpPresenter.swift */; };
 		41D4F3E721427C4900DC848F /* DisplayEntitiesPopUpInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41D4F3E621427C4900DC848F /* DisplayEntitiesPopUpInteractor.swift */; };
@@ -159,8 +162,6 @@
 		41F721952139F75400AD98AA /* DisplayEntitiesInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41F7218F2139F75400AD98AA /* DisplayEntitiesInteractor.swift */; };
 		5F782E391D4B152F00144EA9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F782E381D4B152F00144EA9 /* AppDelegate.swift */; };
 		5F782E3E1D4B152F00144EA9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5F782E3C1D4B152F00144EA9 /* Main.storyboard */; };
-		5F782E401D4B152F00144EA9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5F782E3F1D4B152F00144EA9 /* Assets.xcassets */; };
-		5F782E431D4B152F00144EA9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5F782E411D4B152F00144EA9 /* LaunchScreen.storyboard */; };
 		5F782E591D4B153000144EA9 /* SpeakerTrackerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F782E581D4B153000144EA9 /* SpeakerTrackerUITests.swift */; };
 		5F8BE5631D546F310040DD76 /* WMTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F8BE5611D546F310040DD76 /* WMTableViewCell.swift */; };
 /* End PBXBuildFile section */
@@ -320,11 +321,13 @@
 		41D0E7F3216000C800BEB784 /* DisplayMeetingGroupsHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayMeetingGroupsHeaderView.swift; sourceTree = "<group>"; };
 		41D0E7F52160070F00BEB784 /* DisplayMembersHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayMembersHeaderView.swift; sourceTree = "<group>"; };
 		41D0E7F721600B9A00BEB784 /* DisplayEventsHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayEventsHeaderView.swift; sourceTree = "<group>"; };
+		41D10EA223487A5F0040804C /* Launch.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Launch.storyboard; sourceTree = "<group>"; };
 		41D167E8215594CC004C1A5C /* DisplayReportsPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayReportsPresenter.swift; sourceTree = "<group>"; };
 		41D167EA215594CC004C1A5C /* DisplayReportsRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayReportsRouter.swift; sourceTree = "<group>"; };
 		41D167EB215594CC004C1A5C /* DisplayReportsModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayReportsModels.swift; sourceTree = "<group>"; };
 		41D167EC215594CC004C1A5C /* DisplayReportsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayReportsViewController.swift; sourceTree = "<group>"; };
 		41D167ED215594CC004C1A5C /* DisplayReportsInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayReportsInteractor.swift; sourceTree = "<group>"; };
+		41D333F4234B194800790F1F /* WMTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WMTabBar.swift; sourceTree = "<group>"; };
 		41D4F3DF214268C800DC848F /* DisplayEntitiesPopUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayEntitiesPopUpViewController.swift; sourceTree = "<group>"; };
 		41D4F3E421427C1100DC848F /* DisplayEntitiesPopUpPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayEntitiesPopUpPresenter.swift; sourceTree = "<group>"; };
 		41D4F3E621427C4900DC848F /* DisplayEntitiesPopUpInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayEntitiesPopUpInteractor.swift; sourceTree = "<group>"; };
@@ -352,7 +355,6 @@
 		5F782E381D4B152F00144EA9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5F782E3D1D4B152F00144EA9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		5F782E3F1D4B152F00144EA9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		5F782E421D4B152F00144EA9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5F782E441D4B152F00144EA9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5F782E491D4B153000144EA9 /* SpeakerTrackerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SpeakerTrackerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5F782E4F1D4B153000144EA9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -423,6 +425,7 @@
 				4114D7C62167D78B002DC056 /* WMTextField.swift */,
 				4114D7C82167DADC002DC056 /* WMEditView.swift */,
 				4114D7D721685A61002DC056 /* WMLabel.swift */,
+				41D333F4234B194800790F1F /* WMTabBar.swift */,
 			);
 			path = "UI sub-classes";
 			sourceTree = "<group>";
@@ -999,8 +1002,8 @@
 			isa = PBXGroup;
 			children = (
 				5F782E381D4B152F00144EA9 /* AppDelegate.swift */,
-				5F782E411D4B152F00144EA9 /* LaunchScreen.storyboard */,
 				5F782E3C1D4B152F00144EA9 /* Main.storyboard */,
+				41D10EA223487A5F0040804C /* Launch.storyboard */,
 				5F782E441D4B152F00144EA9 /* Info.plist */,
 				5F782E3F1D4B152F00144EA9 /* Assets.xcassets */,
 				411EBAF62246DA01001D2EA5 /* Utilities */,
@@ -1154,9 +1157,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5F782E431D4B152F00144EA9 /* LaunchScreen.storyboard in Resources */,
-				5F782E401D4B152F00144EA9 /* Assets.xcassets in Resources */,
+				41D10EA4234884BB0040804C /* Assets.xcassets in Resources */,
 				5F782E3E1D4B152F00144EA9 /* Main.storyboard in Resources */,
+				41D10EA323487A5F0040804C /* Launch.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1220,6 +1223,7 @@
 				41D8A3D52161F18E0066FAE8 /* EditEntityInteractor.swift in Sources */,
 				41C3C763214365A9004AD9D9 /* EditMeetingGroupView.swift in Sources */,
 				41C3C75321435882004AD9D9 /* DisplayMeetingGroupsModels.swift in Sources */,
+				41D333F5234B194800790F1F /* WMTabBar.swift in Sources */,
 				4114D7D821685A61002DC056 /* WMLabel.swift in Sources */,
 				41D167F0215594CC004C1A5C /* DisplayReportsRouter.swift in Sources */,
 				41253B30215EBA0100A5A062 /* DisplayMtgGpsForReportsHeaderView.swift in Sources */,
@@ -1375,14 +1379,6 @@
 			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
-		5F782E411D4B152F00144EA9 /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				5F782E421D4B152F00144EA9 /* Base */,
-			);
-			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
@@ -1435,7 +1431,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -1489,7 +1485,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
@@ -1504,14 +1500,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = SpeakerTracker/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 2.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.wm.SpeakerTracker;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -1523,14 +1519,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = SpeakerTracker/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 2.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.wm.SpeakerTracker;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;

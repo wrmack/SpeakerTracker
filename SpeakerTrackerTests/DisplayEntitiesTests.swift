@@ -44,7 +44,8 @@ class DisplayEntitiesTests: XCTestCase {
         let storyboard = UIStoryboard(name: "Main", bundle: bundle)
         // Load rootviewcontroller
         let initialTabBarCon = storyboard.instantiateInitialViewController() as! UITabBarController
-        UIApplication.shared.keyWindow?.rootViewController = initialTabBarCon
+        let kw = UIApplication.shared.windows.first { $0.isKeyWindow }
+        kw?.rootViewController = initialTabBarCon
         // Load setup tab
         initialTabBarCon.selectedIndex = 1
         // Get sut

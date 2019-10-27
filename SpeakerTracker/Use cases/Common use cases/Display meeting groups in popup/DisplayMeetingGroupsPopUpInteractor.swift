@@ -16,7 +16,7 @@ protocol  DisplayMeetingGroupsPopUpBusinessLogic {
     func fetchMeetingGroups(request:  DisplayMeetingGroupsPopUp.MeetingGroups.Request)
     func getMeetingGroup(index: Int) -> MeetingGroup
     func setEntity(entity: Entity?)
-    func setIncludePrevious(previous: Bool)
+    func setIncludeDeletedGroups(includeDeletedGroups: Bool)
 }
 
 protocol  DisplayMeetingGroupsPopUpDataStore {
@@ -28,7 +28,7 @@ class  DisplayMeetingGroupsPopUpInteractor:  DisplayMeetingGroupsPopUpBusinessLo
     var entity: Entity?
     var meetingGroup: MeetingGroup?
     var meetingGroups = [MeetingGroup]()
-    var includePreviousGroups: Bool?
+    var includeDeletedGroups: Bool?
 
 
 
@@ -42,7 +42,7 @@ class  DisplayMeetingGroupsPopUpInteractor:  DisplayMeetingGroupsPopUpBusinessLo
                 return false
             })
         }
-        let response = DisplayMeetingGroupsPopUp.MeetingGroups.Response(meetingGroups: self.meetingGroups, includePreviousGroups: includePreviousGroups)
+        let response = DisplayMeetingGroupsPopUp.MeetingGroups.Response(meetingGroups: self.meetingGroups, includeDeletedGroups: includeDeletedGroups)
         self.presenter?.presentMeetingGroups(response: response)
     }
     
@@ -55,7 +55,7 @@ class  DisplayMeetingGroupsPopUpInteractor:  DisplayMeetingGroupsPopUpBusinessLo
         self.entity = entity
     }
     
-    func setIncludePrevious(previous: Bool) {
-        self.includePreviousGroups = previous
+    func setIncludeDeletedGroups(includeDeletedGroups: Bool) {
+        self.includeDeletedGroups = includeDeletedGroups
     }
 }

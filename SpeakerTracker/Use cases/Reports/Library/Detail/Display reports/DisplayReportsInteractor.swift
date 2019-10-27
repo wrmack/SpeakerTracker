@@ -145,7 +145,7 @@ class DisplayReportsInteractor: DisplayReportsBusinessLogic, DisplayReportsDataS
                                     let urlWithoutExt = eventUrl.deletingPathExtension()
                                     event.filename = urlWithoutExt.lastPathComponent
                                 }
-                                if event.meetingGroupStatus == MeetingGroupStatus.previous {
+                                if event.meetingGroupStatus == MeetingGroupStatus.deleted {
                                     self.events!.append(event)
                                 }
                                 self.events?.sort(by: { evt1, evt2 in

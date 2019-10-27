@@ -128,7 +128,7 @@ class DisplayReportsViewController: UICollectionViewController, DisplayReportsDi
     // MARK: - Collection view delegate methods
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print("Selected item: \(indexPath.item)")
+//        print("Selected item: \(indexPath.item)")
         interactor!.setSelectedItem(item: indexPath.item)
         router?.passSelectedItemToShowReport()
     }

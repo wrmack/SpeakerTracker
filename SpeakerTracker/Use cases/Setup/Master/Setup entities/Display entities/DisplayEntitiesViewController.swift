@@ -75,31 +75,28 @@ class DisplayEntitiesViewController: UITableViewController, DisplayEntitiesDispl
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        let splitVC = splitViewController
+        let masterTabBarCont = (splitVC?.viewControllers[0])!
+        let traitColl = UITraitCollection(horizontalSizeClass: .compact)
+        splitVC?.setOverrideTraitCollection(traitColl, forChild: masterTabBarCont)
     }
-
+    
+    
     /*
-     Adjust tab bar of original UITabBarController once views have loaded
+     Assign the detail view controller delegate to self.
+     Change the height of the master view controller view.
      */
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+
         let splitVC = splitViewController
         let detailVC = (splitVC?.viewControllers[1] as! UINavigationController).viewControllers[0] as! DisplayDetailViewController
         detailVC.editEntityDelegate = self
-        guard let tabBarCont = UIApplication.shared.keyWindow?.rootViewController as? UITabBarController else {
-            print("DisplayEntitiesViewController: could not get UITabBarController")
-            return
-        }
-
-        let tbFrame = tabBarCont.tabBar.frame
-        if tbFrame.origin.x == 0 {
-            let splitVC = splitViewController
-            let detailVC = (splitVC?.viewControllers[1] as! UINavigationController).viewControllers[0] as! DisplayDetailViewController
-            let detailVCView = detailVC.view
-            let detailVCViewWidth = detailVCView!.frame.size.width
-            let tbFrameCurrentWidth = tbFrame.size.width
-            tabBarCont.tabBar.frame = CGRect(x: tbFrameCurrentWidth - detailVCViewWidth, y: tbFrame.origin.y, width: detailVCViewWidth, height: tbFrame.size.height)
-        }
-
+        
+        let kw = UIApplication.shared.windows.first { $0.isKeyWindow }
+        let splitVCRect = splitVC?.viewControllers[0].view.frame
+        splitVC?.viewControllers[0].view.frame = CGRect(x: 0, y: 0, width: splitVCRect!.width, height: (kw!.frame.size.height) - 10)
+        
         fetchEntities()
     }
     

@@ -180,7 +180,7 @@ class SelectMembersViewController: UIViewController, SelectMembersDisplayLogic, 
             selectedCell?.accessoryType = UITableViewCell.AccessoryType.checkmark
             if selectedRows == nil { selectedRows = [Int]()}
             selectedRows?.append(indexPath.row)
-            print("Selected rows: \(selectedRows!)")
+//            print("Selected rows: \(selectedRows!)")
         }
         else if (selectedCell?.accessoryType ==  UITableViewCell.AccessoryType.checkmark ) {
             selectedCell?.accessoryType = UITableViewCell.AccessoryType.none

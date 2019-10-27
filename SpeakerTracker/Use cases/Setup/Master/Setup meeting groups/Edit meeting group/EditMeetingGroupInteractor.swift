@@ -92,7 +92,7 @@ class EditMeetingGroupInteractor: EditMeetingGroupBusinessLogic, EditMeetingGrou
                 }
                 entityDoc.updateChangeCount(.done)
                 entityDoc.close(completionHandler: { success in
-                    print(entityDoc)
+//                    print(entityDoc)
                     callback()
                 })
             }

@@ -66,7 +66,7 @@ class AddMemberInteractor: AddMemberBusinessLogic, AddMemberDataStore {
                 entityDoc.entity = self.entity
                 entityDoc.updateChangeCount(.done)
                 entityDoc.close(completionHandler: { success in
-                    print(entityDoc)
+//                    print(entityDoc)
                     callback()
                 })
             }

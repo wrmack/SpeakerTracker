@@ -69,6 +69,8 @@ class DebateSectionHeaderView: UITableViewHeaderFooterView {
         debateSectionLabel!.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10).isActive = true
         debateSectionLabel!.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10).isActive = true
         debateSectionLabel!.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 4).isActive = true
+        debateSectionLabel!.widthAnchor.constraint(equalTo: contentView.widthAnchor, constant: -20).isActive = true
+
         
         notesButton = UIButton(type: .system)
         notesButton?.setImage(UIImage(named: "Pencil"), for: .normal)

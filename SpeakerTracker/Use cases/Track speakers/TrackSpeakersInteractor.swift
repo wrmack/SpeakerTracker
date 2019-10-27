@@ -315,7 +315,7 @@ class TrackSpeakersInteractor: TrackSpeakersBusinessLogic, TrackSpeakersDataStor
         })
         mainMotionRemainingList = remainingList
         mainMotionWaitingList = waitingList
-        var speakers = speakingList[speakingListNumberOfSections - 1]
+        let speakers = speakingList[speakingListNumberOfSections - 1]
         let finalSpeaker = speakers![speakers!.count - 1].member
         let allMembers = currentMeetingGroupMembers
         let membersNotIncluding = allMembers.filter {$0 != finalSpeaker }

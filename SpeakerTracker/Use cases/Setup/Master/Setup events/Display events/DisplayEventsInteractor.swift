@@ -14,7 +14,7 @@ import UIKit
 
 protocol DisplayEventsBusinessLogic {
     func fetchEvents(request: DisplayEvents.Events.Request)
-    func fetchEventsForPreviousGroups()
+    func fetchEventsForDeletedGroups()
     func getCurrentEventIndex()->Int?
     func setCurrentEvent(index: Int?)
     func setMeetingGroup(meetingGroup: MeetingGroup)
@@ -114,11 +114,11 @@ class DisplayEventsInteractor: DisplayEventsBusinessLogic, DisplayEventsDataStor
     }
     
     
-    func fetchEventsForPreviousGroups() {
+    func fetchEventsForDeletedGroups() {
         events = [Event]()
         let fileManager = FileManager.default
         guard let docDirectory = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first else {
-            print("DisplayEventsInteractor: fetchEventsForPreviousGroups: error: Document directory not found")
+            print("DisplayEventsInteractor: fetchEventsForPDeletedGroups: error: Document directory not found")
             return
         }
         do {
@@ -141,15 +141,15 @@ class DisplayEventsInteractor: DisplayEventsBusinessLogic, DisplayEventsDataStor
                     let eventDoc = EventDocument(fileURL: eventUrl)
                     eventDoc.open(completionHandler: { success in
                         if !success {
-                            print("DisplayEventsInteractor: fetchEventsForPreviousGroups: error opening EventDocument")
+                            print("DisplayEventsInteractor: fetchEventsForDeletedGroups: error opening EventDocument")
                             return
                         }
                         else {
-                            guard var event = eventDoc.event else {
-                                print("DisplayEventsPopUpInteractor: fetchEventsForPreviousGroups: event is nil")
+                            guard let event = eventDoc.event else {
+                                print("DisplayEventsPopUpInteractor: fetchEventsForDeletedGroups: event is nil")
                                 return
                             }
-                            if event.entity == self.entity && event.meetingGroupStatus == .previous {
+                            if event.entity == self.entity && event.meetingGroupStatus == .deleted {
 //                                if event.meetingGroup?.memberIDs == nil {
 //                                    event.meetingGroup?.memberIDs = [UUID]()
 //                                }

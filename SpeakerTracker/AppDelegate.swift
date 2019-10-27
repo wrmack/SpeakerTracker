@@ -23,7 +23,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             return false
         }
         print(docDirectory)
-        print("User defaults:  \(UserDefaults.standard.dictionaryRepresentation())")
+//        print("User defaults:  \(UserDefaults.standard.dictionaryRepresentation())")
         return true
     }
     

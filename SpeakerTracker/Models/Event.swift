@@ -76,5 +76,5 @@ struct SpeakerEvent: Codable {
 
 enum MeetingGroupStatus: String, Codable {
     case current
-    case previous
+    case deleted
 }

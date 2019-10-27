@@ -70,7 +70,7 @@ class RemoveMeetingGroupInteractor: RemoveMeetingGroupBusinessLogic, RemoveMeeti
                 }
                 entityDoc.updateChangeCount(.done)
                 entityDoc.close(completionHandler: { success in
-                    print(entityDoc)
+//                    print(entityDoc)
                     self.changeMeetingGroupStatusInEvents(callback: {
                         self.meetingGroup = nil
                         callback()
@@ -110,7 +110,7 @@ class RemoveMeetingGroupInteractor: RemoveMeetingGroupBusinessLogic, RemoveMeeti
                                 return
                             }
                             if event.meetingGroup == self.meetingGroup {
-                                event.meetingGroupStatus = .previous
+                                event.meetingGroupStatus = .deleted
                                 eventDoc.event = event
                                 eventDoc.updateChangeCount(.done)
                             }
