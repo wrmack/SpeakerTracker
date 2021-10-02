@@ -10,8 +10,8 @@ import Foundation
 
 
 class ReportsState : ObservableObject {
-    var events: [Event]?
-    var selectedEvent: Event?
+//    var events: [Event]?
+//    var selectedEvent: Event?
     
     init() {
         print("++++++ ReportsState initialised")

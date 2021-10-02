@@ -120,7 +120,7 @@ struct ContentView: View {
                     HStack(spacing: 0) {
                         DisplayMeetingGroupsForReportsView(selectedMasterRow: $selectedSetupMasterRow).frame(width: MASTERVIEW_WIDTH)
                         GeometryReader{ geo in
-                            DisplayReportsForMeetingGroupView()
+//                            DisplayReportsForMeetingGroupView()
                         }
                     }
                 }

@@ -43,7 +43,7 @@ struct WaitingTableList: View {
             }
          }
          .background(Color.white)
-         .environment(\.editMode, isEditable ? .constant(.active) : .constant(.inactive))
+//         .environment(\.editMode, isEditable ? .constant(.active) : .constant(.inactive))
 
       }
    }

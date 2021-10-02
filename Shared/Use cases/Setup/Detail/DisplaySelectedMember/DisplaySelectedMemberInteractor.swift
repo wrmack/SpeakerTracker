@@ -26,22 +26,22 @@ class DisplaySelectedMemberInteractor {
     func fetchMemberFromChangingEntity(presenter: DisplaySelectedMemberPresenter, entity: Entity, selectedMasterRow: Int) {
         print("DisplaySelectedMemberInteractor.fetchMember")
 
-        let row = selectedMasterRow
-        
-        var sortedMbrs = [Member]()
-        if entity.members != nil {
-           let members = entity.members!
-            sortedMbrs = members.sorted(by: {
-              if $0.lastName! < $1.lastName! {
-                 return true
-              }
-              return false
-           })
-        }
-        var currentMember: Member?
-        if sortedMbrs.count > 0 {
-            currentMember = sortedMbrs[row]
-        }
-        presenter.presentMemberDetail(member: currentMember)
+//        let row = selectedMasterRow
+//        
+//        var sortedMbrs = [Member]()
+//        if entity.members != nil {
+//           let members = entity.members!
+//            sortedMbrs = members.sorted(by: {
+//              if $0.lastName! < $1.lastName! {
+//                 return true
+//              }
+//              return false
+//           })
+//        }
+//        var currentMember: Member?
+//        if sortedMbrs.count > 0 {
+//            currentMember = sortedMbrs[row]
+//        }
+//        presenter.presentMemberDetail(member: currentMember)
    }
 }

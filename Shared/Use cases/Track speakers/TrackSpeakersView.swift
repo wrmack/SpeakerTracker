@@ -252,20 +252,20 @@ struct TrackSpeakersView: View {
             let interactor = TrackSpeakersInteractor()
             interactor.moveMember(moveAction: action, trackSpeakersState: trackSpeakersState)
         })
-        .onChange(of: memberTimerActions, perform: { action in
-            print("member timer action")
-            let interactor = TrackSpeakersInteractor()
-            interactor.setCurrentMemberTimerState(trackSpeakersState: trackSpeakersState, memberTimerAction: action)
-            if memberTimerActions.timerButtonPressed == .play {
-                playTimer()
-            }
-            if memberTimerActions.timerButtonPressed == .stop  {
-                stopTimer()
-            }
-            if memberTimerActions.timerButtonPressed == .pause  {
-                pauseTimer()
-            }
-        })
+//        .onChange(of: memberTimerActions, perform: { action in
+//            print("member timer action")
+//            let interactor = TrackSpeakersInteractor()
+//            interactor.setCurrentMemberTimerState(trackSpeakersState: trackSpeakersState, memberTimerAction: action)
+//            if memberTimerActions.timerButtonPressed == .play {
+//                playTimer()
+//            }
+//            if memberTimerActions.timerButtonPressed == .stop  {
+//                stopTimer()
+//            }
+//            if memberTimerActions.timerButtonPressed == .pause  {
+//                pauseTimer()
+//            }
+//        })
         .onChange(of: longPressAction, perform: { action in
             if action.type == .amendmentMover {
                 let interactor = TrackSpeakersInteractor()
@@ -320,24 +320,24 @@ struct TrackSpeakersView: View {
     }
 }
 
-struct TrackSpeakersView_Previews: PreviewProvider {
-    @State static var showMeetingSetupSheet = false
-    @State static var selectedEntityName = ""
-    @State static var isRecording = true
-    @EnvironmentObject static var trackSpeakersState: TrackSpeakersState
-    @EnvironmentObject static var entityState: EntityState
-    
-    static var previews: some View {
-        TrackSpeakersView(
-            showMeetingSetupSheet: $showMeetingSetupSheet,
-            selectedMeetingGroup: .constant(MeetingGroup(name: "Finance and Performance Committee", memberIDs: nil, fileName: nil)),
-            isRecording: $isRecording
-        )
-        .previewDevice("iPad Pro (12.9-inch) (5th generation)")
-        .previewDisplayName("iPad Pro (12.9-inch)")
-        .previewLayout(.fixed(width: 1366, height: 1024))
-        .environmentObject(EntityState())
-        .environmentObject(EventState())
-        .environmentObject(TrackSpeakersState())
-    }
-}
+//struct TrackSpeakersView_Previews: PreviewProvider {
+//    @State static var showMeetingSetupSheet = false
+//    @State static var selectedEntityName = ""
+//    @State static var isRecording = true
+//    @EnvironmentObject static var trackSpeakersState: TrackSpeakersState
+//    @EnvironmentObject static var entityState: EntityState
+//
+//    static var previews: some View {
+//        TrackSpeakersView(
+//            showMeetingSetupSheet: $showMeetingSetupSheet,
+//            selectedMeetingGroup: .constant(MeetingGroup(name: "Finance and Performance Committee", memberIDs: nil, fileName: nil)),
+//            isRecording: $isRecording
+//        )
+//        .previewDevice("iPad Pro (12.9-inch) (5th generation)")
+//        .previewDisplayName("iPad Pro (12.9-inch)")
+//        .previewLayout(.fixed(width: 1366, height: 1024))
+//        .environmentObject(EntityState())
+//        .environmentObject(EventState())
+//        .environmentObject(TrackSpeakersState())
+//    }
+//}

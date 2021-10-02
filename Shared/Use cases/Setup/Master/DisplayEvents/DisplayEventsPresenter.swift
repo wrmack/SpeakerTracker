@@ -13,26 +13,26 @@ struct EventSummary: Hashable {
     var idx: Int
 }
 
-class DisplayEventsPresenter : ObservableObject {
-    @Published var eventSummaries = [EventSummary]()
-    
-    func presentEventSummaries(events: [Event]) {
-        let savedEvents = events
-        var tempSummaries = [EventSummary]()
-        var idx = 0
-        savedEvents.forEach({ event in
-            let formatter = DateFormatter()
-            formatter.dateStyle = .none
-            formatter.timeStyle = .short
-            let timeString = formatter.string(from: event.date!)
-            formatter.dateStyle = .long
-            formatter.timeStyle = .none
-            let dateString = formatter.string(from: event.date!)
-            let timeDateString = timeString + ", " + dateString
-            let evSum = EventSummary(summary: timeDateString, idx: idx)
-            tempSummaries.append(evSum)
-            idx += 1
-        })
-        eventSummaries = tempSummaries
-    }
-}
+//class DisplayEventsPresenter : ObservableObject {
+//    @Published var eventSummaries = [EventSummary]()
+//    
+//    func presentEventSummaries(events: [Event]) {
+//        let savedEvents = events
+//        var tempSummaries = [EventSummary]()
+//        var idx = 0
+//        savedEvents.forEach({ event in
+//            let formatter = DateFormatter()
+//            formatter.dateStyle = .none
+//            formatter.timeStyle = .short
+//            let timeString = formatter.string(from: event.date!)
+//            formatter.dateStyle = .long
+//            formatter.timeStyle = .none
+//            let dateString = formatter.string(from: event.date!)
+//            let timeDateString = timeString + ", " + dateString
+//            let evSum = EventSummary(summary: timeDateString, idx: idx)
+//            tempSummaries.append(evSum)
+//            idx += 1
+//        })
+//        eventSummaries = tempSummaries
+//    }
+//}

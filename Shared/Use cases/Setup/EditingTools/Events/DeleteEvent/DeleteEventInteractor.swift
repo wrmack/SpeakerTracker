@@ -8,15 +8,15 @@
 
 import Foundation
 
-
-class DeleteEventInteractor {
-    
-    func displaySelectedEvent(setupState: SetupState, presenter: DeleteEventPresenter, selectedMasterRow: Int ) {
-        let event = setupState.sortedEvents![selectedMasterRow]
-        presenter.presentViewModel(selectedEvent: event)
-    }
-    
-    func deleteSelectedEvent(eventState: EventState, setupState: SetupState, selectedMasterRow: Int) {
-        
-    }
-}
+//
+//class DeleteEventInteractor {
+//    
+//    func displaySelectedEvent(setupState: SetupState, presenter: DeleteEventPresenter, selectedMasterRow: Int ) {
+//        let event = setupState.sortedEvents![selectedMasterRow]
+//        presenter.presentViewModel(selectedEvent: event)
+//    }
+//    
+//    func deleteSelectedEvent(eventState: EventState, setupState: SetupState, selectedMasterRow: Int) {
+//        
+//    }
+//}

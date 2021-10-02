@@ -55,7 +55,7 @@ class SetupState: ObservableObject {
 //    var sortedEntities: [Entity]?
 //    var sortedMembers: [Member]?
 //    var sortedMeetingGroups: [MeetingGroup]?
-    var sortedEvents: [Event]?
+//    var sortedEvents: [Event]?
 
     var membersDetailIsSetup = false
     var meetingGroupsDetailIsSetup = false

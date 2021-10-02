@@ -26,24 +26,24 @@ class DeleteEntityInteractor {
     }
     
     func deleteEntity(entityState: EntityState, indexOfEntityToDelete: Int) {
-        let entityState = entityState
-        let currentEntity = entityState.sortedEntities[indexOfEntityToDelete]
-        
-        guard let docDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else {
-            print("DeleteEntityInteractor: removEntity: error: Document directory not found")
-            return
-        }
-        let file = currentEntity.id.uuidString
-        let docFileURL = docDirectory.appendingPathComponent(file + ".ent")
-        do {
-            try FileManager.default.removeItem(at: docFileURL)
-            entityState.entities.removeAll(where: { entity in
-                entity.id == currentEntity.id
-            })
-            entityState.entityModelChanged = true
-        }
-        catch {
-            print(error)
-        }
+//        let entityState = entityState
+//        let currentEntity = entityState.sortedEntities[indexOfEntityToDelete]
+//        
+//        guard let docDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else {
+//            print("DeleteEntityInteractor: removEntity: error: Document directory not found")
+//            return
+//        }
+//        let file = currentEntity.id.uuidString
+//        let docFileURL = docDirectory.appendingPathComponent(file + ".ent")
+//        do {
+//            try FileManager.default.removeItem(at: docFileURL)
+//            entityState.entities.removeAll(where: { entity in
+//                entity.id == currentEntity.id
+//            })
+//            entityState.entityModelChanged = true
+//        }
+//        catch {
+//            print(error)
+//        }
     }
 }

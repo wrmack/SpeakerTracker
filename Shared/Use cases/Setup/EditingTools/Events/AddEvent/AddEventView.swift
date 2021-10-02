@@ -68,8 +68,9 @@ struct AddEventView: View {
                 if meetingGroups != nil && meetingGroups!.count > 0 {
                     Menu {
                         ForEach(meetingGroups!.indices, id: \.self) { idx in
-                            Button(entityState.entities[selectedEntityIndex ?? 0].meetingGroups![idx].name!, action: {
-                                    changeMeetingGroup(row: idx)})
+//                            Button(entityState.entities[selectedEntityIndex ?? 0].meetingGroups![idx].name!, action: {
+//                                    changeMeetingGroup(row: idx)}
+//                            )
                         }
                     } label: {
                         Text("Change")
@@ -98,26 +99,26 @@ struct AddEventView: View {
             }
             HStack {
 
-                DatePicker(
-                    "",
-                    selection: $eventDate,
-                    displayedComponents: [.date]
-                )
-                .frame(width: 300, height: 330, alignment: .leading)
-                .padding(EdgeInsets.init(top: 0, leading: 100, bottom: 0, trailing: 0))
-                .padding(Edge.Set.trailing,10)
-                .datePickerStyle(GraphicalDatePickerStyle())
-
-                DatePicker(
-                    "",
-                    selection: $eventTime,
-                    displayedComponents: [.hourAndMinute]
-                )
-                .frame(width: 290, height: 330, alignment: .leading)
-                .datePickerStyle(WheelDatePickerStyle())
-                .offset(x: -50)
-                .scaleEffect(CGSize(width: 0.7, height: 0.7))
-                .padding(0)
+//                DatePicker(
+//                    "",
+//                    selection: $eventDate,
+//                    displayedComponents: [.date]
+//                )
+//                .frame(width: 300, height: 330, alignment: .leading)
+//                .padding(EdgeInsets.init(top: 0, leading: 100, bottom: 0, trailing: 0))
+//                .padding(Edge.Set.trailing,10)
+//                .datePickerStyle(GraphicalDatePickerStyle())
+//
+//                DatePicker(
+//                    "",
+//                    selection: $eventTime,
+//                    displayedComponents: [.hourAndMinute]
+//                )
+//                .frame(width: 290, height: 330, alignment: .leading)
+//                .datePickerStyle(WheelDatePickerStyle())
+//                .offset(x: -50)
+//                .scaleEffect(CGSize(width: 0.7, height: 0.7))
+//                .padding(0)
 
             }
 
@@ -134,23 +135,23 @@ struct AddEventView: View {
     }
     
     func saveEvent() {
-        let interactor = AddEventInteractor()
-        interactor.saveEvent(entityState: entityState, entityIndex: selectedEntityIndex!, meetingGroupIndex: selectedMeetingGroupIndex!, date: eventDate, time: eventTime )
+//        let interactor = AddEventInteractor()
+//        interactor.saveEvent(entityState: entityState, entityIndex: selectedEntityIndex!, meetingGroupIndex: selectedMeetingGroupIndex!, date: eventDate, time: eventTime )
     }
     
     func changeEntity(row: Int) {
-        let interactor = AddEventInteractor()
-        let selectedEntity = interactor.fetchEntityForRow(entityState: entityState, row: row)
-        entityName = selectedEntity.name
-        meetingGroups = selectedEntity.meetingGroups
-        selectedEntityIndex = row
+//        let interactor = AddEventInteractor()
+//        let selectedEntity = interactor.fetchEntityForRow(entityState: entityState, row: row)
+//        entityName = selectedEntity.name
+//        meetingGroups = selectedEntity.meetingGroups
+//        selectedEntityIndex = row
     }
     
     func changeMeetingGroup(row: Int) {
-        let interactor = AddEventInteractor()
-        let selectedMeetingGroup = interactor.fetchMeetingGroupForRow(entityState: entityState, selectedEntityIndex: selectedEntityIndex!, row: row)
-        meetingGroupName = selectedMeetingGroup.name
-        selectedMeetingGroupIndex = row
+//        let interactor = AddEventInteractor()
+//        let selectedMeetingGroup = interactor.fetchMeetingGroupForRow(entityState: entityState, selectedEntityIndex: selectedEntityIndex!, row: row)
+//        meetingGroupName = selectedMeetingGroup.name
+//        selectedMeetingGroupIndex = row
     }
 }
 

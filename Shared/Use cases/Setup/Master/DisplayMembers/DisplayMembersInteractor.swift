@@ -24,7 +24,7 @@ class DisplayMembersInteractor {
     func fetchMembers(entity: Entity, presenter: DisplayMembersPresenter) {
       var members = [Member]()
       if entity.members != nil {
-         members = entity.members!
+          members = entity.members!.allObjects as! [Member]
          members.sort(by: {
             if $0.lastName! < $1.lastName! {
                return true

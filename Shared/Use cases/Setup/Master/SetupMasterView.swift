@@ -54,7 +54,7 @@ struct SetupMasterView: View {
          .tag(2)
          
          VStack {
-            DisplayEventsView(selectedTab: $selectedSetupTab, selectedMasterRow: $selectedMasterRow)
+//            DisplayEventsView(selectedTab: $selectedSetupTab, selectedMasterRow: $selectedMasterRow)
          }
          .tabItem {
              VStack {

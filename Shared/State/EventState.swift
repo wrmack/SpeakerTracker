@@ -15,18 +15,18 @@ import Combine
  */
 
 class EventState : ObservableObject {
-    
-    var events = [Event]() {
-        didSet {
-            print("++++++ AppState: [Event] set for \(events.count) events")
-        }
-    }
-    
-    init() {
-        print("++++++ AppState intialized")
-    }
-    
-    deinit {
-        print("++++++ AppState de-initialized")
-    }
+//    
+//    var events = [Event]() {
+//        didSet {
+//            print("++++++ AppState: [Event] set for \(events.count) events")
+//        }
+//    }
+//    
+//    init() {
+//        print("++++++ AppState intialized")
+//    }
+//    
+//    deinit {
+//        print("++++++ AppState de-initialized")
+//    }
 }

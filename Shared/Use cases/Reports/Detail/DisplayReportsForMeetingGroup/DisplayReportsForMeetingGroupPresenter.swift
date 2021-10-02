@@ -16,26 +16,26 @@ struct ReportCover : Hashable {
     var eventID = 0
 }
 
-class DisplayReportsForMeetingGroupPresenter : ObservableObject {
-    @Published var reportCovers = [ReportCover]()
-    
-    func presentEventReports(events: [Event]) {
-        let savedEvents = events
-        var tempReportCovers = [ReportCover]()
-        var idx = 0
-        savedEvents.forEach({ event in
-            let formatter = DateFormatter()
-            formatter.dateStyle = .long
-            formatter.timeStyle = .none
-            let dateStrg = formatter.string(from: event.date!)
-            formatter.dateStyle = .none
-            formatter.timeStyle = .short
-            let timeStrg = formatter.string(from: event.date!)
-            
-            let rpt = ReportCover(entityName: event.entity!.name!, meetingGroupName: event.meetingGroup!.name!, eventTime: timeStrg, eventDate: dateStrg, eventID: idx)
-            tempReportCovers.append(rpt)
-            idx += 1
-        })
-        reportCovers = tempReportCovers
-    }
-}
+//class DisplayReportsForMeetingGroupPresenter : ObservableObject {
+//    @Published var reportCovers = [ReportCover]()
+//    
+//    func presentEventReports(events: [Event]) {
+//        let savedEvents = events
+//        var tempReportCovers = [ReportCover]()
+//        var idx = 0
+//        savedEvents.forEach({ event in
+//            let formatter = DateFormatter()
+//            formatter.dateStyle = .long
+//            formatter.timeStyle = .none
+//            let dateStrg = formatter.string(from: event.date!)
+//            formatter.dateStyle = .none
+//            formatter.timeStyle = .short
+//            let timeStrg = formatter.string(from: event.date!)
+//            
+//            let rpt = ReportCover(entityName: event.entity!.name!, meetingGroupName: event.meetingGroup!.name!, eventTime: timeStrg, eventDate: dateStrg, eventID: idx)
+//            tempReportCovers.append(rpt)
+//            idx += 1
+//        })
+//        reportCovers = tempReportCovers
+//    }
+//}

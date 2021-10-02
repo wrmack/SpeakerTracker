@@ -1,24 +1,26 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="19206" systemVersion="20G165" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
-    <entity name="Entity" representedClassName="Entity" syncable="YES">
+    <entity name="Entity" representedClassName="Entity" syncable="YES" codeGenerationType="class">
         <attribute name="name" optional="YES" attributeType="String"/>
-        <relationship name="meetingGroups" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="MeetingGroup" inverseName="groupOf" inverseEntity="MeetingGroup"/>
-        <relationship name="members" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Member" inverseName="memberOf" inverseEntity="Member"/>
+        <relationship name="meetingGroups" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="MeetingGroup" inverseName="groupOfEntity" inverseEntity="MeetingGroup"/>
+        <relationship name="members" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Member" inverseName="memberOfEntity" inverseEntity="Member"/>
     </entity>
-    <entity name="MeetingGroup" representedClassName="MeetingGroup" syncable="YES">
-        <relationship name="groupOf" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Entity" inverseName="meetingGroups" inverseEntity="Entity"/>
-        <relationship name="members" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Member" inverseName="newRelationship" inverseEntity="Member"/>
+    <entity name="MeetingGroup" representedClassName="MeetingGroup" syncable="YES" codeGenerationType="class">
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <relationship name="groupOfEntity" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Entity" inverseName="meetingGroups" inverseEntity="Entity"/>
+        <relationship name="members" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Member" inverseName="memberOfGroup" inverseEntity="Member"/>
     </entity>
-    <entity name="Member" representedClassName="Member" syncable="YES">
+    <entity name="Member" representedClassName="Member" syncable="YES" codeGenerationType="class">
         <attribute name="firstName" optional="YES" attributeType="String"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="lastName" optional="YES" attributeType="String"/>
-        <relationship name="memberOf" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Entity" inverseName="members" inverseEntity="Entity"/>
-        <relationship name="newRelationship" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="MeetingGroup" inverseName="members" inverseEntity="MeetingGroup"/>
+        <attribute name="title" optional="YES" attributeType="String"/>
+        <relationship name="memberOfEntity" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Entity" inverseName="members" inverseEntity="Entity"/>
+        <relationship name="memberOfGroup" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="MeetingGroup" inverseName="members" inverseEntity="MeetingGroup"/>
     </entity>
     <elements>
         <element name="Entity" positionX="-102.4296875" positionY="-323.49609375" width="128" height="88"/>
-        <element name="Member" positionX="92.546875" positionY="-126.91015625" width="128" height="118"/>
-        <element name="MeetingGroup" positionX="271.703125" positionY="-294.1171875" width="128" height="73"/>
+        <element name="Member" positionX="92.546875" positionY="-126.91015625" width="128" height="133"/>
+        <element name="MeetingGroup" positionX="271.703125" positionY="-294.1171875" width="128" height="88"/>
     </elements>
 </model>

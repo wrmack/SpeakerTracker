@@ -23,8 +23,8 @@ class TrackSpeakersState : ObservableObject {
     @Published var timerString = "00:00"
     @Published var amendmentModeSet = false
     var timerSeconds = 0
-    var currentEvent: Event?
-    var currentDebate: Debate?
+//    var currentEvent: Event?
+//    var currentDebate: Debate?
     
     
     init() {

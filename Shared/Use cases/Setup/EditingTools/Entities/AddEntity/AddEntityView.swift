@@ -61,7 +61,7 @@ struct AddEntityView: View {
         print("AddEntityView saveEntity called")
         let interactor = AddEntityInteractor()
         interactor.setupInteractor(entityState: entityState)
-        interactor.saveEntityToDisk(entityName: entityName)
+        interactor.saveEntityToStore(entityName: entityName)
     }
 }
 

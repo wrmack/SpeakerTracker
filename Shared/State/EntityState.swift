@@ -59,7 +59,7 @@ class EntityState : ObservableObject {
         get {
             var sortedMbrs = [Member]()
             if currentEntity!.members != nil {
-               let members = currentEntity!.members!
+                let members = currentEntity!.members!.allObjects as! [Member]
                 sortedMbrs = members.sorted(by: {
                   if $0.lastName! < $1.lastName! {
                      return true
@@ -75,7 +75,7 @@ class EntityState : ObservableObject {
         get {
             var meetingGroups = [MeetingGroup]()
             if currentEntity!.meetingGroups != nil {
-                meetingGroups = currentEntity!.meetingGroups!
+                meetingGroups = currentEntity!.meetingGroups!.allObjects as! [MeetingGroup]
                 meetingGroups.sort(by: {
                     if $0.name! < $1.name! {
                        return true

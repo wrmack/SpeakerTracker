@@ -9,10 +9,10 @@
 import Foundation
 
 
-class EditEventInteractor {
-    
-    func displaySelectedEvent(setupState: SetupState, presenter: EditEventPresenter, selectedMasterRow: Int) {
-        let event = setupState.sortedEvents![selectedMasterRow]
-        presenter.presentViewModel(selectedEvent: event)
-    }
-}
+//class EditEventInteractor {
+//    
+//    func displaySelectedEvent(setupState: SetupState, presenter: EditEventPresenter, selectedMasterRow: Int) {
+//        let event = setupState.sortedEvents![selectedMasterRow]
+//        presenter.presentViewModel(selectedEvent: event)
+//    }
+//}

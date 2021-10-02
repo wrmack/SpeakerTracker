@@ -13,7 +13,7 @@ class DisplayMeetingGroupsForReportsInteractor {
     func fetchMeetingGroups(entity: Entity, presenter: DisplayMeetingGroupsForReportsPresenter ) {
         var meetingGroups = [MeetingGroup]()
         if entity.meetingGroups != nil {
-           meetingGroups = entity.meetingGroups!
+            meetingGroups = entity.meetingGroups!.allObjects as! [MeetingGroup] 
            meetingGroups.sort(by: {
               if $0.name! < $1.name! {
                  return true

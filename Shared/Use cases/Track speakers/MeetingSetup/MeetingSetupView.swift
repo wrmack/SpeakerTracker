@@ -104,18 +104,18 @@ struct MeetingSetupSheetView: View {
                 .fontWeight(.semibold)
                 .padding(.top, 40)
             HStack {
-                if meetingGroups != nil && meetingGroups!.count > 0 {
-                    Menu {
-                        ForEach(meetingGroups!.indices, id: \.self) { idx in
-                            Button(entityState.entities[selectedEntityIndex ?? 0].meetingGroups![idx].name!, action: {
-                                    changeMeetingGroup(row: idx)})
-                        }
-                    } label: {
-                        Text("Change")
-                    }.padding(.trailing, 20)
-                }
-
-                TextField("Select a meeting group", text: $selectedMeetingGroupName)
+//                if meetingGroups != nil && meetingGroups!.count > 0 {
+//                    Menu {
+//                        ForEach(meetingGroups!.indices, id: \.self) { idx in
+//                            Button(entityState.entities[selectedEntityIndex ?? 0].meetingGroups![idx].name!, action: {
+//                                    changeMeetingGroup(row: idx)})
+//                        }
+//                    } label: {
+//                        Text("Change")
+//                    }.padding(.trailing, 20)
+//                }
+//
+//                TextField("Select a meeting group", text: $selectedMeetingGroupName)
             }
 
             Toggle(isOn: $isRecording) {
@@ -128,20 +128,20 @@ struct MeetingSetupSheetView: View {
             if isRecording == true {
                 Spacer().fixedSize().frame(height: 40)
                 HStack {
-                    Menu {
-                        ForEach(eventState.events.indices, id: \.self) { idx in
-                            Button(eventState.events[idx].filename!, action: { changeMeetingEvent(row: idx)})
-                        }
-                    } label: {
-                        Text("Change")
-                    }.padding(.trailing, 20)
-                    TextField("Select an existing meeting event", text: $selectedMeetingEventName)
-                        .frame(width: 300)
-                    Image(systemName: "info.circle")
-                        .onTapGesture {
-                            showReportInfo = showReportInfo ? false : true
-                        }
-                    Spacer()
+//                    Menu {
+//                        ForEach(eventState.events.indices, id: \.self) { idx in
+//                            Button(eventState.events[idx].filename!, action: { changeMeetingEvent(row: idx)})
+//                        }
+//                    } label: {
+//                        Text("Change")
+//                    }.padding(.trailing, 20)
+//                    TextField("Select an existing meeting event", text: $selectedMeetingEventName)
+//                        .frame(width: 300)
+//                    Image(systemName: "info.circle")
+//                        .onTapGesture {
+//                            showReportInfo = showReportInfo ? false : true
+//                        }
+//                    Spacer()
                 }
                     
             }
@@ -167,27 +167,27 @@ struct MeetingSetupSheetView: View {
     }
     
     func changeEntity(row: Int) {
-        let interactor = MeetingSetupInteractor()
-        let selectedEntity = interactor.fetchEntityForRow(entityState: entityState, trackSpeakersState: trackSpeakersState, row: row)
-        selectedEntityName = selectedEntity.name!
-        meetingGroups = selectedEntity.meetingGroups
-        selectedEntityIndex = row
+//        let interactor = MeetingSetupInteractor()
+//        let selectedEntity = interactor.fetchEntityForRow(entityState: entityState, trackSpeakersState: trackSpeakersState, row: row)
+//        selectedEntityName = selectedEntity.name!
+//        meetingGroups = selectedEntity.meetingGroups
+//        selectedEntityIndex = row
     }
 
     func changeMeetingGroup(row: Int) {
-        let interactor = MeetingSetupInteractor()
-        let selectedMeetingGroup = interactor.fetchMeetingGroupForRow(entityState: entityState, trackSpeakersState: trackSpeakersState, selectedEntityIndex: selectedEntityIndex!, row: row)
-        self.selectedMeetingGroup = selectedMeetingGroup
-        selectedMeetingGroupName = selectedMeetingGroup.name!
-        selectedMeetingGroupIndex = row
+//        let interactor = MeetingSetupInteractor()
+//        let selectedMeetingGroup = interactor.fetchMeetingGroupForRow(entityState: entityState, trackSpeakersState: trackSpeakersState, selectedEntityIndex: selectedEntityIndex!, row: row)
+//        self.selectedMeetingGroup = selectedMeetingGroup
+//        selectedMeetingGroupName = selectedMeetingGroup.name!
+//        selectedMeetingGroupIndex = row
     }
     
     func changeMeetingEvent(row: Int) {
-        let interactor = MeetingSetupInteractor()
-        let selectedMeetingEvent = interactor.fetchMeetingEventForRow(eventState: eventState, trackSpeakersState: trackSpeakersState, row: row)
-        selectedMeetingEventName = selectedMeetingEvent.filename!
-        selectedMeetingEventIndex = row
-        showMeetingSetupSheet = false
+//        let interactor = MeetingSetupInteractor()
+//        let selectedMeetingEvent = interactor.fetchMeetingEventForRow(eventState: eventState, trackSpeakersState: trackSpeakersState, row: row)
+//        selectedMeetingEventName = selectedMeetingEvent.filename!
+//        selectedMeetingEventIndex = row
+//        showMeetingSetupSheet = false
     }
 }
 

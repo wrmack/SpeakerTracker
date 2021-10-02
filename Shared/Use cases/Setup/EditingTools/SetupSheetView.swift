@@ -107,10 +107,10 @@ struct SetupSheetView: View {
                     AddEventView(sheetState: self.$sheetState, saveButtonState: self.saveButtonState)
                 }
                 if self.sheetState.editMode == 1 {
-                    EditEventView(sheetState: self.$sheetState, saveButtonState: self.saveButtonState, selectedMasterRow: self.$selectedMasterRow)
+//                    EditEventView(sheetState: self.$sheetState, saveButtonState: self.saveButtonState, selectedMasterRow: self.$selectedMasterRow)
                 }
                 if (self.sheetState.editMode == 2) {
-                    DeleteEventView(sheetState: self.$sheetState, saveButtonState: self.saveButtonState, selectedMasterRow: self.$selectedMasterRow)
+//                    DeleteEventView(sheetState: self.$sheetState, saveButtonState: self.saveButtonState, selectedMasterRow: self.$selectedMasterRow)
                 }
             
             default: AddEntityView(sheetState: self.$sheetState, saveWasPressed: self.$saveWasPressed)
