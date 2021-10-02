@@ -1,0 +1,1486 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 55;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		416A5ED127061AD3006E6CD9 /* Speaker_tracker_multiApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5EC127061AD2006E6CD9 /* Speaker_tracker_multiApp.swift */; };
+		416A5ED227061AD3006E6CD9 /* Speaker_tracker_multiApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5EC127061AD2006E6CD9 /* Speaker_tracker_multiApp.swift */; };
+		416A5ED327061AD3006E6CD9 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5EC227061AD2006E6CD9 /* ContentView.swift */; };
+		416A5ED427061AD3006E6CD9 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5EC227061AD2006E6CD9 /* ContentView.swift */; };
+		416A5ED527061AD3006E6CD9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 416A5EC327061AD3006E6CD9 /* Assets.xcassets */; };
+		416A5ED627061AD3006E6CD9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 416A5EC327061AD3006E6CD9 /* Assets.xcassets */; };
+		416A5EE327061FC4006E6CD9 /* Debugging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5EE227061FC4006E6CD9 /* Debugging.swift */; };
+		416A5EE427061FC4006E6CD9 /* Debugging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5EE227061FC4006E6CD9 /* Debugging.swift */; };
+		416A5F6927062041006E6CD9 /* EntityState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F6327062041006E6CD9 /* EntityState.swift */; };
+		416A5F6A27062041006E6CD9 /* EntityState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F6327062041006E6CD9 /* EntityState.swift */; };
+		416A5F6B27062041006E6CD9 /* ReportsState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F6427062041006E6CD9 /* ReportsState.swift */; };
+		416A5F6C27062041006E6CD9 /* ReportsState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F6427062041006E6CD9 /* ReportsState.swift */; };
+		416A5F6D27062041006E6CD9 /* SaveButtonState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F6527062041006E6CD9 /* SaveButtonState.swift */; };
+		416A5F6E27062041006E6CD9 /* SaveButtonState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F6527062041006E6CD9 /* SaveButtonState.swift */; };
+		416A5F6F27062041006E6CD9 /* TrackSpeakersState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F6627062041006E6CD9 /* TrackSpeakersState.swift */; };
+		416A5F7027062041006E6CD9 /* TrackSpeakersState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F6627062041006E6CD9 /* TrackSpeakersState.swift */; };
+		416A5F7127062041006E6CD9 /* EventState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F6727062041006E6CD9 /* EventState.swift */; };
+		416A5F7227062041006E6CD9 /* EventState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F6727062041006E6CD9 /* EventState.swift */; };
+		416A5F7327062041006E6CD9 /* SetupState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F6827062041006E6CD9 /* SetupState.swift */; };
+		416A5F7427062041006E6CD9 /* SetupState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F6827062041006E6CD9 /* SetupState.swift */; };
+		416A5F7E270620B0006E6CD9 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F7627062050006E6CD9 /* Event.swift */; };
+		416A5F7F270620B0006E6CD9 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F7627062050006E6CD9 /* Event.swift */; };
+		416A5F80270620B3006E6CD9 /* Entity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F7727062050006E6CD9 /* Entity.swift */; };
+		416A5F81270620B4006E6CD9 /* Entity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F7727062050006E6CD9 /* Entity.swift */; };
+		416A5F82270620B7006E6CD9 /* Member.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F7827062050006E6CD9 /* Member.swift */; };
+		416A5F83270620B7006E6CD9 /* Member.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F7827062050006E6CD9 /* Member.swift */; };
+		416A5F84270620BB006E6CD9 /* MeetingGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F7927062050006E6CD9 /* MeetingGroup.swift */; };
+		416A5F85270620BB006E6CD9 /* MeetingGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F7927062050006E6CD9 /* MeetingGroup.swift */; };
+		416A5F86270620C5006E6CD9 /* EntityDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F7B27062058006E6CD9 /* EntityDocument.swift */; };
+		416A5F87270620C6006E6CD9 /* EntityDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F7B27062058006E6CD9 /* EntityDocument.swift */; };
+		416A5F88270620C9006E6CD9 /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F7C27062058006E6CD9 /* UserDefaultsManager.swift */; };
+		416A5F89270620CA006E6CD9 /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F7C27062058006E6CD9 /* UserDefaultsManager.swift */; };
+		416A5F8A270620CD006E6CD9 /* EventDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F7D27062058006E6CD9 /* EventDocument.swift */; };
+		416A5F8B270620CE006E6CD9 /* EventDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F7D27062058006E6CD9 /* EventDocument.swift */; };
+		416A5F8C270620E2006E6CD9 /* SetupHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F4127062034006E6CD9 /* SetupHeaderView.swift */; };
+		416A5F8D270620E2006E6CD9 /* SetupHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F4127062034006E6CD9 /* SetupHeaderView.swift */; };
+		416A5F8E270620EF006E6CD9 /* DisplayEntitiesPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F3E27062034006E6CD9 /* DisplayEntitiesPresenter.swift */; };
+		416A5F8F270620EF006E6CD9 /* DisplayEntitiesPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F3E27062034006E6CD9 /* DisplayEntitiesPresenter.swift */; };
+		416A5F90270620F4006E6CD9 /* DisplayEntitiesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F3F27062034006E6CD9 /* DisplayEntitiesView.swift */; };
+		416A5F91270620F4006E6CD9 /* DisplayEntitiesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F3F27062034006E6CD9 /* DisplayEntitiesView.swift */; };
+		416A5F92270620F7006E6CD9 /* DisplayEntitiesInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F4027062034006E6CD9 /* DisplayEntitiesInteractor.swift */; };
+		416A5F93270620F7006E6CD9 /* DisplayEntitiesInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F4027062034006E6CD9 /* DisplayEntitiesInteractor.swift */; };
+		416A5F94270620FB006E6CD9 /* SetupMasterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F3C27062034006E6CD9 /* SetupMasterView.swift */; };
+		416A5F95270620FB006E6CD9 /* SetupMasterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F3C27062034006E6CD9 /* SetupMasterView.swift */; };
+		416A5F9627062100006E6CD9 /* DisplayMembersPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F3927062034006E6CD9 /* DisplayMembersPresenter.swift */; };
+		416A5F9727062100006E6CD9 /* DisplayMembersPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F3927062034006E6CD9 /* DisplayMembersPresenter.swift */; };
+		416A5F9827062103006E6CD9 /* DisplayMembersInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F3A27062034006E6CD9 /* DisplayMembersInteractor.swift */; };
+		416A5F9927062103006E6CD9 /* DisplayMembersInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F3A27062034006E6CD9 /* DisplayMembersInteractor.swift */; };
+		416A5F9A27062106006E6CD9 /* DisplayMembersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F3B27062034006E6CD9 /* DisplayMembersView.swift */; };
+		416A5F9B27062107006E6CD9 /* DisplayMembersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F3B27062034006E6CD9 /* DisplayMembersView.swift */; };
+		416A5F9C2706210C006E6CD9 /* DisplayMeetingGroupsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F3527062034006E6CD9 /* DisplayMeetingGroupsPresenter.swift */; };
+		416A5F9D2706210C006E6CD9 /* DisplayMeetingGroupsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F3527062034006E6CD9 /* DisplayMeetingGroupsPresenter.swift */; };
+		416A5F9E2706210F006E6CD9 /* DisplayMeetingGroupsInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F3627062034006E6CD9 /* DisplayMeetingGroupsInteractor.swift */; };
+		416A5F9F27062110006E6CD9 /* DisplayMeetingGroupsInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F3627062034006E6CD9 /* DisplayMeetingGroupsInteractor.swift */; };
+		416A5FA027062114006E6CD9 /* DisplayMeetingGroupsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F3727062034006E6CD9 /* DisplayMeetingGroupsView.swift */; };
+		416A5FA127062115006E6CD9 /* DisplayMeetingGroupsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F3727062034006E6CD9 /* DisplayMeetingGroupsView.swift */; };
+		416A5FA22706211A006E6CD9 /* DisplayEventsInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F3127062034006E6CD9 /* DisplayEventsInteractor.swift */; };
+		416A5FA32706211B006E6CD9 /* DisplayEventsInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F3127062034006E6CD9 /* DisplayEventsInteractor.swift */; };
+		416A5FA42706211E006E6CD9 /* DisplayEventsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F3227062034006E6CD9 /* DisplayEventsPresenter.swift */; };
+		416A5FA52706211E006E6CD9 /* DisplayEventsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F3227062034006E6CD9 /* DisplayEventsPresenter.swift */; };
+		416A5FA627062121006E6CD9 /* DisplayEventsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F3327062034006E6CD9 /* DisplayEventsView.swift */; };
+		416A5FA727062122006E6CD9 /* DisplayEventsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F3327062034006E6CD9 /* DisplayEventsView.swift */; };
+		416A5FA82706212C006E6CD9 /* TrackSpeakersPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F4F27062034006E6CD9 /* TrackSpeakersPresenter.swift */; };
+		416A5FA92706212D006E6CD9 /* TrackSpeakersPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F4F27062034006E6CD9 /* TrackSpeakersPresenter.swift */; };
+		416A5FAA27062132006E6CD9 /* RemainingTableViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F4C27062034006E6CD9 /* RemainingTableViews.swift */; };
+		416A5FAB27062132006E6CD9 /* RemainingTableViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F4C27062034006E6CD9 /* RemainingTableViews.swift */; };
+		416A5FAC27062135006E6CD9 /* SpeakingTableViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F4D27062034006E6CD9 /* SpeakingTableViews.swift */; };
+		416A5FAD27062135006E6CD9 /* SpeakingTableViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F4D27062034006E6CD9 /* SpeakingTableViews.swift */; };
+		416A5FAE27062138006E6CD9 /* WaitingTableViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F4E27062034006E6CD9 /* WaitingTableViews.swift */; };
+		416A5FAF27062139006E6CD9 /* WaitingTableViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F4E27062034006E6CD9 /* WaitingTableViews.swift */; };
+		416A5FB02706213C006E6CD9 /* TrackSpeakersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F4927062034006E6CD9 /* TrackSpeakersView.swift */; };
+		416A5FB12706213C006E6CD9 /* TrackSpeakersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F4927062034006E6CD9 /* TrackSpeakersView.swift */; };
+		416A5FB22706213F006E6CD9 /* TrackSpeakersInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F4A27062034006E6CD9 /* TrackSpeakersInteractor.swift */; };
+		416A5FB327062141006E6CD9 /* TrackSpeakersInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F4A27062034006E6CD9 /* TrackSpeakersInteractor.swift */; };
+		416A5FB427062148006E6CD9 /* TrackSpeakersModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F4827062034006E6CD9 /* TrackSpeakersModels.swift */; };
+		416A5FB527062149006E6CD9 /* TrackSpeakersModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F4827062034006E6CD9 /* TrackSpeakersModels.swift */; };
+		416A5FB62706214D006E6CD9 /* MeetingSetupPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F4427062034006E6CD9 /* MeetingSetupPresenter.swift */; };
+		416A5FB72706214E006E6CD9 /* MeetingSetupPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F4427062034006E6CD9 /* MeetingSetupPresenter.swift */; };
+		416A5FB827062151006E6CD9 /* MeetingSetupInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F4527062034006E6CD9 /* MeetingSetupInteractor.swift */; };
+		416A5FB927062151006E6CD9 /* MeetingSetupInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F4527062034006E6CD9 /* MeetingSetupInteractor.swift */; };
+		416A5FBA27062154006E6CD9 /* MeetingSetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F4627062034006E6CD9 /* MeetingSetupView.swift */; };
+		416A5FBB27062155006E6CD9 /* MeetingSetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F4627062034006E6CD9 /* MeetingSetupView.swift */; };
+		416A5FBC27062167006E6CD9 /* DisplayMeetingGroupsForReportsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F5F27062034006E6CD9 /* DisplayMeetingGroupsForReportsView.swift */; };
+		416A5FBD27062168006E6CD9 /* DisplayMeetingGroupsForReportsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F5F27062034006E6CD9 /* DisplayMeetingGroupsForReportsView.swift */; };
+		416A5FBE2706216B006E6CD9 /* DisplayMeetingGroupsForReportsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F6027062034006E6CD9 /* DisplayMeetingGroupsForReportsPresenter.swift */; };
+		416A5FBF2706216C006E6CD9 /* DisplayMeetingGroupsForReportsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F6027062034006E6CD9 /* DisplayMeetingGroupsForReportsPresenter.swift */; };
+		416A5FC027062170006E6CD9 /* DisplayMeetingGroupsForReportsInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F6127062034006E6CD9 /* DisplayMeetingGroupsForReportsInteractor.swift */; };
+		416A5FC127062170006E6CD9 /* DisplayMeetingGroupsForReportsInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F6127062034006E6CD9 /* DisplayMeetingGroupsForReportsInteractor.swift */; };
+		416A5FC227062185006E6CD9 /* DisplayReportsForMeetingGroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F5A27062034006E6CD9 /* DisplayReportsForMeetingGroupView.swift */; };
+		416A5FC327062185006E6CD9 /* DisplayReportsForMeetingGroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F5A27062034006E6CD9 /* DisplayReportsForMeetingGroupView.swift */; };
+		416A5FC427062189006E6CD9 /* DisplayReportsForMeetingGroupInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F5B27062034006E6CD9 /* DisplayReportsForMeetingGroupInteractor.swift */; };
+		416A5FC527062189006E6CD9 /* DisplayReportsForMeetingGroupInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F5B27062034006E6CD9 /* DisplayReportsForMeetingGroupInteractor.swift */; };
+		416A5FC62706218D006E6CD9 /* DisplayReportsForMeetingGroupPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F5C27062034006E6CD9 /* DisplayReportsForMeetingGroupPresenter.swift */; };
+		416A5FC72706218D006E6CD9 /* DisplayReportsForMeetingGroupPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F5C27062034006E6CD9 /* DisplayReportsForMeetingGroupPresenter.swift */; };
+		416A5FC827062191006E6CD9 /* ReportsHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F5727062034006E6CD9 /* ReportsHeaderView.swift */; };
+		416A5FC927062192006E6CD9 /* ReportsHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F5727062034006E6CD9 /* ReportsHeaderView.swift */; };
+		416A5FCA27062197006E6CD9 /* ShowReportInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F5327062034006E6CD9 /* ShowReportInteractor.swift */; };
+		416A5FCB27062197006E6CD9 /* ShowReportInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F5327062034006E6CD9 /* ShowReportInteractor.swift */; };
+		416A5FCC2706219A006E6CD9 /* ShowReportPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F5427062034006E6CD9 /* ShowReportPresenter.swift */; };
+		416A5FCD2706219B006E6CD9 /* ShowReportPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F5427062034006E6CD9 /* ShowReportPresenter.swift */; };
+		416A5FCE2706219E006E6CD9 /* Attributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F5527062034006E6CD9 /* Attributes.swift */; };
+		416A5FCF2706219E006E6CD9 /* Attributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F5527062034006E6CD9 /* Attributes.swift */; };
+		416A5FD0270621A1006E6CD9 /* ShowReportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F5627062034006E6CD9 /* ShowReportView.swift */; };
+		416A5FD1270621A2006E6CD9 /* ShowReportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F5627062034006E6CD9 /* ShowReportView.swift */; };
+		416A5FD2270621A9006E6CD9 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5EE627062022006E6CD9 /* Constants.swift */; };
+		416A5FD3270621AA006E6CD9 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5EE627062022006E6CD9 /* Constants.swift */; };
+		416A5FD4270621AD006E6CD9 /* ViewComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5EE727062022006E6CD9 /* ViewComponents.swift */; };
+		416A5FD5270621AD006E6CD9 /* ViewComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5EE727062022006E6CD9 /* ViewComponents.swift */; };
+		416A5FD6270621E3006E6CD9 /* SetupDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F2627062034006E6CD9 /* SetupDetailView.swift */; };
+		416A5FD7270621E3006E6CD9 /* SetupDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F2627062034006E6CD9 /* SetupDetailView.swift */; };
+		416A5FD827062205006E6CD9 /* DisplaySelectedEntityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F2327062034006E6CD9 /* DisplaySelectedEntityView.swift */; };
+		416A5FD927062205006E6CD9 /* DisplaySelectedEntityInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F2427062034006E6CD9 /* DisplaySelectedEntityInteractor.swift */; };
+		416A5FDA27062205006E6CD9 /* DisplaySelectedEntityPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F2527062034006E6CD9 /* DisplaySelectedEntityPresenter.swift */; };
+		416A5FDB27062206006E6CD9 /* DisplaySelectedEntityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F2327062034006E6CD9 /* DisplaySelectedEntityView.swift */; };
+		416A5FDC27062206006E6CD9 /* DisplaySelectedEntityInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F2427062034006E6CD9 /* DisplaySelectedEntityInteractor.swift */; };
+		416A5FDD27062206006E6CD9 /* DisplaySelectedEntityPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F2527062034006E6CD9 /* DisplaySelectedEntityPresenter.swift */; };
+		416A5FDE27062213006E6CD9 /* DisplaySelectedMemberView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F2027062034006E6CD9 /* DisplaySelectedMemberView.swift */; };
+		416A5FDF27062213006E6CD9 /* DisplaySelectedMemberPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F1F27062034006E6CD9 /* DisplaySelectedMemberPresenter.swift */; };
+		416A5FE027062213006E6CD9 /* DisplaySelectedMemberInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F2127062034006E6CD9 /* DisplaySelectedMemberInteractor.swift */; };
+		416A5FE127062213006E6CD9 /* DisplaySelectedMemberView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F2027062034006E6CD9 /* DisplaySelectedMemberView.swift */; };
+		416A5FE227062213006E6CD9 /* DisplaySelectedMemberPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F1F27062034006E6CD9 /* DisplaySelectedMemberPresenter.swift */; };
+		416A5FE327062213006E6CD9 /* DisplaySelectedMemberInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F2127062034006E6CD9 /* DisplaySelectedMemberInteractor.swift */; };
+		416A5FE42706221A006E6CD9 /* DisplaySelectedMeetingGroupInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F2927062034006E6CD9 /* DisplaySelectedMeetingGroupInteractor.swift */; };
+		416A5FE52706221A006E6CD9 /* DisplaySelectedMeetingGroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F2827062034006E6CD9 /* DisplaySelectedMeetingGroupView.swift */; };
+		416A5FE62706221A006E6CD9 /* DisplaySelectedMeetingGroupPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F2A27062034006E6CD9 /* DisplaySelectedMeetingGroupPresenter.swift */; };
+		416A5FE72706221B006E6CD9 /* DisplaySelectedMeetingGroupInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F2927062034006E6CD9 /* DisplaySelectedMeetingGroupInteractor.swift */; };
+		416A5FE82706221B006E6CD9 /* DisplaySelectedMeetingGroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F2827062034006E6CD9 /* DisplaySelectedMeetingGroupView.swift */; };
+		416A5FE92706221B006E6CD9 /* DisplaySelectedMeetingGroupPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F2A27062034006E6CD9 /* DisplaySelectedMeetingGroupPresenter.swift */; };
+		416A5FEA27062222006E6CD9 /* DisplaySelectedEventView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F2E27062034006E6CD9 /* DisplaySelectedEventView.swift */; };
+		416A5FEB27062222006E6CD9 /* DisplaySelectedEventPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F2C27062034006E6CD9 /* DisplaySelectedEventPresenter.swift */; };
+		416A5FEC27062222006E6CD9 /* DisplaySelectedEventInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F2D27062034006E6CD9 /* DisplaySelectedEventInteractor.swift */; };
+		416A5FED27062222006E6CD9 /* DisplaySelectedEventView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F2E27062034006E6CD9 /* DisplaySelectedEventView.swift */; };
+		416A5FEE27062222006E6CD9 /* DisplaySelectedEventPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F2C27062034006E6CD9 /* DisplaySelectedEventPresenter.swift */; };
+		416A5FEF27062222006E6CD9 /* DisplaySelectedEventInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F2D27062034006E6CD9 /* DisplaySelectedEventInteractor.swift */; };
+		416A5FF02706223E006E6CD9 /* SetupSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5EF827062034006E6CD9 /* SetupSheetView.swift */; };
+		416A5FF12706223E006E6CD9 /* SetupSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5EF827062034006E6CD9 /* SetupSheetView.swift */; };
+		416A5FF227062255006E6CD9 /* AddEntityInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F1427062034006E6CD9 /* AddEntityInteractor.swift */; };
+		416A5FF327062255006E6CD9 /* AddEntityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F1327062034006E6CD9 /* AddEntityView.swift */; };
+		416A5FF427062256006E6CD9 /* AddEntityInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F1427062034006E6CD9 /* AddEntityInteractor.swift */; };
+		416A5FF527062256006E6CD9 /* AddEntityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F1327062034006E6CD9 /* AddEntityView.swift */; };
+		416A5FF62706225B006E6CD9 /* DeleteEntityPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F1627062034006E6CD9 /* DeleteEntityPresenter.swift */; };
+		416A5FF72706225B006E6CD9 /* DeleteEntityInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F1827062034006E6CD9 /* DeleteEntityInteractor.swift */; };
+		416A5FF82706225B006E6CD9 /* DeleteEntityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F1727062034006E6CD9 /* DeleteEntityView.swift */; };
+		416A5FF92706225C006E6CD9 /* DeleteEntityPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F1627062034006E6CD9 /* DeleteEntityPresenter.swift */; };
+		416A5FFA2706225C006E6CD9 /* DeleteEntityInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F1827062034006E6CD9 /* DeleteEntityInteractor.swift */; };
+		416A5FFB2706225C006E6CD9 /* DeleteEntityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F1727062034006E6CD9 /* DeleteEntityView.swift */; };
+		416A5FFC27062262006E6CD9 /* EditEntityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F1C27062034006E6CD9 /* EditEntityView.swift */; };
+		416A5FFD27062262006E6CD9 /* EditEntityPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F1A27062034006E6CD9 /* EditEntityPresenter.swift */; };
+		416A5FFE27062262006E6CD9 /* EditEntityInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F1B27062034006E6CD9 /* EditEntityInteractor.swift */; };
+		416A5FFF27062262006E6CD9 /* EditEntityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F1C27062034006E6CD9 /* EditEntityView.swift */; };
+		416A600027062262006E6CD9 /* EditEntityPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F1A27062034006E6CD9 /* EditEntityPresenter.swift */; };
+		416A600127062262006E6CD9 /* EditEntityInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F1B27062034006E6CD9 /* EditEntityInteractor.swift */; };
+		416A60022706226E006E6CD9 /* DeleteEventInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F0927062034006E6CD9 /* DeleteEventInteractor.swift */; };
+		416A60032706226E006E6CD9 /* DeleteEventView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F0827062034006E6CD9 /* DeleteEventView.swift */; };
+		416A60042706226E006E6CD9 /* DeleteEventPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F0727062034006E6CD9 /* DeleteEventPresenter.swift */; };
+		416A60052706226F006E6CD9 /* DeleteEventInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F0927062034006E6CD9 /* DeleteEventInteractor.swift */; };
+		416A60062706226F006E6CD9 /* DeleteEventView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F0827062034006E6CD9 /* DeleteEventView.swift */; };
+		416A60072706226F006E6CD9 /* DeleteEventPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F0727062034006E6CD9 /* DeleteEventPresenter.swift */; };
+		416A600827062275006E6CD9 /* EditEventView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F0B27062034006E6CD9 /* EditEventView.swift */; };
+		416A600927062275006E6CD9 /* EditEventPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F0C27062034006E6CD9 /* EditEventPresenter.swift */; };
+		416A600A27062275006E6CD9 /* EditEventInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F0D27062034006E6CD9 /* EditEventInteractor.swift */; };
+		416A600B27062275006E6CD9 /* EditEventView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F0B27062034006E6CD9 /* EditEventView.swift */; };
+		416A600C27062275006E6CD9 /* EditEventPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F0C27062034006E6CD9 /* EditEventPresenter.swift */; };
+		416A600D27062275006E6CD9 /* EditEventInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F0D27062034006E6CD9 /* EditEventInteractor.swift */; };
+		416A600E2706227D006E6CD9 /* AddEventView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F1027062034006E6CD9 /* AddEventView.swift */; };
+		416A600F2706227D006E6CD9 /* AddEventInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F0F27062034006E6CD9 /* AddEventInteractor.swift */; };
+		416A60102706227D006E6CD9 /* AddEventView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F1027062034006E6CD9 /* AddEventView.swift */; };
+		416A60112706227D006E6CD9 /* AddEventInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F0F27062034006E6CD9 /* AddEventInteractor.swift */; };
+		416A601227062288006E6CD9 /* DeleteMemberPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5EFD27062034006E6CD9 /* DeleteMemberPresenter.swift */; };
+		416A601327062288006E6CD9 /* DeleteMemberInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5EFB27062034006E6CD9 /* DeleteMemberInteractor.swift */; };
+		416A601427062288006E6CD9 /* DeleteMemberView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5EFC27062034006E6CD9 /* DeleteMemberView.swift */; };
+		416A601527062288006E6CD9 /* DeleteMemberPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5EFD27062034006E6CD9 /* DeleteMemberPresenter.swift */; };
+		416A601627062288006E6CD9 /* DeleteMemberInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5EFB27062034006E6CD9 /* DeleteMemberInteractor.swift */; };
+		416A601727062288006E6CD9 /* DeleteMemberView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5EFC27062034006E6CD9 /* DeleteMemberView.swift */; };
+		416A60182706228E006E6CD9 /* AddMemberView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5EFF27062034006E6CD9 /* AddMemberView.swift */; };
+		416A60192706228E006E6CD9 /* AddMemberInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F0027062034006E6CD9 /* AddMemberInteractor.swift */; };
+		416A601A2706228F006E6CD9 /* AddMemberView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5EFF27062034006E6CD9 /* AddMemberView.swift */; };
+		416A601B2706228F006E6CD9 /* AddMemberInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F0027062034006E6CD9 /* AddMemberInteractor.swift */; };
+		416A601C27062294006E6CD9 /* EditMemberPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F0327062034006E6CD9 /* EditMemberPresenter.swift */; };
+		416A601D27062294006E6CD9 /* EditMemberView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F0227062034006E6CD9 /* EditMemberView.swift */; };
+		416A601E27062294006E6CD9 /* EditMemberInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F0427062034006E6CD9 /* EditMemberInteractor.swift */; };
+		416A601F27062294006E6CD9 /* EditMemberPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F0327062034006E6CD9 /* EditMemberPresenter.swift */; };
+		416A602027062294006E6CD9 /* EditMemberView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F0227062034006E6CD9 /* EditMemberView.swift */; };
+		416A602127062294006E6CD9 /* EditMemberInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F0427062034006E6CD9 /* EditMemberInteractor.swift */; };
+		416A6022270622A9006E6CD9 /* DeleteMeetingGroupInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5EED27062034006E6CD9 /* DeleteMeetingGroupInteractor.swift */; };
+		416A6023270622A9006E6CD9 /* DeleteMeetingGroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5EEE27062034006E6CD9 /* DeleteMeetingGroupView.swift */; };
+		416A6024270622A9006E6CD9 /* DeleteMeetingGroupPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5EEF27062034006E6CD9 /* DeleteMeetingGroupPresenter.swift */; };
+		416A6025270622A9006E6CD9 /* DeleteMeetingGroupInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5EED27062034006E6CD9 /* DeleteMeetingGroupInteractor.swift */; };
+		416A6026270622A9006E6CD9 /* DeleteMeetingGroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5EEE27062034006E6CD9 /* DeleteMeetingGroupView.swift */; };
+		416A6027270622A9006E6CD9 /* DeleteMeetingGroupPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5EEF27062034006E6CD9 /* DeleteMeetingGroupPresenter.swift */; };
+		416A6028270622AF006E6CD9 /* AddMeetingGroupInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5EF127062034006E6CD9 /* AddMeetingGroupInteractor.swift */; };
+		416A6029270622AF006E6CD9 /* AddMeetingGroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5EF227062034006E6CD9 /* AddMeetingGroupView.swift */; };
+		416A602A270622AF006E6CD9 /* AddMeetingGroupInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5EF127062034006E6CD9 /* AddMeetingGroupInteractor.swift */; };
+		416A602B270622AF006E6CD9 /* AddMeetingGroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5EF227062034006E6CD9 /* AddMeetingGroupView.swift */; };
+		416A602C270622B4006E6CD9 /* EditMeetingGroupInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5EF627062034006E6CD9 /* EditMeetingGroupInteractor.swift */; };
+		416A602D270622B4006E6CD9 /* EditMeetingGroupPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5EF527062034006E6CD9 /* EditMeetingGroupPresenter.swift */; };
+		416A602E270622B4006E6CD9 /* EditMeetingGroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5EF427062034006E6CD9 /* EditMeetingGroupView.swift */; };
+		416A602F270622B5006E6CD9 /* EditMeetingGroupInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5EF627062034006E6CD9 /* EditMeetingGroupInteractor.swift */; };
+		416A6030270622B5006E6CD9 /* EditMeetingGroupPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5EF527062034006E6CD9 /* EditMeetingGroupPresenter.swift */; };
+		416A6031270622B5006E6CD9 /* EditMeetingGroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5EF427062034006E6CD9 /* EditMeetingGroupView.swift */; };
+		416A6032270622B9006E6CD9 /* MeetingGroupSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5EF727062034006E6CD9 /* MeetingGroupSheetView.swift */; };
+		416A6033270622B9006E6CD9 /* MeetingGroupSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5EF727062034006E6CD9 /* MeetingGroupSheetView.swift */; };
+		416A608F27064203006E6CD9 /* Main.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 416A608D27064203006E6CD9 /* Main.xcdatamodeld */; };
+		416A609027064203006E6CD9 /* Main.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 416A608D27064203006E6CD9 /* Main.xcdatamodeld */; };
+		416A609227066288006E6CD9 /* PersistenceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A609127066288006E6CD9 /* PersistenceController.swift */; };
+		416A609327066288006E6CD9 /* PersistenceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A609127066288006E6CD9 /* PersistenceController.swift */; };
+		41CC1BB02708B7F300B40255 /* Member+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41CC1BAA2708B7F300B40255 /* Member+CoreDataClass.swift */; };
+		41CC1BB12708B7F300B40255 /* Member+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41CC1BAA2708B7F300B40255 /* Member+CoreDataClass.swift */; };
+		41CC1BB22708B7F300B40255 /* Member+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41CC1BAB2708B7F300B40255 /* Member+CoreDataProperties.swift */; };
+		41CC1BB32708B7F300B40255 /* Member+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41CC1BAB2708B7F300B40255 /* Member+CoreDataProperties.swift */; };
+		41CC1BB42708B7F300B40255 /* MeetingGroup+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41CC1BAC2708B7F300B40255 /* MeetingGroup+CoreDataClass.swift */; };
+		41CC1BB52708B7F300B40255 /* MeetingGroup+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41CC1BAC2708B7F300B40255 /* MeetingGroup+CoreDataClass.swift */; };
+		41CC1BB62708B7F300B40255 /* MeetingGroup+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41CC1BAD2708B7F300B40255 /* MeetingGroup+CoreDataProperties.swift */; };
+		41CC1BB72708B7F300B40255 /* MeetingGroup+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41CC1BAD2708B7F300B40255 /* MeetingGroup+CoreDataProperties.swift */; };
+		41CC1BB82708B7F300B40255 /* Entity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41CC1BAE2708B7F300B40255 /* Entity+CoreDataClass.swift */; };
+		41CC1BB92708B7F300B40255 /* Entity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41CC1BAE2708B7F300B40255 /* Entity+CoreDataClass.swift */; };
+		41CC1BBA2708B7F300B40255 /* Entity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41CC1BAF2708B7F300B40255 /* Entity+CoreDataProperties.swift */; };
+		41CC1BBB2708B7F300B40255 /* Entity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41CC1BAF2708B7F300B40255 /* Entity+CoreDataProperties.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		416A5EC127061AD2006E6CD9 /* Speaker_tracker_multiApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Speaker_tracker_multiApp.swift; sourceTree = "<group>"; };
+		416A5EC227061AD2006E6CD9 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		416A5EC327061AD3006E6CD9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		416A5EC827061AD3006E6CD9 /* Speaker-tracker-multi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Speaker-tracker-multi.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		416A5ECE27061AD3006E6CD9 /* Speaker-tracker-multi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Speaker-tracker-multi.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		416A5ED027061AD3006E6CD9 /* macOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = macOS.entitlements; sourceTree = "<group>"; };
+		416A5EDF27061C2F006E6CD9 /* Speaker-tracker-multi--iOS--Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Speaker-tracker-multi--iOS--Info.plist"; sourceTree = "<group>"; };
+		416A5EE027061E2F006E6CD9 /* Speaker-tracker-multi--macOS--Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Speaker-tracker-multi--macOS--Info.plist"; sourceTree = "<group>"; };
+		416A5EE127061F02006E6CD9 /* Design.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = Design.md; sourceTree = "<group>"; };
+		416A5EE227061FC4006E6CD9 /* Debugging.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Debugging.swift; sourceTree = "<group>"; };
+		416A5EE627062022006E6CD9 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		416A5EE727062022006E6CD9 /* ViewComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewComponents.swift; sourceTree = "<group>"; };
+		416A5EED27062034006E6CD9 /* DeleteMeetingGroupInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteMeetingGroupInteractor.swift; sourceTree = "<group>"; };
+		416A5EEE27062034006E6CD9 /* DeleteMeetingGroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteMeetingGroupView.swift; sourceTree = "<group>"; };
+		416A5EEF27062034006E6CD9 /* DeleteMeetingGroupPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteMeetingGroupPresenter.swift; sourceTree = "<group>"; };
+		416A5EF127062034006E6CD9 /* AddMeetingGroupInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMeetingGroupInteractor.swift; sourceTree = "<group>"; };
+		416A5EF227062034006E6CD9 /* AddMeetingGroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMeetingGroupView.swift; sourceTree = "<group>"; };
+		416A5EF427062034006E6CD9 /* EditMeetingGroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditMeetingGroupView.swift; sourceTree = "<group>"; };
+		416A5EF527062034006E6CD9 /* EditMeetingGroupPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditMeetingGroupPresenter.swift; sourceTree = "<group>"; };
+		416A5EF627062034006E6CD9 /* EditMeetingGroupInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditMeetingGroupInteractor.swift; sourceTree = "<group>"; };
+		416A5EF727062034006E6CD9 /* MeetingGroupSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingGroupSheetView.swift; sourceTree = "<group>"; };
+		416A5EF827062034006E6CD9 /* SetupSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupSheetView.swift; sourceTree = "<group>"; };
+		416A5EFB27062034006E6CD9 /* DeleteMemberInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteMemberInteractor.swift; sourceTree = "<group>"; };
+		416A5EFC27062034006E6CD9 /* DeleteMemberView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteMemberView.swift; sourceTree = "<group>"; };
+		416A5EFD27062034006E6CD9 /* DeleteMemberPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteMemberPresenter.swift; sourceTree = "<group>"; };
+		416A5EFF27062034006E6CD9 /* AddMemberView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMemberView.swift; sourceTree = "<group>"; };
+		416A5F0027062034006E6CD9 /* AddMemberInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMemberInteractor.swift; sourceTree = "<group>"; };
+		416A5F0227062034006E6CD9 /* EditMemberView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditMemberView.swift; sourceTree = "<group>"; };
+		416A5F0327062034006E6CD9 /* EditMemberPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditMemberPresenter.swift; sourceTree = "<group>"; };
+		416A5F0427062034006E6CD9 /* EditMemberInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditMemberInteractor.swift; sourceTree = "<group>"; };
+		416A5F0727062034006E6CD9 /* DeleteEventPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteEventPresenter.swift; sourceTree = "<group>"; };
+		416A5F0827062034006E6CD9 /* DeleteEventView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteEventView.swift; sourceTree = "<group>"; };
+		416A5F0927062034006E6CD9 /* DeleteEventInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteEventInteractor.swift; sourceTree = "<group>"; };
+		416A5F0B27062034006E6CD9 /* EditEventView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditEventView.swift; sourceTree = "<group>"; };
+		416A5F0C27062034006E6CD9 /* EditEventPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditEventPresenter.swift; sourceTree = "<group>"; };
+		416A5F0D27062034006E6CD9 /* EditEventInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditEventInteractor.swift; sourceTree = "<group>"; };
+		416A5F0F27062034006E6CD9 /* AddEventInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEventInteractor.swift; sourceTree = "<group>"; };
+		416A5F1027062034006E6CD9 /* AddEventView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEventView.swift; sourceTree = "<group>"; };
+		416A5F1327062034006E6CD9 /* AddEntityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEntityView.swift; sourceTree = "<group>"; };
+		416A5F1427062034006E6CD9 /* AddEntityInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEntityInteractor.swift; sourceTree = "<group>"; };
+		416A5F1627062034006E6CD9 /* DeleteEntityPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteEntityPresenter.swift; sourceTree = "<group>"; };
+		416A5F1727062034006E6CD9 /* DeleteEntityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteEntityView.swift; sourceTree = "<group>"; };
+		416A5F1827062034006E6CD9 /* DeleteEntityInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteEntityInteractor.swift; sourceTree = "<group>"; };
+		416A5F1A27062034006E6CD9 /* EditEntityPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditEntityPresenter.swift; sourceTree = "<group>"; };
+		416A5F1B27062034006E6CD9 /* EditEntityInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditEntityInteractor.swift; sourceTree = "<group>"; };
+		416A5F1C27062034006E6CD9 /* EditEntityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditEntityView.swift; sourceTree = "<group>"; };
+		416A5F1F27062034006E6CD9 /* DisplaySelectedMemberPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplaySelectedMemberPresenter.swift; sourceTree = "<group>"; };
+		416A5F2027062034006E6CD9 /* DisplaySelectedMemberView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplaySelectedMemberView.swift; sourceTree = "<group>"; };
+		416A5F2127062034006E6CD9 /* DisplaySelectedMemberInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplaySelectedMemberInteractor.swift; sourceTree = "<group>"; };
+		416A5F2327062034006E6CD9 /* DisplaySelectedEntityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplaySelectedEntityView.swift; sourceTree = "<group>"; };
+		416A5F2427062034006E6CD9 /* DisplaySelectedEntityInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplaySelectedEntityInteractor.swift; sourceTree = "<group>"; };
+		416A5F2527062034006E6CD9 /* DisplaySelectedEntityPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplaySelectedEntityPresenter.swift; sourceTree = "<group>"; };
+		416A5F2627062034006E6CD9 /* SetupDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupDetailView.swift; sourceTree = "<group>"; };
+		416A5F2827062034006E6CD9 /* DisplaySelectedMeetingGroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplaySelectedMeetingGroupView.swift; sourceTree = "<group>"; };
+		416A5F2927062034006E6CD9 /* DisplaySelectedMeetingGroupInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplaySelectedMeetingGroupInteractor.swift; sourceTree = "<group>"; };
+		416A5F2A27062034006E6CD9 /* DisplaySelectedMeetingGroupPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplaySelectedMeetingGroupPresenter.swift; sourceTree = "<group>"; };
+		416A5F2C27062034006E6CD9 /* DisplaySelectedEventPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplaySelectedEventPresenter.swift; sourceTree = "<group>"; };
+		416A5F2D27062034006E6CD9 /* DisplaySelectedEventInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplaySelectedEventInteractor.swift; sourceTree = "<group>"; };
+		416A5F2E27062034006E6CD9 /* DisplaySelectedEventView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplaySelectedEventView.swift; sourceTree = "<group>"; };
+		416A5F3127062034006E6CD9 /* DisplayEventsInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayEventsInteractor.swift; sourceTree = "<group>"; };
+		416A5F3227062034006E6CD9 /* DisplayEventsPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayEventsPresenter.swift; sourceTree = "<group>"; };
+		416A5F3327062034006E6CD9 /* DisplayEventsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayEventsView.swift; sourceTree = "<group>"; };
+		416A5F3527062034006E6CD9 /* DisplayMeetingGroupsPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayMeetingGroupsPresenter.swift; sourceTree = "<group>"; };
+		416A5F3627062034006E6CD9 /* DisplayMeetingGroupsInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayMeetingGroupsInteractor.swift; sourceTree = "<group>"; };
+		416A5F3727062034006E6CD9 /* DisplayMeetingGroupsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayMeetingGroupsView.swift; sourceTree = "<group>"; };
+		416A5F3927062034006E6CD9 /* DisplayMembersPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayMembersPresenter.swift; sourceTree = "<group>"; };
+		416A5F3A27062034006E6CD9 /* DisplayMembersInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayMembersInteractor.swift; sourceTree = "<group>"; };
+		416A5F3B27062034006E6CD9 /* DisplayMembersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayMembersView.swift; sourceTree = "<group>"; };
+		416A5F3C27062034006E6CD9 /* SetupMasterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupMasterView.swift; sourceTree = "<group>"; };
+		416A5F3E27062034006E6CD9 /* DisplayEntitiesPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayEntitiesPresenter.swift; sourceTree = "<group>"; };
+		416A5F3F27062034006E6CD9 /* DisplayEntitiesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayEntitiesView.swift; sourceTree = "<group>"; };
+		416A5F4027062034006E6CD9 /* DisplayEntitiesInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayEntitiesInteractor.swift; sourceTree = "<group>"; };
+		416A5F4127062034006E6CD9 /* SetupHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupHeaderView.swift; sourceTree = "<group>"; };
+		416A5F4427062034006E6CD9 /* MeetingSetupPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingSetupPresenter.swift; sourceTree = "<group>"; };
+		416A5F4527062034006E6CD9 /* MeetingSetupInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingSetupInteractor.swift; sourceTree = "<group>"; };
+		416A5F4627062034006E6CD9 /* MeetingSetupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingSetupView.swift; sourceTree = "<group>"; };
+		416A5F4827062034006E6CD9 /* TrackSpeakersModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackSpeakersModels.swift; sourceTree = "<group>"; };
+		416A5F4927062034006E6CD9 /* TrackSpeakersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackSpeakersView.swift; sourceTree = "<group>"; };
+		416A5F4A27062034006E6CD9 /* TrackSpeakersInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackSpeakersInteractor.swift; sourceTree = "<group>"; };
+		416A5F4C27062034006E6CD9 /* RemainingTableViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemainingTableViews.swift; sourceTree = "<group>"; };
+		416A5F4D27062034006E6CD9 /* SpeakingTableViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeakingTableViews.swift; sourceTree = "<group>"; };
+		416A5F4E27062034006E6CD9 /* WaitingTableViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitingTableViews.swift; sourceTree = "<group>"; };
+		416A5F4F27062034006E6CD9 /* TrackSpeakersPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackSpeakersPresenter.swift; sourceTree = "<group>"; };
+		416A5F5327062034006E6CD9 /* ShowReportInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowReportInteractor.swift; sourceTree = "<group>"; };
+		416A5F5427062034006E6CD9 /* ShowReportPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowReportPresenter.swift; sourceTree = "<group>"; };
+		416A5F5527062034006E6CD9 /* Attributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Attributes.swift; sourceTree = "<group>"; };
+		416A5F5627062034006E6CD9 /* ShowReportView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowReportView.swift; sourceTree = "<group>"; };
+		416A5F5727062034006E6CD9 /* ReportsHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportsHeaderView.swift; sourceTree = "<group>"; };
+		416A5F5A27062034006E6CD9 /* DisplayReportsForMeetingGroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayReportsForMeetingGroupView.swift; sourceTree = "<group>"; };
+		416A5F5B27062034006E6CD9 /* DisplayReportsForMeetingGroupInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayReportsForMeetingGroupInteractor.swift; sourceTree = "<group>"; };
+		416A5F5C27062034006E6CD9 /* DisplayReportsForMeetingGroupPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayReportsForMeetingGroupPresenter.swift; sourceTree = "<group>"; };
+		416A5F5F27062034006E6CD9 /* DisplayMeetingGroupsForReportsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayMeetingGroupsForReportsView.swift; sourceTree = "<group>"; };
+		416A5F6027062034006E6CD9 /* DisplayMeetingGroupsForReportsPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayMeetingGroupsForReportsPresenter.swift; sourceTree = "<group>"; };
+		416A5F6127062034006E6CD9 /* DisplayMeetingGroupsForReportsInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayMeetingGroupsForReportsInteractor.swift; sourceTree = "<group>"; };
+		416A5F6327062041006E6CD9 /* EntityState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EntityState.swift; sourceTree = "<group>"; };
+		416A5F6427062041006E6CD9 /* ReportsState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReportsState.swift; sourceTree = "<group>"; };
+		416A5F6527062041006E6CD9 /* SaveButtonState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SaveButtonState.swift; sourceTree = "<group>"; };
+		416A5F6627062041006E6CD9 /* TrackSpeakersState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackSpeakersState.swift; sourceTree = "<group>"; };
+		416A5F6727062041006E6CD9 /* EventState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventState.swift; sourceTree = "<group>"; };
+		416A5F6827062041006E6CD9 /* SetupState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetupState.swift; sourceTree = "<group>"; };
+		416A5F7627062050006E6CD9 /* Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
+		416A5F7727062050006E6CD9 /* Entity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Entity.swift; sourceTree = "<group>"; };
+		416A5F7827062050006E6CD9 /* Member.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Member.swift; sourceTree = "<group>"; };
+		416A5F7927062050006E6CD9 /* MeetingGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingGroup.swift; sourceTree = "<group>"; };
+		416A5F7B27062058006E6CD9 /* EntityDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityDocument.swift; sourceTree = "<group>"; };
+		416A5F7C27062058006E6CD9 /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
+		416A5F7D27062058006E6CD9 /* EventDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDocument.swift; sourceTree = "<group>"; };
+		416A608E27064203006E6CD9 /* Main.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Main.xcdatamodel; sourceTree = "<group>"; };
+		416A609127066288006E6CD9 /* PersistenceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceController.swift; sourceTree = "<group>"; };
+		41CC1BAA2708B7F300B40255 /* Member+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Member+CoreDataClass.swift"; sourceTree = "<group>"; };
+		41CC1BAB2708B7F300B40255 /* Member+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Member+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		41CC1BAC2708B7F300B40255 /* MeetingGroup+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MeetingGroup+CoreDataClass.swift"; sourceTree = "<group>"; };
+		41CC1BAD2708B7F300B40255 /* MeetingGroup+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MeetingGroup+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		41CC1BAE2708B7F300B40255 /* Entity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Entity+CoreDataClass.swift"; sourceTree = "<group>"; };
+		41CC1BAF2708B7F300B40255 /* Entity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Entity+CoreDataProperties.swift"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		416A5EC527061AD3006E6CD9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		416A5ECB27061AD3006E6CD9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		416A5EBB27061AD2006E6CD9 = {
+			isa = PBXGroup;
+			children = (
+				416A5EE127061F02006E6CD9 /* Design.md */,
+				416A5EC027061AD2006E6CD9 /* Shared */,
+				41CC1BBD2708BA2E00B40255 /* iOS */,
+				416A5ECF27061AD3006E6CD9 /* macOS */,
+				416A5EC927061AD3006E6CD9 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		416A5EC027061AD2006E6CD9 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				416A5EC127061AD2006E6CD9 /* Speaker_tracker_multiApp.swift */,
+				416A5EE227061FC4006E6CD9 /* Debugging.swift */,
+				416A5EC227061AD2006E6CD9 /* ContentView.swift */,
+				416A5EC327061AD3006E6CD9 /* Assets.xcassets */,
+				416A5F7A27062058006E6CD9 /* Persistent storage */,
+				416A5F7527062050006E6CD9 /* Models */,
+				416A5F6227062041006E6CD9 /* State */,
+				416A5EE827062034006E6CD9 /* Use cases */,
+				416A5EE527062022006E6CD9 /* Global */,
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
+		416A5EC927061AD3006E6CD9 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				416A5EC827061AD3006E6CD9 /* Speaker-tracker-multi.app */,
+				416A5ECE27061AD3006E6CD9 /* Speaker-tracker-multi.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		416A5ECF27061AD3006E6CD9 /* macOS */ = {
+			isa = PBXGroup;
+			children = (
+				416A5EE027061E2F006E6CD9 /* Speaker-tracker-multi--macOS--Info.plist */,
+				416A5ED027061AD3006E6CD9 /* macOS.entitlements */,
+			);
+			path = macOS;
+			sourceTree = "<group>";
+		};
+		416A5EE527062022006E6CD9 /* Global */ = {
+			isa = PBXGroup;
+			children = (
+				416A5EE627062022006E6CD9 /* Constants.swift */,
+				416A5EE727062022006E6CD9 /* ViewComponents.swift */,
+			);
+			path = Global;
+			sourceTree = "<group>";
+		};
+		416A5EE827062034006E6CD9 /* Use cases */ = {
+			isa = PBXGroup;
+			children = (
+				416A5EE927062034006E6CD9 /* Setup */,
+				416A5F4227062034006E6CD9 /* Track speakers */,
+				416A5F5027062034006E6CD9 /* Help */,
+				416A5F5127062034006E6CD9 /* Reports */,
+			);
+			path = "Use cases";
+			sourceTree = "<group>";
+		};
+		416A5EE927062034006E6CD9 /* Setup */ = {
+			isa = PBXGroup;
+			children = (
+				416A5EEA27062034006E6CD9 /* EditingTools */,
+				416A5F1D27062034006E6CD9 /* Detail */,
+				416A5F2F27062034006E6CD9 /* Master */,
+			);
+			path = Setup;
+			sourceTree = "<group>";
+		};
+		416A5EEA27062034006E6CD9 /* EditingTools */ = {
+			isa = PBXGroup;
+			children = (
+				416A5EF827062034006E6CD9 /* SetupSheetView.swift */,
+				416A5F1127062034006E6CD9 /* Entities */,
+				416A5EF927062034006E6CD9 /* Members */,
+				416A5EEB27062034006E6CD9 /* MeetingGroups */,
+				416A5F0527062034006E6CD9 /* Events */,
+			);
+			path = EditingTools;
+			sourceTree = "<group>";
+		};
+		416A5EEB27062034006E6CD9 /* MeetingGroups */ = {
+			isa = PBXGroup;
+			children = (
+				416A5EEC27062034006E6CD9 /* DeleteMeetingGroup */,
+				416A5EF027062034006E6CD9 /* AddMeetingGroup */,
+				416A5EF327062034006E6CD9 /* EditMeetingGroup */,
+				416A5EF727062034006E6CD9 /* MeetingGroupSheetView.swift */,
+			);
+			path = MeetingGroups;
+			sourceTree = "<group>";
+		};
+		416A5EEC27062034006E6CD9 /* DeleteMeetingGroup */ = {
+			isa = PBXGroup;
+			children = (
+				416A5EED27062034006E6CD9 /* DeleteMeetingGroupInteractor.swift */,
+				416A5EEE27062034006E6CD9 /* DeleteMeetingGroupView.swift */,
+				416A5EEF27062034006E6CD9 /* DeleteMeetingGroupPresenter.swift */,
+			);
+			path = DeleteMeetingGroup;
+			sourceTree = "<group>";
+		};
+		416A5EF027062034006E6CD9 /* AddMeetingGroup */ = {
+			isa = PBXGroup;
+			children = (
+				416A5EF127062034006E6CD9 /* AddMeetingGroupInteractor.swift */,
+				416A5EF227062034006E6CD9 /* AddMeetingGroupView.swift */,
+			);
+			path = AddMeetingGroup;
+			sourceTree = "<group>";
+		};
+		416A5EF327062034006E6CD9 /* EditMeetingGroup */ = {
+			isa = PBXGroup;
+			children = (
+				416A5EF427062034006E6CD9 /* EditMeetingGroupView.swift */,
+				416A5EF527062034006E6CD9 /* EditMeetingGroupPresenter.swift */,
+				416A5EF627062034006E6CD9 /* EditMeetingGroupInteractor.swift */,
+			);
+			path = EditMeetingGroup;
+			sourceTree = "<group>";
+		};
+		416A5EF927062034006E6CD9 /* Members */ = {
+			isa = PBXGroup;
+			children = (
+				416A5EFA27062034006E6CD9 /* DeleteMember */,
+				416A5EFE27062034006E6CD9 /* AddMember */,
+				416A5F0127062034006E6CD9 /* EditMember */,
+			);
+			path = Members;
+			sourceTree = "<group>";
+		};
+		416A5EFA27062034006E6CD9 /* DeleteMember */ = {
+			isa = PBXGroup;
+			children = (
+				416A5EFB27062034006E6CD9 /* DeleteMemberInteractor.swift */,
+				416A5EFC27062034006E6CD9 /* DeleteMemberView.swift */,
+				416A5EFD27062034006E6CD9 /* DeleteMemberPresenter.swift */,
+			);
+			path = DeleteMember;
+			sourceTree = "<group>";
+		};
+		416A5EFE27062034006E6CD9 /* AddMember */ = {
+			isa = PBXGroup;
+			children = (
+				416A5EFF27062034006E6CD9 /* AddMemberView.swift */,
+				416A5F0027062034006E6CD9 /* AddMemberInteractor.swift */,
+			);
+			path = AddMember;
+			sourceTree = "<group>";
+		};
+		416A5F0127062034006E6CD9 /* EditMember */ = {
+			isa = PBXGroup;
+			children = (
+				416A5F0227062034006E6CD9 /* EditMemberView.swift */,
+				416A5F0327062034006E6CD9 /* EditMemberPresenter.swift */,
+				416A5F0427062034006E6CD9 /* EditMemberInteractor.swift */,
+			);
+			path = EditMember;
+			sourceTree = "<group>";
+		};
+		416A5F0527062034006E6CD9 /* Events */ = {
+			isa = PBXGroup;
+			children = (
+				416A5F0627062034006E6CD9 /* DeleteEvent */,
+				416A5F0A27062034006E6CD9 /* EditEvent */,
+				416A5F0E27062034006E6CD9 /* AddEvent */,
+			);
+			path = Events;
+			sourceTree = "<group>";
+		};
+		416A5F0627062034006E6CD9 /* DeleteEvent */ = {
+			isa = PBXGroup;
+			children = (
+				416A5F0727062034006E6CD9 /* DeleteEventPresenter.swift */,
+				416A5F0827062034006E6CD9 /* DeleteEventView.swift */,
+				416A5F0927062034006E6CD9 /* DeleteEventInteractor.swift */,
+			);
+			path = DeleteEvent;
+			sourceTree = "<group>";
+		};
+		416A5F0A27062034006E6CD9 /* EditEvent */ = {
+			isa = PBXGroup;
+			children = (
+				416A5F0B27062034006E6CD9 /* EditEventView.swift */,
+				416A5F0C27062034006E6CD9 /* EditEventPresenter.swift */,
+				416A5F0D27062034006E6CD9 /* EditEventInteractor.swift */,
+			);
+			path = EditEvent;
+			sourceTree = "<group>";
+		};
+		416A5F0E27062034006E6CD9 /* AddEvent */ = {
+			isa = PBXGroup;
+			children = (
+				416A5F0F27062034006E6CD9 /* AddEventInteractor.swift */,
+				416A5F1027062034006E6CD9 /* AddEventView.swift */,
+			);
+			path = AddEvent;
+			sourceTree = "<group>";
+		};
+		416A5F1127062034006E6CD9 /* Entities */ = {
+			isa = PBXGroup;
+			children = (
+				416A5F1227062034006E6CD9 /* AddEntity */,
+				416A5F1527062034006E6CD9 /* DeleteEntity */,
+				416A5F1927062034006E6CD9 /* EditEntity */,
+			);
+			path = Entities;
+			sourceTree = "<group>";
+		};
+		416A5F1227062034006E6CD9 /* AddEntity */ = {
+			isa = PBXGroup;
+			children = (
+				416A5F1327062034006E6CD9 /* AddEntityView.swift */,
+				416A5F1427062034006E6CD9 /* AddEntityInteractor.swift */,
+			);
+			path = AddEntity;
+			sourceTree = "<group>";
+		};
+		416A5F1527062034006E6CD9 /* DeleteEntity */ = {
+			isa = PBXGroup;
+			children = (
+				416A5F1627062034006E6CD9 /* DeleteEntityPresenter.swift */,
+				416A5F1727062034006E6CD9 /* DeleteEntityView.swift */,
+				416A5F1827062034006E6CD9 /* DeleteEntityInteractor.swift */,
+			);
+			path = DeleteEntity;
+			sourceTree = "<group>";
+		};
+		416A5F1927062034006E6CD9 /* EditEntity */ = {
+			isa = PBXGroup;
+			children = (
+				416A5F1A27062034006E6CD9 /* EditEntityPresenter.swift */,
+				416A5F1B27062034006E6CD9 /* EditEntityInteractor.swift */,
+				416A5F1C27062034006E6CD9 /* EditEntityView.swift */,
+			);
+			path = EditEntity;
+			sourceTree = "<group>";
+		};
+		416A5F1D27062034006E6CD9 /* Detail */ = {
+			isa = PBXGroup;
+			children = (
+				416A5F2627062034006E6CD9 /* SetupDetailView.swift */,
+				416A5F2227062034006E6CD9 /* DisplaySelectedEntity */,
+				416A5F1E27062034006E6CD9 /* DisplaySelectedMember */,
+				416A5F2727062034006E6CD9 /* DisplaySelectedMeetingGroup */,
+				416A5F2B27062034006E6CD9 /* DisplaySelectedEvent */,
+			);
+			path = Detail;
+			sourceTree = "<group>";
+		};
+		416A5F1E27062034006E6CD9 /* DisplaySelectedMember */ = {
+			isa = PBXGroup;
+			children = (
+				416A5F1F27062034006E6CD9 /* DisplaySelectedMemberPresenter.swift */,
+				416A5F2027062034006E6CD9 /* DisplaySelectedMemberView.swift */,
+				416A5F2127062034006E6CD9 /* DisplaySelectedMemberInteractor.swift */,
+			);
+			path = DisplaySelectedMember;
+			sourceTree = "<group>";
+		};
+		416A5F2227062034006E6CD9 /* DisplaySelectedEntity */ = {
+			isa = PBXGroup;
+			children = (
+				416A5F2327062034006E6CD9 /* DisplaySelectedEntityView.swift */,
+				416A5F2427062034006E6CD9 /* DisplaySelectedEntityInteractor.swift */,
+				416A5F2527062034006E6CD9 /* DisplaySelectedEntityPresenter.swift */,
+			);
+			path = DisplaySelectedEntity;
+			sourceTree = "<group>";
+		};
+		416A5F2727062034006E6CD9 /* DisplaySelectedMeetingGroup */ = {
+			isa = PBXGroup;
+			children = (
+				416A5F2827062034006E6CD9 /* DisplaySelectedMeetingGroupView.swift */,
+				416A5F2927062034006E6CD9 /* DisplaySelectedMeetingGroupInteractor.swift */,
+				416A5F2A27062034006E6CD9 /* DisplaySelectedMeetingGroupPresenter.swift */,
+			);
+			path = DisplaySelectedMeetingGroup;
+			sourceTree = "<group>";
+		};
+		416A5F2B27062034006E6CD9 /* DisplaySelectedEvent */ = {
+			isa = PBXGroup;
+			children = (
+				416A5F2C27062034006E6CD9 /* DisplaySelectedEventPresenter.swift */,
+				416A5F2D27062034006E6CD9 /* DisplaySelectedEventInteractor.swift */,
+				416A5F2E27062034006E6CD9 /* DisplaySelectedEventView.swift */,
+			);
+			path = DisplaySelectedEvent;
+			sourceTree = "<group>";
+		};
+		416A5F2F27062034006E6CD9 /* Master */ = {
+			isa = PBXGroup;
+			children = (
+				416A5F4127062034006E6CD9 /* SetupHeaderView.swift */,
+				416A5F3C27062034006E6CD9 /* SetupMasterView.swift */,
+				416A5F3D27062034006E6CD9 /* DisplayEntities */,
+				416A5F3827062034006E6CD9 /* DisplayMembers */,
+				416A5F3427062034006E6CD9 /* DisplayMeetingGroups */,
+				416A5F3027062034006E6CD9 /* DisplayEvents */,
+			);
+			path = Master;
+			sourceTree = "<group>";
+		};
+		416A5F3027062034006E6CD9 /* DisplayEvents */ = {
+			isa = PBXGroup;
+			children = (
+				416A5F3127062034006E6CD9 /* DisplayEventsInteractor.swift */,
+				416A5F3227062034006E6CD9 /* DisplayEventsPresenter.swift */,
+				416A5F3327062034006E6CD9 /* DisplayEventsView.swift */,
+			);
+			path = DisplayEvents;
+			sourceTree = "<group>";
+		};
+		416A5F3427062034006E6CD9 /* DisplayMeetingGroups */ = {
+			isa = PBXGroup;
+			children = (
+				416A5F3527062034006E6CD9 /* DisplayMeetingGroupsPresenter.swift */,
+				416A5F3627062034006E6CD9 /* DisplayMeetingGroupsInteractor.swift */,
+				416A5F3727062034006E6CD9 /* DisplayMeetingGroupsView.swift */,
+			);
+			path = DisplayMeetingGroups;
+			sourceTree = "<group>";
+		};
+		416A5F3827062034006E6CD9 /* DisplayMembers */ = {
+			isa = PBXGroup;
+			children = (
+				416A5F3927062034006E6CD9 /* DisplayMembersPresenter.swift */,
+				416A5F3A27062034006E6CD9 /* DisplayMembersInteractor.swift */,
+				416A5F3B27062034006E6CD9 /* DisplayMembersView.swift */,
+			);
+			path = DisplayMembers;
+			sourceTree = "<group>";
+		};
+		416A5F3D27062034006E6CD9 /* DisplayEntities */ = {
+			isa = PBXGroup;
+			children = (
+				416A5F3E27062034006E6CD9 /* DisplayEntitiesPresenter.swift */,
+				416A5F3F27062034006E6CD9 /* DisplayEntitiesView.swift */,
+				416A5F4027062034006E6CD9 /* DisplayEntitiesInteractor.swift */,
+			);
+			path = DisplayEntities;
+			sourceTree = "<group>";
+		};
+		416A5F4227062034006E6CD9 /* Track speakers */ = {
+			isa = PBXGroup;
+			children = (
+				416A5F4927062034006E6CD9 /* TrackSpeakersView.swift */,
+				416A5F4A27062034006E6CD9 /* TrackSpeakersInteractor.swift */,
+				416A5F4F27062034006E6CD9 /* TrackSpeakersPresenter.swift */,
+				416A5F4327062034006E6CD9 /* MeetingSetup */,
+				416A5F4727062034006E6CD9 /* Models */,
+				416A5F4B27062034006E6CD9 /* Sub views */,
+			);
+			path = "Track speakers";
+			sourceTree = "<group>";
+		};
+		416A5F4327062034006E6CD9 /* MeetingSetup */ = {
+			isa = PBXGroup;
+			children = (
+				416A5F4427062034006E6CD9 /* MeetingSetupPresenter.swift */,
+				416A5F4527062034006E6CD9 /* MeetingSetupInteractor.swift */,
+				416A5F4627062034006E6CD9 /* MeetingSetupView.swift */,
+			);
+			path = MeetingSetup;
+			sourceTree = "<group>";
+		};
+		416A5F4727062034006E6CD9 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				416A5F4827062034006E6CD9 /* TrackSpeakersModels.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		416A5F4B27062034006E6CD9 /* Sub views */ = {
+			isa = PBXGroup;
+			children = (
+				416A5F4C27062034006E6CD9 /* RemainingTableViews.swift */,
+				416A5F4D27062034006E6CD9 /* SpeakingTableViews.swift */,
+				416A5F4E27062034006E6CD9 /* WaitingTableViews.swift */,
+			);
+			path = "Sub views";
+			sourceTree = "<group>";
+		};
+		416A5F5027062034006E6CD9 /* Help */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Help;
+			sourceTree = "<group>";
+		};
+		416A5F5127062034006E6CD9 /* Reports */ = {
+			isa = PBXGroup;
+			children = (
+				416A5F5227062034006E6CD9 /* ShowReport */,
+				416A5F5727062034006E6CD9 /* ReportsHeaderView.swift */,
+				416A5F5827062034006E6CD9 /* Detail */,
+				416A5F5D27062034006E6CD9 /* Master */,
+			);
+			path = Reports;
+			sourceTree = "<group>";
+		};
+		416A5F5227062034006E6CD9 /* ShowReport */ = {
+			isa = PBXGroup;
+			children = (
+				416A5F5327062034006E6CD9 /* ShowReportInteractor.swift */,
+				416A5F5427062034006E6CD9 /* ShowReportPresenter.swift */,
+				416A5F5527062034006E6CD9 /* Attributes.swift */,
+				416A5F5627062034006E6CD9 /* ShowReportView.swift */,
+			);
+			path = ShowReport;
+			sourceTree = "<group>";
+		};
+		416A5F5827062034006E6CD9 /* Detail */ = {
+			isa = PBXGroup;
+			children = (
+				416A5F5927062034006E6CD9 /* DisplayReportsForMeetingGroup */,
+			);
+			path = Detail;
+			sourceTree = "<group>";
+		};
+		416A5F5927062034006E6CD9 /* DisplayReportsForMeetingGroup */ = {
+			isa = PBXGroup;
+			children = (
+				416A5F5A27062034006E6CD9 /* DisplayReportsForMeetingGroupView.swift */,
+				416A5F5B27062034006E6CD9 /* DisplayReportsForMeetingGroupInteractor.swift */,
+				416A5F5C27062034006E6CD9 /* DisplayReportsForMeetingGroupPresenter.swift */,
+			);
+			path = DisplayReportsForMeetingGroup;
+			sourceTree = "<group>";
+		};
+		416A5F5D27062034006E6CD9 /* Master */ = {
+			isa = PBXGroup;
+			children = (
+				416A5F5E27062034006E6CD9 /* DisplayMeetingGroups */,
+			);
+			path = Master;
+			sourceTree = "<group>";
+		};
+		416A5F5E27062034006E6CD9 /* DisplayMeetingGroups */ = {
+			isa = PBXGroup;
+			children = (
+				416A5F5F27062034006E6CD9 /* DisplayMeetingGroupsForReportsView.swift */,
+				416A5F6027062034006E6CD9 /* DisplayMeetingGroupsForReportsPresenter.swift */,
+				416A5F6127062034006E6CD9 /* DisplayMeetingGroupsForReportsInteractor.swift */,
+			);
+			path = DisplayMeetingGroups;
+			sourceTree = "<group>";
+		};
+		416A5F6227062041006E6CD9 /* State */ = {
+			isa = PBXGroup;
+			children = (
+				416A5F6327062041006E6CD9 /* EntityState.swift */,
+				416A5F6427062041006E6CD9 /* ReportsState.swift */,
+				416A5F6527062041006E6CD9 /* SaveButtonState.swift */,
+				416A5F6627062041006E6CD9 /* TrackSpeakersState.swift */,
+				416A5F6727062041006E6CD9 /* EventState.swift */,
+				416A5F6827062041006E6CD9 /* SetupState.swift */,
+			);
+			path = State;
+			sourceTree = "<group>";
+		};
+		416A5F7527062050006E6CD9 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				416A5F7627062050006E6CD9 /* Event.swift */,
+				416A5F7727062050006E6CD9 /* Entity.swift */,
+				416A5F7827062050006E6CD9 /* Member.swift */,
+				416A5F7927062050006E6CD9 /* MeetingGroup.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		416A5F7A27062058006E6CD9 /* Persistent storage */ = {
+			isa = PBXGroup;
+			children = (
+				41CC1BBC2708B82D00B40255 /* ManagedObject sub-classes */,
+				416A608D27064203006E6CD9 /* Main.xcdatamodeld */,
+				416A609127066288006E6CD9 /* PersistenceController.swift */,
+				416A5F7B27062058006E6CD9 /* EntityDocument.swift */,
+				416A5F7C27062058006E6CD9 /* UserDefaultsManager.swift */,
+				416A5F7D27062058006E6CD9 /* EventDocument.swift */,
+			);
+			path = "Persistent storage";
+			sourceTree = "<group>";
+		};
+		41CC1BBC2708B82D00B40255 /* ManagedObject sub-classes */ = {
+			isa = PBXGroup;
+			children = (
+				41CC1BAA2708B7F300B40255 /* Member+CoreDataClass.swift */,
+				41CC1BAB2708B7F300B40255 /* Member+CoreDataProperties.swift */,
+				41CC1BAC2708B7F300B40255 /* MeetingGroup+CoreDataClass.swift */,
+				41CC1BAD2708B7F300B40255 /* MeetingGroup+CoreDataProperties.swift */,
+				41CC1BAE2708B7F300B40255 /* Entity+CoreDataClass.swift */,
+				41CC1BAF2708B7F300B40255 /* Entity+CoreDataProperties.swift */,
+			);
+			path = "ManagedObject sub-classes";
+			sourceTree = "<group>";
+		};
+		41CC1BBD2708BA2E00B40255 /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				416A5EDF27061C2F006E6CD9 /* Speaker-tracker-multi--iOS--Info.plist */,
+			);
+			path = iOS;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		416A5EC727061AD3006E6CD9 /* Speaker-tracker-multi (iOS) */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 416A5ED927061AD3006E6CD9 /* Build configuration list for PBXNativeTarget "Speaker-tracker-multi (iOS)" */;
+			buildPhases = (
+				416A5EC427061AD3006E6CD9 /* Sources */,
+				416A5EC527061AD3006E6CD9 /* Frameworks */,
+				416A5EC627061AD3006E6CD9 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Speaker-tracker-multi (iOS)";
+			productName = "Speaker-tracker-multi (iOS)";
+			productReference = 416A5EC827061AD3006E6CD9 /* Speaker-tracker-multi.app */;
+			productType = "com.apple.product-type.application";
+		};
+		416A5ECD27061AD3006E6CD9 /* Speaker-tracker-multi (macOS) */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 416A5EDC27061AD3006E6CD9 /* Build configuration list for PBXNativeTarget "Speaker-tracker-multi (macOS)" */;
+			buildPhases = (
+				416A5ECA27061AD3006E6CD9 /* Sources */,
+				416A5ECB27061AD3006E6CD9 /* Frameworks */,
+				416A5ECC27061AD3006E6CD9 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Speaker-tracker-multi (macOS)";
+			productName = "Speaker-tracker-multi (macOS)";
+			productReference = 416A5ECE27061AD3006E6CD9 /* Speaker-tracker-multi.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		416A5EBC27061AD2006E6CD9 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1300;
+				LastUpgradeCheck = 1300;
+				TargetAttributes = {
+					416A5EC727061AD3006E6CD9 = {
+						CreatedOnToolsVersion = 13.0;
+					};
+					416A5ECD27061AD3006E6CD9 = {
+						CreatedOnToolsVersion = 13.0;
+					};
+				};
+			};
+			buildConfigurationList = 416A5EBF27061AD2006E6CD9 /* Build configuration list for PBXProject "Speaker-tracker-multi" */;
+			compatibilityVersion = "Xcode 13.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 416A5EBB27061AD2006E6CD9;
+			productRefGroup = 416A5EC927061AD3006E6CD9 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				416A5EC727061AD3006E6CD9 /* Speaker-tracker-multi (iOS) */,
+				416A5ECD27061AD3006E6CD9 /* Speaker-tracker-multi (macOS) */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		416A5EC627061AD3006E6CD9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				416A5ED527061AD3006E6CD9 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		416A5ECC27061AD3006E6CD9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				416A5ED627061AD3006E6CD9 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		416A5EC427061AD3006E6CD9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				416A5ED327061AD3006E6CD9 /* ContentView.swift in Sources */,
+				416A5FD0270621A1006E6CD9 /* ShowReportView.swift in Sources */,
+				416A5F9E2706210F006E6CD9 /* DisplayMeetingGroupsInteractor.swift in Sources */,
+				416A600927062275006E6CD9 /* EditEventPresenter.swift in Sources */,
+				416A608F27064203006E6CD9 /* Main.xcdatamodeld in Sources */,
+				416A5FC827062191006E6CD9 /* ReportsHeaderView.swift in Sources */,
+				416A5F9627062100006E6CD9 /* DisplayMembersPresenter.swift in Sources */,
+				416A5F86270620C5006E6CD9 /* EntityDocument.swift in Sources */,
+				416A5FD827062205006E6CD9 /* DisplaySelectedEntityView.swift in Sources */,
+				416A601E27062294006E6CD9 /* EditMemberInteractor.swift in Sources */,
+				416A5FAA27062132006E6CD9 /* RemainingTableViews.swift in Sources */,
+				416A5FD2270621A9006E6CD9 /* Constants.swift in Sources */,
+				416A5EE327061FC4006E6CD9 /* Debugging.swift in Sources */,
+				416A5F6927062041006E6CD9 /* EntityState.swift in Sources */,
+				416A5FB827062151006E6CD9 /* MeetingSetupInteractor.swift in Sources */,
+				416A601427062288006E6CD9 /* DeleteMemberView.swift in Sources */,
+				416A5FAE27062138006E6CD9 /* WaitingTableViews.swift in Sources */,
+				416A5FDF27062213006E6CD9 /* DisplaySelectedMemberPresenter.swift in Sources */,
+				416A5FC027062170006E6CD9 /* DisplayMeetingGroupsForReportsInteractor.swift in Sources */,
+				416A5FFD27062262006E6CD9 /* EditEntityPresenter.swift in Sources */,
+				416A60182706228E006E6CD9 /* AddMemberView.swift in Sources */,
+				416A602C270622B4006E6CD9 /* EditMeetingGroupInteractor.swift in Sources */,
+				416A5F9C2706210C006E6CD9 /* DisplayMeetingGroupsPresenter.swift in Sources */,
+				41CC1BB42708B7F300B40255 /* MeetingGroup+CoreDataClass.swift in Sources */,
+				416A5FC62706218D006E6CD9 /* DisplayReportsForMeetingGroupPresenter.swift in Sources */,
+				416A5FFC27062262006E6CD9 /* EditEntityView.swift in Sources */,
+				416A5FAC27062135006E6CD9 /* SpeakingTableViews.swift in Sources */,
+				416A5F94270620FB006E6CD9 /* SetupMasterView.swift in Sources */,
+				416A609227066288006E6CD9 /* PersistenceController.swift in Sources */,
+				416A60192706228E006E6CD9 /* AddMemberInteractor.swift in Sources */,
+				41CC1BBA2708B7F300B40255 /* Entity+CoreDataProperties.swift in Sources */,
+				41CC1BB22708B7F300B40255 /* Member+CoreDataProperties.swift in Sources */,
+				416A5F7327062041006E6CD9 /* SetupState.swift in Sources */,
+				416A5FBE2706216B006E6CD9 /* DisplayMeetingGroupsForReportsPresenter.swift in Sources */,
+				416A5FEA27062222006E6CD9 /* DisplaySelectedEventView.swift in Sources */,
+				416A5F7E270620B0006E6CD9 /* Event.swift in Sources */,
+				416A5FBA27062154006E6CD9 /* MeetingSetupView.swift in Sources */,
+				416A602D270622B4006E6CD9 /* EditMeetingGroupPresenter.swift in Sources */,
+				416A5F8C270620E2006E6CD9 /* SetupHeaderView.swift in Sources */,
+				416A5FF02706223E006E6CD9 /* SetupSheetView.swift in Sources */,
+				416A5FE52706221A006E6CD9 /* DisplaySelectedMeetingGroupView.swift in Sources */,
+				416A600A27062275006E6CD9 /* EditEventInteractor.swift in Sources */,
+				41CC1BB02708B7F300B40255 /* Member+CoreDataClass.swift in Sources */,
+				416A60102706227D006E6CD9 /* AddEventView.swift in Sources */,
+				416A5FD4270621AD006E6CD9 /* ViewComponents.swift in Sources */,
+				416A601D27062294006E6CD9 /* EditMemberView.swift in Sources */,
+				416A5FA82706212C006E6CD9 /* TrackSpeakersPresenter.swift in Sources */,
+				416A5F9827062103006E6CD9 /* DisplayMembersInteractor.swift in Sources */,
+				416A602E270622B4006E6CD9 /* EditMeetingGroupView.swift in Sources */,
+				416A5FDA27062205006E6CD9 /* DisplaySelectedEntityPresenter.swift in Sources */,
+				416A5ED127061AD3006E6CD9 /* Speaker_tracker_multiApp.swift in Sources */,
+				416A60022706226E006E6CD9 /* DeleteEventInteractor.swift in Sources */,
+				416A6024270622A9006E6CD9 /* DeleteMeetingGroupPresenter.swift in Sources */,
+				416A5FEB27062222006E6CD9 /* DisplaySelectedEventPresenter.swift in Sources */,
+				416A5F92270620F7006E6CD9 /* DisplayEntitiesInteractor.swift in Sources */,
+				416A5FBC27062167006E6CD9 /* DisplayMeetingGroupsForReportsView.swift in Sources */,
+				416A5FCC2706219A006E6CD9 /* ShowReportPresenter.swift in Sources */,
+				416A5FF82706225B006E6CD9 /* DeleteEntityView.swift in Sources */,
+				416A5F90270620F4006E6CD9 /* DisplayEntitiesView.swift in Sources */,
+				416A5FA42706211E006E6CD9 /* DisplayEventsPresenter.swift in Sources */,
+				416A5FCE2706219E006E6CD9 /* Attributes.swift in Sources */,
+				416A5F6D27062041006E6CD9 /* SaveButtonState.swift in Sources */,
+				416A5FF72706225B006E6CD9 /* DeleteEntityInteractor.swift in Sources */,
+				416A5F84270620BB006E6CD9 /* MeetingGroup.swift in Sources */,
+				416A5F9A27062106006E6CD9 /* DisplayMembersView.swift in Sources */,
+				416A6023270622A9006E6CD9 /* DeleteMeetingGroupView.swift in Sources */,
+				416A5FA22706211A006E6CD9 /* DisplayEventsInteractor.swift in Sources */,
+				416A5FB427062148006E6CD9 /* TrackSpeakersModels.swift in Sources */,
+				416A6028270622AF006E6CD9 /* AddMeetingGroupInteractor.swift in Sources */,
+				416A5F82270620B7006E6CD9 /* Member.swift in Sources */,
+				416A5F80270620B3006E6CD9 /* Entity.swift in Sources */,
+				416A5FA127062115006E6CD9 /* DisplayMeetingGroupsView.swift in Sources */,
+				416A5F88270620C9006E6CD9 /* UserDefaultsManager.swift in Sources */,
+				416A5FA627062121006E6CD9 /* DisplayEventsView.swift in Sources */,
+				416A60042706226E006E6CD9 /* DeleteEventPresenter.swift in Sources */,
+				416A5FF227062255006E6CD9 /* AddEntityInteractor.swift in Sources */,
+				416A5F6B27062041006E6CD9 /* ReportsState.swift in Sources */,
+				416A5FEC27062222006E6CD9 /* DisplaySelectedEventInteractor.swift in Sources */,
+				416A600827062275006E6CD9 /* EditEventView.swift in Sources */,
+				416A5FE027062213006E6CD9 /* DisplaySelectedMemberInteractor.swift in Sources */,
+				416A5FC427062189006E6CD9 /* DisplayReportsForMeetingGroupInteractor.swift in Sources */,
+				416A5FB22706213F006E6CD9 /* TrackSpeakersInteractor.swift in Sources */,
+				416A5FD6270621E3006E6CD9 /* SetupDetailView.swift in Sources */,
+				416A5FD927062205006E6CD9 /* DisplaySelectedEntityInteractor.swift in Sources */,
+				416A601327062288006E6CD9 /* DeleteMemberInteractor.swift in Sources */,
+				416A5FB02706213C006E6CD9 /* TrackSpeakersView.swift in Sources */,
+				416A60112706227D006E6CD9 /* AddEventInteractor.swift in Sources */,
+				416A6029270622AF006E6CD9 /* AddMeetingGroupView.swift in Sources */,
+				41CC1BB62708B7F300B40255 /* MeetingGroup+CoreDataProperties.swift in Sources */,
+				416A601C27062294006E6CD9 /* EditMemberPresenter.swift in Sources */,
+				416A5F8E270620EF006E6CD9 /* DisplayEntitiesPresenter.swift in Sources */,
+				416A6022270622A9006E6CD9 /* DeleteMeetingGroupInteractor.swift in Sources */,
+				416A5FC227062185006E6CD9 /* DisplayReportsForMeetingGroupView.swift in Sources */,
+				416A5FF62706225B006E6CD9 /* DeleteEntityPresenter.swift in Sources */,
+				416A5F7127062041006E6CD9 /* EventState.swift in Sources */,
+				416A6032270622B9006E6CD9 /* MeetingGroupSheetView.swift in Sources */,
+				416A5F6F27062041006E6CD9 /* TrackSpeakersState.swift in Sources */,
+				416A5FDE27062213006E6CD9 /* DisplaySelectedMemberView.swift in Sources */,
+				416A5FF327062255006E6CD9 /* AddEntityView.swift in Sources */,
+				416A5FCA27062197006E6CD9 /* ShowReportInteractor.swift in Sources */,
+				416A601227062288006E6CD9 /* DeleteMemberPresenter.swift in Sources */,
+				41CC1BB82708B7F300B40255 /* Entity+CoreDataClass.swift in Sources */,
+				416A5FB62706214D006E6CD9 /* MeetingSetupPresenter.swift in Sources */,
+				416A5FE42706221A006E6CD9 /* DisplaySelectedMeetingGroupInteractor.swift in Sources */,
+				416A5FE62706221A006E6CD9 /* DisplaySelectedMeetingGroupPresenter.swift in Sources */,
+				416A5F8A270620CD006E6CD9 /* EventDocument.swift in Sources */,
+				416A5FFE27062262006E6CD9 /* EditEntityInteractor.swift in Sources */,
+				416A60032706226E006E6CD9 /* DeleteEventView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		416A5ECA27061AD3006E6CD9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				416A5ED427061AD3006E6CD9 /* ContentView.swift in Sources */,
+				416A5FD1270621A2006E6CD9 /* ShowReportView.swift in Sources */,
+				416A5F9F27062110006E6CD9 /* DisplayMeetingGroupsInteractor.swift in Sources */,
+				416A600C27062275006E6CD9 /* EditEventPresenter.swift in Sources */,
+				416A609027064203006E6CD9 /* Main.xcdatamodeld in Sources */,
+				416A5FC927062192006E6CD9 /* ReportsHeaderView.swift in Sources */,
+				416A5F9727062100006E6CD9 /* DisplayMembersPresenter.swift in Sources */,
+				416A5F87270620C6006E6CD9 /* EntityDocument.swift in Sources */,
+				416A5FDB27062206006E6CD9 /* DisplaySelectedEntityView.swift in Sources */,
+				416A602127062294006E6CD9 /* EditMemberInteractor.swift in Sources */,
+				416A5FAB27062132006E6CD9 /* RemainingTableViews.swift in Sources */,
+				416A5FD3270621AA006E6CD9 /* Constants.swift in Sources */,
+				416A5EE427061FC4006E6CD9 /* Debugging.swift in Sources */,
+				416A5F6A27062041006E6CD9 /* EntityState.swift in Sources */,
+				416A5FB927062151006E6CD9 /* MeetingSetupInteractor.swift in Sources */,
+				416A601727062288006E6CD9 /* DeleteMemberView.swift in Sources */,
+				416A5FAF27062139006E6CD9 /* WaitingTableViews.swift in Sources */,
+				416A5FE227062213006E6CD9 /* DisplaySelectedMemberPresenter.swift in Sources */,
+				416A5FC127062170006E6CD9 /* DisplayMeetingGroupsForReportsInteractor.swift in Sources */,
+				416A600027062262006E6CD9 /* EditEntityPresenter.swift in Sources */,
+				416A601A2706228F006E6CD9 /* AddMemberView.swift in Sources */,
+				416A602F270622B5006E6CD9 /* EditMeetingGroupInteractor.swift in Sources */,
+				416A5F9D2706210C006E6CD9 /* DisplayMeetingGroupsPresenter.swift in Sources */,
+				41CC1BB52708B7F300B40255 /* MeetingGroup+CoreDataClass.swift in Sources */,
+				416A5FC72706218D006E6CD9 /* DisplayReportsForMeetingGroupPresenter.swift in Sources */,
+				416A5FFF27062262006E6CD9 /* EditEntityView.swift in Sources */,
+				416A5FAD27062135006E6CD9 /* SpeakingTableViews.swift in Sources */,
+				416A5F95270620FB006E6CD9 /* SetupMasterView.swift in Sources */,
+				416A609327066288006E6CD9 /* PersistenceController.swift in Sources */,
+				416A601B2706228F006E6CD9 /* AddMemberInteractor.swift in Sources */,
+				41CC1BBB2708B7F300B40255 /* Entity+CoreDataProperties.swift in Sources */,
+				41CC1BB32708B7F300B40255 /* Member+CoreDataProperties.swift in Sources */,
+				416A5F7427062041006E6CD9 /* SetupState.swift in Sources */,
+				416A5FBF2706216C006E6CD9 /* DisplayMeetingGroupsForReportsPresenter.swift in Sources */,
+				416A5FED27062222006E6CD9 /* DisplaySelectedEventView.swift in Sources */,
+				416A5F7F270620B0006E6CD9 /* Event.swift in Sources */,
+				416A5FBB27062155006E6CD9 /* MeetingSetupView.swift in Sources */,
+				416A6030270622B5006E6CD9 /* EditMeetingGroupPresenter.swift in Sources */,
+				416A5F8D270620E2006E6CD9 /* SetupHeaderView.swift in Sources */,
+				416A5FF12706223E006E6CD9 /* SetupSheetView.swift in Sources */,
+				416A5FE82706221B006E6CD9 /* DisplaySelectedMeetingGroupView.swift in Sources */,
+				416A600D27062275006E6CD9 /* EditEventInteractor.swift in Sources */,
+				41CC1BB12708B7F300B40255 /* Member+CoreDataClass.swift in Sources */,
+				416A600E2706227D006E6CD9 /* AddEventView.swift in Sources */,
+				416A5FD5270621AD006E6CD9 /* ViewComponents.swift in Sources */,
+				416A602027062294006E6CD9 /* EditMemberView.swift in Sources */,
+				416A5FA92706212D006E6CD9 /* TrackSpeakersPresenter.swift in Sources */,
+				416A5F9927062103006E6CD9 /* DisplayMembersInteractor.swift in Sources */,
+				416A6031270622B5006E6CD9 /* EditMeetingGroupView.swift in Sources */,
+				416A5FDD27062206006E6CD9 /* DisplaySelectedEntityPresenter.swift in Sources */,
+				416A5ED227061AD3006E6CD9 /* Speaker_tracker_multiApp.swift in Sources */,
+				416A60052706226F006E6CD9 /* DeleteEventInteractor.swift in Sources */,
+				416A6027270622A9006E6CD9 /* DeleteMeetingGroupPresenter.swift in Sources */,
+				416A5FEE27062222006E6CD9 /* DisplaySelectedEventPresenter.swift in Sources */,
+				416A5F93270620F7006E6CD9 /* DisplayEntitiesInteractor.swift in Sources */,
+				416A5FBD27062168006E6CD9 /* DisplayMeetingGroupsForReportsView.swift in Sources */,
+				416A5FCD2706219B006E6CD9 /* ShowReportPresenter.swift in Sources */,
+				416A5FFB2706225C006E6CD9 /* DeleteEntityView.swift in Sources */,
+				416A5F91270620F4006E6CD9 /* DisplayEntitiesView.swift in Sources */,
+				416A5FA52706211E006E6CD9 /* DisplayEventsPresenter.swift in Sources */,
+				416A5FCF2706219E006E6CD9 /* Attributes.swift in Sources */,
+				416A5F6E27062041006E6CD9 /* SaveButtonState.swift in Sources */,
+				416A5FFA2706225C006E6CD9 /* DeleteEntityInteractor.swift in Sources */,
+				416A5F85270620BB006E6CD9 /* MeetingGroup.swift in Sources */,
+				416A5F9B27062107006E6CD9 /* DisplayMembersView.swift in Sources */,
+				416A6026270622A9006E6CD9 /* DeleteMeetingGroupView.swift in Sources */,
+				416A5FA32706211B006E6CD9 /* DisplayEventsInteractor.swift in Sources */,
+				416A5FB527062149006E6CD9 /* TrackSpeakersModels.swift in Sources */,
+				416A602A270622AF006E6CD9 /* AddMeetingGroupInteractor.swift in Sources */,
+				416A5F83270620B7006E6CD9 /* Member.swift in Sources */,
+				416A5F81270620B4006E6CD9 /* Entity.swift in Sources */,
+				416A5FA027062114006E6CD9 /* DisplayMeetingGroupsView.swift in Sources */,
+				416A5F89270620CA006E6CD9 /* UserDefaultsManager.swift in Sources */,
+				416A5FA727062122006E6CD9 /* DisplayEventsView.swift in Sources */,
+				416A60072706226F006E6CD9 /* DeleteEventPresenter.swift in Sources */,
+				416A5FF427062256006E6CD9 /* AddEntityInteractor.swift in Sources */,
+				416A5F6C27062041006E6CD9 /* ReportsState.swift in Sources */,
+				416A5FEF27062222006E6CD9 /* DisplaySelectedEventInteractor.swift in Sources */,
+				416A600B27062275006E6CD9 /* EditEventView.swift in Sources */,
+				416A5FE327062213006E6CD9 /* DisplaySelectedMemberInteractor.swift in Sources */,
+				416A5FC527062189006E6CD9 /* DisplayReportsForMeetingGroupInteractor.swift in Sources */,
+				416A5FB327062141006E6CD9 /* TrackSpeakersInteractor.swift in Sources */,
+				416A5FD7270621E3006E6CD9 /* SetupDetailView.swift in Sources */,
+				416A5FDC27062206006E6CD9 /* DisplaySelectedEntityInteractor.swift in Sources */,
+				416A601627062288006E6CD9 /* DeleteMemberInteractor.swift in Sources */,
+				416A5FB12706213C006E6CD9 /* TrackSpeakersView.swift in Sources */,
+				416A600F2706227D006E6CD9 /* AddEventInteractor.swift in Sources */,
+				416A602B270622AF006E6CD9 /* AddMeetingGroupView.swift in Sources */,
+				41CC1BB72708B7F300B40255 /* MeetingGroup+CoreDataProperties.swift in Sources */,
+				416A601F27062294006E6CD9 /* EditMemberPresenter.swift in Sources */,
+				416A5F8F270620EF006E6CD9 /* DisplayEntitiesPresenter.swift in Sources */,
+				416A6025270622A9006E6CD9 /* DeleteMeetingGroupInteractor.swift in Sources */,
+				416A5FC327062185006E6CD9 /* DisplayReportsForMeetingGroupView.swift in Sources */,
+				416A5FF92706225C006E6CD9 /* DeleteEntityPresenter.swift in Sources */,
+				416A5F7227062041006E6CD9 /* EventState.swift in Sources */,
+				416A6033270622B9006E6CD9 /* MeetingGroupSheetView.swift in Sources */,
+				416A5F7027062041006E6CD9 /* TrackSpeakersState.swift in Sources */,
+				416A5FE127062213006E6CD9 /* DisplaySelectedMemberView.swift in Sources */,
+				416A5FF527062256006E6CD9 /* AddEntityView.swift in Sources */,
+				416A5FCB27062197006E6CD9 /* ShowReportInteractor.swift in Sources */,
+				416A601527062288006E6CD9 /* DeleteMemberPresenter.swift in Sources */,
+				41CC1BB92708B7F300B40255 /* Entity+CoreDataClass.swift in Sources */,
+				416A5FB72706214E006E6CD9 /* MeetingSetupPresenter.swift in Sources */,
+				416A5FE72706221B006E6CD9 /* DisplaySelectedMeetingGroupInteractor.swift in Sources */,
+				416A5FE92706221B006E6CD9 /* DisplaySelectedMeetingGroupPresenter.swift in Sources */,
+				416A5F8B270620CE006E6CD9 /* EventDocument.swift in Sources */,
+				416A600127062262006E6CD9 /* EditEntityInteractor.swift in Sources */,
+				416A60062706226F006E6CD9 /* DeleteEventView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		416A5ED727061AD3006E6CD9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		416A5ED827061AD3006E6CD9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+			};
+			name = Release;
+		};
+		416A5EDA27061AD3006E6CD9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = C4XR3G25JL;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Speaker-tracker-multi--iOS--Info.plist";
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UIRequiresFullScreen = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.wrmack.Speaker-tracker-multi";
+				PRODUCT_NAME = "Speaker-tracker-multi";
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 2;
+			};
+			name = Debug;
+		};
+		416A5EDB27061AD3006E6CD9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = C4XR3G25JL;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Speaker-tracker-multi--iOS--Info.plist";
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UIRequiresFullScreen = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.wrmack.Speaker-tracker-multi";
+				PRODUCT_NAME = "Speaker-tracker-multi";
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 2;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		416A5EDD27061AD3006E6CD9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = macOS/macOS.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = C4XR3G25JL;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Speaker-tracker-multi--macOS--Info.plist";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 11.3;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.wrmack.Speaker-tracker-multi";
+				PRODUCT_NAME = "Speaker-tracker-multi";
+				SDKROOT = macosx;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		416A5EDE27061AD3006E6CD9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = macOS/macOS.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = C4XR3G25JL;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Speaker-tracker-multi--macOS--Info.plist";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 11.3;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.wrmack.Speaker-tracker-multi";
+				PRODUCT_NAME = "Speaker-tracker-multi";
+				SDKROOT = macosx;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		416A5EBF27061AD2006E6CD9 /* Build configuration list for PBXProject "Speaker-tracker-multi" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				416A5ED727061AD3006E6CD9 /* Debug */,
+				416A5ED827061AD3006E6CD9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		416A5ED927061AD3006E6CD9 /* Build configuration list for PBXNativeTarget "Speaker-tracker-multi (iOS)" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				416A5EDA27061AD3006E6CD9 /* Debug */,
+				416A5EDB27061AD3006E6CD9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		416A5EDC27061AD3006E6CD9 /* Build configuration list for PBXNativeTarget "Speaker-tracker-multi (macOS)" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				416A5EDD27061AD3006E6CD9 /* Debug */,
+				416A5EDE27061AD3006E6CD9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		416A608D27064203006E6CD9 /* Main.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				416A608E27064203006E6CD9 /* Main.xcdatamodel */,
+			);
+			currentVersion = 416A608E27064203006E6CD9 /* Main.xcdatamodel */;
+			path = Main.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = 416A5EBC27061AD2006E6CD9 /* Project object */;
+}
