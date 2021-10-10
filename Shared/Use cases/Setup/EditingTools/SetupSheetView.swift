@@ -19,21 +19,20 @@ struct DebugSheetView {
 struct SetupSheetView: View {
     
     @EnvironmentObject var entityState: EntityState
-    @EnvironmentObject var setupState: SetupState
-    @Binding var sheetState: SheetState
+//    @EnvironmentObject var setupState: SetupState
+    @ObservedObject var setupSheetState: SetupSheetState
     @Binding var presentMembersSheet: Bool
     @Binding var selectedSetupTab: Int
-    @Binding var selectedMasterRow: Int
-    @State var saveWasPressed = false
-    @StateObject var saveButtonState = SaveButtonState()
+//    @Binding var selectedMasterRow: Int
+//    @State var saveWasPressed = false
     
-    init(sheetState: Binding<SheetState>, presentMembersSheet: Binding<Bool>, selectedSetupTab: Binding<Int>, selectedMasterRow: Binding<Int>) {
-        self._sheetState = sheetState
-        self._presentMembersSheet = presentMembersSheet
-        self._selectedSetupTab = selectedSetupTab
-        self._selectedMasterRow = selectedMasterRow
-        DebugSheetView().printMe()
-    }
+//    init(setupSheetState: Binding<SetupSheetState>, presentMembersSheet: Binding<Bool>, selectedSetupTab: Binding<Int>) {
+//        self._setupSheetState = setupSheetState
+//        self._presentMembersSheet = presentMembersSheet
+//        self._selectedSetupTab = selectedSetupTab
+////        self._selectedMasterRow = selectedMasterRow
+////        DebugSheetView().printMe()
+//    }
     
     var body: some View {
         
@@ -42,19 +41,19 @@ struct SetupSheetView: View {
             Spacer().fixedSize().frame(height: 30)
             HStack {
                 Button(action: {withAnimation(.easeInOut(duration: EASEINOUT)) {
-                    self.sheetState.showSheet = false
+                    setupSheetState.showSheet = false
                 }}) {
                     Text("Cancel")
                 }
+                .buttonStyle(PlainButtonStyle())
                 .padding(Edge.Set.leading, 50)
                 .font(.system(size: 24))
                 Spacer()
                 Button(action: {withAnimation(.easeInOut(duration: EASEINOUT)) {
-                    self.sheetState.showSheet = false
-                    self.saveButtonState.savePressed = true
-                    self.saveWasPressed = true
+                    setupSheetState.showSheet = false
+                    setupSheetState.saveWasPressed = true
                 }}) {
-                    switch sheetState.editMode {
+                    switch setupSheetState.editMode {
                     case 0, 1:
                         Text("Save")
                     case 2:
@@ -65,6 +64,7 @@ struct SetupSheetView: View {
                         Text("Save")
                     }
                 }
+                .buttonStyle(PlainButtonStyle())
                 .padding(Edge.Set.trailing, 50)
                 .font(.system(size: 24))
             }
@@ -72,53 +72,53 @@ struct SetupSheetView: View {
             switch selectedSetupTab {
             case 0:
                 
-                if self.sheetState.editMode == 0 {
-                    AddEntityView(sheetState: self.$sheetState, saveWasPressed: self.$saveWasPressed) 
+                if setupSheetState.editMode == 0 {
+                    AddEntityView(setupSheetState: setupSheetState)
                 }
-                if self.sheetState.editMode == 1 {
-                    EditEntityView(sheetState: self.$sheetState, selectedMasterRow: self.$selectedMasterRow, saveWasPressed: $saveWasPressed) 
+                if setupSheetState.editMode == 1 {
+                    EditEntityView(setupSheetState: setupSheetState)
                 }
-                if (self.sheetState.editMode == 2) {
-                    DeleteEntityView(sheetState: self.$sheetState, selectedMasterRow: self.$selectedMasterRow, saveWasPressed: $saveWasPressed)
+                if (setupSheetState.editMode == 2) {
+                    DeleteEntityView(setupSheetState: setupSheetState)
                 }
                 
             case 1:
-                if self.sheetState.editMode == 0 {
-                    AddMemberView(sheetState: self.$sheetState, saveButtonState: self.saveButtonState)
+                if setupSheetState.editMode == 0 {
+                    AddMemberView(setupSheetState: setupSheetState)
                 }
-                if self.sheetState.editMode == 1 {
-                    EditMemberView(sheetState: self.$sheetState, saveButtonState: self.saveButtonState, selectedMasterRow: self.$selectedMasterRow)
+                if setupSheetState.editMode == 1 {
+                    EditMemberView(setupSheetState: setupSheetState)
                 }
-                if (self.sheetState.editMode == 2) {
-                    DeleteMemberView(sheetState: self.$sheetState, saveButtonState: self.saveButtonState, selectedMasterRow: self.$selectedMasterRow)
+                if (setupSheetState.editMode == 2) {
+                    DeleteMemberView(setupSheetState: setupSheetState)
                 }
             case 2:
-                if self.sheetState.editMode == 0 {
-                    AddMeetingGroupView(presentMembersSheet: $presentMembersSheet, sheetState: self.$sheetState, saveButtonState: self.saveButtonState)
+                if setupSheetState.editMode == 0 {
+                    AddMeetingGroupView(setupSheetState: setupSheetState)
                 }
-                if self.sheetState.editMode == 1 {
-                    EditMeetingGroupView(presentMembersSheet: $presentMembersSheet, sheetState: self.$sheetState, saveButtonState: self.saveButtonState, selectedMasterRow: self.$selectedMasterRow)
+                if setupSheetState.editMode == 1 {
+                    EditMeetingGroupView(setupSheetState: setupSheetState)
                 }
-                if self.sheetState.editMode == 2 {
-                    DeleteMeetingGroupView(sheetState: self.$sheetState, saveButtonState: self.saveButtonState, selectedMasterRow: self.$selectedMasterRow)
+                if setupSheetState.editMode == 2 {
+                    DeleteMeetingGroupView(setupSheetState: setupSheetState)
                 }
             case 3:
-                if self.sheetState.editMode == 0 {
-                    AddEventView(sheetState: self.$sheetState, saveButtonState: self.saveButtonState)
+                if setupSheetState.editMode == 0 {
+//                    AddEventView(sheetState: self.$sheetState, saveButtonState: self.saveButtonState)
                 }
-                if self.sheetState.editMode == 1 {
+                if setupSheetState.editMode == 1 {
 //                    EditEventView(sheetState: self.$sheetState, saveButtonState: self.saveButtonState, selectedMasterRow: self.$selectedMasterRow)
                 }
-                if (self.sheetState.editMode == 2) {
+                if (setupSheetState.editMode == 2) {
 //                    DeleteEventView(sheetState: self.$sheetState, saveButtonState: self.saveButtonState, selectedMasterRow: self.$selectedMasterRow)
                 }
             
-            default: AddEntityView(sheetState: self.$sheetState, saveWasPressed: self.$saveWasPressed)
+            default: AddEntityView(setupSheetState: setupSheetState)
             
             }
             
         }
-        .background(Color(white: 0.85))
+        .background(Color(white: 0.3, opacity: 1.0))
     }
 }
 

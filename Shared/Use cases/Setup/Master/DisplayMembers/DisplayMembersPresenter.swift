@@ -9,44 +9,42 @@
 import Foundation
 import Combine
 
-
-struct MemberName: Hashable {
+/// The model that is used by the presenter for publishing members
+struct MemberViewModel: Hashable {
    var name: String
-   var idx: Int
+   var idx: UUID
 }
 
+/// `DisplayMembersPresenter` is responsible for formatting data it receives from `DisplayMembersInteractor`
+/// so that it is ready for presentation by `DisplayMembersView`.
 class DisplayMembersPresenter: ObservableObject {
-   var members = [Member]()
-   @Published var memberNames = [MemberName]()
+
+   @Published var members = [MemberViewModel]()
    
    init() {
-      print("DisplayMembersPresenter initialized")
+      print("++++++ DisplayMembersPresenter initialized")
    }
    
    deinit {
-      print("DisplayMembersPresenter de-initialized")
+      print("++++++ DisplayMembersPresenter de-initialized")
    }
    
-   func presentMemberNames(members: [Member]?) {
-      var tempNames = [String]()
-      var tempMemberNames = [MemberName]()
+    /// Receives members and stores them in the presenter's publisher using the presenter's view model
+   func presentMembers(members: [Member]?) {
+       var tempMembers = members
+       tempMembers?.sort(by: {
+           if $0.lastName! < $1.lastName! { return true }
+           return false
+       })
+      var tempMemberVMs = [MemberViewModel]()
       if members != nil {
          for member in members! {
-            tempNames.append(member.lastName!)
-            tempNames.sort(by: {
-               if $0 < $1 {
-                  return true
-               }
-               return false
-            })
+             let memberName = member.lastName == "" ? "test" : member.lastName
+             tempMemberVMs.append(MemberViewModel(name:memberName!, idx: member.idx!))
          }
-         var idx = 0
-         tempNames.forEach({ el in
-            tempMemberNames.append(MemberName(name: el, idx: idx))
-            idx += 1
-         })
+
       }
-      print("DisplayMembersPresenter presentMemberNames")
-      self.memberNames = tempMemberNames
+      print("------ DisplayMembersPresenter presentMembers")
+      self.members = tempMemberVMs
    }
 }

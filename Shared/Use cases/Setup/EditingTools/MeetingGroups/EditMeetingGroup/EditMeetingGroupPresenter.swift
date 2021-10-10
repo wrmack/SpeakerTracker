@@ -16,12 +16,14 @@ struct EditMeetingGroupViewModel {
 class EditMeetingGroupPresenter: ObservableObject {
     @Published var viewModel = EditMeetingGroupViewModel()
     
-    func presentViewModel(name: String, members: [Member]?) {
-        let meetingGroupName = name
+    func presentViewModel(selectedMeetingGroup: MeetingGroup) {
+        let meetingGroupName = selectedMeetingGroup.name
         var meetingGroupMembers = ""
+        let members = selectedMeetingGroup.members
         if members != nil {
             var mbrString =  ""
-            members!.forEach({ member in
+            members!.forEach({ val in
+                let member = val as! Member
                 if (mbrString.count > 0) {
                    mbrString.append(", ")
                 }
@@ -33,7 +35,7 @@ class EditMeetingGroupPresenter: ObservableObject {
             })
             meetingGroupMembers = mbrString
         }
-        let tempModel = EditMeetingGroupViewModel(name: meetingGroupName, members: meetingGroupMembers)
+        let tempModel = EditMeetingGroupViewModel(name: meetingGroupName!, members: meetingGroupMembers)
         viewModel = tempModel
     }
 }

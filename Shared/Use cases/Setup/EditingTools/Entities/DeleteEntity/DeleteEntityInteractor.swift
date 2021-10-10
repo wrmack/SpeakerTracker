@@ -8,6 +8,7 @@
 
 import Foundation
 import Combine
+import CoreData
 
 
 class DeleteEntityInteractor {
@@ -20,30 +21,47 @@ class DeleteEntityInteractor {
         print("DeleteEntityInteractor de-initialised")
     }
     
-    func displaySelectedEntity(entityState: EntityState, presenter: DeleteEntityPresenter, indexOfEntityToFetch: Int) {
-        let entity = entityState.sortedEntities[indexOfEntityToFetch]
-        presenter.presentViewModel(selectedEntity: entity)
+    func displaySelectedEntity(entityState: EntityState, presenter: DeleteEntityPresenter) {
+        guard let entity = entityState.currentEntity else {return}
+        presenter.presentViewModel(selectedEntity:entity)
     }
     
-    func deleteEntity(entityState: EntityState, indexOfEntityToDelete: Int) {
-//        let entityState = entityState
-//        let currentEntity = entityState.sortedEntities[indexOfEntityToDelete]
-//        
-//        guard let docDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else {
-//            print("DeleteEntityInteractor: removEntity: error: Document directory not found")
-//            return
-//        }
-//        let file = currentEntity.id.uuidString
-//        let docFileURL = docDirectory.appendingPathComponent(file + ".ent")
-//        do {
-//            try FileManager.default.removeItem(at: docFileURL)
-//            entityState.entities.removeAll(where: { entity in
-//                entity.id == currentEntity.id
-//            })
-//            entityState.entityModelChanged = true
-//        }
-//        catch {
-//            print(error)
-//        }
+    func deleteEntity(entityState: EntityState) {
+        
+        let desc = NSSortDescriptor(key: "name", ascending: true)
+
+        let viewContext = PersistenceController.shared.container.viewContext
+        let fetchRequest = NSFetchRequest<Entity>(entityName: "Entity")
+       
+        fetchRequest.sortDescriptors = [desc]
+        
+        if entityState.currentEntityIndex != nil {
+            let pred = NSPredicate(format: "idx == %@", entityState.currentEntityIndex! as CVarArg)
+            fetchRequest.predicate = pred
+        }
+        
+        var fetchedEntities: [NSFetchRequestResult]?
+        do {
+            fetchedEntities = try viewContext.fetch(fetchRequest)
+        }
+        catch {
+            print(error)
+        }
+        
+        let selectedEntity = fetchedEntities![0]
+        
+        entityState.currentEntityIndex = nil
+        
+        viewContext.delete(selectedEntity as! NSManagedObject)
+        
+        do {
+            try viewContext.save()
+        } catch {
+            // Replace this implementation with code to handle the error appropriately.
+            // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+            let nsError = error as NSError
+            fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
+        }
+
     }
 }

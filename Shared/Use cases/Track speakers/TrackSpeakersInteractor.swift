@@ -51,13 +51,13 @@ class TrackSpeakersInteractor {
     
     // Initial presentation uses the currentMeetingGroup property in TrackSpeakersState
     func fetchMembers(presenter: TrackSpeakersPresenter, entityState: EntityState, eventState: EventState, trackSpeakersState: TrackSpeakersState) {
-        if entityState.entities.count == 0 {
-            fetchEntities(presenter: presenter, entityState: entityState, eventState: eventState,trackSpeakersState: trackSpeakersState)
-        }
-        else {
-            guard let currentMeetingGroup = trackSpeakersState.currentMeetingGroup else {return}
-            fetchMembers(presenter: presenter, trackSpeakersState: trackSpeakersState, meetingGroupForRemainingTable: currentMeetingGroup)
-        }
+//        if entityState.entities.count == 0 {
+//            fetchEntities(presenter: presenter, entityState: entityState, eventState: eventState,trackSpeakersState: trackSpeakersState)
+//        }
+//        else {
+//            guard let currentMeetingGroup = trackSpeakersState.currentMeetingGroup else {return}
+//            fetchMembers(presenter: presenter, trackSpeakersState: trackSpeakersState, meetingGroupForRemainingTable: currentMeetingGroup)
+//        }
 
     }
     

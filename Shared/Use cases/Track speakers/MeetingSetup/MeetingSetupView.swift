@@ -53,8 +53,8 @@ struct MeetingSetupSheetView: View {
                     }
                     HStack {
                         Menu {
-                            ForEach(entityState.entities.indices, id: \.self) { idx in
-                                Button(entityState.entities[idx].name!, action: { changeEntity(row: idx)})
+                            ForEach(entityState.sortedEntities!.indices, id: \.self) { idx in
+                                Button(entityState.sortedEntities![idx].name!, action: { changeEntity(row: idx)})
                             }
                         } label: {
                             Text("Change")

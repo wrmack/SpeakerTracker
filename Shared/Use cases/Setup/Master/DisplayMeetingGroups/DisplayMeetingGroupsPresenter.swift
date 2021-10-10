@@ -10,44 +10,40 @@ import Foundation
 import Combine
 
 
-struct MeetingGroupName: Hashable {
+struct MeetingGroupViewModel: Hashable {
    var name: String
-   var idx: Int
+   var idx: UUID
 }
 
 class DisplayMeetingGroupsPresenter: ObservableObject {
-   var meetingGroups = [MeetingGroup]()
-   @Published var meetingGroupNames = [MeetingGroupName]()
-   @Published var presenterUp = true  // Used to signal to DisplayMeetingGroupsView to fetch data
+
+   @Published var meetingGroups = [MeetingGroupViewModel]()
+
    
    init() {
-      print("DisplayMeetingGroupsPresenter initialized")
+      print("++++++ DisplayMeetingGroupsPresenter initialized")
    }
    
    deinit {
-      print("DisplayMeetingGroupsPresenter de-initialized")
+      print("++++++ isplayMeetingGroupsPresenter de-initialized")
    }
    
-   func presentMeetingGroupNames(meetingGroups: [MeetingGroup]?) {
-      var tempNames = [String]()
-      var tempMeetingGroupNames = [MeetingGroupName]()
+   func presentMeetingGroups(meetingGroups: [MeetingGroup]?) {
+       var tempMeetingGroups = meetingGroups
+       tempMeetingGroups?.sort(by: {
+           if $0.name! < $1.name! { return true }
+           return false
+       })
+      var tempMeetingGroupVMs = [MeetingGroupViewModel]()
       if meetingGroups != nil {
          for meetingGroup in meetingGroups! {
-            tempNames.append(meetingGroup.name!)
-            tempNames.sort(by: {
-               if $0 < $1 {
-                  return true
-               }
-               return false
-            })
+             let meetingGroupName = meetingGroup.name == "" ? "test" : meetingGroup.name
+             tempMeetingGroupVMs.append(MeetingGroupViewModel(name:meetingGroupName!, idx: meetingGroup.idx!)) 
          }
-         var idx = 0
-         tempNames.forEach({ el in
-            tempMeetingGroupNames.append(MeetingGroupName(name: el, idx: idx))
-            idx += 1
-         })
+
       }
-      print("DisplayMeetingGroupsPresenter presentMeetingGroupsNames")
-      self.meetingGroupNames = tempMeetingGroupNames
+      print("------ DisplayMeetingGroupsPresenter presentMembers")
+      self.meetingGroups = tempMeetingGroupVMs
+
    }
 }

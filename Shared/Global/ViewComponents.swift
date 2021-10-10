@@ -25,7 +25,7 @@ struct MasterListRowModifier: ViewModifier {
         content
             .padding()
             .frame(minWidth: 0, maxWidth: .infinity, maxHeight: 40, alignment: .leading)
-            .background(isSelected ? Color(white: 0.95) : Color.white)
+            .background(isSelected ? Color.secondary : Color.clear)
     }
 }
 

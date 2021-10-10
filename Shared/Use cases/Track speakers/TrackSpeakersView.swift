@@ -8,6 +8,7 @@
 
 import SwiftUI
 import Combine
+import CoreData
 
 struct PlayButtonState {
     var disabled = false
@@ -107,8 +108,9 @@ struct TrackSpeakersView: View {
                     {
                         Image(systemName: "play.fill")
                             .resizable()
-                            .frame(width: 80, height: 80)
                     }
+                    .buttonStyle(PlainButtonStyle())
+                    .frame(width: 80, height: 80)
                     .disabled(playButton.disabled)
                     .foregroundColor(playButton.color)
                     
@@ -120,8 +122,9 @@ struct TrackSpeakersView: View {
                     {
                         Image(systemName: "pause.fill")
                             .resizable()
-                            .frame(width: 80, height: 80)
                     }
+                    .buttonStyle(PlainButtonStyle())
+                    .frame(width: 80, height: 80)
                     .disabled(pauseButton.disabled)
                     .foregroundColor(pauseButton.color)
                     
@@ -133,8 +136,9 @@ struct TrackSpeakersView: View {
                     {
                         Image(systemName: "stop.fill")
                             .resizable()
-                            .frame(width: 80, height: 80)
                     }
+                    .buttonStyle(PlainButtonStyle())
+                    .frame(width: 80, height: 80)
                     .disabled(stopButton.disabled)
                     .foregroundColor(stopButton.color)
                 }
@@ -162,6 +166,10 @@ struct TrackSpeakersView: View {
                                 .padding(.trailing, 10)
                                 .padding(.top, 40)
                         }
+                        .buttonStyle(PlainButtonStyle())
+                        .frame(width: 250, height: 80)
+                        
+                        
                         Button(action: {
                             saveEvent()
                         }) {
@@ -173,6 +181,8 @@ struct TrackSpeakersView: View {
                                 .padding(.trailing, 10)
                                 .padding(.top, 40)
                         }
+                        .buttonStyle(PlainButtonStyle())
+                        .frame(width: 250, height: 80)
                         Image(systemName: "circle.fill")
                             .resizable()
                             .frame(width: 60.0, height: 60.0)
@@ -203,9 +213,11 @@ struct TrackSpeakersView: View {
                                 .padding(.trailing, 10)
                                 .padding(.top, 40)
                         }
+                        .buttonStyle(PlainButtonStyle())
+                        .frame(width: 250, height: 80)
                     }
                         
-                    Spacer().fixedSize(horizontal: true, vertical: true).frame(width: 140, height: 400)
+                    Spacer().fixedSize(horizontal: true, vertical: true).frame(width: 200, height: 400)
                 }
             }.padding(.leading, 20.0).padding(.bottom, 5).padding(.top,20)
         }
@@ -320,24 +332,26 @@ struct TrackSpeakersView: View {
     }
 }
 
-//struct TrackSpeakersView_Previews: PreviewProvider {
-//    @State static var showMeetingSetupSheet = false
-//    @State static var selectedEntityName = ""
-//    @State static var isRecording = true
-//    @EnvironmentObject static var trackSpeakersState: TrackSpeakersState
-//    @EnvironmentObject static var entityState: EntityState
-//
-//    static var previews: some View {
-//        TrackSpeakersView(
-//            showMeetingSetupSheet: $showMeetingSetupSheet,
-//            selectedMeetingGroup: .constant(MeetingGroup(name: "Finance and Performance Committee", memberIDs: nil, fileName: nil)),
-//            isRecording: $isRecording
-//        )
+struct TrackSpeakersView_Previews: PreviewProvider {
+    @State static var showMeetingSetupSheet = false
+    @State static var selectedEntityName = ""
+    @State static var isRecording = true
+    @EnvironmentObject static var trackSpeakersState: TrackSpeakersState
+    @EnvironmentObject static var entityState: EntityState
+    static var viewContext = PersistenceController.shared.container.viewContext
+
+    static var previews: some View {
+        TrackSpeakersView(
+            showMeetingSetupSheet: $showMeetingSetupSheet,
+            selectedMeetingGroup: .constant(MeetingGroup(context: viewContext)),
+            isRecording: $isRecording
+        )
 //        .previewDevice("iPad Pro (12.9-inch) (5th generation)")
 //        .previewDisplayName("iPad Pro (12.9-inch)")
-//        .previewLayout(.fixed(width: 1366, height: 1024))
-//        .environmentObject(EntityState())
-//        .environmentObject(EventState())
-//        .environmentObject(TrackSpeakersState())
-//    }
-//}
+        .previewLayout(.fixed(width: 1366, height: 1024))
+        .environmentObject(EntityState())
+        .environmentObject(EventState())
+        .environmentObject(TrackSpeakersState())
+//        .environment(\.colorScheme, .light)
+    }
+}

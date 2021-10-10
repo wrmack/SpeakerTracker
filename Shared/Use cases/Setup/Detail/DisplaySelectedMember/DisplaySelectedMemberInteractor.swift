@@ -8,23 +8,26 @@
 
 import Foundation
 
+/// `DisplaySelectedMemberInteractor` is responsible for interacting with the data model.
 class DisplaySelectedMemberInteractor {
    
-   
-    func fetchMember(presenter: DisplaySelectedMemberPresenter, entityState: EntityState, selectedMasterRow: Int) {
-        print("DisplaySelectedMemberInteractor.fetchMember")
-
-        let row = selectedMasterRow
-        let members = entityState.sortedMembers
-        var currentMember: Member?
-        if members.count > 0 {
-            currentMember = members[row]
+    func fetchMember(presenter: DisplaySelectedMemberPresenter, entityState: EntityState, newIndex: UUID?) {
+        print("------ DisplaySelectedMemberInteractor.fetchMember")
+        var memberIndex: UUID?
+        if newIndex == nil {
+            guard let members = entityState.sortedMembers(entity: entityState.currentEntity!) else {return}
+            if members.count == 0 {return}
+            memberIndex = members[0].idx
         }
-        presenter.presentMemberDetail(member: currentMember)
+        else {
+            memberIndex = newIndex
+        }
+        let member = entityState.memberWithIndex(index: memberIndex!)
+        presenter.presentMemberDetail(member: member)
    }
     
     func fetchMemberFromChangingEntity(presenter: DisplaySelectedMemberPresenter, entity: Entity, selectedMasterRow: Int) {
-        print("DisplaySelectedMemberInteractor.fetchMember")
+        print("------ DisplaySelectedMemberInteractor.fetchMemberFromChangingEntity")
 
 //        let row = selectedMasterRow
 //        

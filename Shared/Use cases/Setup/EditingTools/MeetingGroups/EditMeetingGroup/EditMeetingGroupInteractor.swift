@@ -11,20 +11,14 @@ import Foundation
 
 class EditMeetingGroupInteractor {
     
-    func displaySelectedMeetingGroup(entityState: EntityState, presenter: EditMeetingGroupPresenter, selectedMasterRow: Int) {
-        let meetingGroup = entityState.sortedMeetingGroups[selectedMasterRow]
-        var members = [Member]()
-//        meetingGroup.members!.forEach({ id in
-//            entityState.currentEntity?.members?.forEach({ member in
-//                if member.id == id {
-//                    members.append(member)
-//                }
-//            })
-//        })
-        presenter.presentViewModel(name: meetingGroup.name!, members: members)
+    func displaySelectedMeetingGroup(entityState: EntityState, presenter: EditMeetingGroupPresenter) {
+        
+        guard let meetingGroup = entityState.currentMeetingGroup else {return}
+        presenter.presentViewModel(selectedMeetingGroup: meetingGroup)
+    
     }
     
-    func saveMeetingGroupToEntity(entityState: EntityState, setupState: SetupState, meetingGroupName: String, members: Set<Member>?, selectedMasterRow: Int) {
+    func saveMeetingGroupToEntity(entityState: EntityState, setupSheetState: SetupSheetState, meetingGroupName: String, members: Set<Member>?) {
 //        let entityState = entityState
 //        let setupState = setupState
 //        var currentEntity = entityState.currentEntity!

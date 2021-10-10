@@ -17,12 +17,14 @@ struct DeleteMeetingGroupViewModel {
 class DeleteMeetingGroupPresenter: ObservableObject {
     @Published var viewModel = DeleteMeetingGroupViewModel()
     
-    func presentViewModel(name: String, members: [Member]?) {
-        let meetingGroupName = name
+    func presentViewModel(selectedMeetingGroup: MeetingGroup) {
+        let meetingGroupName = selectedMeetingGroup.name
         var meetingGroupMembers = ""
+        let members = selectedMeetingGroup.members
         if members != nil {
             var mbrString =  ""
-            members!.forEach({ member in
+            members!.forEach({ val in
+                let member = val as! Member
                 if (mbrString.count > 0) {
                    mbrString.append(", ")
                 }
@@ -34,7 +36,7 @@ class DeleteMeetingGroupPresenter: ObservableObject {
             })
             meetingGroupMembers = mbrString
         }
-        let tempModel = DeleteMeetingGroupViewModel(name: meetingGroupName, members: meetingGroupMembers)
+        let tempModel = DeleteMeetingGroupViewModel(name: meetingGroupName!, members: meetingGroupMembers)
         viewModel = tempModel
     }
 }

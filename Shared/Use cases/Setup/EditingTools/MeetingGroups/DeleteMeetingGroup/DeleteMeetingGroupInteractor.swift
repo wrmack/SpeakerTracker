@@ -7,84 +7,45 @@
 //
 
 import Foundation
+import CoreData
 
 
 class DeleteMeetingGroupInteractor {
 
     init() {
-        print("DeleteMeetingGroupInteractor initialised")
+        print("++++++ DeleteMeetingGroupInteractor initialised")
     }
 
     deinit {
-        print("DeleteMeetingGroupInteractor de-initialised")
+        print("++++++ DeleteMeetingGroupInteractor de-initialised")
     }
    
     
-    func displaySelectedMeetingGroup(entityState: EntityState, presenter:  DeleteMeetingGroupPresenter, selectedMasterRow: Int) {
-//        let meetingGroup = entityState.sortedMeetingGroups[selectedMasterRow]
-//        var members = [Member]()
-//        meetingGroup.memberIDs?.forEach({ id in
-//            entityState.currentEntity?.members?.forEach({ member in
-//                if member.id == id {
-//                    members.append(member)
-//                }
-//            })
-//        })
-//        presenter.presentViewModel(name: meetingGroup.name!, members: members)
+    func displaySelectedMeetingGroup(entityState: EntityState, presenter:  DeleteMeetingGroupPresenter) {
+        
+        guard let meetingGroup = entityState.currentMeetingGroup else {return}
+        presenter.presentViewModel(selectedMeetingGroup: meetingGroup)
+        
     }
     
     
-    func deleteSelectedMeetingGroupFromEntity(entityState: EntityState, setupState: SetupState, selectedMasterRow: Int) {
-//        let entityState = entityState
-//        let setupState = setupState
-//        var currentEntity = entityState.currentEntity!
-//        let meetingGroupToDelete = entityState.sortedMeetingGroups[selectedMasterRow]
-//        
-//        var newMeetingGroups = [MeetingGroup]()
-//        
-//        currentEntity.meetingGroups?.forEach({ meetingGroup in
-//            if meetingGroup.id != meetingGroupToDelete.id {
-//                newMeetingGroups.append(meetingGroup)
-//            }
-//        })
-//        currentEntity.meetingGroups = newMeetingGroups
-//        
-//        guard let docDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else {
-//            print("DeleteMemberInteractor: deleteMember: error: Document directory not found")
-//            return
-//        }
-//        let file = currentEntity.id.uuidString 
-//        let docFileURL = docDirectory.appendingPathComponent(file + ".ent")
-//        let entityDoc = EntityDocument(fileURL: docFileURL)
-//        entityDoc.open(completionHandler: { success in
-//           if !success {
-//              print("DeleteMemberInteractor: deleteSelectedMemberFromEntity: error opening EntityDocument")
-//           }
-//           else {
-//              entityDoc.entity = currentEntity
-//              entityDoc.updateChangeCount(.done)
-//              entityDoc.close(completionHandler: { success in
-//                 if !success {
-//                    print("DeleteMemberInteractor: deleteSelectedMemberFromEntity: Error saving")
-//                 }
-//                 else{
-//                    print("entityDoc: \(entityDoc)")
-//                    var newEntities = [Entity]()
-//                    entityState.entities.forEach({ entity in
-//                        if entity.id == currentEntity.id {
-//                            newEntities.append(currentEntity)
-//                        }
-//                        else {
-//                            newEntities.append(entity)
-//                        }
-//                    })
-//                    entityState.entities = newEntities
-//                    entityState.currentEntity = currentEntity
-//                    setupState.numberOfRows -= 1
-//                 }
-//
-//              })
-//           }
-//        })
+    func deleteSelectedMeetingGroupFromEntity(entityState: EntityState) {
+        guard let meetingGroup = entityState.currentMeetingGroup else {return}
+        
+        let viewContext = PersistenceController.shared.container.viewContext
+        viewContext.delete(meetingGroup as NSManagedObject)
+        
+        do {
+            try viewContext.save()
+        } catch {
+            // Replace this implementation with code to handle the error appropriately.
+            // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+            let nsError = error as NSError
+            fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
+        }
+            
+        entityState.currentMeetingGroupIndex = nil
+        entityState.meetingGroupsHaveChanged = true
+        
    }
 }

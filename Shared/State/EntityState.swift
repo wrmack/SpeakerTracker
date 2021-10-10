@@ -9,11 +9,20 @@
 /*
  An Environment Object
  
+ 
+ 
  */
 
 import Foundation
 import Combine
+import CoreData
 
+/// Holds state of organisational entities, members and meeting groups
+///
+/// Organisational entities, members and meeting groups are CoreData managed objects
+/// setup in Main.xcdatmodeld.  Each has a unique UUID index (idx) property which is used
+/// for identifying the current entity, member or meeting group.
+///
 class EntityState : ObservableObject {
     
     // MARK: - Initialisation
@@ -28,64 +37,317 @@ class EntityState : ObservableObject {
     
     // MARK: - Published properties
     
-    @Published var currentEntity: Entity?
-    @Published var currentMeetingGroup: MeetingGroup?
+    //    @Published var currentEntity: Entity?
+    //    @Published var currentMeetingGroup: MeetingGroup?
     @Published var meetingGroupMembers: Set<Member>?
-    @Published var entityModelChanged = false
+    //    @Published var entityModelChanged = false
+    
+    @Published var currentEntityIndex: UUID?
+    @Published var currentMemberIndex: UUID?
+    @Published var currentMeetingGroupIndex: UUID?
+    
+    // Additions, deletions, edits to members
+    @Published var entitiesHaveChanged = false
+    @Published var membersHaveChanged = false
+    @Published var meetingGroupsHaveChanged = false
     
     // MARK: - Stored properties
     
-    var entities = [Entity]() {
-        didSet {
-            print("++++++ EntityState entities: [Entity]() didSet for \(entities.count) entities")
-        }
-    }
+    //    var entities = [Entity]() {
+    //        didSet {
+    //            print("++++++ EntityState entities: [Entity]() didSet for \(entities.count) entities")
+    //        }
+    //    }
     
     // MARK: - Computed properties
     
-    var sortedEntities: [Entity] {
+    var currentEntity: Entity? {
         get {
-            let sortedEntities = entities.sorted(by: {
-                if $0.name! < $1.name! {
-                    return true
-                }
-                return false
+            // Setup fetch request
+            let viewContext = PersistenceController.shared.container.viewContext
+            let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Entity")
+            
+            // Predicate
+            guard let idx = currentEntityIndex else {return nil}
+            let pred = NSPredicate(format: "idx == %@", idx as CVarArg)
+            fetchRequest.predicate = pred
+            
+            // Fetch
+            var fetchedEntities: [NSFetchRequestResult]?
+            do {
+                fetchedEntities = try viewContext.fetch(fetchRequest)
+            }
+            catch {
+                print(error)
+            }
+            
+            let currentEntity = fetchedEntities![0] as! Entity
+            
+            return currentEntity
+        }
+    }
+    
+    var currentMember: Member? {
+        get {
+            // Setup fetch request
+            let viewContext = PersistenceController.shared.container.viewContext
+            let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Member")
+            
+            // Predicate
+            guard let idx = currentMemberIndex else {return nil}
+            let pred = NSPredicate(format: "idx == %@", idx as CVarArg)
+            fetchRequest.predicate = pred
+            
+            // Fetch
+            var fetchedMembers: [NSFetchRequestResult]?
+            do {
+                fetchedMembers = try viewContext.fetch(fetchRequest)
+            }
+            catch {
+                print(error)
+            }
+            
+            let currentMember = fetchedMembers![0] as! Member
+            
+            return currentMember
+        }
+    }
+    
+    var currentMeetingGroup: MeetingGroup? {
+        get {
+            // Setup fetch request
+            let viewContext = PersistenceController.shared.container.viewContext
+            let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "MeetingGroup")
+            
+            // Predicate
+            guard let idx = currentMeetingGroupIndex else {return nil}
+            let pred = NSPredicate(format: "idx == %@", idx as CVarArg)
+            fetchRequest.predicate = pred
+            
+            // Fetch
+            var fetchedMeetingGroups: [NSFetchRequestResult]?
+            do {
+                fetchedMeetingGroups = try viewContext.fetch(fetchRequest)
+            }
+            catch {
+                print(error)
+            }
+            
+            let currentMeetingGroup = fetchedMeetingGroups![0] as! MeetingGroup
+            
+            return currentMeetingGroup
+        }
+    }
+    
+    var sortedEntities: [Entity]? {
+        get {
+            // Setup fetch request
+            let viewContext = PersistenceController.shared.container.viewContext
+            let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Entity")
+            
+            // Sort descriptor
+            let desc = NSSortDescriptor(key: "name", ascending: true)
+            fetchRequest.sortDescriptors = [desc]
+            
+            // Fetch
+            var fetchedEntities: [NSFetchRequestResult]?
+            do {
+                fetchedEntities = try viewContext.fetch(fetchRequest)
+            }
+            catch {
+                print(error)
+            }
+            
+            if fetchedEntities == nil { return nil }
+            var entities = [Entity]()
+            fetchedEntities!.forEach({ entity in
+                entities.append(entity as! Entity)
             })
-            return sortedEntities
+            
+            return entities
         }
+        
     }
     
-    var sortedMembers: [Member] {
-        get {
-            var sortedMbrs = [Member]()
-            if currentEntity!.members != nil {
-                let members = currentEntity!.members!.allObjects as! [Member]
-                sortedMbrs = members.sorted(by: {
-                  if $0.lastName! < $1.lastName! {
-                     return true
-                  }
-                  return false
-               })
+    // MARK: - Methods
+    
+    func entityWithIndex(index: UUID) -> Entity? {
+        
+        // Setup fetch request
+        let viewContext = PersistenceController.shared.container.viewContext
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Entity")
+        
+        // Predicate
+        let pred = NSPredicate(format: "idx == %@", index as CVarArg)
+        fetchRequest.predicate = pred
+        
+        // Fetch
+        var fetchedEntities: [NSFetchRequestResult]?
+        do {
+            fetchedEntities = try viewContext.fetch(fetchRequest)
+        }
+        catch {
+            print(error)
+        }
+        
+        let entity = fetchedEntities![0] as! Entity
+        
+        return entity
+        
+    }
+    
+    func memberWithIndex(index: UUID) -> Member? {
+        
+        // Setup fetch request
+        let viewContext = PersistenceController.shared.container.viewContext
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Member")
+        
+        // Predicate
+        let pred = NSPredicate(format: "idx == %@", index as CVarArg)
+        fetchRequest.predicate = pred
+        
+        // Fetch
+        var fetchedMembers: [NSFetchRequestResult]?
+        do {
+            fetchedMembers = try viewContext.fetch(fetchRequest)
+        }
+        catch {
+            print(error)
+        }
+        
+        let member = fetchedMembers![0] as! Member
+        
+        return member
+        
+    }
+
+    
+    func sortedMembers(entity: Entity) -> [Member]? {
+        
+        // Setup fetch request
+        let viewContext = PersistenceController.shared.container.viewContext
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Member")
+        
+        // Predicate
+        //        guard let idx = entity.idx else {return nil}
+        let pred = NSPredicate(format: "memberOfEntity == %@", entity as CVarArg)
+        fetchRequest.predicate = pred
+        
+        // Sort descriptor
+        let desc = NSSortDescriptor(key: "lastName", ascending: true)
+        fetchRequest.sortDescriptors = [desc]
+        
+        // Fetch
+        var fetchedMembers: [NSFetchRequestResult]?
+        do {
+            fetchedMembers = try viewContext.fetch(fetchRequest)
+        }
+        catch {
+            print(error)
+        }
+        
+        if fetchedMembers == nil { return nil }
+        var members = [Member]()
+        fetchedMembers!.forEach({ member in
+            members.append(member as! Member)
+        })
+        
+        return members
+    }
+    
+    func meetingGroupWithIndex(index: UUID) -> MeetingGroup? {
+        
+        // Setup fetch request
+        let viewContext = PersistenceController.shared.container.viewContext
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "MeetingGroup")
+        
+        // Predicate
+        let pred = NSPredicate(format: "idx == %@", index as CVarArg)
+        fetchRequest.predicate = pred
+        
+        // Fetch
+        var fetchedMeetingGroups: [NSFetchRequestResult]?
+        do {
+            fetchedMeetingGroups = try viewContext.fetch(fetchRequest)
+        }
+        catch {
+            print(error)
+        }
+        
+        let meetingGroup = fetchedMeetingGroups![0] as! MeetingGroup
+        
+        return meetingGroup
+        
+    }
+    
+    func sortedMeetingGroups(entity: Entity) -> [MeetingGroup]? {
+        
+        // Setup fetch request
+        let viewContext = PersistenceController.shared.container.viewContext
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "MeetingGroup")
+        
+        // Predicate
+        //        guard let idx = entity.idx else {return nil}
+        let pred = NSPredicate(format: "groupOfEntity == %@", entity as CVarArg)
+        fetchRequest.predicate = pred
+        
+        // Sort descriptor
+        let desc = NSSortDescriptor(key: "name", ascending: true)
+        fetchRequest.sortDescriptors = [desc]
+        
+        // Fetch
+        var fetchedMeetingGroups: [NSFetchRequestResult]?
+        do {
+            fetchedMeetingGroups = try viewContext.fetch(fetchRequest)
+        }
+        catch {
+            print(error)
+        }
+        
+        if fetchedMeetingGroups == nil { return nil }
+        var meetingGroups = [MeetingGroup]()
+        fetchedMeetingGroups!.forEach({ meetingGroup in
+            meetingGroups.append(meetingGroup as! MeetingGroup)
+        })
+        
+        return meetingGroups
+    }
+    
+    // MARK: - Debugging
+    
+    /// Deletes any members who are not members of an entity
+    func purgeFloatingMembers() {
+        
+        // Setup fetch request
+        let viewContext = PersistenceController.shared.container.viewContext
+        let fetchRequest = NSFetchRequest<Member>(entityName: "Member")
+        
+        // Fetch
+        var fetchedMembers: [Member]?
+        do {
+            fetchedMembers = try viewContext.fetch(fetchRequest)
+        }
+        catch {
+            print(error)
+        }
+        
+        fetchedMembers?.forEach({member in
+            if member.memberOfEntity == nil {
+                print("\(String(describing: member.lastName)) is nil")
+                viewContext.delete(member)
             }
-            return sortedMbrs
+        })
+        
+        do {
+            try viewContext.save()
+        } catch {
+            // Replace this implementation with code to handle the error appropriately.
+            // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+            let nsError = error as NSError
+            fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
         }
+        
+        
     }
-    
-    var sortedMeetingGroups: [MeetingGroup] {
-        get {
-            var meetingGroups = [MeetingGroup]()
-            if currentEntity!.meetingGroups != nil {
-                meetingGroups = currentEntity!.meetingGroups!.allObjects as! [MeetingGroup]
-                meetingGroups.sort(by: {
-                    if $0.name! < $1.name! {
-                       return true
-                    }
-                    return false
-                })
-            }
-            return meetingGroups
-        }
-    }
-    
 }
 

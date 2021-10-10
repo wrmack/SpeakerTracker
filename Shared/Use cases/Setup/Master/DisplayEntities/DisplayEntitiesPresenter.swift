@@ -9,42 +9,45 @@
 import SwiftUI
 import Combine
 
-struct EntityName: Hashable {
+/// The model that is used by the presenter for publishing entities
+struct EntityViewModel: Hashable {
    var name: String
-   var idx: Int
+   var idx: UUID
 }
 
+/// `DisplayEntitiesPresenter` is responsible for formatting data it receives from `DisplayEntitiesInteractor`
+/// so that it is ready for presentation by `DisplayMembersView`.
 class DisplayEntitiesPresenter: ObservableObject {
-    var entities = [Entity]()
-    @Published var entityNames = [EntityName]()
+
+    @Published var entities = [EntityViewModel]()
    
     init() {
-      print("DisplayEntitiesPresenter initialized")
+      print("++++++ DisplayEntitiesPresenter initialized")
     }
    
     deinit {
-      print("DisplayEntitiesPresenter de-initialized")
+      print("++++++ DisplayEntitiesPresenter de-initialized")
     }
    
-   func presentEntityNames(entities: [Entity]) {
-      self.entities = entities
-      var tempNames = [String]()
-      var tempEntityNames = [EntityName]()
-      for entity in entities {
-         tempNames.append(entity.name!)
-         tempNames.sort(by: {
-              if $0 < $1 {
-                  return true
-              }
-              return false
-          })
+    /// Receives entities and stores them in the presenter's publisher using the presenter's view model
+   func presentEntityNames(entities: [Entity]?) {
+       print("------ DisplayEntitiesPresenter presentEntityNames")
+       var tempEntities = entities
+       tempEntities?.sort(by: {
+           if $0.name! < $1.name! { return true }
+           return false
+       })
+      var tempEntityVMs = [EntityViewModel]()
+      if entities != nil {
+         for entity in entities! {
+             let entityName = entity.name == "" ? "test" : entity.name
+             tempEntityVMs.append(EntityViewModel(name:entityName!, idx: entity.idx!))
+         }
+
       }
-      var idx = 0
-      tempNames.forEach({ el in
-         tempEntityNames.append(EntityName(name: el, idx: idx))
-         idx += 1
-      })
-      self.entityNames = tempEntityNames
+
+      self.entities = tempEntityVMs
+       
    }
    
 }

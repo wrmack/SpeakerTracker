@@ -11,29 +11,25 @@ import Foundation
 
 class DisplaySelectedMeetingGroupInteractor {
     
-    func fetchMeetingGroup(presenter: DisplaySelectedMeetingGroupPresenter, entityState: EntityState, selectedMasterRow: Int?) {
-        print("DisplaySelectedMeetingGroupInteractor.fetchMeetingGroup")
-        var row = selectedMasterRow
-        if row == nil { row = 0}
+    func fetchMeetingGroup(presenter: DisplaySelectedMeetingGroupPresenter, entityState: EntityState, newIndex: UUID?) {
+        print("------ DisplaySelectedMeetingGroupInteractor.fetchMeetingGroup")
         
-        let meetingGroups = entityState.sortedMeetingGroups
-        var currentMeetingGroup: MeetingGroup?
-        var currentMembers = [Member]()
-//        if meetingGroups != nil && meetingGroups.count > 0 {
-//            currentMeetingGroup = meetingGroups[row!]
-//            currentMeetingGroup!.memberIDs?.forEach({ id in
-//                entityState.currentEntity!.members?.forEach({ member in
-//                    if member.id == id {
-//                        currentMembers.append(member)
-//                    }
-//                })
-//            })
-//        }
-        presenter.presentMeetingGroupDetail(name:currentMeetingGroup?.name, members: currentMembers)
+        var meetingGroupIndex: UUID?
+        if newIndex == nil {
+            guard let meetingGroups = entityState.sortedMeetingGroups(entity: entityState.currentEntity!) else {return}
+            if meetingGroups.count == 0 {return}
+            meetingGroupIndex = meetingGroups[0].idx
+        }
+        else {
+            meetingGroupIndex = newIndex
+        }
+        let meetingGroup = entityState.meetingGroupWithIndex(index: meetingGroupIndex!)
+        
+        presenter.presentMeetingGroupDetail(meetingGroup: meetingGroup)
     }
     
     func fetchMeetingGroupFromChangingEntity(presenter: DisplaySelectedMeetingGroupPresenter, entity: Entity, selectedMasterRow: Int) {
-        print("DisplaySelectedMemberInteractor.fetchMember")
+        print("------ DisplaySelectedMemberInteractor.fetchMember")
 
 //        let row = selectedMasterRow
 //        

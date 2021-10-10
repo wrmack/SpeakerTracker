@@ -17,35 +17,44 @@ struct MeetingGroupViewModelRecord: Hashable {
 
 
 class DisplaySelectedMeetingGroupPresenter: ObservableObject {
-    @Published var presenterUp = true
+
     @Published var meetingGroupViewModel = [MeetingGroupViewModelRecord]()
     
     init() {
-        print("DisplaySelectedMeetingGroupPresenter initialized")
+        print("++++++ DisplaySelectedMeetingGroupPresenter initialized")
     }
     
     deinit {
-        print("DisplaySelectedMeetingGroupPresenter de-initialized")
+        print("++++++ DisplaySelectedMeetingGroupPresenter de-initialized")
     }
     
-    func presentMeetingGroupDetail(name: String?, members: [Member]?) {
+    func presentMeetingGroupDetail(meetingGroup: MeetingGroup?) {
         var tempArray = [MeetingGroupViewModelRecord]()
-        if name != nil && members != nil {
-            tempArray.append(MeetingGroupViewModelRecord(label: "Name", value: name!))
+        if meetingGroup != nil {
+            var name = ""
+            if meetingGroup!.name != nil {
+                name = meetingGroup!.name!
+            }
+            tempArray.append(MeetingGroupViewModelRecord(label: "Name", value: name))
+                
             var mbrString =  ""
-            members!.forEach({ member in
-                if (mbrString.count > 0) {
-                   mbrString.append(", ")
-                }
-                var fullTitle: String?
-                if let title = member.title {
-                   fullTitle = title + " "
-                }
-                mbrString.append((fullTitle ?? "") + (member.firstName ?? "") + " " + member.lastName!)
-            })
+            if meetingGroup!.members != nil {
+                meetingGroup!.members!.forEach({ val in
+                    let member = val as! Member
+                    if (mbrString.count > 0) {
+                       mbrString.append(", ")
+                    }
+                    var fullTitle: String?
+                    if let title = member.title {
+                       fullTitle = title + " "
+                    }
+                    mbrString.append((fullTitle ?? "") + (member.firstName ?? "") + " " + member.lastName!)
+                })
+            }
             
             tempArray.append(MeetingGroupViewModelRecord(label: "Members", value: mbrString))
         }
+        
         meetingGroupViewModel = tempArray
     }
 }

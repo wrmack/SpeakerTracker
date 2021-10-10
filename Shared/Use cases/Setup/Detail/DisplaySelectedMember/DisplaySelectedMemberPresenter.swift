@@ -16,16 +16,18 @@ struct MemberViewModelRecord: Hashable {
 }
 
 
-
+/// `DisplaySelectedMemberPresenter` is responsible for formatting data it receives from `DisplaySelectedMemberInteractor`
+/// so that it is ready for presentation by `DisplaySelectedMemberView`.
 class DisplaySelectedMemberPresenter: ObservableObject {
+    
     @Published var memberViewModel = [MemberViewModelRecord]()
     
     init() {
-        print("DisplaySelectedMemberPresenter initialized")
+        print("++++++ DisplaySelectedMemberPresenter initialized")
     }
     
     deinit {
-        print("DisplaySelectedMemberPresenter de-initialized")
+        print("++++++ DisplaySelectedMemberPresenter de-initialized")
     }
     
     func presentMemberDetail(member: Member?) {

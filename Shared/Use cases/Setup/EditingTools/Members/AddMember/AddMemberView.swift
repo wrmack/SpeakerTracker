@@ -9,23 +9,23 @@
 import SwiftUI
 import Combine
 
-/**
- Don't need to populate textfields with values.  Just use an Interactor to save final values to model.
- */
+/// A view providing textfields for adding a new member.
+///
+/// `AddMemberView` works with `AddMemberInteractor`.
+///
+/// `AddMemberInteractor` is responsible for interacting with the data model.
+///
+/// `sheetState` is bound to ContentView
+///
+/// `saveWasPressed` is bound to `SetupSheetView` which has the Save button.
 struct AddMemberView: View {
     @EnvironmentObject var entityState: EntityState
-    @EnvironmentObject var setupState: SetupState
-    @ObservedObject var saveButtonState: SaveButtonState
     @State var memberTitle = ""
     @State var memberFirstName = ""
     @State var memberLastName = ""
-    @Binding var sheetState: SheetState
+    @ObservedObject var setupSheetState: SetupSheetState
     
     
-    init(sheetState: Binding<SheetState>, saveButtonState: SaveButtonState ) {
-        self._sheetState = sheetState
-        self.saveButtonState = saveButtonState
-    }
     
     var body: some View {
         Print(">>>>>> AddMemberView body refreshed")
@@ -41,36 +41,31 @@ struct AddMemberView: View {
                     .frame(width: 120, height: 100, alignment: .trailing)
                     .padding(Edge.Set.trailing, 30)
                     .font(Font.system(size: 20))
-                TextField("eg Councillor", text: $memberTitle, onCommit: {withAnimation(.easeInOut(duration: EASEINOUT)){
-                    self.sheetState.showSheet = false
-                    self.saveMember()
-                }})
-                .frame(height: 55)
-                .disableAutocorrection(true)
-                .textFieldStyle(PlainTextFieldStyle())
-                .padding(EdgeInsets.init(top: 0, leading: 20, bottom: 0, trailing: 0))
-                .background(Color.white)
-                .cornerRadius(16)
-                .overlay(RoundedRectangle(cornerRadius: 16).stroke(Color.gray))
-                .padding(Edge.Set.trailing,100)
+
+                TextField("eg Councillor", text: $memberTitle)
+                    .frame(height: 55)
+                    .padding(EdgeInsets.init(top: 0, leading: 20, bottom: 0, trailing: 0))
+                    .padding(Edge.Set.trailing,100)
+                    .overlay(RoundedRectangle(cornerRadius: 16).stroke(Color.gray))
+                    .textFieldStyle(PlainTextFieldStyle())
+                    .font(Font.system(size: 18))
+                    .disableAutocorrection(true)
+
             }
             HStack {
                 Text("First name")
                     .frame(width: 120, height: 100, alignment: .trailing)
                     .padding(Edge.Set.trailing, 30)
                     .font(Font.system(size: 20))
-                TextField("eg John", text: $memberFirstName, onCommit: {withAnimation(.easeInOut(duration: EASEINOUT)){
-                    self.sheetState.showSheet = false
-                    self.saveMember()
-                }})
-                .frame(height: 55)
-                .disableAutocorrection(true)
-                .textFieldStyle(PlainTextFieldStyle())
-                .padding(EdgeInsets.init(top: 0, leading: 20, bottom: 0, trailing: 0))
-                .background(Color.white)
-                .cornerRadius(16)
-                .overlay(RoundedRectangle(cornerRadius: 16).stroke(Color.gray))
-                .padding(Edge.Set.trailing,100)
+
+                TextField("eg John", text: $memberFirstName)
+                    .frame(height: 55)
+                    .padding(EdgeInsets.init(top: 0, leading: 20, bottom: 0, trailing: 0))
+                    .padding(Edge.Set.trailing,100)
+                    .overlay(RoundedRectangle(cornerRadius: 16).stroke(Color.gray))
+                    .textFieldStyle(PlainTextFieldStyle())
+                    .font(Font.system(size: 18))
+                    .disableAutocorrection(true)
             }
             HStack {
                 Text("Last name")
@@ -78,35 +73,33 @@ struct AddMemberView: View {
                     .padding(Edge.Set.trailing, 30)
                     .font(Font.system(size: 20))
                 TextField("eg Smith", text: $memberLastName, onCommit: {withAnimation(.easeInOut(duration: EASEINOUT)){
-                    self.sheetState.showSheet = false
-                    self.saveMember()
+                    self.setupSheetState.showSheet = false
+                    self.saveNewMember()
                 }})
-                .frame(height: 55)
-                .disableAutocorrection(true)
-                .textFieldStyle(PlainTextFieldStyle())
-                .padding(EdgeInsets.init(top: 0, leading: 20, bottom: 0, trailing: 0))
-                .background(Color.white)
-                .cornerRadius(16)
-                .overlay(RoundedRectangle(cornerRadius: 16).stroke(Color.gray))
-                .padding(Edge.Set.trailing,100)
+                    .frame(height: 55)
+                    .padding(EdgeInsets.init(top: 0, leading: 20, bottom: 0, trailing: 0))
+                    .padding(Edge.Set.trailing,100)
+                    .overlay(RoundedRectangle(cornerRadius: 16).stroke(Color.gray))
+                    .textFieldStyle(PlainTextFieldStyle())
+                    .font(Font.system(size: 18))
+                    .disableAutocorrection(true)
             }
             Spacer()
         }
-        .onReceive(self.saveButtonState.$savePressed, perform: { pressed in
-            print("AddMemberView .onReceive saveButtonState.$savePressed")
-            if (pressed == true) && (sheetState.editMode == 0) {
-                print("------ .onReceive")
-                self.saveButtonState.savePressed = false
-                self.saveMember()
+        .onReceive(setupSheetState.$saveWasPressed, perform: { pressed in
+            print("------ AddMemberView .onReceive saveButtonState.$savePressed")
+            if (pressed == true) && (setupSheetState.editMode == 0) {
+                setupSheetState.saveWasPressed = false
+                self.saveNewMember()
             }
         })
     }
     
     
-    func saveMember() {
-        print("AddMemberView saveMember called")
+    func saveNewMember() {
+        print("------ AddMemberView saveMember called")
         let interactor = AddMemberInteractor()
-        interactor.saveMemberToEntity(entityState: entityState, setupState: setupState, title: memberTitle, first: memberFirstName, last: memberLastName)
+        interactor.saveNewMemberToEntity(entityState: entityState, title: memberTitle, first: memberFirstName, last: memberLastName)
     }
     
 }

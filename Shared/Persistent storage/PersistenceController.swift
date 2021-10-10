@@ -41,6 +41,8 @@ struct PersistenceController {
         }
 
         container.loadPersistentStores { description, error in
+            print("storeDescription: \(description)")
+            
             if let error = error {
                 fatalError("Error: \(error.localizedDescription)")
             }

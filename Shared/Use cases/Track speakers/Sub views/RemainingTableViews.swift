@@ -37,8 +37,9 @@ struct RemainingTableList: View {
             }
 
          }
-         .background(Color.white)
+         .colorScheme(.light)
       }
+      .background(Color.white)
    }
 }
 
@@ -85,12 +86,12 @@ struct RemainingTableRow: View {
 
 //struct SpeakerTableList_Previews: PreviewProvider {
 //   static var testData = [
-//      ListMember(row: 0, member: Member(title: "Cr", firstName: "Adam1", lastName: "Smitgh")),
-//      ListMember(row: 1, member: Member(title: "Cr", firstName: "Eve", lastName: "Ning"))
+//    ListMember(row: 0, member: Member()),
+//      ListMember(row: 1, member: Member())
 //   ]
-//   
+//
 //   static var previews: some View {
-//        RemainingTableList(viewModel: testData)
+//       RemainingTableList(viewModel: testData, moveAction: .constant(MoveMemberAction()))
 //    }
 //}
 

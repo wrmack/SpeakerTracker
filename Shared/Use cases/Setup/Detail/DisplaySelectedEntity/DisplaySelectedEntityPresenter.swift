@@ -9,27 +9,35 @@
 import Foundation
 
 
-struct EntityViewModelRecord: Hashable {
+struct EntityDetailViewModel: Hashable {
     var label: String
     var value: String
 }
 
 
-
+/// `DisplaySelectedEntityPresenter` is responsible for formatting data it receives from `DisplaySelectedEntityInteractor`
+/// so that it is ready for presentation by `DisplaySelectedEntityView`.
 class DisplaySelectedEntityPresenter: ObservableObject {
-//    @Published var presenterUp = true
-    @Published var entityViewModel = [EntityViewModelRecord]()
+
+    @Published var entityDetail = [EntityDetailViewModel]()
     
     init() {
-        print("DisplaySelectedEntityPresenter initialized")
+        print("++++++ DisplaySelectedEntityPresenter initialized")
     }
     
     deinit {
-        print("DisplaySelectedEntityPresenter de-initialized")
+        print("++++++ DisplaySelectedEntityPresenter de-initialized")
     }
     
 
     func presentEntityDetail(entity: Entity?) {
+        if entity != nil {
+            var tempArray = [EntityDetailViewModel]()
+            tempArray.append(EntityDetailViewModel(label: "Name", value: entity!.name!))
+            
+            entityDetail = tempArray
+        }
+        
 //        if entity != nil {
 //            var tempArray = [EntityViewModelRecord]()
 //                tempArray.append(EntityViewModelRecord(label: "Name", value: entity!.name!))

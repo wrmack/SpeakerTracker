@@ -9,11 +9,22 @@
 import SwiftUI
 import Combine
 
+
+/// View for displaying members as a list for a selected entity.
+///
+/// `DisplayMeetingGroupsView` works with `DisplayMeetingGroupsInteractor` and `DisplayMeetingGroupsPresenter`.
+///
+/// `DisplayMeetingGroupsInteractor` is responsible for interacting with the data model.
+///
+/// `DisplayMeetingGroupsPresenter` is responsible for formatting data it receives from `DisplayMeetingGroupsInteractor`
+/// so that it is ready for presentation by `DisplayMeetingGroupsView`. It is initialised as a `@StateObject`
+/// to ensure there is only one instance and it notifies new content through a publisher.
+///
+/// This pattern is based on the VIP (View-Interactor-Presenter) and VMVM (View-Model-ViewModel) patterns.
 struct DisplayMeetingGroupsView: View {
     @EnvironmentObject var entityState: EntityState
     @StateObject var presenter = DisplayMeetingGroupsPresenter()
     @Binding var selectedTab: Int
-    @Binding var selectedMasterRow: Int
     
     var body: some View {
         Print(">>>>>> DisplayMeetingGroupsView body refreshed")
@@ -27,42 +38,47 @@ struct DisplayMeetingGroupsView: View {
                     }
                     HStack {
                         Menu {
-                            ForEach(entityState.entities.indices, id: \.self) { idx in
-                                Button(entityState.entities[idx].name!, action: { changeEntity(row: idx)})
+                            ForEach(entityState.sortedEntities!.indices, id: \.self) { idx in
+                                Button(entityState.sortedEntities![idx].name!, action: { changeEntity(row: idx)})
                             }
                         } label: {
                             Text("Change entity")
                         }.padding(.trailing, 20)
                     }
-                    
+
                 }
                 else {
                     Text("No entities created")
                 }
-            }.alignmentGuide(HorizontalAlignment.leading) {_ in -10 }
+            }
+            .padding(.leading,20)
+            .padding(.trailing,20)
             
             Divider().frame(height: 2).background(Color(white: 0.85, opacity: 1.0))
-            
-            List(presenter.meetingGroupNames, id: \.self, rowContent:  { meetingGroupName in
-                MeetingGroupsListRow(rowContent: meetingGroupName, selectedMasterRow: $selectedMasterRow)
+
+            List(presenter.meetingGroups, id: \.self, rowContent:  { meetingGroup in
+                MeetingGroupListRow(rowContent: meetingGroup)
             })
             // When user changes selected entity
-            .onReceive(entityState.$currentEntity, perform:{ entity in
-                print("DisplayMeetingGroupsView .onRecieve detailState.objectWillChange")
+            .onReceive(entityState.$currentEntityIndex, perform:{ newIndex in
+                print("------ DisplayMeetingGroupsView .onReceive $currentEntityIndex")
                 if (selectedTab == 2) {
-                    print("------ onReceive: Calling interactor")
                     let interactor = DisplayMeetingGroupsInteractor()
-                    interactor.fetchMeetingGroups(entity: entity!, presenter: presenter)
+                    if newIndex == nil {
+                        interactor.initialiseEntities(entityState: entityState)
+                    }
+                    interactor.fetchMeetingGroupsOnEntityChange(entityIndex: newIndex!, presenter: presenter, entityState: entityState)
                 }
             })
-            // Fetch meeting groups when view appears, if not already setup
+            // When view appears:
+            // - set currentEntityIndex
+            // - set currentMeetingGroupIndex
             .onAppear(perform: {
                 print("------ DisplayMeetingGroupsView .onAppear")
-                if selectedTab == 2 && entityState.entities.count > 0 {
-                    print("****** fetching members on view appear")
-                    entityState.currentEntity = entityState.entities[0]
+                if selectedTab == 2 {
                     let interactor = DisplayMeetingGroupsInteractor()
-                    interactor.fetchMeetingGroups(entity: entityState.currentEntity!, presenter: presenter)
+                    interactor.initialiseEntities(entityState: entityState)
+                    interactor.setSelectedMeetingGroupIndex(idx: nil, entityState: entityState)
                 }
             })
             // Reset state for when view is recreated
@@ -73,24 +89,29 @@ struct DisplayMeetingGroupsView: View {
     }
     
     func changeEntity(row: Int) {
-        print("Changed entity: row \(row) selected")
-        let entities = entityState.sortedEntities
-        let selectedEntity = entities[row]
-        entityState.currentEntity = selectedEntity
+//        print("Changed entity: row \(row) selected")
+//        let entities = entityState.sortedEntities
+//        let selectedEntity = entities[row]
+//        entityState.currentEntity = selectedEntity
     }
 }
 
-struct MeetingGroupsListRow: View {
-    var rowContent: MeetingGroupName
-    @Binding var selectedMasterRow: Int
+struct MeetingGroupListRow: View {
+    @EnvironmentObject var entityState: EntityState
+    @State var selectedMeetingGroupIdx: UUID?
+    var rowContent: MeetingGroupViewModel
+
     
     var body: some View {
         HStack {
             Text(rowContent.name)
         }
-        .modifier(MasterListRowModifier(isSelected: rowContent.idx == selectedMasterRow))
+        .modifier(MasterListRowModifier(isSelected: entityState.currentMeetingGroupIndex != nil ? rowContent.idx == entityState.currentMeetingGroupIndex! : false))
         .onTapGesture {
-            selectedMasterRow = rowContent.idx
+            // Set local state variable and EntityState's currentMemberIndex
+            selectedMeetingGroupIdx = rowContent.idx
+            let interactor = DisplayMeetingGroupsInteractor()
+            interactor.setSelectedMeetingGroupIndex(idx: selectedMeetingGroupIdx!, entityState: entityState)
         }
     }
 }

@@ -12,50 +12,44 @@ import Combine
 struct DisplaySelectedMeetingGroupView: View {
     @EnvironmentObject var entityState: EntityState
     @StateObject var presenter = DisplaySelectedMeetingGroupPresenter()
-    @Binding var selectedMasterRow: Int
-   
-   var body: some View {
-      Print(">>>>>> DisplaySelectedMeetingGroupView body refreshed")
-      List {
-         Section {
-            ForEach(presenter.meetingGroupViewModel, id: \.self) { content in
-               DisplaySelectedMeetingGroupListRow(rowContent: content)
+    
+    
+    var body: some View {
+        Print(">>>>>> DisplaySelectedMeetingGroupView body refreshed")
+        List {
+            Section {
+                ForEach(presenter.meetingGroupViewModel, id: \.self) { content in
+                    DisplaySelectedMeetingGroupListRow(rowContent: content)
+                }
             }
-         }
-      }
-      .onReceive(entityState.$currentEntity, perform: { entity in
-        print("DisplaySelectedMeetingGroupView onReceive entityState.$currentEntity \(entity!)")
-        let interactor = DisplaySelectedMeetingGroupInteractor()
-        interactor.fetchMeetingGroupFromChangingEntity(presenter: presenter, entity: entity!, selectedMasterRow: 0)
-      })
-      .onChange(of: selectedMasterRow, perform: { row in
-        print("DisplaySelectedMeetingGroupView: .onChange selectedMasterRow")
-        print("------ onReceive calling interactor")
-        let interactor = DisplaySelectedMeetingGroupInteractor()
-        interactor.fetchMeetingGroup(presenter: presenter, entityState: entityState, selectedMasterRow: row)
-        })
-      .onAppear(perform: {
-        if entityState.sortedEntities.count > 0 {
-            let interactor = DisplaySelectedMeetingGroupInteractor()
-            interactor.fetchMeetingGroup(presenter: presenter, entityState: entityState, selectedMasterRow: 0)
         }
-      })
-   }
+        .onReceive(entityState.$currentMeetingGroupIndex, perform: { newIndex in
+            print("------ DisplaySelectedMeetingGroupView: .onReceive $currentMeetingGroupIndex")
+            if newIndex != nil {
+                let interactor = DisplaySelectedMeetingGroupInteractor()
+                interactor.fetchMeetingGroup(presenter: presenter, entityState: entityState, newIndex: newIndex!)
+            }
+        })
+        .onAppear(perform: {
+            let interactor = DisplaySelectedMeetingGroupInteractor()
+            interactor.fetchMeetingGroup(presenter: presenter, entityState: entityState, newIndex: nil)
+        })
+    }
 }
 
 
 struct DisplaySelectedMeetingGroupListRow: View {
-   var rowContent: MeetingGroupViewModelRecord
-   
-   var body: some View {
-      HStack{
-         Text("\(rowContent.label): ")
-            .modifier(DetailListRowLabelModifier())
-         Spacer()
-         Text(rowContent.value)
-            .modifier(DetailListRowValueModifier())
-      }
-   }
+    var rowContent: MeetingGroupViewModelRecord
+    
+    var body: some View {
+        HStack{
+            Text("\(rowContent.label): ")
+                .modifier(DetailListRowLabelModifier())
+            Spacer()
+            Text(rowContent.value)
+                .modifier(DetailListRowValueModifier())
+        }
+    }
 }
 
 

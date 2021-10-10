@@ -16,7 +16,6 @@ struct SetupMasterView: View {
    
     @State var selectedItemText = ""
     @Binding var selectedSetupTab: Int
-    @Binding var selectedMasterRow: Int
    
    
    var body: some View {
@@ -24,7 +23,7 @@ struct SetupMasterView: View {
       TabView(selection: $selectedSetupTab) {
          
          VStack {
-            DisplayEntitiesView(selectedTab: $selectedSetupTab, selectedMasterRow: $selectedMasterRow)
+            DisplayEntitiesView(selectedTab: $selectedSetupTab)
          }
          .tabItem {
              VStack {
@@ -34,7 +33,7 @@ struct SetupMasterView: View {
          .tag(0)
          
          VStack {
-            DisplayMembersView(selectedTab: $selectedSetupTab, selectedMasterRow: $selectedMasterRow)
+            DisplayMembersView(selectedTab: $selectedSetupTab)
          }
          .tabItem {
              VStack {
@@ -44,7 +43,7 @@ struct SetupMasterView: View {
          .tag(1)
          
          VStack {
-            DisplayMeetingGroupsView(selectedTab: $selectedSetupTab, selectedMasterRow: $selectedMasterRow)
+            DisplayMeetingGroupsView(selectedTab: $selectedSetupTab)
          }
          .tabItem {
              VStack {
@@ -64,6 +63,7 @@ struct SetupMasterView: View {
          .tag(3)
          
       }
+      .padding(.top,10)
       .border(Color(white: 0.85), width: 1)
       .onChange(of: selectedSetupTab, perform: { tag in
          print("########### Selected tab: \(self.selectedSetupTab)")
@@ -73,8 +73,10 @@ struct SetupMasterView: View {
   
 }
 
-//struct SetupMaster_Previews: PreviewProvider {
-//   static var previews: some View {
-//      SetupMasterView()
-//   }
-//}
+struct SetupMaster_Previews: PreviewProvider {
+   static var previews: some View {
+       SetupMasterView(selectedSetupTab: .constant(0))
+           .environmentObject(EntityState())
+   }
+
+}

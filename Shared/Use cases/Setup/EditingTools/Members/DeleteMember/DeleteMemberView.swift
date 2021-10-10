@@ -14,20 +14,12 @@ import SwiftUI
  */
 struct DeleteMemberView: View {
     @EnvironmentObject var entityState: EntityState
-    @EnvironmentObject var setupState: SetupState
+    @ObservedObject var setupSheetState: SetupSheetState
     @StateObject var presenter = DeleteMemberPresenter()
-    @ObservedObject var saveButtonState: SaveButtonState
     @State var memberTitle = ""
     @State var memberFirstName = ""
     @State var memberLastName = ""
-    @Binding var sheetState: SheetState
-    @Binding var selectedMasterRow: Int
-    
-    init(sheetState: Binding<SheetState>, saveButtonState: SaveButtonState, selectedMasterRow: Binding<Int> ) {
-        self._sheetState = sheetState
-        self.saveButtonState = saveButtonState
-        self._selectedMasterRow = selectedMasterRow
-    }
+
     
     var body: some View {
        Print(">>>>>> DeleteMemberView body refreshed")
@@ -43,11 +35,12 @@ struct DeleteMemberView: View {
            TextField("eg Councillor", text: $memberTitle)
             .disabled(true)
             .frame(height: 55)
-            .textFieldStyle(PlainTextFieldStyle())
             .padding(EdgeInsets.init(top: 0, leading: 20, bottom: 0, trailing: 0))
-            .cornerRadius(16)
-            .overlay(RoundedRectangle(cornerRadius: 16).stroke(Color.gray))
             .padding(Edge.Set.trailing,100)
+            .overlay(RoundedRectangle(cornerRadius: 16).stroke(Color.gray))
+            .textFieldStyle(PlainTextFieldStyle())
+            .font(Font.system(size: 18))
+            .disableAutocorrection(true)
         }
         HStack {
            Text("First name")
@@ -57,11 +50,12 @@ struct DeleteMemberView: View {
            TextField("eg John", text: $memberFirstName)
             .disabled(true)
             .frame(height: 55)
-            .textFieldStyle(PlainTextFieldStyle())
             .padding(EdgeInsets.init(top: 0, leading: 20, bottom: 0, trailing: 0))
-            .cornerRadius(16)
-            .overlay(RoundedRectangle(cornerRadius: 16).stroke(Color.gray))
             .padding(Edge.Set.trailing,100)
+            .overlay(RoundedRectangle(cornerRadius: 16).stroke(Color.gray))
+            .textFieldStyle(PlainTextFieldStyle())
+            .font(Font.system(size: 18))
+            .disableAutocorrection(true)
         }
         HStack {
            Text("Last name")
@@ -71,11 +65,12 @@ struct DeleteMemberView: View {
            TextField("eg Smith", text: $memberLastName)
             .disabled(true)
             .frame(height: 55)
-            .textFieldStyle(PlainTextFieldStyle())
             .padding(EdgeInsets.init(top: 0, leading: 20, bottom: 0, trailing: 0))
-            .cornerRadius(16)
-            .overlay(RoundedRectangle(cornerRadius: 16).stroke(Color.gray))
             .padding(Edge.Set.trailing,100)
+            .overlay(RoundedRectangle(cornerRadius: 16).stroke(Color.gray))
+            .textFieldStyle(PlainTextFieldStyle())
+            .font(Font.system(size: 18))
+            .disableAutocorrection(true)
         }
           Spacer()
        }
@@ -87,22 +82,22 @@ struct DeleteMemberView: View {
            self.memberFirstName = viewModel.firstName
            self.memberLastName = viewModel.lastName
        })
-       .onReceive(self.saveButtonState.$savePressed, perform: { pressed in
+       .onReceive(setupSheetState.$saveWasPressed, perform: { pressed in
           print("DeleteMemberView onReceive saveButtonState.$savePressed = \(pressed)")
-          if (pressed == true) && (sheetState.editMode == 2) {
-            self.saveButtonState.savePressed = false
+          if (pressed == true) && (setupSheetState.editMode == 2) {
+              setupSheetState.saveWasPressed = false
             self.deleteMember() }
        })
     }
     
     func fetchSelectedMember() {
         let interactor = DeleteMemberInteractor()
-        interactor.displaySelectedMember(entityState: entityState, presenter: presenter, selectedMasterRow: selectedMasterRow)
+        interactor.displaySelectedMember(entityState: entityState, presenter: presenter)
     }
     
     func deleteMember() {
         let interactor = DeleteMemberInteractor()
-        interactor.deleteSelectedMemberFromEntity(entityState: entityState, setupState: setupState, selectedMasterRow: selectedMasterRow)
+        interactor.deleteSelectedMemberFromEntity(entityState: entityState)
     }
 }
 

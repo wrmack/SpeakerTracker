@@ -9,16 +9,28 @@
 import SwiftUI
 import Combine
 
+/// View for displaying members as a list for a selected entity.
+///
+/// `DisplayMembersView` works with `DisplayMembersInteractor` and `DisplayMembersPresenter`.
+///
+/// `DisplayMembersInteractor` is responsible for interacting with the data model.
+///
+/// `DisplayMembersPresenter` is responsible for formatting data it receives from `DisplayMembersInteractor`
+/// so that it is ready for presentation by `DisplayMembersView`. It is initialised as a `@StateObject`
+/// to ensure there is only one instance and it notifies new content through a publisher.
+///
+/// This pattern is based on the VIP (View-Interactor-Presenter) and VMVM (View-Model-ViewModel) patterns.
 struct DisplayMembersView: View {
     @EnvironmentObject var entityState: EntityState
     @StateObject var presenter = DisplayMembersPresenter()
     @Binding var selectedTab: Int
-    @Binding var selectedMasterRow: Int
     
     
     var body: some View {
         Print(">>>>>> DisplayMembersView body refreshed")
         VStack(alignment: .leading) {
+            
+            // Menu to select entity
             VStack(alignment: .leading) {
                 if entityState.currentEntity != nil {
                     Text(entityState.currentEntity!.name!)
@@ -27,44 +39,58 @@ struct DisplayMembersView: View {
                 }
                 HStack {
                     Menu {
-                        ForEach(entityState.sortedEntities.indices, id: \.self) { idx in
-                            Button(entityState.sortedEntities[idx].name!, action: { changeEntity(row: idx)})
+                        ForEach(entityState.sortedEntities!.indices, id: \.self) { idx in
+                            Button(entityState.sortedEntities![idx].name!, action: { changeEntity(row: idx)})
                         }
                     } label: {
                         Text("Change entity")
-                    }.padding(.trailing, 20)
-                    Spacer()
-                }
+                    }
 
-            }.alignmentGuide(HorizontalAlignment.leading) {_ in -10 }
+                }
+            }
+            .padding(.leading,20)
+            .padding(.trailing,20)
+
             
             Divider().frame(height: 2).background(Color(white: 0.85, opacity: 1.0))
             
-            List(presenter.memberNames, id: \.self, rowContent:  { memberName in
-                Print("DisplayMembersView list closure")
-                MemberListRow(rowContent: memberName, selectedMasterRow: $selectedMasterRow)
+            // Display members
+            List(presenter.members, id: \.self, rowContent:  { member in
+                MemberListRow(rowContent: member)
             })
             
-            // When user changes selected entity
-            .onReceive(entityState.$currentEntity, perform: { entity in
-                if entity == nil {return}
-                print("DisplayMembersView .onReceive entityState.$currentEntity")
+            // When user changes selected entity, reset currentMemberIndex
+            .onReceive(entityState.$currentEntityIndex, perform: { newIndex in
+                print("------ DisplayMembersView .onReceive entityState.$currentEntityIndex: \(String(describing: newIndex))")
                 if (selectedTab == 1)   {
-                    print("------ onReceive: Calling interactor")
                     let interactor = DisplayMembersInteractor()
-                    interactor.fetchMembers(entity: entity!, presenter: presenter)
+                    if newIndex == nil {
+                        interactor.initialiseEntities(entityState: entityState)
+                    }
+                    interactor.fetchMembersOnEntityChange(entityIndex: newIndex!, presenter: presenter, entityState: entityState)
                 }
             })
-            // Fetch members when view appears, if not already setup
+            .onReceive(entityState.$membersHaveChanged, perform: { val in
+                print("------ DisplayMembersView .onReceive entityState.$membersHaveChanged: \(val)")
+                if (selectedTab == 1) && (val == true)   {
+                    entityState.membersHaveChanged = false
+                    let interactor = DisplayMembersInteractor()
+                    interactor.fetchMembers(presenter: presenter, entityState: entityState)
+                }
+            })
+
+            // When view appears:
+            // - set currentEntityIndex
+            // - set currentMemberIndex
             .onAppear(perform: {
                 print("------ DisplayMembersView .onAppear")
-                if selectedTab == 1 && entityState.entities.count > 0 {
-                    print("****** fetching members on view appear")
-                    entityState.currentEntity = entityState.sortedEntities[0]
+                if selectedTab == 1 {
                     let interactor = DisplayMembersInteractor()
-                    interactor.fetchMembers(entity: entityState.currentEntity!, presenter: presenter) 
+                    interactor.initialiseEntities(entityState: entityState)
+                    interactor.setSelectedMemberIndex(idx: nil, entityState: entityState)
                 }
             })
+            
             // Reset state for when view is recreated
             .onDisappear(perform: {
                 print("------ DisplayMembersView .onDisappear")
@@ -75,44 +101,36 @@ struct DisplayMembersView: View {
     
     func changeEntity(row: Int) {
         print("Changed entity: row \(row) selected")
-        let entities = entityState.sortedEntities
+        guard let entities = DisplayMembersInteractor().getEntities(entityState: entityState) else {return}
         let selectedEntity = entities[row]
-        entityState.currentEntity = selectedEntity
+        entityState.currentEntityIndex = selectedEntity.idx
     }
 }
 
-/*
- MemberListRow
- =============
- 
- View for displaying a row in the list of members.
- 
- State variable:
- - tracks whether this row is selected, which determines the background color
- 
- Observed object:
- - DisplayMembersState object: the view passes this to the row; if the row is tapped,
- the selectedRow property of DisplayEntitiesState is updated
- 
- Modifiers:
- - onRecieve: listens for changes to the DisplayEntitiesState selectedRow property and
- modifies the State variable selected accordingly
- 
- */
+/// View for displaying a row in the list of members.
+///
+/// If a row it tapped, the local `selectedMemberIdx` is changed
+/// and EntityState's `currentMemberIndex` property is set
+/// to the selected member.
 
 struct MemberListRow: View {
-    var rowContent: MemberName
-    @Binding var selectedMasterRow: Int
+    @EnvironmentObject var entityState: EntityState
+    @State var selectedMemberIdx: UUID?
+    var rowContent: MemberViewModel
     
     var body: some View {
         Print(">>>>>> MemberListRow body refreshed -- \(rowContent.name)")
-        Print("selectedMasterRow: \(selectedMasterRow)")
+
         HStack {
             Text(rowContent.name)
         }
-        .modifier(MasterListRowModifier(isSelected: rowContent.idx == selectedMasterRow))
+        .modifier(MasterListRowModifier(isSelected: entityState.currentMemberIndex != nil ? rowContent.idx == entityState.currentMemberIndex! : false))
+        .contentShape(Rectangle())  
         .onTapGesture {
-            selectedMasterRow = rowContent.idx
+            // Set local state variable and EntityState's currentMemberIndex
+            selectedMemberIdx = rowContent.idx
+            let interactor = DisplayMembersInteractor()
+            interactor.setSelectedMemberIndex(idx: selectedMemberIdx!, entityState: entityState)
         }
     }
 }
@@ -122,13 +140,15 @@ struct MemberListRow: View {
 
 struct DisplayMembersView_Previews: PreviewProvider {
     @State static var tab = 1
-    @State static var row = 0
-    
+
+
     static var previews: some View {
       Group {
-        DisplayMembersView(selectedTab: $tab, selectedMasterRow: $row)
+        DisplayMembersView(selectedTab: $tab)
             .environmentObject(EntityState())
-        MemberListRow(rowContent: MemberName(name: "Adam", idx: 0), selectedMasterRow: $row)
+//        MemberListRow(rowContent: MemberViewModel(name: "Adam", idx: UUID()))
+//              .environmentObject(EntityState())
       }
     }
+       
 }

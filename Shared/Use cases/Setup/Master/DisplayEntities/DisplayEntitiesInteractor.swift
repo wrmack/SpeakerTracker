@@ -8,86 +8,70 @@
 
 import Foundation
 import Combine
-//import SwiftUI
+import CoreData
 
 
 
+
+/// `DisplayEntitiesInteractor` is responsible for interacting with the data model.
 class DisplayEntitiesInteractor {
     
+    // Track initialisation for debugging purposes
     init() {
-        print("DisplayEntitiesInteractor initialized")
+        print("++++++ DisplayEntitiesInteractor initialized")
     }
     
     deinit {
-        print("DisplayEntitiesInteractor de-initialized")
+        print("++++++ DisplayEntitiesInteractor de-initialized")
     }
     
-    
-    /*
-     Gathers all ".ent" urls then enumerates them to build an array of entities.
-     Opening and closing of documents is async so array is passed to presenter when final document is closed.
-     */
+    /// Fetches entities and passes these to the presenter.
+    ///
+    ///
     func fetchEntities(presenter: DisplayEntitiesPresenter, entityState: EntityState) {
+        // For debugging
+//        entityState.purgeFloatingMembers()
         
-//        var entities = [Entity]()
-//        
-//        let fileManager = FileManager.default
-//        guard let docDirectory = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first else {
-//            print("DisplayEntitiesInteractor: fetchEntities: error: Document directory not found")
-//            return
-//        }
-//        do {
-//            var entityUrls = [URL]()
-//            let fileURLs = try fileManager.contentsOfDirectory(at: docDirectory, includingPropertiesForKeys: nil)
-//            for url in fileURLs {
-//                if url.pathExtension == "ent" {
-//                    entityUrls.append(url)
-//                }
-//            }
-//            if entityUrls.count == 0 {
-//                print("count == 0")
-//                entityState.entities = entities
-//                presenter.presentEntityNames(entities: entities)
-//            }
-//            else {
-//                for entityUrl in entityUrls {
-//                    let entityDoc = EntityDocument(fileURL: entityUrl)
-//                    entityDoc.open(completionHandler: { success in
-//                        if !success {
-//                            print("DisplayEntitiesInteractor: fetchEntities: error opening EntityDocument")
-//                        }
-//                        else {
-//                            entityDoc.close(completionHandler: { success in
-//                                guard let entity = entityDoc.entity else {
-//                                    print("DisplayEntitiesInteractor: fetchEntities: entity is nil")
-//                                    return
-//                                }
-//                                entities.append(entity)
-//                                if entities.count == entityUrls.count {
-//                                    entities.sort(by: {
-//                                        if $0.name! < $1.name! {
-//                                            return true
-//                                        }
-//                                        return false
-//                                    })
-//                                    entityState.entities = entities
-//                                    presenter.presentEntityNames(entities: entities)
-//                                }
-//                            })
-//                        }
-//                    })
-//                }
-//            }
-//        } catch {
-//            print("Error while enumerating files \(docDirectory.path): \(error.localizedDescription)")
-//        }
+        let fetchedEntities = entityState.sortedEntities
+        if fetchedEntities == nil { return }
+        var entities = [Entity]()
+        fetchedEntities!.forEach({ entity in
+            entities.append(entity)
+        })
+        
+        presenter.presentEntityNames(entities: entities)
         
     }
     
-    
-    func entityAtRow(row: Int) {
-        //      self.detailState?.currentEntity = self.appState!.entities[row]
+    /// Sets the `currentEntityIndex` of EntityState
+    ///
+    /// Called when user selects an entity, to store the selected index as `currentEntityIndex`.
+    /// If the passed-in idx is nil then sets `currentEntityIndex` to the first entity.
+    /// - Parameters:
+    ///    - idx: A UUID
+    ///    - entityState: The EntityState environment object
+    /// - Returns: The index of the current entity
+    func setSelectedEntityIndex(idx: UUID?, entityState: EntityState) {
+        
+        // Get all sorted entities and return nil if result is nil or there are none
+        guard let fetchedEntities = entityState.sortedEntities else {return}
+        if fetchedEntities.count == 0 {return }
+        
+        var entityIdx = idx
+        
+        // If idx is nil then select the first entity
+        if entityIdx == nil {
+            let firstEntity = fetchedEntities[0]
+            entityIdx = firstEntity.idx
+        }
+        
+        // Set currentEntityIndex property of EntityState
+        for entity in fetchedEntities {
+            if entity.idx == entityIdx  {
+                entityState.currentEntityIndex = entity.idx
+            }
+        }
+        
     }
-    
- 
+
 }

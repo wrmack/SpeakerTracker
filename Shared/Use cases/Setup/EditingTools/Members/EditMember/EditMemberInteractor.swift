@@ -12,8 +12,8 @@ import Combine
 
 class EditMemberInteractor {
 
-    func displaySelectedMember(entityState: EntityState, presenter: EditMemberPresenter, selectedMasterRow: Int) {
-        let member = entityState.sortedMembers[selectedMasterRow]
+    func displaySelectedMember(entityState: EntityState, presenter: EditMemberPresenter) {
+        guard let member = entityState.currentMember else {return}
         presenter.presentViewModel(selectedMember: member)
     }
     
@@ -21,71 +21,21 @@ class EditMemberInteractor {
     /**
      Saves member being edited.  
      */
-    func saveMemberToEntity(entityState: EntityState, setupState: SetupState, title: String, first: String, last: String, selectedMasterRow: Int) {
-//        let entityState = entityState
-//        let setupState = setupState
-//        
-//        var currentEntity = entityState.currentEntity!
-//        let memberTitle = title
-//        let memberFirstName = first
-//        let memberLastName = last
-//        
-//        var memberToEdit = entityState.sortedMembers[selectedMasterRow]
-//        memberToEdit.title = memberTitle
-//        memberToEdit.firstName = memberFirstName
-//        memberToEdit.lastName = memberLastName
-//        
-//        var newMembers = [Member]()
-//        currentEntity.members!.forEach({ member in
-//            var newMbr = member
-//            if member.id == memberToEdit.id {
-//                newMbr.title = memberToEdit.title
-//                newMbr.firstName = memberToEdit.firstName
-//                newMbr.lastName = memberToEdit.lastName
-//            }
-//            newMembers.append(newMbr)
-//        })
-//        
-//        currentEntity.members = newMembers
-//        
-//        let savedEntity = UserDefaultsManager.getCurrentEntity()
-//        if savedEntity == currentEntity {
-//            UserDefaultsManager.saveCurrentEntity(entity: currentEntity)
-//        }
-//        guard let docDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else {
-//            print("EditMemberInteractor: saveMemberToEntity: error: Document directory not found")
-//            return
-//        }
-//        let docFileURL = docDirectory.appendingPathComponent(currentEntity.id.uuidString + ".ent")
-//        let entityDoc = EntityDocument(fileURL: docFileURL)
-//        entityDoc.open(completionHandler: { success in
-//            if !success {
-//                print("EditMemberInteractor: saveMemberToEntity: error opening EntityDocument")
-//            }
-//            else {
-//                entityDoc.entity = currentEntity
-//                entityDoc.updateChangeCount(.done)
-//                entityDoc.close(completionHandler: { success in
-//                    if !success {
-//                        print("EditMemberInteractor: saveMemberToEntity: Error saving")
-//                    }
-//                    else{
-//                        print("entityDoc: \(entityDoc)")
-//                        var newEntities = [Entity]()
-//                        entityState.entities.forEach({ entity in
-//                            if entity.id == currentEntity.id {
-//                                newEntities.append(currentEntity)
-//                            }
-//                            else {
-//                                newEntities.append(entity)
-//                            }
-//                        })
-//                        entityState.entities = newEntities
-//                        entityState.currentEntity = currentEntity
-//                    }
-//                    
-//                })
-//            }
-//        })
+    func saveChangedMemberToStore(entityState: EntityState, title: String, first: String, last: String) {
+        let viewContext = PersistenceController.shared.container.viewContext
+        let currentMember = entityState.currentMember
+        currentMember?.title = title
+        currentMember?.firstName = first
+        currentMember?.lastName = last
+        
+        do {
+            try viewContext.save()
+        } catch {
+            // Replace this implementation with code to handle the error appropriately.
+            // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+            let nsError = error as NSError
+            fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
+        }
+        entityState.membersHaveChanged = true
     }
 }

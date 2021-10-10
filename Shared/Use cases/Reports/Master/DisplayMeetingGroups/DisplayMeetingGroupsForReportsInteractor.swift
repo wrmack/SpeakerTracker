@@ -21,6 +21,6 @@ class DisplayMeetingGroupsForReportsInteractor {
               return false
            })
         }
-        presenter.presentMeetingGroupNames(meetingGroups: meetingGroups)
+//        presenter.presentMeetingGroupNames(meetingGroups: meetingGroups)
     }
 }

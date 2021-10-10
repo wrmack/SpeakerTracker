@@ -17,17 +17,9 @@ struct DeleteEntityView: View {
     @EnvironmentObject var entityState: EntityState
     @StateObject var presenter = DeleteEntityPresenter()
     @State var entityName = ""
-    @Binding var sheetState: SheetState
-    @Binding var selectedMasterRow: Int
-    @Binding var saveWasPressed: Bool
+    @ObservedObject var setupSheetState: SetupSheetState
     
-    
-//    init(sheetState: Binding<SheetState>, selectedMasterRow: Binding<Int>, saveWasPressed: Binding<Bool> ) {
-//        self._sheetState = sheetState
-//        self._selectedMasterRow = selectedMasterRow
-//        self._saveWasPressed = saveWasPressed
-//    }
-    
+
     var body: some View {
         Print(">>>>>> DeleteEntityView body refreshed")
         VStack {
@@ -41,40 +33,39 @@ struct DeleteEntityView: View {
                 TextField("eg Some Council, or Some Board", text: $entityName)
                     .disabled(true)
                     .frame(height: 55)
-                    .textFieldStyle(PlainTextFieldStyle())
                     .padding(EdgeInsets.init(top: 0, leading: 20, bottom: 0, trailing: 0))
-                    .cornerRadius(16)
-                    .overlay(RoundedRectangle(cornerRadius: 16).stroke(Color.gray))
                     .padding(Edge.Set.trailing,100)
+                    .overlay(RoundedRectangle(cornerRadius: 16).stroke(Color.gray))
+                    .textFieldStyle(PlainTextFieldStyle())
+                    .font(Font.system(size: 18))
+                    .disableAutocorrection(true)
             }
             Spacer()
         }
         .onAppear(perform: {
-            fetchSelectedEntity(indexOfEntityToFetch: selectedMasterRow)
+            fetchSelectedEntity()
         })
         .onReceive(presenter.$viewModel, perform: { viewModel in
             self.entityName = viewModel.name
         })
-        .onChange(of: saveWasPressed, perform: { val in
+        .onChange(of: setupSheetState.saveWasPressed, perform: { val in
             print("DeleteEntityView onChange saveWasPressed = \(val)")
-            if (val == true) && (sheetState.editMode == 2) {
-                let indexOfEntityToDelete = selectedMasterRow
-                if selectedMasterRow > 0 {self.selectedMasterRow -= 1} else { selectedMasterRow = 0}
-                self.deleteEntity(indexOfEntityToDelete: indexOfEntityToDelete)
-                self.saveWasPressed = false
+            if (val == true) && (setupSheetState.editMode == 2) {
+                self.deleteEntity()
+                setupSheetState.saveWasPressed = false
             }
         })
     }
     
-    func fetchSelectedEntity(indexOfEntityToFetch: Int) {
+    func fetchSelectedEntity() {
         let interactor = DeleteEntityInteractor()
-        interactor.displaySelectedEntity(entityState: entityState, presenter: presenter, indexOfEntityToFetch: indexOfEntityToFetch)
+        interactor.displaySelectedEntity(entityState: entityState, presenter: presenter)
     }
     
-    func deleteEntity(indexOfEntityToDelete: Int) {
+    func deleteEntity() {
         print("DeleteEntityView deleteEntity called")
         let interactor = DeleteEntityInteractor()
-        interactor.deleteEntity(entityState: entityState, indexOfEntityToDelete: indexOfEntityToDelete) 
+        interactor.deleteEntity(entityState: entityState)
     }
 }
 

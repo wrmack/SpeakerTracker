@@ -79,7 +79,7 @@ struct SpeakingTableList: View {
                }
             }
          }
-         .background(Color.white)
+         .colorScheme(.light)
       }
    }
 }

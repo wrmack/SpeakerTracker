@@ -19,9 +19,9 @@ struct Speaker_tracker_multiApp: App {
             ContentView()
                 .environmentObject(EntityState())
                 .environmentObject(EventState())
-                .environmentObject(SetupState())
                 .environmentObject(TrackSpeakersState())
                 .environmentObject(ReportsState())
+//                .environment(\.colorScheme, .light)
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
         .onChange(of: scenePhase) { _ in

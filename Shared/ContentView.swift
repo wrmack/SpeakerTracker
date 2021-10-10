@@ -6,23 +6,18 @@
 //
 import SwiftUI
 
-struct SheetState {
-    var showSheet = false
-    var editMode = 0  // 0 = add, 1 = edit, 2 = delete
-}
 
 
 
 struct ContentView: View {
-    @Environment(\.managedObjectContext) var managedObjectContext
+    @Environment(\.managedObjectContext) var managedObjectContext // TODO: needed??
     
-    @State private var sheetState = SheetState()
+    @StateObject var setupSheetState = SetupSheetState()
     @State private var showMeetingSetupSheet = false
     @State private var presentMembersSheet = false
     @State private var selectedMeetingGroup: MeetingGroup?
     @State private var isRecording = false
     @State private var selectedSetupTab = 0
-    @State private var selectedSetupMasterRow = 0
     
     
     var speakers:[Member] = []
@@ -37,6 +32,7 @@ struct ContentView: View {
                 VStack {
                     GeometryReader { geo in
                         TrackSpeakersView(showMeetingSetupSheet: $showMeetingSetupSheet, selectedMeetingGroup: $selectedMeetingGroup, isRecording: $isRecording)
+
                         ZStack {
                             if self.showMeetingSetupSheet {
                                 HStack {
@@ -46,10 +42,11 @@ struct ContentView: View {
                                         isRecording: $isRecording
                                     )
                                     .frame(maxWidth:500, minHeight:geo.size.height)
-                                    .background(Color.white)
+//                                    .background(Color.white)
                                 }
                                 .transition(.move(edge: .leading))
                             }
+
                         }
                     }
                 }
@@ -67,39 +64,46 @@ struct ContentView: View {
                             .font(.title)
                             .padding(.bottom,2)
                             .padding(.top,10)
-                            .background(SETUP_BAR_COLOR)
+//                            .background(SETUP_BAR_COLOR)
                         Spacer()
                     }
                     
-                    SetupHeaderView(sheetState: $sheetState, selectedSetupTab: $selectedSetupTab)
+                    SetupHeaderView(setupSheetState: setupSheetState, selectedSetupTab: $selectedSetupTab)
                     
                     Divider().frame(height: 2).background(Color(white: 0.85, opacity: 1.0))
                     
                     HStack(spacing: 0) {
-                        SetupMasterView(selectedSetupTab: $selectedSetupTab, selectedMasterRow: $selectedSetupMasterRow).frame(width: MASTERVIEW_WIDTH)
+                        SetupMasterView(selectedSetupTab: $selectedSetupTab)
+                            .frame(maxWidth: MASTERVIEW_WIDTH)
                         GeometryReader{ geo in
-                            SetupDetailView(selectedSetupTab: $selectedSetupTab, selectedMasterRow: $selectedSetupMasterRow)
                             ZStack {
-                                if self.sheetState.showSheet {
-                                    SetupSheetView(sheetState: self.$sheetState, presentMembersSheet: self.$presentMembersSheet, selectedSetupTab: $selectedSetupTab, selectedMasterRow: $selectedSetupMasterRow)
+                                SetupDetailView(selectedSetupTab: $selectedSetupTab)
+                                
+                                if setupSheetState.showSheet {
+                                    SetupSheetView(setupSheetState: setupSheetState, presentMembersSheet: self.$presentMembersSheet, selectedSetupTab: $selectedSetupTab)
+                                        .zIndex(1)
                                         .transition(.move(edge: .trailing))
                                         .frame(minWidth:geo.size.width, minHeight:geo.size.height)
                                 }
-                                if self.presentMembersSheet {
-                                    MeetingGroupSheetView(presentMembersSheet: self.$presentMembersSheet)
+                                if setupSheetState.showMembersSheet {
+                                    MeetingGroupSheetView(setupSheetState: setupSheetState)
                                         .transition(.move(edge: .trailing))
                                         .frame(minWidth:geo.size.width, minHeight:geo.size.height)
-                                        .background(Color.white)
+//                                        .background(Color.white)
                                         .zIndex(1)  // In order to see animation on close, zindex must be set or view goes to back.
                                 }
                             }
+                            .frame(maxWidth:.infinity, maxHeight: .infinity)
                         }
                     }
+//                    .onReceive(setupSheetState.showSheet, perform: {val in
+//                        showMeetingSetupSheet = val
+//                    })
                 }
-                .background(SETUP_BAR_COLOR)
+//                .background(SETUP_BAR_COLOR)
                 .edgesIgnoringSafeArea([.top])
                 .tabItem {
-                    Text("Entity setup")
+                    Text("Entity setup").foregroundColor(Color.white)
                 }
                 .tag(1)
                 
@@ -118,13 +122,13 @@ struct ContentView: View {
                     Divider().frame(height: 2).background(Color(white: 0.85, opacity: 1.0))
                     
                     HStack(spacing: 0) {
-                        DisplayMeetingGroupsForReportsView(selectedMasterRow: $selectedSetupMasterRow).frame(width: MASTERVIEW_WIDTH)
+//                        DisplayMeetingGroupsForReportsView(selectedMasterRow: $selectedSetupMasterRow).frame(width: MASTERVIEW_WIDTH)
                         GeometryReader{ geo in
 //                            DisplayReportsForMeetingGroupView()
                         }
                     }
                 }
-                .background(SETUP_BAR_COLOR)
+//                .background(SETUP_BAR_COLOR)
                 .edgesIgnoringSafeArea([.top])
                 .tabItem {
                     Text("Reports")
@@ -132,6 +136,7 @@ struct ContentView: View {
                 .tag(2)
             }
         }
+        .padding(.top,10)
         .onAppear(perform: {
             guard let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else {
              print("Error: Document directory not found")
@@ -151,12 +156,12 @@ struct ContentView_Previews: PreviewProvider {
      */
     static var previews: some View {
         ContentView(speakers: testData)
-            .previewDevice("iPad Pro (12.9-inch) (4th generation)")
-            .previewDisplayName("iPad Pro (12.9-inch)")
+//            .previewDevice("iPad Pro (12.9-inch) (4th generation)")
+//            .previewDisplayName("iPad Pro (12.9-inch)")
             .previewLayout(.fixed(width: 1366, height: 1024))
             .environmentObject(EntityState())
             .environmentObject(EventState())
-            .environmentObject(SetupState())
             .environmentObject(TrackSpeakersState())
+//            .environment(\.colorScheme, .light)
     }
 }

@@ -11,15 +11,35 @@ import Combine
 
 class AddMeetingGroupInteractor {
     
-    // MARK: Model management
-    
-    /*
-     Saves member to model and persistent storage.
-     Called when user decides to save new member.
-     tempMemberList is an array that is updated when user presses the "Add another" button, but is not saved until this is called.
-     Also updates current entity in user defaults.
-     */
-    func saveMeetingGroupToEntity(entityState: EntityState, setupState: SetupState, meetingGroupName: String, members: Set<Member>?) {
+    func saveMeetingGroupToEntity(entityState: EntityState, setupSheetState: SetupSheetState, meetingGroupName: String, members: Set<Member>?) {
+        
+        let viewContext = PersistenceController.shared.container.viewContext
+        let newMeetingGroup = MeetingGroup(context: viewContext)
+        newMeetingGroup.name = meetingGroupName
+        newMeetingGroup.members = members as NSSet?
+        newMeetingGroup.idx = UUID()
+        
+        entityState.currentMeetingGroupIndex = newMeetingGroup.idx
+        
+        let currentEntity = entityState.currentEntity!
+        let meetingGroupSet = currentEntity.meetingGroups
+        currentEntity.meetingGroups = meetingGroupSet!.adding(newMeetingGroup) as NSSet
+        
+        do {
+            try viewContext.save()
+        } catch {
+            // Replace this implementation with code to handle the error appropriately.
+            // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+            let nsError = error as NSError
+            fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
+        }
+        
+        entityState.currentMeetingGroupIndex = newMeetingGroup.idx
+        entityState.meetingGroupsHaveChanged = true 
+        
+        
+        
+        
 //        let entityState = entityState
 //        let setupState = setupState
 //        var currentEntity = entityState.currentEntity!

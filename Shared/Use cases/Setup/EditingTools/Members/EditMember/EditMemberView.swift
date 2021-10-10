@@ -15,63 +15,47 @@ import Combine
  */
 struct EditMemberView: View {
     @EnvironmentObject var entityState: EntityState
-    @EnvironmentObject var setupState: SetupState
+    @ObservedObject var setupSheetState: SetupSheetState
     @StateObject var presenter = EditMemberPresenter()
-    @ObservedObject var saveButtonState: SaveButtonState
     @State var memberTitle = ""
     @State var memberFirstName = ""
     @State var memberLastName = ""
-    @Binding var sheetState: SheetState
-    @Binding var selectedMasterRow: Int
-    
-    
-    init(sheetState: Binding<SheetState>, saveButtonState: SaveButtonState, selectedMasterRow: Binding<Int> ) {
-        self._sheetState = sheetState
-        self.saveButtonState = saveButtonState
-        self._selectedMasterRow = selectedMasterRow
-    }
+
     
     var body: some View {
         Print(">>>>>> EditMemberView body refreshed")
         VStack {
             Text("Edit member")
-                .padding(Edge.Set.top, 30).padding(Edge.Set.bottom, 30)
+                .padding(.top, 30)
                 .font(Font.system(size: 30))
             HStack {
                 Text("Title")
                     .frame(width: 120, height: 100, alignment: .trailing)
                     .padding(Edge.Set.trailing, 30)
                     .font(Font.system(size: 20))
-                TextField("eg Councillor", text: $memberTitle, onCommit: {withAnimation(.easeInOut(duration:  EASEINOUT)){
-                    self.sheetState.showSheet = false
-                    self.saveMember()
-                }})
-                .frame(height: 55)
-                .disableAutocorrection(true)
-                .textFieldStyle(PlainTextFieldStyle())
-                .padding(EdgeInsets.init(top: 0, leading: 20, bottom: 0, trailing: 0))
-                .background(Color.white)
-                .cornerRadius(16)
-                .overlay(RoundedRectangle(cornerRadius: 16).stroke(Color.gray))
-                .padding(Edge.Set.trailing,100)
+                TextField("eg Councillor", text: $memberTitle)
+                    .frame(height: 55)
+                    .padding(EdgeInsets.init(top: 0, leading: 20, bottom: 0, trailing: 0))
+                    .padding(Edge.Set.trailing,100)
+                    .overlay(RoundedRectangle(cornerRadius: 16).stroke(Color.gray))
+                    .textFieldStyle(PlainTextFieldStyle())
+                    .font(Font.system(size: 18))
+                    .disableAutocorrection(true)
             }
             HStack {
                 Text("First name")
                     .frame(width: 120, height: 100, alignment: .trailing)
                     .padding(Edge.Set.trailing, 30)
                     .font(Font.system(size: 20))
-                TextField("eg John", text: $memberFirstName, onCommit: {withAnimation(.easeInOut(duration: EASEINOUT)){
-                    self.sheetState.showSheet = false
-                    self.saveMember()
-                }})
-                .frame(height: 55)
-                .disableAutocorrection(true)
-                .textFieldStyle(PlainTextFieldStyle())
-                .padding(EdgeInsets.init(top: 0, leading: 20, bottom: 0, trailing: 0))
-                .background(Color.white)
-                .cornerRadius(16)
-                .overlay(RoundedRectangle(cornerRadius: 16).stroke(Color.gray))
-                .padding(Edge.Set.trailing,100)
+                TextField("eg John", text: $memberFirstName)
+                    .frame(height: 55)
+                    .padding(EdgeInsets.init(top: 0, leading: 20, bottom: 0, trailing: 0))
+                    .padding(Edge.Set.trailing,100)
+                    .overlay(RoundedRectangle(cornerRadius: 16).stroke(Color.gray))
+                    .textFieldStyle(PlainTextFieldStyle())
+                    .font(Font.system(size: 18))
+                    .disableAutocorrection(true)
+
             }
             HStack {
                 Text("Last name")
@@ -79,20 +63,20 @@ struct EditMemberView: View {
                     .padding(Edge.Set.trailing, 30)
                     .font(Font.system(size: 20))
                 TextField("eg Smith", text: $memberLastName, onCommit: {withAnimation(.easeInOut(duration: EASEINOUT)){
-                    self.sheetState.showSheet = false
+                    setupSheetState.showSheet = false
                     self.saveMember()
                 }})
-                .frame(height: 55)
-                .disableAutocorrection(true)
-                .textFieldStyle(PlainTextFieldStyle())
-                .padding(EdgeInsets.init(top: 0, leading: 20, bottom: 0, trailing: 0))
-                .background(Color.white)
-                .cornerRadius(16)
-                .overlay(RoundedRectangle(cornerRadius: 16).stroke(Color.gray))
-                .padding(Edge.Set.trailing,100)
+                    .frame(height: 55)
+                    .padding(EdgeInsets.init(top: 0, leading: 20, bottom: 0, trailing: 0))
+                    .padding(Edge.Set.trailing,100)
+                    .overlay(RoundedRectangle(cornerRadius: 16).stroke(Color.gray))
+                    .textFieldStyle(PlainTextFieldStyle())
+                    .font(Font.system(size: 18))
+                    .disableAutocorrection(true)
             }
             Spacer()
         }
+        .padding(.trailing,20)
         .onAppear(perform: {
             fetchSelectedMember()
         })
@@ -101,28 +85,29 @@ struct EditMemberView: View {
             self.memberFirstName = viewModel.firstName
             self.memberLastName = viewModel.lastName
         })
-        .onReceive(self.saveButtonState.$savePressed, perform: { pressed in
-            print("EditMemberView onReceive saveButtonState.$savePressed called")
-            if (pressed == true) && (sheetState.editMode == 1) {
-                self.saveButtonState.savePressed = false
-                self.saveMember() }
+        .onReceive(setupSheetState.$saveWasPressed, perform: { pressed in
+            print("------ EditMemberView onReceive saveButtonState.$savePressed called")
+            if (pressed == true) && (setupSheetState.editMode == 1) {
+                setupSheetState.saveWasPressed = false
+                saveMember() }
         })
     }
     
     func fetchSelectedMember() {
         let interactor = EditMemberInteractor()
-        interactor.displaySelectedMember(entityState: entityState, presenter: presenter, selectedMasterRow: selectedMasterRow)
+        interactor.displaySelectedMember(entityState: entityState, presenter: presenter)
     }
     
     func saveMember() {
-        print("EditMemberView saveMember called")
+        print("------ EditMemberView saveMember called")
         let interactor = EditMemberInteractor()
-        interactor.saveMemberToEntity(entityState: entityState, setupState: setupState, title: memberTitle, first: memberFirstName, last: memberLastName, selectedMasterRow: selectedMasterRow)
+        interactor.saveChangedMemberToStore(entityState: entityState, title: memberTitle, first: memberFirstName, last: memberLastName)
     }
 }
 
-//struct EditMemberView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        EditMemberView()
-//    }
-//}
+struct EditMemberView_Previews: PreviewProvider {
+    static var previews: some View {
+        EditMemberView(setupSheetState: SetupSheetState())
+            .environmentObject(EntityState())
+    }
+}

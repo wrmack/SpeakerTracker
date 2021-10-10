@@ -6,47 +6,21 @@
 //  Copyright © 2020 Warwick McNaughton. All rights reserved.
 //
 
-import SwiftUI
+import Foundation
 import Combine
+import CoreData
 
 
 class AddEntityInteractor {
-   var entityName = ""
-   var entityState: EntityState?
-   
-    var viewContext = PersistenceController.shared.container.viewContext
-   
-   func setupInteractor(entityState: EntityState) {
-      self.entityState = entityState
-   }
-   
-   
-//   func saveEntityToDisk(entityName: String) {
-//      self.entityName = entityName
-//      let newEntity = Entity(name: entityName, members: nil, meetingGroups: nil)
-//      guard let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else {
-//          print("Error: Document directory not found")
-//          return
-//      }
-//      print(documentsDirectory)
-//      let docFileURL =  documentsDirectory.appendingPathComponent(newEntity.id.uuidString + ".ent")
-//      let entityDoc = EntityDocument(fileURL: docFileURL, name: newEntity.name, entity: newEntity)
-//      entityDoc.save(to: docFileURL, for: .forCreating, completionHandler: { success in
-//          if !success {
-//              print("AddEntityInteractor: saveEntityToDisk: Error saving")
-//          }
-//          else{
-//            self.entityState!.entities.append(newEntity)
-//            self.entityState!.currentEntity = newEntity
-//            self.entityState!.entityModelChanged = true
-//          }
-//      })
-//   }
-    
-    func saveEntityToStore(entityName: String) {
+
+
+    func saveNewEntityToStore(entityName: String, entityState: EntityState) {
+        
+        let viewContext = PersistenceController.shared.container.viewContext
         let newEntity = Entity(context: viewContext)
         newEntity.name = entityName
-
+        newEntity.idx = UUID()
+        
         do {
             try viewContext.save()
         } catch {
@@ -55,7 +29,7 @@ class AddEntityInteractor {
             let nsError = error as NSError
             fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
         }
-        self.entityState!.currentEntity = newEntity
-        self.entityState?.entityModelChanged = true
+        entityState.currentEntityIndex = newEntity.idx 
+//        self.entityState?.entityModelChanged = true
     }
 }

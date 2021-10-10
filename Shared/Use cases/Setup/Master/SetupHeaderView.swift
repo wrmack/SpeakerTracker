@@ -14,7 +14,7 @@ import SwiftUI
  The editing sheet is displayed (by ContentView) depending on the state of SheetState.
  */
 struct SetupHeaderView: View {
-    @Binding var sheetState: SheetState
+    @ObservedObject var setupSheetState: SetupSheetState
     @Binding var selectedSetupTab: Int
     
     var body: some View {
@@ -30,47 +30,53 @@ struct SetupHeaderView: View {
                 }
                 Spacer()
                 Button(action: {withAnimation(.easeInOut(duration: EASEINOUT)) {
-                    self.sheetState.showSheet.toggle()
-                    self.sheetState.editMode = 0
+                    setupSheetState.showSheet.toggle()
+                    self.setupSheetState.editMode = 0
                 }}) {
                     Text("+")
                         .font(.system(size: 32, weight: .light, design: .default))
                         .frame(alignment: .trailing)
                         .padding(.trailing, 10)
                 }
+                    .buttonStyle(PlainButtonStyle())
             }
-            .frame(width: MASTERVIEW_WIDTH, alignment: .center)
+                .frame(width: MASTERVIEW_WIDTH, alignment: .center)
             
             HStack{
                 Spacer()
                 Button(action: {withAnimation(.easeInOut(duration: EASEINOUT)) {
-                    self.sheetState.showSheet.toggle()
-                    self.sheetState.editMode = 2
+                    self.setupSheetState.showSheet.toggle()
+                    self.setupSheetState.editMode = 2
                 }})
                 {
                     Image(systemName: "trash")
                         .resizable()
-                        .accentColor(Color.red)
                         .frame(width: 25, height: 25)
+                        .foregroundColor(.red)
                 }
+                .buttonStyle(PlainButtonStyle())
+
+                
                 Spacer().fixedSize().frame(width: 50)
                 Button(action: {withAnimation(.easeInOut(duration: EASEINOUT)) {
-                    self.sheetState.showSheet.toggle()
-                    self.sheetState.editMode = 1
+                    self.setupSheetState.showSheet.toggle()
+                    self.setupSheetState.editMode = 1
                 }}) {
                     Text("Edit")
                         .modifier(SetupHeaderViewMasterHeading())
                         .frame(width: 60, height: 60, alignment: .trailing)
                         .padding(.trailing,30)
                 }
+                    .buttonStyle(PlainButtonStyle())
             }
             .frame(minWidth: 200, alignment: .trailing)
+
         }
     }
 }
 
 //struct SetupHeaderView_Previews: PreviewProvider {
 //    static var previews: some View {
-//        SetupHeaderView()
+//        SetupHeaderView(setupSheetState: .constant(SetupSheetState()), selectedSetupTab: .constant(0))
 //    }
 //}

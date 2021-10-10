@@ -10,22 +10,12 @@ import SwiftUI
 
 struct EditMeetingGroupView: View {
     @EnvironmentObject var entityState: EntityState
-    @EnvironmentObject var setupState: SetupState
+    @ObservedObject var setupSheetState: SetupSheetState
     @StateObject var presenter = EditMeetingGroupPresenter()
-    @ObservedObject var saveButtonState: SaveButtonState
     @State var meetingGroupName = ""
     @State var memberNames = ""
     @State var members = Set<Member>()
-    @Binding var sheetState: SheetState
-    @Binding var presentMembersSheet: Bool
-    @Binding var selectedMasterRow: Int
-    
-    init(presentMembersSheet: Binding<Bool>, sheetState: Binding<SheetState>, saveButtonState: SaveButtonState, selectedMasterRow: Binding<Int> ) {
-        self._presentMembersSheet = presentMembersSheet
-        self._sheetState = sheetState
-        self.saveButtonState = saveButtonState
-        self._selectedMasterRow = selectedMasterRow
-    }
+
     
     var body: some View {
         Print(">>>>>> EditMemberView body refreshed")
@@ -38,37 +28,29 @@ struct EditMeetingGroupView: View {
                     .frame(width: 120, height: 100, alignment: .trailing)
                     .padding(Edge.Set.trailing, 30)
                     .font(Font.system(size: 20))
-                TextField("eg Some Committee", text: $meetingGroupName, onCommit: {withAnimation(.easeInOut(duration:  EASEINOUT)){
-                    self.sheetState.showSheet = false
-                    self.saveMeetingGroup()
-                }})
-                .frame(height: 55)
-                .disableAutocorrection(true)
-                .textFieldStyle(PlainTextFieldStyle())
-                .padding(EdgeInsets.init(top: 0, leading: 20, bottom: 0, trailing: 0))
-                .background(Color.white)
-                .cornerRadius(16)
-                .overlay(RoundedRectangle(cornerRadius: 16).stroke(Color.gray))
-                .padding(Edge.Set.trailing,100)
+                TextField("eg Some Committee", text: $meetingGroupName)
+                    .frame(height: 55)
+                    .padding(EdgeInsets.init(top: 0, leading: 20, bottom: 0, trailing: 0))
+                    .padding(Edge.Set.trailing,100)
+                    .overlay(RoundedRectangle(cornerRadius: 16).stroke(Color.gray))
+                    .textFieldStyle(PlainTextFieldStyle())
+                    .font(Font.system(size: 18))
+                    .disableAutocorrection(true)
             }
             HStack {
                 Text("Members")
                     .frame(width: 120, height: 100, alignment: .trailing)
                     .padding(Edge.Set.trailing, 30)
                     .font(Font.system(size: 20))
-                TextField("Members", text: $memberNames, onCommit: {withAnimation(.easeInOut(duration: EASEINOUT)){
-                    self.sheetState.showSheet = false
-                    self.saveMeetingGroup()
-                }})
-                .frame(height: 55)
-                .disableAutocorrection(true)
-                .textFieldStyle(PlainTextFieldStyle())
-                .padding(EdgeInsets.init(top: 0, leading: 20, bottom: 0, trailing: 0))
-                .background(Color.white)
-                .cornerRadius(16)
-                .overlay(RoundedRectangle(cornerRadius: 16).stroke(Color.gray))
-                .padding(Edge.Set.trailing,100)
-                .onChange(of: entityState.meetingGroupMembers, perform: { selectedMembers in
+                TextField("Members", text: $memberNames)
+                    .frame(height: 55)
+                    .padding(EdgeInsets.init(top: 0, leading: 20, bottom: 0, trailing: 0))
+                    .padding(Edge.Set.trailing,100)
+                    .overlay(RoundedRectangle(cornerRadius: 16).stroke(Color.gray))
+                    .textFieldStyle(PlainTextFieldStyle())
+                    .font(Font.system(size: 18))
+                    .disableAutocorrection(true)
+                    .onReceive(setupSheetState.$selectedMembers, perform: { selectedMembers in
                     var mbrsStr = String()
                     if selectedMembers != nil {
                         selectedMembers!.forEach { member in
@@ -90,11 +72,12 @@ struct EditMeetingGroupView: View {
                     }
                 })
                 Button(action: {withAnimation(.easeInOut(duration: EASEINOUT)) {
-                    self.saveButtonState.savePressed = false
-                    self.presentMembersSheet = true
+                    setupSheetState.saveWasPressed = false
+                    setupSheetState.showMembersSheet = true
                 }}) {
                     Text(">")
                 }
+                .buttonStyle(PlainButtonStyle())
                 .padding(Edge.Set.trailing, 50)
                 .font(.system(size: 36, weight: .medium))
                 Spacer()
@@ -109,23 +92,23 @@ struct EditMeetingGroupView: View {
             self.meetingGroupName = viewModel.name
             self.memberNames = viewModel.members
         })
-        .onReceive(self.saveButtonState.$savePressed, perform: { pressed in
-            print("EditMeetingGroupView onReceive saveButtonState.$savePressed called")
-            if (pressed == true) && (sheetState.editMode == 1) {
-                self.saveButtonState.savePressed = false
+        .onReceive(setupSheetState.$saveWasPressed, perform: { pressed in
+            print("------ EditMeetingGroupView onReceive saveButtonState.$savePressed called")
+            if (pressed == true) && (setupSheetState.editMode == 1) {
+                setupSheetState.saveWasPressed = false
                 self.saveMeetingGroup() }
         })
     }
     
     func fetchSelectedMeetingGroup() {
         let interactor = EditMeetingGroupInteractor()
-        interactor.displaySelectedMeetingGroup(entityState: entityState, presenter: presenter, selectedMasterRow: selectedMasterRow)
+        interactor.displaySelectedMeetingGroup(entityState: entityState, presenter: presenter)
     }
     
     func saveMeetingGroup() {
-        print("EditMeetingGroupView saveMeetingGroup called")
+        print("------ EditMeetingGroupView saveMeetingGroup called")
         let interactor = EditMeetingGroupInteractor()
-        interactor.saveMeetingGroupToEntity(entityState: entityState, setupState: setupState, meetingGroupName: meetingGroupName, members: members, selectedMasterRow: selectedMasterRow)
+        interactor.saveMeetingGroupToEntity(entityState: entityState, setupSheetState: setupSheetState, meetingGroupName: meetingGroupName, members: members)
     }
     
 }

@@ -9,19 +9,19 @@
 import SwiftUI
 import Combine
 
-/**
- Don't need to populate textfields with values.  Just use an Interactor to save final values to model.
- */
+/// A view providing a textfield for adding a new entity.
+///
+/// `AddEntityView` works with `AddEntityInteractor`.
+///
+/// `AddEntityInteractor` is responsible for interacting with the data model.
+///
+/// `sheetState` is bound to ContentView
+///
+/// `saveWasPressed` is bound to `SetupSheetView` which has the Save button.
 struct AddEntityView: View {
     @EnvironmentObject var entityState: EntityState
     @State var entityName = ""
-    @Binding var sheetState: SheetState
-    @Binding var saveWasPressed: Bool
-    
-    init(sheetState: Binding<SheetState>, saveWasPressed: Binding<Bool> ) {
-        self._sheetState = sheetState
-        self._saveWasPressed = saveWasPressed
-    }
+    @ObservedObject var setupSheetState: SetupSheetState
     
     var body: some View {
         Print(">>>>>> AddEntityView body refreshed")
@@ -34,41 +34,41 @@ struct AddEntityView: View {
                     .padding(Edge.Set.trailing, 20).padding(Edge.Set.leading, 50)
                     .font(Font.system(size: 20))
                 TextField("eg Some Council, or Some Board", text: $entityName, onCommit: {withAnimation(.easeInOut(duration: EASEINOUT)){
-                    self.sheetState.showSheet = false
-                    self.saveEntity()
+                    self.setupSheetState.showSheet = false
+                    self.saveNewEntity()
                 }})
-                .frame(height: 55)
-                .disableAutocorrection(true)
-                .textFieldStyle(PlainTextFieldStyle())
-                .padding(EdgeInsets.init(top: 0, leading: 20, bottom: 0, trailing: 0))
-                .background(Color.white)
-                .cornerRadius(16)
-                .overlay(RoundedRectangle(cornerRadius: 16).stroke(Color.gray))
-                .padding(Edge.Set.trailing,100)
+                    .frame(height: 55)
+                    .padding(EdgeInsets.init(top: 0, leading: 20, bottom: 0, trailing: 0))
+                    .padding(Edge.Set.trailing,100)
+                    .overlay(RoundedRectangle(cornerRadius: 16).stroke(Color.gray))
+                    .textFieldStyle(PlainTextFieldStyle())
+                    .font(Font.system(size: 18))
+                    .disableAutocorrection(true)
+
             }
             Spacer()
         }
-        .onChange(of: saveWasPressed, perform: { val in
-          print("AddEntityView onChange saveWasPressed called val: \(val)")
-          if (val == true) && (sheetState.editMode == 0) {
-              self.saveEntity()
-              self.saveWasPressed = false
+        .onChange(of: setupSheetState.saveWasPressed, perform: { val in
+          print("------ AddEntityView onChange saveWasPressed called val: \(val)")
+          if (val == true) && (setupSheetState.editMode == 0) {
+              self.saveNewEntity()
+              setupSheetState.saveWasPressed = false
              }
         })
     }
     
-    func saveEntity() {
-        print("AddEntityView saveEntity called")
+    /// Sends entity name to interactor to save to data store
+    func saveNewEntity() {
+        print("------ AddEntityView saveEntity called")
         let interactor = AddEntityInteractor()
-        interactor.setupInteractor(entityState: entityState)
-        interactor.saveEntityToStore(entityName: entityName)
+        interactor.saveNewEntityToStore(entityName: entityName, entityState: entityState)
     }
 }
 
 
 //struct AddEntity_Previews: PreviewProvider {
 //    static var previews: some View {
-//      AddEntityView(showSheet: .constant(true))
+//        AddEntityView(setupSheetState: .constant(SetupSheetState()))
 //        .previewDevice(PreviewDevice(rawValue: "iPad Pro (12.9-inch) (4th generation)"))
 //        .previewDisplayName("iPad Pro (12.9-inch) (4th generation)")
 //        .previewLayout(.fixed(width: 1080, height: 900))

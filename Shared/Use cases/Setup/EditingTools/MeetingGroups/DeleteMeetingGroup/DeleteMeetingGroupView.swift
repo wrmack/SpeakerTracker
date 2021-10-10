@@ -10,20 +10,13 @@ import SwiftUI
 
 struct DeleteMeetingGroupView: View {
     @EnvironmentObject var entityState: EntityState
-    @EnvironmentObject var setupState: SetupState
+    @ObservedObject var setupSheetState: SetupSheetState
     @StateObject var presenter = DeleteMeetingGroupPresenter()
-    @ObservedObject var saveButtonState: SaveButtonState
     @State var meetingGroupName = ""
     @State var memberNames = ""
     @State var members = Set<Member>()
-    @Binding var sheetState: SheetState
-    @Binding var selectedMasterRow: Int
     
-    init(sheetState: Binding<SheetState>, saveButtonState: SaveButtonState, selectedMasterRow: Binding<Int> ) {
-        self._sheetState = sheetState
-        self.saveButtonState = saveButtonState
-        self._selectedMasterRow = selectedMasterRow
-    }
+
     
     var body: some View {
         Print(">>>>>> DeleteMemberView body refreshed")
@@ -39,26 +32,28 @@ struct DeleteMeetingGroupView: View {
                 TextField("eg Some committee", text: $meetingGroupName)
                     .disabled(true)
                     .frame(height: 55)
-                    .textFieldStyle(PlainTextFieldStyle())
                     .padding(EdgeInsets.init(top: 0, leading: 20, bottom: 0, trailing: 0))
-                    .cornerRadius(16)
-                    .overlay(RoundedRectangle(cornerRadius: 16).stroke(Color.gray))
                     .padding(Edge.Set.trailing,100)
+                    .overlay(RoundedRectangle(cornerRadius: 16).stroke(Color.gray))
+                    .textFieldStyle(PlainTextFieldStyle())
+                    .font(Font.system(size: 18))
+                    .disableAutocorrection(true)
             }
             HStack {
                 Text("Members")
                     .frame(width: 120, height: 100, alignment: .trailing)
                     .padding(Edge.Set.trailing, 30)
                     .font(Font.system(size: 20))
-                TextField("eg John", text: $memberNames)
+                TextField("", text: $memberNames)
                     .disabled(true)
                     .frame(height: 55)
-                    .textFieldStyle(PlainTextFieldStyle())
                     .padding(EdgeInsets.init(top: 0, leading: 20, bottom: 0, trailing: 0))
-                    .cornerRadius(16)
-                    .overlay(RoundedRectangle(cornerRadius: 16).stroke(Color.gray))
                     .padding(Edge.Set.trailing,100)
-                    .onReceive(entityState.$meetingGroupMembers, perform: { selectedMembers in
+                    .overlay(RoundedRectangle(cornerRadius: 16).stroke(Color.gray))
+                    .textFieldStyle(PlainTextFieldStyle())
+                    .font(Font.system(size: 18))
+                    .disableAutocorrection(true)
+                    .onReceive(setupSheetState.$selectedMembers, perform: { selectedMembers in
                         var mbrsStr = String()
                         if selectedMembers != nil {
                             selectedMembers!.forEach { member in
@@ -82,6 +77,7 @@ struct DeleteMeetingGroupView: View {
             }
             Spacer()
         }
+        .padding(.trailing, 20)
         .onAppear(perform: {
             fetchSelectedMeetingGroup()
         })
@@ -89,22 +85,22 @@ struct DeleteMeetingGroupView: View {
             self.meetingGroupName = viewModel.name
             self.memberNames = viewModel.members
         })
-        .onReceive(self.saveButtonState.$savePressed, perform: { pressed in
-            print("DeleteMemberView onReceive saveButtonState.$savePressed = \(pressed)")
-            if (pressed == true) && (sheetState.editMode == 2) {
-                self.saveButtonState.savePressed = false
+        .onReceive(setupSheetState.$saveWasPressed, perform: { pressed in
+            print("------ DeleteMemberView onReceive saveButtonState.$savePressed = \(pressed)")
+            if (pressed == true) && (setupSheetState.editMode == 2) {
+                setupSheetState.saveWasPressed = false
                 self.deleteMeetingGroup() }
         })
     }
     
     func fetchSelectedMeetingGroup() {
         let interactor = DeleteMeetingGroupInteractor()
-        interactor.displaySelectedMeetingGroup(entityState: entityState, presenter:  presenter, selectedMasterRow: selectedMasterRow)
+        interactor.displaySelectedMeetingGroup(entityState: entityState, presenter:  presenter)
     }
     
     func deleteMeetingGroup() {
         let interactor = DeleteMeetingGroupInteractor()
-        interactor.deleteSelectedMeetingGroupFromEntity(entityState: entityState, setupState: setupState, selectedMasterRow: selectedMasterRow)
+        interactor.deleteSelectedMeetingGroupFromEntity(entityState: entityState)
     }
 }
 

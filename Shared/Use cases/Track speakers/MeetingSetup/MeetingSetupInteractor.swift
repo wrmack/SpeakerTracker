@@ -12,8 +12,8 @@ import Foundation
 class MeetingSetupInteractor {
     
     func fetchEntityForRow(entityState: EntityState, trackSpeakersState: TrackSpeakersState, row: Int) -> Entity {
-        trackSpeakersState.currentEntity = entityState.entities[row]
-        return entityState.entities[row]
+        trackSpeakersState.currentEntity = entityState.sortedEntities![row]
+        return entityState.sortedEntities![row]
     }
     
 //    func fetchMeetingGroupForRow(entityState: EntityState,  trackSpeakersState: TrackSpeakersState, selectedEntityIndex: Int, row: Int) -> MeetingGroup {
