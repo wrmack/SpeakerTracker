@@ -25,19 +25,22 @@ struct RemainingTableList: View {
                .foregroundColor(Color.white)
                .padding(.vertical, 10.0)
             Spacer()
-         }.background(Color.black)
+         }
+         .frame(height:44)
+         .background(Color.black)
          List {
             ForEach(viewModel, id: \.self) { sectionList in
-               Section {
+//                Section(header: HStack{}){
                   ForEach(sectionList.sectionMembers, id: \.self) { listMember in
-//                     Print("RemainingTableList listMember \(listMember)")
                      RemainingTableRow(rowContent: listMember, sectionNumber: sectionList.sectionNumber, moveAction: $moveAction)
                   }
-               }
+//               }
+                
             }
 
          }
          .colorScheme(.light)
+         .environment(\.defaultMinListHeaderHeight, 0)
       }
       .background(Color.white)
    }
@@ -84,15 +87,24 @@ struct RemainingTableRow: View {
    }
 }
 
-//struct SpeakerTableList_Previews: PreviewProvider {
-//   static var testData = [
-//    ListMember(row: 0, member: Member()),
-//      ListMember(row: 1, member: Member())
-//   ]
-//
-//   static var previews: some View {
-//       RemainingTableList(viewModel: testData, moveAction: .constant(MoveMemberAction()))
-//    }
-//}
+struct SpeakerTableList_Previews: PreviewProvider {
+
+
+   static var previews: some View {
+       let context = PersistenceController.preview.container.viewContext
+       let member1 = Member(context: context)
+       member1.lastName = "Name1"
+       let member2 = Member(context: context)
+       member2.lastName = "Name2"
+       let listMember1 = ListMember(row:0, member: member1)
+       let listMember2 = ListMember(row:1, member: member2)
+       
+       let testData = [
+           SectionList(sectionNumber: 0, sectionType: .mainDebate, sectionMembers: [listMember1, listMember2])
+          ]
+       return RemainingTableList(viewModel: testData, moveAction: .constant(MoveMemberAction()))
+           .environment(\.managedObjectContext, context)
+    }
+}
 
 

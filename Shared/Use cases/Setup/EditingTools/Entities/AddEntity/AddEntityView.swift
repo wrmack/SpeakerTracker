@@ -26,7 +26,7 @@ struct AddEntityView: View {
     var body: some View {
         Print(">>>>>> AddEntityView body refreshed")
         VStack {
-            Text("Create new entity")
+            Text("Add new entity")
                 .padding(Edge.Set.top, 30).padding(Edge.Set.bottom, 30)
                 .font(Font.system(size: 30))
             HStack {
@@ -60,8 +60,7 @@ struct AddEntityView: View {
     /// Sends entity name to interactor to save to data store
     func saveNewEntity() {
         print("------ AddEntityView saveEntity called")
-        let interactor = AddEntityInteractor()
-        interactor.saveNewEntityToStore(entityName: entityName, entityState: entityState)
+        AddEntityInteractor.saveNewEntityToStore(entityName: entityName, entityState: entityState)
     }
 }
 

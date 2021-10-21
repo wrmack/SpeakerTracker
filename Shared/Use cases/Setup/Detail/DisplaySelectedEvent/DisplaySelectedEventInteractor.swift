@@ -9,10 +9,32 @@
 import Foundation
 
 
-//class DisplaySelectedEventInteractor {
-//    
-//    
-//    func fetchEvent(presenter: DisplaySelectedEventPresenter, entityState: EntityState, setupState: SetupState, forRow: Int?) {
+class DisplaySelectedEventInteractor {
+    
+    static func fetchEvent(presenter: DisplaySelectedEventPresenter, entityState: EntityState, eventState: EventState, newIndex: UUID?) {
+        
+        print("------ DisplaySelectedEventInteractor.fetchEvent newIndex \(String(describing: newIndex))")
+        
+        var eventIndex: UUID?
+
+        // newIndex is nil when method called by .onAppear
+        if newIndex == nil {
+            if let currentMeetingEventIndex = eventState.currentMeetingEventIndex {
+                eventIndex = currentMeetingEventIndex
+            }
+            else {
+                presenter.presentMeetingEventDetail(event: nil)
+                return
+            }
+        }
+        else {
+            eventIndex = newIndex
+        }
+        let selectedMeetingEvent = EventState.meetingEventWithIndex(index: eventIndex!)
+        
+        presenter.presentMeetingEventDetail(event: selectedMeetingEvent)
+        
+        
 //        print("DisplaySelectedEventInteractor.fetchEvent")
 //        var row = forRow
 //        if row == nil { row = 0}
@@ -49,5 +71,5 @@ import Foundation
 //        }
 //        presenter.presentEventDetail(event: currentEvent, memberString: memberString)
         
-//    }
-//}
+    }
+}

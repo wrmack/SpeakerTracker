@@ -22,7 +22,7 @@ struct AddMeetingGroupView: View {
     var body: some View {
         Print(">>>>>> AddMeetingGroupView body refreshed")
         VStack {
-            Text("Create new meeting group for")
+            Text("Add new meeting group for")
                 .padding(Edge.Set.top, 0).padding(Edge.Set.bottom, 0)
                 .font(Font.system(size: 30))
             Text(entityState.currentEntity!.name!)
@@ -106,8 +106,7 @@ struct AddMeetingGroupView: View {
     }
     
     func saveMeetingGroup() {
-        let interactor = AddMeetingGroupInteractor()
-        interactor.saveMeetingGroupToEntity(entityState: entityState, setupSheetState: setupSheetState, meetingGroupName: meetingGroupName, members: members)
+        AddMeetingGroupInteractor.saveMeetingGroupToEntity(entityState: entityState, setupSheetState: setupSheetState, meetingGroupName: meetingGroupName, members: members)
     }
     
 }

@@ -22,13 +22,13 @@ class DeleteMemberInteractor {
     }
    
     
-    func displaySelectedMember(entityState: EntityState, presenter: DeleteMemberPresenter) {
+    class func displaySelectedMember(entityState: EntityState, presenter: DeleteMemberPresenter) {
         guard let member = entityState.currentMember else {return}
         presenter.presentViewModel(selectedMember: member)
     }
     
     
-    func deleteSelectedMemberFromEntity(entityState: EntityState) {
+    class func deleteSelectedMemberFromEntity(entityState: EntityState) {
         
         guard let member = entityState.currentMember else {return}
         

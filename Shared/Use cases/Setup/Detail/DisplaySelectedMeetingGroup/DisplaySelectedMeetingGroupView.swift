@@ -17,22 +17,18 @@ struct DisplaySelectedMeetingGroupView: View {
     var body: some View {
         Print(">>>>>> DisplaySelectedMeetingGroupView body refreshed")
         List {
-            Section {
-                ForEach(presenter.meetingGroupViewModel, id: \.self) { content in
-                    DisplaySelectedMeetingGroupListRow(rowContent: content)
-                }
+            ForEach(presenter.meetingGroupViewModel, id: \.self) { content in
+                DisplaySelectedMeetingGroupListRow(rowContent: content)
             }
         }
-        .onReceive(entityState.$currentMeetingGroupIndex, perform: { newIndex in
-            print("------ DisplaySelectedMeetingGroupView: .onReceive $currentMeetingGroupIndex")
-            if newIndex != nil {
-                let interactor = DisplaySelectedMeetingGroupInteractor()
-                interactor.fetchMeetingGroup(presenter: presenter, entityState: entityState, newIndex: newIndex!)
-            }
+        // Called when meeting group is changed
+        .onChange(of: entityState.currentMeetingGroupIndex, perform: { newIndex in
+            print("------ DisplaySelectedMeetingGroupView: .onChange currentMeetingGroupIndex")
+            DisplaySelectedMeetingGroupInteractor.fetchMeetingGroup(presenter: presenter, entityState: entityState, newIndex: newIndex)
         })
+        // Called when first appears
         .onAppear(perform: {
-            let interactor = DisplaySelectedMeetingGroupInteractor()
-            interactor.fetchMeetingGroup(presenter: presenter, entityState: entityState, newIndex: nil)
+            DisplaySelectedMeetingGroupInteractor.fetchMeetingGroup(presenter: presenter, entityState: entityState, newIndex: nil)
         })
     }
 }

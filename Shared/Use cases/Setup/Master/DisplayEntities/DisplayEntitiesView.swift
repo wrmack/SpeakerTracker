@@ -33,36 +33,32 @@ struct DisplayEntitiesView: View {
             List(presenter.entities, id: \.self, rowContent:  { entity in
                 EntityListRow(rowContent: entity)
             })
-            //            .onReceive(entityState.$entityModelChanged, perform: { val in
-            //                print("DisplayEntitiesView .onReceive $entityModelChanged val: \(val)")
-            //                // Only if entityModelChanged is true.  View is refreshed even if focus is on a different tab.
-            //                if val == true {
-            //                    let interactor = DisplayEntitiesInteractor()
-            //                    interactor.fetchEntities(presenter: self.presenter, entityState: entityState)
-            //                    entityState.entityModelChanged = false
-            //                }
-            //            })
-            
-            // Called whenever `currentEntityIndex` publishes a change.
-            // `currentEntityIndex` changes when .onAppear sets it and
-            // when user selects a different row.
-            // Each time all entities are fetched.
-                .onReceive(entityState.$currentEntityIndex, perform: { val in
+                .onChange(of: entityState.entitiesHaveChanged, perform: { val in
+                    print("------ DisplayEntitiesView .onChange entityState.entitiesHaveChanged: \(val)")
+                    if (selectedTab == 0) && (val == true)   {
+                        entityState.entitiesHaveChanged = false
+                        DisplayEntitiesInteractor.fetchEntities(presenter: presenter)
+                    }
+                })
+            // Called whenever `currentEntityIndex` changes.
+            // - when user selects a different row.
+            //
+                .onChange(of: entityState.currentEntityIndex, perform: { newIndex in
                     if selectedTab == 0 {
-                        print("------ DisplayEntitiesView .onReceive entityState.$currentEntityIndex \(String(describing: val))")
-                        if val == nil {return}
-                        let interactor = DisplayEntitiesInteractor()
-                        interactor.fetchEntities(presenter: self.presenter, entityState: entityState)
+                        print("------ DisplayEntitiesView .onChange entityState.currentEntityIndex \(String(describing: newIndex))")
+                        if newIndex == nil {return}
+                        DisplayEntitiesInteractor.fetchEntities(presenter: self.presenter)
                     }
                 })
             
             // When view appears:
             // - set currentEntityIndex
+            // - fetch entities
                 .onAppear(perform: {
                     print("------ DisplayEntitiesView .onAppear")
                     if selectedTab == 0 {
-                        let interactor = DisplayEntitiesInteractor()
-                        interactor.setSelectedEntityIndex(idx: nil, entityState: entityState)
+                        DisplayEntitiesInteractor.setCurrentEntityIndex(idx: nil, entityState: entityState)
+                        DisplayEntitiesInteractor.fetchEntities(presenter: self.presenter)
                     }
                 })
             // Reset state for when view next appears
@@ -96,8 +92,7 @@ struct EntityListRow: View {
         .onTapGesture {
             // Set local state variable and EntityState's currentEntityIndex
             let selectedEntityIdx = rowContent.idx
-            let interactor = DisplayEntitiesInteractor()
-            interactor.setSelectedEntityIndex(idx: selectedEntityIdx, entityState: entityState)
+            DisplayEntitiesInteractor.setCurrentEntityIndex(idx: selectedEntityIdx, entityState: entityState)
         }
     }
 }

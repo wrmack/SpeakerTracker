@@ -58,14 +58,12 @@ struct DeleteEntityView: View {
     }
     
     func fetchSelectedEntity() {
-        let interactor = DeleteEntityInteractor()
-        interactor.displaySelectedEntity(entityState: entityState, presenter: presenter)
+        DeleteEntityInteractor.displaySelectedEntity(entityState: entityState, presenter: presenter)
     }
     
     func deleteEntity() {
         print("DeleteEntityView deleteEntity called")
-        let interactor = DeleteEntityInteractor()
-        interactor.deleteEntity(entityState: entityState)
+        DeleteEntityInteractor.deleteEntity(entityState: entityState)
     }
 }
 

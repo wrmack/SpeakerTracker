@@ -11,40 +11,26 @@ import Foundation
 /// `DisplaySelectedMemberInteractor` is responsible for interacting with the data model.
 class DisplaySelectedMemberInteractor {
    
-    func fetchMember(presenter: DisplaySelectedMemberPresenter, entityState: EntityState, newIndex: UUID?) {
+    class func fetchMember(presenter: DisplaySelectedMemberPresenter, entityState: EntityState, newIndex: UUID?) {
         print("------ DisplaySelectedMemberInteractor.fetchMember")
         var memberIndex: UUID?
+        
+        // newIndex is nil when method called by .onAppear
         if newIndex == nil {
-            guard let members = entityState.sortedMembers(entity: entityState.currentEntity!) else {return}
-            if members.count == 0 {return}
-            memberIndex = members[0].idx
+            if let currentMemberIndex = entityState.currentMemberIndex {
+                memberIndex = currentMemberIndex
+            }
+            else {
+                presenter.presentMemberDetail(member: nil)
+                return
+            }
         }
         else {
             memberIndex = newIndex
         }
-        let member = entityState.memberWithIndex(index: memberIndex!)
-        presenter.presentMemberDetail(member: member)
+        let selectedMember = EntityState.memberWithIndex(index: memberIndex!)
+        
+        presenter.presentMemberDetail(member: selectedMember)
    }
     
-    func fetchMemberFromChangingEntity(presenter: DisplaySelectedMemberPresenter, entity: Entity, selectedMasterRow: Int) {
-        print("------ DisplaySelectedMemberInteractor.fetchMemberFromChangingEntity")
-
-//        let row = selectedMasterRow
-//        
-//        var sortedMbrs = [Member]()
-//        if entity.members != nil {
-//           let members = entity.members!
-//            sortedMbrs = members.sorted(by: {
-//              if $0.lastName! < $1.lastName! {
-//                 return true
-//              }
-//              return false
-//           })
-//        }
-//        var currentMember: Member?
-//        if sortedMbrs.count > 0 {
-//            currentMember = sortedMbrs[row]
-//        }
-//        presenter.presentMemberDetail(member: currentMember)
-   }
 }

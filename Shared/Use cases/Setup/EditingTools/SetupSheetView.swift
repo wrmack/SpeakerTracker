@@ -104,7 +104,7 @@ struct SetupSheetView: View {
                 }
             case 3:
                 if setupSheetState.editMode == 0 {
-//                    AddEventView(sheetState: self.$sheetState, saveButtonState: self.saveButtonState)
+                    AddEventView(setupSheetState: setupSheetState)
                 }
                 if setupSheetState.editMode == 1 {
 //                    EditEventView(sheetState: self.$sheetState, saveButtonState: self.saveButtonState, selectedMasterRow: self.$selectedMasterRow)

@@ -45,7 +45,7 @@ struct MeetingGroupSheetView: View {
                 .padding(Edge.Set.top, 0).padding(Edge.Set.bottom, 0)
                 .font(Font.system(size: 24))
             
-            List(entityState.sortedMembers(entity: entityState.currentEntity!)!, id: \.self, selection: $selectedList) {
+            List(EntityState.sortedMembers(entityIndex: entityState.currentEntityIndex!)!, id: \.self, selection: $selectedList) {
                 let title = ($0.title != nil) ? $0.title! : ""
                 let firstName = ($0.firstName != nil) ? $0.firstName! : ""
                 let lastName = ($0.lastName != nil) ? $0.lastName! : ""

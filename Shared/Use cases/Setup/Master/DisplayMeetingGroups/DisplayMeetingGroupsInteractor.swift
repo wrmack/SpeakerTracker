@@ -10,9 +10,8 @@ import Foundation
 import Combine
 
 
-
+/// `DisplayMeetingGroupsInteractor` is responsible for interacting with the data model.
 class DisplayMeetingGroupsInteractor {
-
    
    init() {
       print("++++++ DisplayMeetingGroupsInteractor initialized")
@@ -24,22 +23,28 @@ class DisplayMeetingGroupsInteractor {
 
     /// If `currentEntityIndex` is not set, sets it to first entity.
     ///
-    func initialiseEntities(entityState: EntityState) {
+    class func setCurrentEntityIndex(entityState: EntityState) {
         if entityState.currentEntityIndex == nil {
-            let entities = entityState.sortedEntities!
+            let entities = EntityState.sortedEntities!
             entityState.currentEntityIndex = entities[0].idx
         }
     }
     
+    /// Returns all entities, sorted by name
+    class func getEntities() -> [Entity]? {
+        return EntityState.sortedEntities
+    }
+    
+    
     /// Fetches members for selected entity and passes these to the presenter.
     ///
     ///
-    func fetchMeetingGroups(presenter: DisplayMeetingGroupsPresenter, entityState: EntityState) {
+    class func fetchMeetingGroups(presenter: DisplayMeetingGroupsPresenter, entityState: EntityState) {
         
-        guard let currentEntity = entityState.currentEntity else {return}
-        print("------ fetchMeetingGroups currentEntity \(currentEntity)")
+        guard let currentEntityIndex = entityState.currentEntityIndex else {return}
+        print("------ fetchMeetingGroups currentEntity \(currentEntityIndex)")
         
-        let fetchedMeetingGroupsForEntity = entityState.sortedMeetingGroups(entity: currentEntity)!
+        let fetchedMeetingGroupsForEntity = EntityState.sortedMeetingGroups(entityIndex: currentEntityIndex)!
         var meetingGroups = [MeetingGroup]()
         if fetchedMeetingGroupsForEntity.count > 0 {
             fetchedMeetingGroupsForEntity.forEach({ meetingGroup in
@@ -58,12 +63,12 @@ class DisplayMeetingGroupsInteractor {
     ///    - idx: the UUID for the selected meeting group; if nil then selected meeting groups is set to the first meeting group
     ///    - entityState: The EntityState environment object
 
-    func setSelectedMeetingGroupIndex(idx: UUID?, entityState: EntityState) {
+    class func setCurrentMeetingGroupIndex(idx: UUID?, entityState: EntityState) {
         
         // Get the entity then the meeting groups for that entity
         // Return nil if result is nil or there are none
-        let entity = entityState.currentEntity
-        guard let fetchedMeetingGroupsForEntity = entityState.sortedMeetingGroups(entity: entity!) else {return }
+        let entityIndex = entityState.currentEntityIndex
+        guard let fetchedMeetingGroupsForEntity = EntityState.sortedMeetingGroups(entityIndex: entityIndex!) else {return }
         if fetchedMeetingGroupsForEntity.count == 0 {return }
         
         var meetingGroupIdx = idx
@@ -74,22 +79,16 @@ class DisplayMeetingGroupsInteractor {
             meetingGroupIdx = firstMeetingGroup.idx
         }
         
-        // Set currentMemberIndex property of EntityState
-        for meetingGroup in fetchedMeetingGroupsForEntity {
-            if meetingGroup.idx == meetingGroupIdx  {
-                entityState.currentMeetingGroupIndex = meetingGroup.idx
-            }
-        }
+        entityState.currentMeetingGroupIndex = meetingGroupIdx
+
     }
    
     /// Fetches meeting groups for published currentEntityIndex
     ///
     /// The published currentEntityIndex has to be used rather than currentEntityIndex.
-    func fetchMeetingGroupsOnEntityChange(entityIndex: UUID, presenter: DisplayMeetingGroupsPresenter, entityState: EntityState) {
+    class func fetchMeetingGroupsOnEntityChange(entityIndex: UUID, presenter: DisplayMeetingGroupsPresenter, entityState: EntityState) {
 
-        guard let currentEntity = entityState.entityWithIndex(index: entityIndex) else {return}
-
-        let fetchedMeetingGroupsForEntity = entityState.sortedMeetingGroups(entity: currentEntity)!
+        let fetchedMeetingGroupsForEntity = EntityState.sortedMeetingGroups(entityIndex: entityIndex)!
         var meetingGroups = [MeetingGroup]()
         if fetchedMeetingGroupsForEntity.count > 0 {
             fetchedMeetingGroupsForEntity.forEach({ meetingGroup in
@@ -97,10 +96,11 @@ class DisplayMeetingGroupsInteractor {
             })
             let firstMeetingGroup = meetingGroups[0]
             entityState.currentMeetingGroupIndex = firstMeetingGroup.idx
-            
-            presenter.presentMeetingGroups(meetingGroups: meetingGroups)
         }
-
+        else {
+            entityState.currentMeetingGroupIndex = nil
+        }
+        presenter.presentMeetingGroups(meetingGroups: meetingGroups)
     }
    
 }

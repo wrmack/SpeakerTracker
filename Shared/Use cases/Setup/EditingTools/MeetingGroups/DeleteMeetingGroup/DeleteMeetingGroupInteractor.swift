@@ -21,7 +21,7 @@ class DeleteMeetingGroupInteractor {
     }
    
     
-    func displaySelectedMeetingGroup(entityState: EntityState, presenter:  DeleteMeetingGroupPresenter) {
+    class func displaySelectedMeetingGroup(entityState: EntityState, presenter:  DeleteMeetingGroupPresenter) {
         
         guard let meetingGroup = entityState.currentMeetingGroup else {return}
         presenter.presentViewModel(selectedMeetingGroup: meetingGroup)
@@ -29,7 +29,7 @@ class DeleteMeetingGroupInteractor {
     }
     
     
-    func deleteSelectedMeetingGroupFromEntity(entityState: EntityState) {
+    class func deleteSelectedMeetingGroupFromEntity(entityState: EntityState) {
         guard let meetingGroup = entityState.currentMeetingGroup else {return}
         
         let viewContext = PersistenceController.shared.container.viewContext

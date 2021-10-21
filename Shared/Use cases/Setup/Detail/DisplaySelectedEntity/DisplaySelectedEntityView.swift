@@ -29,17 +29,16 @@ struct DisplaySelectedEntityView: View {
     var body: some View {
         Print(">>>>>> DisplaySelectedEntityView body refreshed")
         List {
-            Section {
+//            Section {
                 ForEach(presenter.entityDetail, id: \.self) { content in
                     DisplaySelectedEntityListRow(rowContent: content)
                 }
-            }
+//            }
         }
         // When entityState.currentEntityIndex changes
         .onReceive(entityState.$currentEntityIndex, perform: { newIndex in
             print("------ DisplaySelectedEntityView: .onReceive $currentEntityIndex val: \(String(describing: newIndex))")
-            let interactor = DisplaySelectedEntityInteractor()
-            interactor.fetchEntity(presenter: presenter, entityState: entityState, newIndex: newIndex)
+            DisplaySelectedEntityInteractor.fetchEntity(presenter: presenter, entityState: entityState, newIndex: newIndex)
         })
     }
 }

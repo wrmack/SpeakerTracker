@@ -18,6 +18,13 @@ extension View {
    }
 }
 
+struct DebugReference {
+    static var console = """
+v:  value of variable in current frame (does not evaluate expressions)
+p:  evaluates an expression
+po: object description
+"""
+}
 
 struct DumpingEnvironment<V: View>: View {
    @Environment(\.self) var env

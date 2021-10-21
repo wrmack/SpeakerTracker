@@ -25,8 +25,6 @@
 		416A5F7227062041006E6CD9 /* EventState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F6727062041006E6CD9 /* EventState.swift */; };
 		416A5F7E270620B0006E6CD9 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F7627062050006E6CD9 /* Event.swift */; };
 		416A5F7F270620B0006E6CD9 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F7627062050006E6CD9 /* Event.swift */; };
-		416A5F86270620C5006E6CD9 /* EntityDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F7B27062058006E6CD9 /* EntityDocument.swift */; };
-		416A5F87270620C6006E6CD9 /* EntityDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F7B27062058006E6CD9 /* EntityDocument.swift */; };
 		416A5F88270620C9006E6CD9 /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F7C27062058006E6CD9 /* UserDefaultsManager.swift */; };
 		416A5F89270620CA006E6CD9 /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F7C27062058006E6CD9 /* UserDefaultsManager.swift */; };
 		416A5F8A270620CD006E6CD9 /* EventDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5F7D27062058006E6CD9 /* EventDocument.swift */; };
@@ -204,6 +202,8 @@
 		416A609327066288006E6CD9 /* PersistenceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A609127066288006E6CD9 /* PersistenceController.swift */; };
 		4189C91527111562002F109D /* SetupSheetState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4189C91427111562002F109D /* SetupSheetState.swift */; };
 		4189C91627111562002F109D /* SetupSheetState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4189C91427111562002F109D /* SetupSheetState.swift */; };
+		41BC60752718B73A00378A0B /* RestorationState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41BC60742718B73A00378A0B /* RestorationState.swift */; };
+		41BC60762718B73A00378A0B /* RestorationState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41BC60742718B73A00378A0B /* RestorationState.swift */; };
 		41E742CB270CD7B400C80021 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41E742CA270CD78100C80021 /* Extensions.swift */; };
 /* End PBXBuildFile section */
 
@@ -307,12 +307,12 @@
 		416A5F6627062041006E6CD9 /* TrackSpeakersState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackSpeakersState.swift; sourceTree = "<group>"; };
 		416A5F6727062041006E6CD9 /* EventState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventState.swift; sourceTree = "<group>"; };
 		416A5F7627062050006E6CD9 /* Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
-		416A5F7B27062058006E6CD9 /* EntityDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityDocument.swift; sourceTree = "<group>"; };
 		416A5F7C27062058006E6CD9 /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
 		416A5F7D27062058006E6CD9 /* EventDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDocument.swift; sourceTree = "<group>"; };
 		416A608E27064203006E6CD9 /* Main.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Main.xcdatamodel; sourceTree = "<group>"; };
 		416A609127066288006E6CD9 /* PersistenceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceController.swift; sourceTree = "<group>"; };
 		4189C91427111562002F109D /* SetupSheetState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupSheetState.swift; sourceTree = "<group>"; };
+		41BC60742718B73A00378A0B /* RestorationState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestorationState.swift; sourceTree = "<group>"; };
 		41E742CA270CD78100C80021 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -625,9 +625,9 @@
 		416A5F2B27062034006E6CD9 /* DisplaySelectedEvent */ = {
 			isa = PBXGroup;
 			children = (
-				416A5F2C27062034006E6CD9 /* DisplaySelectedEventPresenter.swift */,
-				416A5F2D27062034006E6CD9 /* DisplaySelectedEventInteractor.swift */,
 				416A5F2E27062034006E6CD9 /* DisplaySelectedEventView.swift */,
+				416A5F2D27062034006E6CD9 /* DisplaySelectedEventInteractor.swift */,
+				416A5F2C27062034006E6CD9 /* DisplaySelectedEventPresenter.swift */,
 			);
 			path = DisplaySelectedEvent;
 			sourceTree = "<group>";
@@ -648,9 +648,9 @@
 		416A5F3027062034006E6CD9 /* DisplayEvents */ = {
 			isa = PBXGroup;
 			children = (
+				416A5F3327062034006E6CD9 /* DisplayEventsView.swift */,
 				416A5F3127062034006E6CD9 /* DisplayEventsInteractor.swift */,
 				416A5F3227062034006E6CD9 /* DisplayEventsPresenter.swift */,
-				416A5F3327062034006E6CD9 /* DisplayEventsView.swift */,
 			);
 			path = DisplayEvents;
 			sourceTree = "<group>";
@@ -720,8 +720,8 @@
 			isa = PBXGroup;
 			children = (
 				416A5F4C27062034006E6CD9 /* RemainingTableViews.swift */,
-				416A5F4D27062034006E6CD9 /* SpeakingTableViews.swift */,
 				416A5F4E27062034006E6CD9 /* WaitingTableViews.swift */,
+				416A5F4D27062034006E6CD9 /* SpeakingTableViews.swift */,
 			);
 			path = "Sub views";
 			sourceTree = "<group>";
@@ -736,10 +736,10 @@
 		416A5F5127062034006E6CD9 /* Reports */ = {
 			isa = PBXGroup;
 			children = (
-				416A5F5227062034006E6CD9 /* ShowReport */,
 				416A5F5727062034006E6CD9 /* ReportsHeaderView.swift */,
-				416A5F5827062034006E6CD9 /* Detail */,
 				416A5F5D27062034006E6CD9 /* Master */,
+				416A5F5827062034006E6CD9 /* Detail */,
+				416A5F5227062034006E6CD9 /* ShowReport */,
 			);
 			path = Reports;
 			sourceTree = "<group>";
@@ -747,10 +747,10 @@
 		416A5F5227062034006E6CD9 /* ShowReport */ = {
 			isa = PBXGroup;
 			children = (
+				416A5F5627062034006E6CD9 /* ShowReportView.swift */,
 				416A5F5327062034006E6CD9 /* ShowReportInteractor.swift */,
 				416A5F5427062034006E6CD9 /* ShowReportPresenter.swift */,
 				416A5F5527062034006E6CD9 /* Attributes.swift */,
-				416A5F5627062034006E6CD9 /* ShowReportView.swift */,
 			);
 			path = ShowReport;
 			sourceTree = "<group>";
@@ -785,8 +785,8 @@
 			isa = PBXGroup;
 			children = (
 				416A5F5F27062034006E6CD9 /* DisplayMeetingGroupsForReportsView.swift */,
-				416A5F6027062034006E6CD9 /* DisplayMeetingGroupsForReportsPresenter.swift */,
 				416A5F6127062034006E6CD9 /* DisplayMeetingGroupsForReportsInteractor.swift */,
+				416A5F6027062034006E6CD9 /* DisplayMeetingGroupsForReportsPresenter.swift */,
 			);
 			path = DisplayMeetingGroups;
 			sourceTree = "<group>";
@@ -799,6 +799,7 @@
 				416A5F6327062041006E6CD9 /* EntityState.swift */,
 				416A5F6727062041006E6CD9 /* EventState.swift */,
 				416A5F6427062041006E6CD9 /* ReportsState.swift */,
+				41BC60742718B73A00378A0B /* RestorationState.swift */,
 			);
 			path = State;
 			sourceTree = "<group>";
@@ -817,7 +818,6 @@
 				41CC1BBC2708B82D00B40255 /* ManagedObject sub-classes */,
 				416A608D27064203006E6CD9 /* Main.xcdatamodeld */,
 				416A609127066288006E6CD9 /* PersistenceController.swift */,
-				416A5F7B27062058006E6CD9 /* EntityDocument.swift */,
 				416A5F7C27062058006E6CD9 /* UserDefaultsManager.swift */,
 				416A5F7D27062058006E6CD9 /* EventDocument.swift */,
 			);
@@ -944,7 +944,6 @@
 				416A608F27064203006E6CD9 /* Main.xcdatamodeld in Sources */,
 				416A5FC827062191006E6CD9 /* ReportsHeaderView.swift in Sources */,
 				416A5F9627062100006E6CD9 /* DisplayMembersPresenter.swift in Sources */,
-				416A5F86270620C5006E6CD9 /* EntityDocument.swift in Sources */,
 				416A5FD827062205006E6CD9 /* DisplaySelectedEntityView.swift in Sources */,
 				416A601E27062294006E6CD9 /* EditMemberInteractor.swift in Sources */,
 				416A5FAA27062132006E6CD9 /* RemainingTableViews.swift in Sources */,
@@ -981,6 +980,7 @@
 				416A5FA82706212C006E6CD9 /* TrackSpeakersPresenter.swift in Sources */,
 				416A5F9827062103006E6CD9 /* DisplayMembersInteractor.swift in Sources */,
 				416A602E270622B4006E6CD9 /* EditMeetingGroupView.swift in Sources */,
+				41BC60752718B73A00378A0B /* RestorationState.swift in Sources */,
 				416A5FDA27062205006E6CD9 /* DisplaySelectedEntityPresenter.swift in Sources */,
 				416A5ED127061AD3006E6CD9 /* Speaker_tracker_multiApp.swift in Sources */,
 				416A60022706226E006E6CD9 /* DeleteEventInteractor.swift in Sources */,
@@ -1049,7 +1049,6 @@
 				416A609027064203006E6CD9 /* Main.xcdatamodeld in Sources */,
 				416A5FC927062192006E6CD9 /* ReportsHeaderView.swift in Sources */,
 				416A5F9727062100006E6CD9 /* DisplayMembersPresenter.swift in Sources */,
-				416A5F87270620C6006E6CD9 /* EntityDocument.swift in Sources */,
 				416A5FDB27062206006E6CD9 /* DisplaySelectedEntityView.swift in Sources */,
 				416A602127062294006E6CD9 /* EditMemberInteractor.swift in Sources */,
 				416A5FAB27062132006E6CD9 /* RemainingTableViews.swift in Sources */,
@@ -1086,6 +1085,7 @@
 				416A602027062294006E6CD9 /* EditMemberView.swift in Sources */,
 				416A5FA92706212D006E6CD9 /* TrackSpeakersPresenter.swift in Sources */,
 				416A5F9927062103006E6CD9 /* DisplayMembersInteractor.swift in Sources */,
+				41BC60762718B73A00378A0B /* RestorationState.swift in Sources */,
 				416A6031270622B5006E6CD9 /* EditMeetingGroupView.swift in Sources */,
 				416A5FDD27062206006E6CD9 /* DisplaySelectedEntityPresenter.swift in Sources */,
 				416A5ED227061AD3006E6CD9 /* Speaker_tracker_multiApp.swift in Sources */,
@@ -1196,6 +1196,8 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				MACOSX_DEPLOYMENT_TARGET = 11.3;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -1249,6 +1251,8 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				MACOSX_DEPLOYMENT_TARGET = 11.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
@@ -1273,7 +1277,7 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1305,7 +1309,7 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

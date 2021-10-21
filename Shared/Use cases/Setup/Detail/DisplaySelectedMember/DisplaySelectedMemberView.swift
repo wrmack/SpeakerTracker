@@ -29,23 +29,17 @@ struct DisplaySelectedMemberView: View {
     var body: some View {
         Print(">>>>>> DisplaySelectedMemberView body refreshed")
         List {
-            Section {
-                ForEach(presenter.memberViewModel, id: \.self) { content in
-                    DisplaySelectedMemberListRow(rowContent: content)
-                }
+            ForEach(presenter.memberDetails, id: \.self) { memberDetail in
+                DisplaySelectedMemberListRow(rowContent: memberDetail)
             }
         }
         // User selects different member
-        .onReceive(entityState.$currentMemberIndex, perform: { newIndex in
-            print("------ DisplaySelectedMemberView: .onReceive $currentMemberIndex val: \(String(describing: newIndex))")
-            if newIndex != nil {
-                let interactor = DisplaySelectedMemberInteractor()
-                interactor.fetchMember(presenter: presenter, entityState: entityState, newIndex: newIndex!)
-            }
+        .onChange(of: entityState.currentMemberIndex, perform: { newIndex in
+            print("------ DisplaySelectedMemberView: .onChange currentMemberIndex \(String(describing: newIndex))")
+            DisplaySelectedMemberInteractor.fetchMember(presenter: presenter, entityState: entityState, newIndex: newIndex)
         })
         .onAppear(perform: {
-            let interactor = DisplaySelectedMemberInteractor()
-            interactor.fetchMember(presenter: presenter, entityState: entityState, newIndex: nil )
+            DisplaySelectedMemberInteractor.fetchMember(presenter: presenter, entityState: entityState, newIndex: nil )
         })
     }
 }

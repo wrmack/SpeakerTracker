@@ -29,17 +29,19 @@ struct WaitingTableList: View {
                .onTapGesture {
                   isEditable.toggle()
                }
-         }.background(Color.black)
+         }
+         .frame(height:44)
+         .background(Color.black)
          List {
             ForEach(viewModel, id: \.self) { sectionList in 
-               Section {
+//               Section {
                   ForEach(sectionList.sectionMembers, id: \.self) { listMember in
                      WaitingTableRow(rowContent: listMember, sectionNumber: sectionList.sectionNumber, moveAction: $moveAction)
                   }
                   .onMove(perform: { (indexSet, index) in
                      print("here")
                   })
-               }
+//               }
             }
 
 //         .environment(\.editMode, isEditable ? .constant(.active) : .constant(.inactive))

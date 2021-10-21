@@ -12,7 +12,7 @@ import Combine
 
 class EditMemberInteractor {
 
-    func displaySelectedMember(entityState: EntityState, presenter: EditMemberPresenter) {
+    class func displaySelectedMember(entityState: EntityState, presenter: EditMemberPresenter) {
         guard let member = entityState.currentMember else {return}
         presenter.presentViewModel(selectedMember: member)
     }
@@ -21,7 +21,7 @@ class EditMemberInteractor {
     /**
      Saves member being edited.  
      */
-    func saveChangedMemberToStore(entityState: EntityState, title: String, first: String, last: String) {
+    class func saveChangedMemberToStore(entityState: EntityState, title: String, first: String, last: String) {
         let viewContext = PersistenceController.shared.container.viewContext
         let currentMember = entityState.currentMember
         currentMember?.title = title

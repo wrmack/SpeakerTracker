@@ -38,8 +38,8 @@ class DisplaySelectedMeetingGroupPresenter: ObservableObject {
             tempArray.append(MeetingGroupViewModelRecord(label: "Name", value: name))
                 
             var mbrString =  ""
-            if meetingGroup!.members != nil {
-                meetingGroup!.members!.forEach({ val in
+            if meetingGroup!.groupMembers != nil {
+                meetingGroup!.groupMembers!.forEach({ val in
                     let member = val as! Member
                     if (mbrString.count > 0) {
                        mbrString.append(", ")

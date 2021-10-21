@@ -12,14 +12,14 @@ import CoreData
 /// `DisplaySelectedEntityInteractor` is responsible for interacting with the data model.
 class DisplaySelectedEntityInteractor {
     
-    func fetchEntity(presenter: DisplaySelectedEntityPresenter, entityState: EntityState, newIndex: UUID?) {
+    class func fetchEntity(presenter: DisplaySelectedEntityPresenter, entityState: EntityState, newIndex: UUID?) {
         print("------ DisplaySelectedEntityInteractor.fetchEntity")
         var entityIndex: UUID?
         if newIndex == nil {
             guard let currentEntityIndex = entityState.currentEntityIndex else {return}
              entityIndex = currentEntityIndex 
         } else { entityIndex = newIndex}
-        let selectedEntity = entityState.entityWithIndex(index: entityIndex!)
+        let selectedEntity = EntityState.entityWithIndex(index: entityIndex!)
         
         presenter.presentEntityDetail(entity: selectedEntity)
     }

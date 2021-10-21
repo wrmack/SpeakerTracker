@@ -10,7 +10,8 @@ import Foundation
 import Combine
 
 
-struct MemberViewModelRecord: Hashable {
+struct MemberViewModelRecord: Hashable, Identifiable {
+    var id = UUID()
     var label: String
     var value: String
 }
@@ -20,7 +21,7 @@ struct MemberViewModelRecord: Hashable {
 /// so that it is ready for presentation by `DisplaySelectedMemberView`.
 class DisplaySelectedMemberPresenter: ObservableObject {
     
-    @Published var memberViewModel = [MemberViewModelRecord]()
+    @Published var memberDetails = [MemberViewModelRecord]()
     
     init() {
         print("++++++ DisplaySelectedMemberPresenter initialized")
@@ -37,6 +38,6 @@ class DisplaySelectedMemberPresenter: ObservableObject {
             tempArray.append(MemberViewModelRecord(label: "First name", value: member!.firstName!))
             tempArray.append(MemberViewModelRecord(label: "Last name", value: member!.lastName!))
         }
-        memberViewModel = tempArray
+        memberDetails = tempArray
     }
 }

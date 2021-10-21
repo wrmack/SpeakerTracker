@@ -38,10 +38,11 @@ struct StopButtonState {
 }
 
 
-
+/// The main view for showing the tables of speakers and the timer
+///
+///
 struct TrackSpeakersView: View {
     
-    @EnvironmentObject var entityState: EntityState
     @EnvironmentObject var eventState: EventState
     @EnvironmentObject var trackSpeakersState: TrackSpeakersState
     @StateObject var presenter = TrackSpeakersPresenter()
@@ -57,6 +58,7 @@ struct TrackSpeakersView: View {
     @State var moveAction = MoveMemberAction()
     @State var memberTimerActions = MemberTimerActions()
     @State var longPressAction = LongPressAction()
+    @State var selectedMeetingGroupName: String?
     @Binding var showMeetingSetupSheet: Bool
     @Binding var selectedMeetingGroup: MeetingGroup?
     @Binding var isRecording: Bool
@@ -64,15 +66,15 @@ struct TrackSpeakersView: View {
     
     var body: some View {
         Print(">>>>>> TrackSpeakersView body")
-        VStack(){
+        VStack {
             HStack {
                 Spacer().fixedSize(horizontal: true, vertical: false).frame(width:100, height:1)
                 HStack {
-                    if let name = selectedMeetingGroup?.name {
-                    Text(name)
-                        .fontWeight(.regular)
-                        .foregroundColor(Color.white)
-                        .font(.system(size: 30))
+                    if let name = selectedMeetingGroupName {
+                        Text(name)
+                            .fontWeight(.regular)
+                            .foregroundColor(Color.white)
+                            .font(.system(size: 30))
                     }
                     else {
                         Text("No meeting group selected")
@@ -94,12 +96,14 @@ struct TrackSpeakersView: View {
                             trackSpeakersState.timerString = timerString
                         })
                 }
+                .frame(minWidth: 600, maxWidth: 700)
                 .padding(.horizontal, 15.0)
                 .background(Color.init(white: 0.5))
                 .cornerRadius(7.0)
+
                 
                 Spacer()
-                    .fixedSize(horizontal: true, vertical: false).frame(width:50, height:1)
+                    .frame(minWidth:50)
                 
                 Group {
                     Button(action: {
@@ -144,9 +148,9 @@ struct TrackSpeakersView: View {
                 }
                 
                 Spacer()
-                    .fixedSize(horizontal: true, vertical: false).frame(width:20, height:1)
+                    .frame(minWidth:20)
                 
-            }
+            } 
             
             HStack (alignment: .bottom, spacing: 20){
                 RemainingTableList(viewModel: presenter.speakersViewModel.remainingList.sectionLists, moveAction: $moveAction)
@@ -154,7 +158,7 @@ struct TrackSpeakersView: View {
                 SpeakingTableList(viewModel: presenter.speakersViewModel.speakingList.sectionLists, moveAction: $moveAction, memberTimerActions: $memberTimerActions, longPressAction: $longPressAction)
                 VStack{
                     if isRecording {
-
+                        
                         Button(action:  {
                             saveDebate()
                         }) {
@@ -197,10 +201,9 @@ struct TrackSpeakersView: View {
                             .fontWeight(.semibold)
                             .foregroundColor(Color.white)
                             .onTapGesture {
-                                let interactor = TrackSpeakersInteractor()
-                                interactor.reset(trackSpeakersState: trackSpeakersState)
+                                TrackSpeakersInteractor.reset(trackSpeakersState: trackSpeakersState)
                             }
-                    
+                        
                         Spacer().fixedSize(horizontal: true, vertical: true).frame(width: 140, height: 50)
                         Button(action: {withAnimation(.easeInOut(duration: EASEINOUT)) {
                             self.showMeetingSetupSheet.toggle()
@@ -216,7 +219,7 @@ struct TrackSpeakersView: View {
                         .buttonStyle(PlainButtonStyle())
                         .frame(width: 250, height: 80)
                     }
-                        
+                    
                     Spacer().fixedSize(horizontal: true, vertical: true).frame(width: 200, height: 400)
                 }
             }.padding(.leading, 20.0).padding(.bottom, 5).padding(.top,20)
@@ -225,34 +228,22 @@ struct TrackSpeakersView: View {
         .background(Color.gray)
         .onAppear(perform: {
             print("------ TrackSpeakersView .onAppear")
-            print("****** fetching members on appear")
-            let interactor = TrackSpeakersInteractor()
-            interactor.fetchMembers(presenter: presenter, entityState: entityState, eventState: eventState, trackSpeakersState: trackSpeakersState)
+            TrackSpeakersInteractor.fetchMembers(presenter: presenter, eventState: eventState, trackSpeakersState: trackSpeakersState)
             viewHasAppeared = true
         })
-//        .onReceive(self.presenter.$presenterUp, perform: { _ in
-//            // Once presenter is ready, set everything up
-//            // Interactor: Fetch all members and send to presenter
-//            // Presenter: Extract names in order to populate the Remaining list
-//            print("------ TrackSpeakersView onReceive presenter.$presenterUp")
-//            print("****** fetching members on presenter.$presenterUp")
-//            let interactor = TrackSpeakersInteractor()
-//            interactor.fetchMembers(presenter: presenter, entityState: entityState, trackSpeakersState: trackSpeakersState)
-//        })
         .onReceive(self.trackSpeakersState.$tableCollection, perform: { newCollection in
             if viewHasAppeared == true {
-            print("------ TrackSpeakersView onReceive trackSpeakersState.$tableCollection")
-            print("****** fetching members on trackSpeakersState.$tableCollection")
-            let interactor = TrackSpeakersInteractor()
-            interactor.fetchMembers(presenter: presenter, tableCollection: newCollection)
+                print("------ TrackSpeakersView onReceive trackSpeakersState.$tableCollection")
+                TrackSpeakersInteractor.fetchMembers(presenter: presenter, tableCollection: newCollection)
             }
         })
         .onReceive(self.trackSpeakersState.$currentMeetingGroup) { meetingGroup in
             if viewHasAppeared == true {
-            print("------ TrackSpeakersView onReceive trackSpeakersState.$currentMeetingGroup")
-            print("****** fetching members on trackSpeakersState.$currentMeetingGroup")
-            let interactor = TrackSpeakersInteractor()
-            interactor.fetchMembers(presenter: presenter, trackSpeakersState: trackSpeakersState, meetingGroupForRemainingTable: meetingGroup)
+                print("------ TrackSpeakersView onReceive trackSpeakersState.$currentMeetingGroup")
+                TrackSpeakersInteractor.fetchMembers(presenter: presenter, trackSpeakersState: trackSpeakersState, meetingGroupForRemainingTable: meetingGroup)
+            }
+            if meetingGroup != nil {
+                selectedMeetingGroupName = meetingGroup!.name
             }
         }
         .onReceive(self.trackSpeakersState.$amendmentModeSet, perform: { set in
@@ -264,28 +255,25 @@ struct TrackSpeakersView: View {
             let interactor = TrackSpeakersInteractor()
             interactor.moveMember(moveAction: action, trackSpeakersState: trackSpeakersState)
         })
-//        .onChange(of: memberTimerActions, perform: { action in
-//            print("member timer action")
-//            let interactor = TrackSpeakersInteractor()
-//            interactor.setCurrentMemberTimerState(trackSpeakersState: trackSpeakersState, memberTimerAction: action)
-//            if memberTimerActions.timerButtonPressed == .play {
-//                playTimer()
-//            }
-//            if memberTimerActions.timerButtonPressed == .stop  {
-//                stopTimer()
-//            }
-//            if memberTimerActions.timerButtonPressed == .pause  {
-//                pauseTimer()
-//            }
-//        })
+        .onChange(of: memberTimerActions, perform: { action in
+            print("------ onChange memberTimerActions")
+            TrackSpeakersInteractor.setCurrentMemberTimerState(trackSpeakersState: trackSpeakersState, memberTimerAction: action)
+            if memberTimerActions.timerButtonPressed == .play {
+                playTimer()
+            }
+            if memberTimerActions.timerButtonPressed == .stop  {
+                stopTimer()
+            }
+            if memberTimerActions.timerButtonPressed == .pause  {
+                pauseTimer()
+            }
+        })
         .onChange(of: longPressAction, perform: { action in
             if action.type == .amendmentMover {
-                let interactor = TrackSpeakersInteractor()
-                interactor.addAmendment(trackSpeakersState: trackSpeakersState, action: action)
+                TrackSpeakersInteractor.addAmendment(trackSpeakersState: trackSpeakersState, action: action)
             }
             if action.type == .amendmentFinal {
-                let interactor = TrackSpeakersInteractor()
-                interactor.finaliseAmendment(trackSpeakersState: trackSpeakersState, action: action)
+                TrackSpeakersInteractor.finaliseAmendment(trackSpeakersState: trackSpeakersState, action: action)
             }
         })
     }
@@ -337,21 +325,19 @@ struct TrackSpeakersView_Previews: PreviewProvider {
     @State static var selectedEntityName = ""
     @State static var isRecording = true
     @EnvironmentObject static var trackSpeakersState: TrackSpeakersState
-    @EnvironmentObject static var entityState: EntityState
-    static var viewContext = PersistenceController.shared.container.viewContext
-
+    static var viewContext = PersistenceController.preview.container.viewContext
+    
     static var previews: some View {
         TrackSpeakersView(
             showMeetingSetupSheet: $showMeetingSetupSheet,
             selectedMeetingGroup: .constant(MeetingGroup(context: viewContext)),
             isRecording: $isRecording
         )
-//        .previewDevice("iPad Pro (12.9-inch) (5th generation)")
-//        .previewDisplayName("iPad Pro (12.9-inch)")
-        .previewLayout(.fixed(width: 1366, height: 1024))
-        .environmentObject(EntityState())
-        .environmentObject(EventState())
-        .environmentObject(TrackSpeakersState())
-//        .environment(\.colorScheme, .light)
+        //        .previewDevice("iPad Pro (12.9-inch) (5th generation)")
+        //        .previewDisplayName("iPad Pro (12.9-inch)")
+            .previewLayout(.fixed(width: 1366, height: 1024))
+            .environmentObject(EventState())
+            .environmentObject(TrackSpeakersState())
+            .environment(\.colorScheme, .light)
     }
 }

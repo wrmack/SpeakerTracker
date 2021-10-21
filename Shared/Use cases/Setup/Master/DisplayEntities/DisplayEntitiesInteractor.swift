@@ -16,7 +16,6 @@ import CoreData
 /// `DisplayEntitiesInteractor` is responsible for interacting with the data model.
 class DisplayEntitiesInteractor {
     
-    // Track initialisation for debugging purposes
     init() {
         print("++++++ DisplayEntitiesInteractor initialized")
     }
@@ -28,11 +27,11 @@ class DisplayEntitiesInteractor {
     /// Fetches entities and passes these to the presenter.
     ///
     ///
-    func fetchEntities(presenter: DisplayEntitiesPresenter, entityState: EntityState) {
+    class func fetchEntities(presenter: DisplayEntitiesPresenter) {
         // For debugging
 //        entityState.purgeFloatingMembers()
         
-        let fetchedEntities = entityState.sortedEntities
+        let fetchedEntities = EntityState.sortedEntities
         if fetchedEntities == nil { return }
         var entities = [Entity]()
         fetchedEntities!.forEach({ entity in
@@ -51,10 +50,10 @@ class DisplayEntitiesInteractor {
     ///    - idx: A UUID
     ///    - entityState: The EntityState environment object
     /// - Returns: The index of the current entity
-    func setSelectedEntityIndex(idx: UUID?, entityState: EntityState) {
+    class func setCurrentEntityIndex(idx: UUID?, entityState: EntityState) {
         
         // Get all sorted entities and return nil if result is nil or there are none
-        guard let fetchedEntities = entityState.sortedEntities else {return}
+        guard let fetchedEntities = EntityState.sortedEntities else {return}
         if fetchedEntities.count == 0 {return }
         
         var entityIdx = idx
@@ -66,11 +65,7 @@ class DisplayEntitiesInteractor {
         }
         
         // Set currentEntityIndex property of EntityState
-        for entity in fetchedEntities {
-            if entity.idx == entityIdx  {
-                entityState.currentEntityIndex = entity.idx
-            }
-        }
+        entityState.currentEntityIndex = entityIdx
         
     }
 

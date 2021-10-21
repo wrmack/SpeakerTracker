@@ -37,27 +37,15 @@ class EntityState : ObservableObject {
     
     // MARK: - Published properties
     
-    //    @Published var currentEntity: Entity?
-    //    @Published var currentMeetingGroup: MeetingGroup?
-    @Published var meetingGroupMembers: Set<Member>?
-    //    @Published var entityModelChanged = false
-    
     @Published var currentEntityIndex: UUID?
     @Published var currentMemberIndex: UUID?
     @Published var currentMeetingGroupIndex: UUID?
     
-    // Additions, deletions, edits to members
+    // Additions, deletions, edits
     @Published var entitiesHaveChanged = false
     @Published var membersHaveChanged = false
     @Published var meetingGroupsHaveChanged = false
     
-    // MARK: - Stored properties
-    
-    //    var entities = [Entity]() {
-    //        didSet {
-    //            print("++++++ EntityState entities: [Entity]() didSet for \(entities.count) entities")
-    //        }
-    //    }
     
     // MARK: - Computed properties
     
@@ -139,7 +127,7 @@ class EntityState : ObservableObject {
         }
     }
     
-    var sortedEntities: [Entity]? {
+    static var sortedEntities: [Entity]? {
         get {
             // Setup fetch request
             let viewContext = PersistenceController.shared.container.viewContext
@@ -171,7 +159,7 @@ class EntityState : ObservableObject {
     
     // MARK: - Methods
     
-    func entityWithIndex(index: UUID) -> Entity? {
+    static func entityWithIndex(index: UUID) -> Entity? {
         
         // Setup fetch request
         let viewContext = PersistenceController.shared.container.viewContext
@@ -196,7 +184,7 @@ class EntityState : ObservableObject {
         
     }
     
-    func memberWithIndex(index: UUID) -> Member? {
+    static func memberWithIndex(index: UUID) -> Member? {
         
         // Setup fetch request
         let viewContext = PersistenceController.shared.container.viewContext
@@ -220,17 +208,16 @@ class EntityState : ObservableObject {
         return member
         
     }
-
     
-    func sortedMembers(entity: Entity) -> [Member]? {
+    
+    static func sortedMembers(entityIndex: UUID) -> [Member]? {
         
         // Setup fetch request
         let viewContext = PersistenceController.shared.container.viewContext
-        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Member")
+        let fetchRequest = NSFetchRequest<Member>(entityName: "Member")
         
         // Predicate
-        //        guard let idx = entity.idx else {return nil}
-        let pred = NSPredicate(format: "memberOfEntity == %@", entity as CVarArg)
+        let pred = NSPredicate(format: "%K == %@", "memberOfEntity.idx", entityIndex as CVarArg)
         fetchRequest.predicate = pred
         
         // Sort descriptor
@@ -255,7 +242,8 @@ class EntityState : ObservableObject {
         return members
     }
     
-    func meetingGroupWithIndex(index: UUID) -> MeetingGroup? {
+    
+    static func meetingGroupWithIndex(index: UUID) -> MeetingGroup? {
         
         // Setup fetch request
         let viewContext = PersistenceController.shared.container.viewContext
@@ -280,15 +268,16 @@ class EntityState : ObservableObject {
         
     }
     
-    func sortedMeetingGroups(entity: Entity) -> [MeetingGroup]? {
+
+    static func sortedMeetingGroups(entityIndex: UUID) -> [MeetingGroup]? {
         
         // Setup fetch request
         let viewContext = PersistenceController.shared.container.viewContext
-        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "MeetingGroup")
+        let fetchRequest = NSFetchRequest<MeetingGroup>(entityName: "MeetingGroup")
         
         // Predicate
         //        guard let idx = entity.idx else {return nil}
-        let pred = NSPredicate(format: "groupOfEntity == %@", entity as CVarArg)
+        let pred = NSPredicate(format: "%K == %@", "groupOfEntity.idx", entityIndex as CVarArg)
         fetchRequest.predicate = pred
         
         // Sort descriptor
@@ -311,6 +300,19 @@ class EntityState : ObservableObject {
         })
         
         return meetingGroups
+    }
+    
+    static func saveManagedObjectContext() {
+        let viewContext = PersistenceController.shared.container.viewContext
+        do {
+            try viewContext.save()
+        } catch {
+            // Replace this implementation with code to handle the error appropriately.
+            // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+            let nsError = error as NSError
+            fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
+        }
+        
     }
     
     // MARK: - Debugging

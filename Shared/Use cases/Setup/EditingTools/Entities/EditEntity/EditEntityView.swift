@@ -18,58 +18,56 @@ struct EditEntityView: View {
     @ObservedObject var setupSheetState: SetupSheetState
     @StateObject var presenter = EditEntityPresenter()
     @State var entityName = ""
-   
-   
-   var body: some View {
-      Print(">>>>>> EditEntityView body refreshed")
-      VStack {
-         Text("Edit entity name")
-            .padding(Edge.Set.top, 30).padding(Edge.Set.bottom, 30)
-            .font(Font.system(size: 30))
-         HStack {
-            Text("Name")
-               .padding(Edge.Set.trailing, 20).padding(Edge.Set.leading, 50)
-               .font(Font.system(size: 20))
-            TextField("eg Some Council, or Some Board", text: $entityName, onCommit: {withAnimation(.easeInOut(duration: EASEINOUT)){
-               setupSheetState.showSheet = false
+    
+    
+    var body: some View {
+        Print(">>>>>> EditEntityView body refreshed")
+        VStack {
+            Text("Edit entity name")
+                .padding(Edge.Set.top, 30).padding(Edge.Set.bottom, 30)
+                .font(Font.system(size: 30))
+            HStack {
+                Text("Name")
+                    .padding(Edge.Set.trailing, 20).padding(Edge.Set.leading, 50)
+                    .font(Font.system(size: 20))
+                TextField("eg Some Council, or Some Board", text: $entityName, onCommit: {withAnimation(.easeInOut(duration: EASEINOUT)){
+                    setupSheetState.showSheet = false
+                    saveEntity()
+                }})
+                    .frame(height: 55)
+                    .padding(EdgeInsets.init(top: 0, leading: 20, bottom: 0, trailing: 0))
+                    .padding(Edge.Set.trailing,100)
+                    .overlay(RoundedRectangle(cornerRadius: 16).stroke(Color.gray))
+                    .textFieldStyle(PlainTextFieldStyle())
+                    .font(Font.system(size: 18))
+                    .disableAutocorrection(true)
+                
+            }
+            Spacer()
+        }
+        .onAppear(perform: {
+            fetchSelectedEntity()
+        })
+        .onReceive(presenter.$viewModel, perform: { viewModel in
+            self.entityName = viewModel.name
+        })
+        .onReceive(setupSheetState.$saveWasPressed, perform: { val in
+            print("------ EditEntityView onReceive saveWasPressed called val: \(val)")
+            if (val == true) && (setupSheetState.editMode == 1) {
+                setupSheetState.saveWasPressed = false
                 saveEntity()
-            }})
-                 .frame(height: 55)
-                 .padding(EdgeInsets.init(top: 0, leading: 20, bottom: 0, trailing: 0))
-                 .padding(Edge.Set.trailing,100)
-                 .overlay(RoundedRectangle(cornerRadius: 16).stroke(Color.gray))
-                 .textFieldStyle(PlainTextFieldStyle())
-                 .font(Font.system(size: 18))
-                 .disableAutocorrection(true)
-
-         }
-         Spacer()
-      }
-      .onAppear(perform: {
-        fetchSelectedEntity()
-      })
-      .onReceive(presenter.$viewModel, perform: { viewModel in
-          self.entityName = viewModel.name
-      })
-      .onReceive(setupSheetState.$saveWasPressed, perform: { val in
-        print("------ EditEntityView onReceive saveWasPressed called val: \(val)")
-        if (val == true) && (setupSheetState.editMode == 1) {
-            setupSheetState.saveWasPressed = false
-            saveEntity()
-           }
-      })
+            }
+        })
     }
-   
+    
     func fetchSelectedEntity() {
-        let interactor = EditEntityInteractor()
-        interactor.displaySelectedEntity(entityState: entityState, presenter: presenter) 
+        EditEntityInteractor.displaySelectedEntity(entityState: entityState, presenter: presenter)
     }
     
     func saveEntity() {
-      print("------ EditEntityView saveEntity called")
-    let interactor = EditEntityInteractor()
-    interactor.saveChangedEntityToStore(entityState: entityState, entityName: entityName)
-   }
+        print("------ EditEntityView saveEntity called")
+        EditEntityInteractor.saveChangedEntityToStore(entityState: entityState, entityName: entityName)
+    }
 }
 
 //struct EditEntityView_Previews: PreviewProvider {

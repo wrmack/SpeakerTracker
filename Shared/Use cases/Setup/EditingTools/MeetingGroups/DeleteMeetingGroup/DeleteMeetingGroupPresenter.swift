@@ -20,7 +20,7 @@ class DeleteMeetingGroupPresenter: ObservableObject {
     func presentViewModel(selectedMeetingGroup: MeetingGroup) {
         let meetingGroupName = selectedMeetingGroup.name
         var meetingGroupMembers = ""
-        let members = selectedMeetingGroup.members
+        let members = selectedMeetingGroup.groupMembers
         if members != nil {
             var mbrString =  ""
             members!.forEach({ val in

@@ -114,6 +114,5 @@ enum LongPressType {
 
 struct LongPressAction: Equatable {
    var type: LongPressType = .amendmentMover
-   
    var member = ListMember()
 }

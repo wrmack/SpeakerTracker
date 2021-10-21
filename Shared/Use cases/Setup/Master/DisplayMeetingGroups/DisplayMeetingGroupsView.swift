@@ -10,7 +10,7 @@ import SwiftUI
 import Combine
 
 
-/// View for displaying members as a list for a selected entity.
+/// View for displaying meeting groups as a list for a selected entity.
 ///
 /// `DisplayMeetingGroupsView` works with `DisplayMeetingGroupsInteractor` and `DisplayMeetingGroupsPresenter`.
 ///
@@ -30,7 +30,7 @@ struct DisplayMeetingGroupsView: View {
         Print(">>>>>> DisplayMeetingGroupsView body refreshed")
         VStack(alignment: .leading) {
             VStack(alignment: .leading) {
-                if entityState.sortedEntities != nil {
+                if EntityState.sortedEntities != nil {
                     if entityState.currentEntity != nil {
                         Text(entityState.currentEntity!.name!)
                             .font(.system(size: 18, weight: .medium))
@@ -38,8 +38,8 @@ struct DisplayMeetingGroupsView: View {
                     }
                     HStack {
                         Menu {
-                            ForEach(entityState.sortedEntities!.indices, id: \.self) { idx in
-                                Button(entityState.sortedEntities![idx].name!, action: { changeEntity(row: idx)})
+                            ForEach(EntityState.sortedEntities!.indices, id: \.self) { idx in
+                                Button(EntityState.sortedEntities![idx].name!, action: { changeEntity(row: idx)})
                             }
                         } label: {
                             Text("Change entity")
@@ -59,40 +59,48 @@ struct DisplayMeetingGroupsView: View {
             List(presenter.meetingGroups, id: \.self, rowContent:  { meetingGroup in
                 MeetingGroupListRow(rowContent: meetingGroup)
             })
-            // When user changes selected entity
-            .onReceive(entityState.$currentEntityIndex, perform:{ newIndex in
-                print("------ DisplayMeetingGroupsView .onReceive $currentEntityIndex")
+            
+            // .onChange preferred to .onReceive because not called when view is first rendered, only when changed
+            .onChange(of: entityState.currentEntityIndex, perform: { newIndex in
+                print("------ DisplayMeetingGroupsView .onChange currentEntityIndex \(String(describing: newIndex))")
                 if (selectedTab == 2) {
-                    let interactor = DisplayMeetingGroupsInteractor()
                     if newIndex == nil {
-                        interactor.initialiseEntities(entityState: entityState)
+                        DisplayMeetingGroupsInteractor.setCurrentEntityIndex(entityState: entityState)  // Ever called?? Unlikely currentEntityIndex will change to nil
                     }
-                    interactor.fetchMeetingGroupsOnEntityChange(entityIndex: newIndex!, presenter: presenter, entityState: entityState)
+                    DisplayMeetingGroupsInteractor.fetchMeetingGroupsOnEntityChange(entityIndex: newIndex!, presenter: presenter, entityState: entityState)
+                }
+            })
+            .onChange(of: entityState.meetingGroupsHaveChanged, perform: { val in
+                print("------ DisplayMeetingGroupsView .onReceive entityState.$meetingGroupsHaveChanged: \(val)")
+                if (selectedTab == 2) && (val == true)   {
+                    entityState.meetingGroupsHaveChanged = false
+                    DisplayMeetingGroupsInteractor.fetchMeetingGroups(presenter: presenter, entityState: entityState)
                 }
             })
             // When view appears:
             // - set currentEntityIndex
             // - set currentMeetingGroupIndex
+            // - fetch meeting groups
             .onAppear(perform: {
                 print("------ DisplayMeetingGroupsView .onAppear")
                 if selectedTab == 2 {
-                    let interactor = DisplayMeetingGroupsInteractor()
-                    interactor.initialiseEntities(entityState: entityState)
-                    interactor.setSelectedMeetingGroupIndex(idx: nil, entityState: entityState)
+                    DisplayMeetingGroupsInteractor.setCurrentEntityIndex(entityState: entityState)
+                    DisplayMeetingGroupsInteractor.setCurrentMeetingGroupIndex(idx: nil, entityState: entityState)
+                    DisplayMeetingGroupsInteractor.fetchMeetingGroups(presenter: presenter, entityState: entityState)
                 }
             })
             // Reset state for when view is recreated
             .onDisappear(perform: {
-                print("DisplayMeetingGroupsView ------ .onDisappear")
+                print("------ DisplayMeetingGroupsView ------ .onDisappear")
             })
         }
     }
     
     func changeEntity(row: Int) {
-//        print("Changed entity: row \(row) selected")
-//        let entities = entityState.sortedEntities
-//        let selectedEntity = entities[row]
-//        entityState.currentEntity = selectedEntity
+        print("------ DisplayMeetingGroupsView changeEntity(row: \(row))")
+        guard let entities = DisplayMeetingGroupsInteractor.getEntities() else {return}
+        let selectedEntity = entities[row]
+        entityState.currentEntityIndex = selectedEntity.idx
     }
 }
 
@@ -107,11 +115,11 @@ struct MeetingGroupListRow: View {
             Text(rowContent.name)
         }
         .modifier(MasterListRowModifier(isSelected: entityState.currentMeetingGroupIndex != nil ? rowContent.idx == entityState.currentMeetingGroupIndex! : false))
+        .contentShape(Rectangle())  
         .onTapGesture {
-            // Set local state variable and EntityState's currentMemberIndex
+            // Set local state variable and EntityState's currentMeetingGroupIndex
             selectedMeetingGroupIdx = rowContent.idx
-            let interactor = DisplayMeetingGroupsInteractor()
-            interactor.setSelectedMeetingGroupIndex(idx: selectedMeetingGroupIdx!, entityState: entityState)
+            DisplayMeetingGroupsInteractor.setCurrentMeetingGroupIndex(idx: selectedMeetingGroupIdx!, entityState: entityState)
         }
     }
 }

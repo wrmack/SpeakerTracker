@@ -33,14 +33,14 @@ struct SetupHeaderView: View {
                     setupSheetState.showSheet.toggle()
                     self.setupSheetState.editMode = 0
                 }}) {
-                    Text("+")
-                        .font(.system(size: 32, weight: .light, design: .default))
+                    Text("Add")
+                        .modifier(SetupHeaderViewMasterHeading())
                         .frame(alignment: .trailing)
                         .padding(.trailing, 10)
                 }
                     .buttonStyle(PlainButtonStyle())
             }
-                .frame(width: MASTERVIEW_WIDTH, alignment: .center)
+                .frame(width: MASTERVIEW_WIDTH + 80, alignment: .center)
             
             HStack{
                 Spacer()
@@ -75,8 +75,9 @@ struct SetupHeaderView: View {
     }
 }
 
-//struct SetupHeaderView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        SetupHeaderView(setupSheetState: .constant(SetupSheetState()), selectedSetupTab: .constant(0))
-//    }
-//}
+struct SetupHeaderView_Previews: PreviewProvider {
+    
+    static var previews: some View {
+        SetupHeaderView(setupSheetState: SetupSheetState(), selectedSetupTab: .constant(0))
+    }
+}

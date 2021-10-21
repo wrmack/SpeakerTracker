@@ -94,13 +94,11 @@ struct DeleteMeetingGroupView: View {
     }
     
     func fetchSelectedMeetingGroup() {
-        let interactor = DeleteMeetingGroupInteractor()
-        interactor.displaySelectedMeetingGroup(entityState: entityState, presenter:  presenter)
+        DeleteMeetingGroupInteractor.displaySelectedMeetingGroup(entityState: entityState, presenter:  presenter)
     }
     
     func deleteMeetingGroup() {
-        let interactor = DeleteMeetingGroupInteractor()
-        interactor.deleteSelectedMeetingGroupFromEntity(entityState: entityState)
+        DeleteMeetingGroupInteractor.deleteSelectedMeetingGroupFromEntity(entityState: entityState)
     }
 }
 

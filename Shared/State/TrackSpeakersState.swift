@@ -23,8 +23,8 @@ class TrackSpeakersState : ObservableObject {
     @Published var timerString = "00:00"
     @Published var amendmentModeSet = false
     var timerSeconds = 0
-//    var currentEvent: Event?
-//    var currentDebate: Debate?
+    var currentEvent: MeetingEvent?
+    var currentDebate: Debate?
     
     
     init() {
@@ -37,6 +37,19 @@ class TrackSpeakersState : ObservableObject {
     
     deinit {
         print("++++++ TrackSpeakersState de-initialised")
+    }
+    
+    func sortedMeetingGroups() -> [MeetingGroup] {
+        var meetingGroups = [MeetingGroup]()
+        guard let entity = currentEntity else { return meetingGroups}
+        guard let entityMeetingGroups = entity.meetingGroups else {return meetingGroups}
+        if entityMeetingGroups.count == 0 {return meetingGroups}
+        meetingGroups = entityMeetingGroups.allObjects as! [MeetingGroup]
+        meetingGroups.sort(by: {
+            if $0.name! < $1.name! { return true }
+            return false
+        })
+        return meetingGroups
     }
     
 }

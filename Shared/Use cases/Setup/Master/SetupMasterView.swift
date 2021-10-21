@@ -53,7 +53,7 @@ struct SetupMasterView: View {
          .tag(2)
          
          VStack {
-//            DisplayEventsView(selectedTab: $selectedSetupTab, selectedMasterRow: $selectedMasterRow)
+            DisplayEventsView(selectedTab: $selectedSetupTab)
          }
          .tabItem {
              VStack {
@@ -64,7 +64,7 @@ struct SetupMasterView: View {
          
       }
       .padding(.top,10)
-      .border(Color(white: 0.85), width: 1)
+//      .border(Color(white: 0.85), width: 1)
       .onChange(of: selectedSetupTab, perform: { tag in
          print("########### Selected tab: \(self.selectedSetupTab)")
       })

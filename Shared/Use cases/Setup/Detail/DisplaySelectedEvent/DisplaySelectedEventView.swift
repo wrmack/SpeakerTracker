@@ -8,63 +8,31 @@
 
 import SwiftUI
 
-//struct DisplaySelectedEventView: View {
-//    @EnvironmentObject var setupState: SetupState
-//    @EnvironmentObject var entityState: EntityState
-////    @StateObject var presenter = DisplaySelectedEventPresenter()
-//    @Binding var selectedMasterRow: Int
-//    
-//    var body: some View {
-//        Print(">>>>>> DisplaySelectedEventView body refreshed")
-//        List {
-//            Section {
-//                ForEach(presenter.eventViewModel, id: \.self) { content in
-//                    DisplaySelectedEventListRow(rowContent: content)
-//                }
-//            }
-//        }
-//        .onReceive(self.presenter.$presenterUp, perform: { _ in
-//            print("DisplaySelectedEventView: .onReceive presenter.$presenterUp")
-//            // If presenter is ready and events master has already been set up
-//            if setupState.eventsMasterIsSetup == true {
-//                print("------ onReceive calling interactor")
-//                let interactor = DisplaySelectedEventInteractor()
-//                interactor.fetchEvent(
-//                    presenter: presenter,
-//                    entityState: entityState,
-//                    setupState: setupState,
-//                    forRow: 0)
-//                self.setupState.meetingGroupsDetailIsSetup = true
-//            }
-//        })
-//        .onReceive(self.setupState.$eventsMasterIsSetup, perform: { _ in
-//            print("DisplaySelectedEventView: .onReceive presenter.$eventsMasterIsSetup")
-//            // If event detail has not been setup but members master has been set up
-//            if (setupState.eventsDetailIsSetup == false) && (setupState.eventsMasterIsSetup == true)  {
-//                print("------ onReceive calling interactor")
-//                let interactor = DisplaySelectedEventInteractor()
-//                interactor.fetchEvent(
-//                    presenter: presenter,
-//                    entityState: entityState,
-//                    setupState: setupState,
-//                    forRow: 0)
-//                self.setupState.meetingGroupsDetailIsSetup = true
-//            }
-//        })
-//        .onChange(of: selectedMasterRow, perform: { row in
-//            print("DisplaySelectedEventView: .onChange selectedMasterRow")
-//            if setupState.eventsMasterIsSetup == true {
-//                print("------ onReceive calling interactor")
-//                let interactor = DisplaySelectedEventInteractor()
-//                interactor.fetchEvent(
-//                    presenter: presenter,
-//                    entityState: entityState,
-//                    setupState: setupState,
-//                    forRow: row)
-//            }
-//        })
-//    }
-//}
+struct DisplaySelectedEventView: View {
+    
+    @EnvironmentObject var entityState: EntityState
+    @EnvironmentObject var eventState: EventState
+    @StateObject var presenter = DisplaySelectedEventPresenter()
+
+    
+    var body: some View {
+        Print(">>>>>> DisplaySelectedEventView body refreshed")
+        List {
+            ForEach(presenter.eventViewModel, id: \.self) { content in
+                DisplaySelectedEventListRow(rowContent: content)
+            }
+        }
+        // Called when different meeting event is selected by user
+        .onChange(of: eventState.currentMeetingEventIndex, perform: { newIndex in
+            print("------ DisplaySelectedEventView: .onChange currentMeetingEventIndex")
+            DisplaySelectedEventInteractor.fetchEvent(presenter: presenter, entityState: entityState, eventState: eventState, newIndex: newIndex)
+        })
+        // Called when first appears
+        .onAppear(perform: {
+            DisplaySelectedEventInteractor.fetchEvent(presenter: presenter, entityState: entityState, eventState: eventState, newIndex: nil)
+        })
+    }
+}
 
 struct DisplaySelectedEventListRow: View {
    var rowContent: EventViewModelRecord

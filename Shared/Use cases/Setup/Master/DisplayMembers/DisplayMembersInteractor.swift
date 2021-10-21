@@ -25,21 +25,26 @@ class DisplayMembersInteractor {
     
     /// If `currentEntityIndex` is not set, sets it to first entity.
     ///
-    func initialiseEntities(entityState: EntityState) {
+    class func setCurrentEntityIndex(entityState: EntityState) {
         if entityState.currentEntityIndex == nil {
-            let entities = entityState.sortedEntities!
+            let entities = EntityState.sortedEntities!
             entityState.currentEntityIndex = entities[0].idx
         }
+    }
+    
+    /// Returns all entities, sorted by name
+    class func getEntities() -> [Entity]? {
+        return EntityState.sortedEntities
     }
     
     /// Fetches members for selected entity and passes these to the presenter.
     ///
     /// 
-    func fetchMembers(presenter: DisplayMembersPresenter, entityState: EntityState) {
+    class func fetchMembers(presenter: DisplayMembersPresenter, entityState: EntityState) {
 
-        guard let currentEntity = entityState.currentEntity else {return}
-        print("------ fetchMembers currentEntity \(currentEntity)")
-        let fetchedMembersForEntity = entityState.sortedMembers(entity: currentEntity)!
+        guard let currentEntityIndex = entityState.currentEntityIndex else {return}
+        print("------ fetchMembers currentEntity \(currentEntityIndex)")
+        let fetchedMembersForEntity = EntityState.sortedMembers(entityIndex: currentEntityIndex)!
         var members = [Member]()
         if fetchedMembersForEntity.count > 0 {
             fetchedMembersForEntity.forEach({ member in
@@ -50,10 +55,6 @@ class DisplayMembersInteractor {
         presenter.presentMembers(members: members)
     }
     
-    /// Returns all entities, sorted by name
-    func getEntities(entityState: EntityState) -> [Entity]? {
-        return entityState.sortedEntities
-    }
     
     /// Sets and returns the `currentMemberIndex` of EntityState
     ///
@@ -63,12 +64,12 @@ class DisplayMembersInteractor {
     ///    - idx: the UUID for the selected member; if nil then selected member is set to the first member
     ///    - entityState: The EntityState environment object
 
-    func setSelectedMemberIndex(idx: UUID?, entityState: EntityState) {
+    class func setCurrentMemberIndex(idx: UUID?, entityState: EntityState) {
         
         // Get the entity then the members for that entity
         // Return nil if result is nil or there are none
-        let entity = entityState.currentEntity
-        guard let fetchedMembersForEntity = entityState.sortedMembers(entity: entity!) else {return }
+        let entityIndex = entityState.currentEntityIndex
+        guard let fetchedMembersForEntity = EntityState.sortedMembers(entityIndex: entityIndex!) else {return }
         if fetchedMembersForEntity.count == 0 {return }
         
         var memberIdx = idx
@@ -80,11 +81,7 @@ class DisplayMembersInteractor {
         }
         
         // Set currentMemberIndex property of EntityState
-        for member in fetchedMembersForEntity {
-            if member.idx == memberIdx  {
-                entityState.currentMemberIndex = member.idx
-            }
-        }
+        entityState.currentMemberIndex = memberIdx
 
     }
     
@@ -92,11 +89,9 @@ class DisplayMembersInteractor {
     /// Fetches members for published currentEntityIndex
     ///
     /// The published currentEntityIndex has to be used rather than currentEntityIndex.
-    func fetchMembersOnEntityChange(entityIndex: UUID, presenter: DisplayMembersPresenter, entityState: EntityState) {
+    class func fetchMembersOnEntityChange(entityIndex: UUID, presenter: DisplayMembersPresenter, entityState: EntityState) {
 
-        guard let currentEntity = entityState.entityWithIndex(index: entityIndex) else {return}
-
-        let fetchedMembersForEntity = entityState.sortedMembers(entity: currentEntity)!
+        let fetchedMembersForEntity = EntityState.sortedMembers(entityIndex: entityIndex)!
         var members = [Member]()
         if fetchedMembersForEntity.count > 0 {
             fetchedMembersForEntity.forEach({ member in
@@ -104,9 +99,11 @@ class DisplayMembersInteractor {
             })
             let firstMember = members[0]
             entityState.currentMemberIndex = firstMember.idx
-            
-            presenter.presentMembers(members: members)
         }
+        else {
+            entityState.currentMemberIndex = nil
+        }
+        presenter.presentMembers(members: members)
 
     }
     

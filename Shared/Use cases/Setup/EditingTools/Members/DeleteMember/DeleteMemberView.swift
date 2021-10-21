@@ -91,13 +91,11 @@ struct DeleteMemberView: View {
     }
     
     func fetchSelectedMember() {
-        let interactor = DeleteMemberInteractor()
-        interactor.displaySelectedMember(entityState: entityState, presenter: presenter)
+        DeleteMemberInteractor.displaySelectedMember(entityState: entityState, presenter: presenter)
     }
     
     func deleteMember() {
-        let interactor = DeleteMemberInteractor()
-        interactor.deleteSelectedMemberFromEntity(entityState: entityState)
+        DeleteMemberInteractor.deleteSelectedMemberFromEntity(entityState: entityState)
     }
 }
 

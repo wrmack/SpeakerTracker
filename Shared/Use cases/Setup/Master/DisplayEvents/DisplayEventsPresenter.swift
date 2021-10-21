@@ -8,31 +8,38 @@
 
 import Foundation
 
-struct EventSummary: Hashable {
+struct EventSummaryViewModel: Hashable {
     var summary: String
-    var idx: Int
+    var idx: UUID
 }
 
-//class DisplayEventsPresenter : ObservableObject {
-//    @Published var eventSummaries = [EventSummary]()
-//    
-//    func presentEventSummaries(events: [Event]) {
-//        let savedEvents = events
-//        var tempSummaries = [EventSummary]()
-//        var idx = 0
-//        savedEvents.forEach({ event in
-//            let formatter = DateFormatter()
-//            formatter.dateStyle = .none
-//            formatter.timeStyle = .short
-//            let timeString = formatter.string(from: event.date!)
-//            formatter.dateStyle = .long
-//            formatter.timeStyle = .none
-//            let dateString = formatter.string(from: event.date!)
-//            let timeDateString = timeString + ", " + dateString
-//            let evSum = EventSummary(summary: timeDateString, idx: idx)
-//            tempSummaries.append(evSum)
-//            idx += 1
+class DisplayEventsPresenter : ObservableObject {
+    @Published var eventSummaries = [EventSummaryViewModel]()
+    
+    func presentEventSummaries(events: [MeetingEvent]?) {
+        var tempMeetingEvents = events
+//        tempMeetingEvents?.sort(by: {
+//            if $0.name! < $1.name! { return true }
+//            return false
 //        })
-//        eventSummaries = tempSummaries
-//    }
-//}
+        
+        var tempMeetingEventVMs = [EventSummaryViewModel]()
+        if events != nil {
+            events!.forEach({ event in
+               let formatter = DateFormatter()
+               formatter.dateStyle = .none
+               formatter.timeStyle = .short
+               let timeString = formatter.string(from: event.date!)
+               formatter.dateStyle = .long
+               formatter.timeStyle = .none
+               let dateString = formatter.string(from: event.date!)
+               let timeDateString = timeString + ", " + dateString
+                let evSum = EventSummaryViewModel(summary: timeDateString, idx: event.idx!)
+                tempMeetingEventVMs.append(evSum)
+           })
+
+        }
+
+        eventSummaries = tempMeetingEventVMs
+    }
+}

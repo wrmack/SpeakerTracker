@@ -101,14 +101,12 @@ struct EditMeetingGroupView: View {
     }
     
     func fetchSelectedMeetingGroup() {
-        let interactor = EditMeetingGroupInteractor()
-        interactor.displaySelectedMeetingGroup(entityState: entityState, presenter: presenter)
+        EditMeetingGroupInteractor.displaySelectedMeetingGroup(entityState: entityState, presenter: presenter)
     }
     
     func saveMeetingGroup() {
         print("------ EditMeetingGroupView saveMeetingGroup called")
-        let interactor = EditMeetingGroupInteractor()
-        interactor.saveMeetingGroupToEntity(entityState: entityState, setupSheetState: setupSheetState, meetingGroupName: meetingGroupName, members: members)
+        EditMeetingGroupInteractor.saveChangedMeetingGroupToStore(entityState: entityState, meetingGroupName: meetingGroupName, members: members)
     }
     
 }

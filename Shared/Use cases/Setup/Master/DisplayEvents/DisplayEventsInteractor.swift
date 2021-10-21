@@ -19,77 +19,89 @@ class DisplayEventsInteractor {
         print("DisplayEventsInteractor de-initialized")
     }
     
+    /// If `currentEntityIndex` is not set, sets it to first entity and sets
+    /// `currentMeetingGroupIndex` to this entity's first meeting group.
+    ///
+    class func setCurrentEntityAndMeetingGroupIndices(entityState: EntityState) {
+        if entityState.currentEntityIndex == nil {
+            let entities = EntityState.sortedEntities
+            if entities != nil && entities!.count > 0 {
+                entityState.currentEntityIndex = entities![0].idx
+            }
+        }
+        let meetingGroups = EntityState.sortedMeetingGroups(entityIndex: entityState.currentEntityIndex!)
+        if meetingGroups != nil && meetingGroups!.count > 0 {
+            entityState.currentMeetingGroupIndex = meetingGroups![0].idx
+        }
+    }
     
-//    func fetchEvents(presenter: DisplayEventsPresenter, eventState: EventState, entityState: EntityState, setupState: SetupState) {
-//        let eventState = eventState
-//        let entityState = entityState
-//        let setupState = setupState
-////        var events = [Event]()
-//        let fileManager = FileManager.default
-//        guard let docDirectory = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first else {
-//            print("DisplayEventsInteractor: fetchEvents: error: Document directory not found")
-//            return
-//        }
-//        do {
-//            var eventUrls = [URL]()
-//            let fileURLs = try fileManager.contentsOfDirectory(at: docDirectory, includingPropertiesForKeys: nil)
-//            for url in fileURLs {
-//                if url.pathExtension == "evt" {
-//                    eventUrls.append(url)
-//                }
-//            }
-//            if eventUrls.count == 0 {
-//                print("count == 0")
-//                eventState.events = events
-//                setupState.sortedEvents = events
-//                setupState.eventsMasterIsSetup = false
-//                presenter.presentEventSummaries(events: events)
-////                setupState.selectedRow = 0
-//            }
-//            else {
-//                for eventUrl in eventUrls {
-//                    let eventDoc = EventDocument(fileURL: eventUrl)
-//                    eventDoc.open(completionHandler: { success in
-//                        if !success {
-//                            print("DisplayEventsInteractor: fetchEvents: error opening EventDocument")
-//                        }
-//                        else {
-//                            eventDoc.close(completionHandler: { success in
-//                                guard let event = eventDoc.event else {
-//                                    print("DisplayEventsInteractor: fetchEvents: event is nil")
-//                                    return
-//                                }
-//                                events.append(event)
-//                                if events.count == eventUrls.count {
-////                                    self.events!.sort(by: {
-////                                        if $0.name! < $1.name! {
-////                                            return true
-////                                        }
-////                                        return false
-////                                    })
-//                                    eventState.events = events
-//                                    setupState.sortedEvents = events
-//                                    setupState.eventsMasterIsSetup = true
-//                                    var eventsForMeetingGroup = [Event]()
-//                                    events.forEach({ event in
-//                                        if entityState.currentMeetingGroup != nil {
-//                                            if event.meetingGroup!.id == entityState.currentMeetingGroup!.id {
-//                                                eventsForMeetingGroup.append(event)
-//                                            }
-//                                        }
-//                                    })
-//                                    presenter.presentEventSummaries(events: eventsForMeetingGroup)
-////                                    setupState.selectedRow = 0
-//                                }
-//                            })
-//                        }
-//                    })
-//                }
-//            }
-//        } catch {
-//            print("Error while enumerating files \(docDirectory.path): \(error.localizedDescription)")
-//        }
-//    }
+    
+    /// Returns all entities, sorted by name
+    class func getEntities() -> [Entity]? {
+        return EntityState.sortedEntities
+    }
+    
+    /// Sets and returns the `currentEventIndex` of EntityState
+    ///
+    /// Called when user selects a member, to store the selected index as `currentEventIndex`.
+    /// If the passed-in idx is nil then sets `currentEventIndex` to the first member.
+    /// - Parameters:
+    ///    - idx: the UUID for the selected meeting group; if nil then selected meeting groups is set to the first meeting group
+    ///    - entityState: The EntityState environment object
+
+    class func setCurrentEventIndex(idx: UUID?, entityState: EntityState, eventState: EventState) {
+        
+        // Get the meeting group then the events for that meeting group
+        guard let meetingGroupIndex = entityState.currentMeetingGroupIndex else {return}
+        guard let fetchedEventsForMeetingGroup = EventState.sortedMeetingEvents(meetingGroupIndex: meetingGroupIndex) else {return }
+        if fetchedEventsForMeetingGroup.count == 0 {return }
+        
+        var eventIdx = idx
+        
+        // If idx is nil then select the first member
+        if eventIdx == nil {
+            let firstEvent = fetchedEventsForMeetingGroup[0]
+            eventIdx = firstEvent.idx
+        }
+        
+        // Set currentEventIndex property of EventState
+        eventState.currentMeetingEventIndex = eventIdx
+    }
+    
+    static func fetchEvents(presenter: DisplayEventsPresenter, eventState: EventState, entityState: EntityState) {
+        
+        guard let currentMeetingGroupIndex = entityState.currentMeetingGroupIndex else {return}
+        
+        let fetchedMeetingEventsForMeetingGroup = EventState.sortedMeetingEvents(meetingGroupIndex: currentMeetingGroupIndex)!
+        var meetingEvents = [MeetingEvent]()
+        if fetchedMeetingEventsForMeetingGroup.count > 0 {
+            fetchedMeetingEventsForMeetingGroup.forEach({ event in
+                meetingEvents.append(event)
+            })
+        }
+        presenter.presentEventSummaries(events: meetingEvents)
+    }
+    
+    static func fetchEventsOnMeetingGroupChange(meetingGroupIndex: UUID, presenter: DisplayEventsPresenter, eventState: EventState) {
+        
+        let fetchedEventsForMeetingGroup = EventState.sortedMeetingEvents(meetingGroupIndex: meetingGroupIndex)!
+        var events = [MeetingEvent]()
+        if fetchedEventsForMeetingGroup.count > 0 {
+            fetchedEventsForMeetingGroup.forEach({ event in
+                events.append(event)
+            })
+            let firstEvent = events[0]
+            eventState.currentMeetingEventIndex = firstEvent.idx
+        }
+        else {
+            eventState.currentMeetingEventIndex = nil
+        }
+        
+        presenter.presentEventSummaries(events: events)
+        
+        
+        
+    }
     
     func fetchMeetingGroupsForEntity(entity: Entity) {
         //       self.entity = entity

@@ -9,10 +9,10 @@
 import Foundation
 
 
-//class DisplayReportsForMeetingGroupInteractor {
-//    
-//    func fetchEvents(reportsState: ReportsState, presenter: DisplayReportsForMeetingGroupPresenter) {
-//        var events = [Event]()
+class DisplayReportsForMeetingGroupInteractor {
+    
+    func fetchEvents(reportsState: ReportsState, presenter: DisplayReportsForMeetingGroupPresenter) {
+        var events = [MeetingEvent]()
 //        let fileManager = FileManager.default
 //        guard let docDirectory = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first else {
 //            print("DisplayReportsForMeetingGroupInteractor: fetchEvents: error: Document directory not found")
@@ -70,5 +70,5 @@ import Foundation
 //        } catch {
 //            print("Error while enumerating files \(docDirectory.path): \(error.localizedDescription)")
 //        }
-//    }
-//}
+    }
+}

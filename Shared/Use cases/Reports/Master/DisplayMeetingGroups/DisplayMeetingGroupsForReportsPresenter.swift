@@ -8,29 +8,29 @@
 
 import Foundation
 
+struct MeetingGroupForReportsViewModel: Hashable {
+   var name: String
+   var idx: UUID
+}
+
 class DisplayMeetingGroupsForReportsPresenter : ObservableObject {
-//    @Published var meetingGroupNames = [MeetingGroupName]()
-//
-//    func presentMeetingGroupNames(meetingGroups: [MeetingGroup]?) {
-//        var tempNames = [String]()
-//        var tempMeetingGroupNames = [MeetingGroupName]()
-//        if meetingGroups != nil {
-//           for meetingGroup in meetingGroups! {
-//              tempNames.append(meetingGroup.name!)
-//              tempNames.sort(by: {
-//                 if $0 < $1 {
-//                    return true
-//                 }
-//                 return false
-//              })
-//           }
-//           var idx = 0
-//           tempNames.forEach({ el in
-//              tempMeetingGroupNames.append(MeetingGroupName(name: el, idx: idx))
-//              idx += 1
-//           })
-//        }
-//        print("DisplayMeetingGroupsForReportsPresenter presentMeetingGroupNames")
-//        self.meetingGroupNames = tempMeetingGroupNames
-//    }
+    @Published var meetingGroups = [MeetingGroupForReportsViewModel]()
+
+    func presentMeetingGroups(meetingGroups: [MeetingGroup]?) {
+        var tempMeetingGroups = meetingGroups
+        tempMeetingGroups?.sort(by: {
+            if $0.name! < $1.name! { return true }
+            return false
+        })
+       var tempMeetingGroupVMs = [MeetingGroupForReportsViewModel]()
+       if meetingGroups != nil {
+          for meetingGroup in meetingGroups! {
+              let meetingGroupName = meetingGroup.name == "" ? "test" : meetingGroup.name
+              tempMeetingGroupVMs.append(MeetingGroupForReportsViewModel(name:meetingGroupName!, idx: meetingGroup.idx!))
+          }
+
+       }
+        print("DisplayMeetingGroupsForReportsPresenter presentMeetingGroupNames")
+        self.meetingGroups = tempMeetingGroupVMs
+    }
 }

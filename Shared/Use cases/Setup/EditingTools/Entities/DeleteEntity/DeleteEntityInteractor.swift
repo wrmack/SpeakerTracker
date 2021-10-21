@@ -21,12 +21,12 @@ class DeleteEntityInteractor {
         print("DeleteEntityInteractor de-initialised")
     }
     
-    func displaySelectedEntity(entityState: EntityState, presenter: DeleteEntityPresenter) {
+    class func displaySelectedEntity(entityState: EntityState, presenter: DeleteEntityPresenter) {
         guard let entity = entityState.currentEntity else {return}
         presenter.presentViewModel(selectedEntity:entity)
     }
     
-    func deleteEntity(entityState: EntityState) {
+    class func deleteEntity(entityState: EntityState) {
         
         let desc = NSSortDescriptor(key: "name", ascending: true)
 
@@ -62,6 +62,7 @@ class DeleteEntityInteractor {
             let nsError = error as NSError
             fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
         }
-
+        entityState.currentEntityIndex = nil
+        entityState.entitiesHaveChanged = true
     }
 }

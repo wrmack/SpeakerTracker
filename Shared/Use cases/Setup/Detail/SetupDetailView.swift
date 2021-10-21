@@ -20,7 +20,7 @@ struct SetupDetailView: View {
         case 0: DisplaySelectedEntityView()
         case 1: DisplaySelectedMemberView()
         case 2: DisplaySelectedMeetingGroupView()
-//        case 3: DisplaySelectedEventView(selectedMasterRow: $selectedMasterRow)
+        case 3: DisplaySelectedEventView()
         default: DisplaySelectedEntityView()
         }
     }

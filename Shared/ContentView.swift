@@ -6,7 +6,40 @@
 //
 import SwiftUI
 
-
+struct SetupTitle: View {
+    @Binding var selectedSetupTab: Int
+    
+    var body: some View {
+        switch selectedSetupTab {
+        case 0:
+            Text("Setup entities")
+                .font(.title)
+                .padding(.bottom,2)
+                .padding(.top,10)
+        case 1:
+            Text("Setup the members of a selected entity")
+                .font(.title)
+                .padding(.bottom,2)
+                .padding(.top,10)
+            
+        case 2:
+            Text("Setup the meeting groups of a selected entity")
+                .font(.title)
+                .padding(.bottom,2)
+                .padding(.top,10)
+        case 3:
+            Text("Setup meeting events for a selected meeting group")
+                .font(.title)
+                .padding(.bottom,2)
+                .padding(.top,10)
+        default:
+            Text("Setup parent entities")
+                .font(.title)
+                .padding(.bottom,2)
+                .padding(.top,10)
+        }
+    }
+}
 
 
 struct ContentView: View {
@@ -18,6 +51,7 @@ struct ContentView: View {
     @State private var selectedMeetingGroup: MeetingGroup?
     @State private var isRecording = false
     @State private var selectedSetupTab = 0
+    @State private var selectedTab = 0
     
     
     var speakers:[Member] = []
@@ -26,27 +60,33 @@ struct ContentView: View {
         Print(">>>>>> ContentView body refreshed")
         VStack(spacing: 0) {
             
-            TabView {
+            TabView(selection: $selectedTab) {
                 
                 // Track speaker main scene
                 VStack {
                     GeometryReader { geo in
                         TrackSpeakersView(showMeetingSetupSheet: $showMeetingSetupSheet, selectedMeetingGroup: $selectedMeetingGroup, isRecording: $isRecording)
-
+                            .onTapGesture {
+                                withAnimation(.easeInOut(duration: EASEINOUT)) {
+                                    if showMeetingSetupSheet == true {
+                                        showMeetingSetupSheet = false
+                                    }
+                                }
+                            }
+                        
                         ZStack {
                             if self.showMeetingSetupSheet {
                                 HStack {
                                     MeetingSetupSheetView(
                                         showMeetingSetupSheet: self.$showMeetingSetupSheet,
-                                        selectedMeetingGroup: $selectedMeetingGroup,
                                         isRecording: $isRecording
                                     )
-                                    .frame(maxWidth:500, minHeight:geo.size.height)
-//                                    .background(Color.white)
+                                        .frame(maxWidth:500, minHeight:geo.size.height)
+                                    //                                    .background(Color.white)
                                 }
                                 .transition(.move(edge: .leading))
                             }
-
+                            
                         }
                     }
                 }
@@ -60,11 +100,7 @@ struct ContentView: View {
                 VStack(alignment:.leading, spacing:0) {
                     HStack {
                         Spacer()
-                        Text("Entity setup")
-                            .font(.title)
-                            .padding(.bottom,2)
-                            .padding(.top,10)
-//                            .background(SETUP_BAR_COLOR)
+                        SetupTitle(selectedSetupTab: $selectedSetupTab)
                         Spacer()
                     }
                     
@@ -75,6 +111,7 @@ struct ContentView: View {
                     HStack(spacing: 0) {
                         SetupMasterView(selectedSetupTab: $selectedSetupTab)
                             .frame(maxWidth: MASTERVIEW_WIDTH)
+                        Divider().frame(width:10)
                         GeometryReader{ geo in
                             ZStack {
                                 SetupDetailView(selectedSetupTab: $selectedSetupTab)
@@ -89,21 +126,21 @@ struct ContentView: View {
                                     MeetingGroupSheetView(setupSheetState: setupSheetState)
                                         .transition(.move(edge: .trailing))
                                         .frame(minWidth:geo.size.width, minHeight:geo.size.height)
-//                                        .background(Color.white)
+                                    //                                        .background(Color.white)
                                         .zIndex(1)  // In order to see animation on close, zindex must be set or view goes to back.
                                 }
                             }
                             .frame(maxWidth:.infinity, maxHeight: .infinity)
                         }
                     }
-//                    .onReceive(setupSheetState.showSheet, perform: {val in
-//                        showMeetingSetupSheet = val
-//                    })
+                    //                    .onReceive(setupSheetState.showSheet, perform: {val in
+                    //                        showMeetingSetupSheet = val
+                    //                    })
                 }
-//                .background(SETUP_BAR_COLOR)
+                //                .background(SETUP_BAR_COLOR)
                 .edgesIgnoringSafeArea([.top])
                 .tabItem {
-                    Text("Entity setup").foregroundColor(Color.white)
+                    Text("Entity setup")
                 }
                 .tag(1)
                 
@@ -115,53 +152,65 @@ struct ContentView: View {
                             .font(.title)
                             .padding(.bottom,2)
                             .padding(.top,10)
-                            .background(SETUP_BAR_COLOR)
+                        //                            .background(SETUP_BAR_COLOR)
                         Spacer()
                     }
                     ReportsHeaderView()
                     Divider().frame(height: 2).background(Color(white: 0.85, opacity: 1.0))
                     
                     HStack(spacing: 0) {
-//                        DisplayMeetingGroupsForReportsView(selectedMasterRow: $selectedSetupMasterRow).frame(width: MASTERVIEW_WIDTH)
+                        DisplayMeetingGroupsForReportsView(selectedTab: $selectedTab).frame(width: MASTERVIEW_WIDTH)
+                        Divider().frame(width:10)
                         GeometryReader{ geo in
-//                            DisplayReportsForMeetingGroupView()
+                            DisplayReportsForMeetingGroupView()
                         }
                     }
                 }
-//                .background(SETUP_BAR_COLOR)
+                //                .background(SETUP_BAR_COLOR)
                 .edgesIgnoringSafeArea([.top])
                 .tabItem {
                     Text("Reports")
                 }
                 .tag(2)
             }
+            .opacity(1.0)
+            .background(Color.orange)
+
         }
+#if os(macOS)
+        .frame(minWidth: 1100)
+#endif
         .padding(.top,10)
         .onAppear(perform: {
+            print("\nReference ******************************")
+            print(DebugReference.console)
             guard let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else {
-             print("Error: Document directory not found")
+                print("Error: Document directory not found")
                 return
             }
             print("Documents directory:\n \(documentsDirectory)")
+            print("****************************************\n")
         })
+        
     }
 }
- 
+
 
 struct ContentView_Previews: PreviewProvider {
     static var testData = [Member]()
+    static var showMeetingSetupSheet = true
     /*
      Size specs here:
      https://developer.apple.com/library/archive/documentation/DeviceInformation/Reference/iOSDeviceCompatibility/Displays/Displays.html
      */
     static var previews: some View {
         ContentView(speakers: testData)
-//            .previewDevice("iPad Pro (12.9-inch) (4th generation)")
-//            .previewDisplayName("iPad Pro (12.9-inch)")
+            .previewDevice("iPad Pro (12.9-inch) (5th generation)")
+        //            .previewDisplayName("iPad Pro (12.9-inch)")
             .previewLayout(.fixed(width: 1366, height: 1024))
             .environmentObject(EntityState())
             .environmentObject(EventState())
             .environmentObject(TrackSpeakersState())
-//            .environment(\.colorScheme, .light)
+        //            .environment(\.colorScheme, .light)
     }
 }

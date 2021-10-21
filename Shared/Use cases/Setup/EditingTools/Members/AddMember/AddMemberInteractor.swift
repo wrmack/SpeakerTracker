@@ -19,7 +19,7 @@ class AddMemberInteractor: ObservableObject {
      tempMemberList is an array that is updated when user presses the "Add another" button, but is not saved until this is called.
      Also updates currenty entity in user defaults.
      */
-    func saveNewMemberToEntity(entityState: EntityState, title: String, first: String, last: String) {
+    class func saveNewMemberToEntity(entityState: EntityState, title: String, first: String, last: String) {
         
         let viewContext = PersistenceController.shared.container.viewContext
         let newMember = Member(context: viewContext)
@@ -31,8 +31,8 @@ class AddMemberInteractor: ObservableObject {
         entityState.currentMemberIndex = newMember.idx
         
         let currentEntity = entityState.currentEntity!
-        let memberSet = currentEntity.members
-        currentEntity.members = memberSet!.adding(newMember) as NSSet
+        let memberSet = currentEntity.entityMembers
+        currentEntity.entityMembers = memberSet!.adding(newMember) as NSSet
         
         do {
             try viewContext.save()

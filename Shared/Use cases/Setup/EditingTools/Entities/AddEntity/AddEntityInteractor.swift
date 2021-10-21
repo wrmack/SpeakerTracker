@@ -14,7 +14,7 @@ import CoreData
 class AddEntityInteractor {
 
 
-    func saveNewEntityToStore(entityName: String, entityState: EntityState) {
+    class func saveNewEntityToStore(entityName: String, entityState: EntityState) {
         
         let viewContext = PersistenceController.shared.container.viewContext
         let newEntity = Entity(context: viewContext)
@@ -30,6 +30,6 @@ class AddEntityInteractor {
             fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
         }
         entityState.currentEntityIndex = newEntity.idx 
-//        self.entityState?.entityModelChanged = true
+        entityState.entitiesHaveChanged = true
     }
 }

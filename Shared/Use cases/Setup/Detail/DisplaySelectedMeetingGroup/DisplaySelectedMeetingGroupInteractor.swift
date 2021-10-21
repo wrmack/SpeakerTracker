@@ -11,50 +11,27 @@ import Foundation
 
 class DisplaySelectedMeetingGroupInteractor {
     
-    func fetchMeetingGroup(presenter: DisplaySelectedMeetingGroupPresenter, entityState: EntityState, newIndex: UUID?) {
-        print("------ DisplaySelectedMeetingGroupInteractor.fetchMeetingGroup")
+    class func fetchMeetingGroup(presenter: DisplaySelectedMeetingGroupPresenter, entityState: EntityState, newIndex: UUID?) {
+        print("------ DisplaySelectedMeetingGroupInteractor.fetchMeetingGroup newIndex \(String(describing: newIndex))")
         
         var meetingGroupIndex: UUID?
+
+        // newIndex is nil when method called by .onAppear
         if newIndex == nil {
-            guard let meetingGroups = entityState.sortedMeetingGroups(entity: entityState.currentEntity!) else {return}
-            if meetingGroups.count == 0 {return}
-            meetingGroupIndex = meetingGroups[0].idx
+            if let currentMeetingGroupIndex = entityState.currentMeetingGroupIndex {
+                meetingGroupIndex = currentMeetingGroupIndex
+            }
+            else {
+                presenter.presentMeetingGroupDetail(meetingGroup: nil)
+                return
+            }
         }
         else {
             meetingGroupIndex = newIndex
         }
-        let meetingGroup = entityState.meetingGroupWithIndex(index: meetingGroupIndex!)
+        let selectedMeetingGroup = EntityState.meetingGroupWithIndex(index: meetingGroupIndex!)
         
-        presenter.presentMeetingGroupDetail(meetingGroup: meetingGroup)
+        presenter.presentMeetingGroupDetail(meetingGroup: selectedMeetingGroup)
     }
     
-    func fetchMeetingGroupFromChangingEntity(presenter: DisplaySelectedMeetingGroupPresenter, entity: Entity, selectedMasterRow: Int) {
-        print("------ DisplaySelectedMemberInteractor.fetchMember")
-
-//        let row = selectedMasterRow
-//        
-//        var sortedMtgGrps = [MeetingGroup]()
-//        if entity.meetingGroups != nil {
-//           let mtgGrps = entity.meetingGroups!
-//            sortedMtgGrps = mtgGrps.sorted(by: {
-//              if $0.name! < $1.name! {
-//                 return true
-//              }
-//              return false
-//           })
-//        }
-//        var currentMeetingGroup: MeetingGroup?
-//        if sortedMtgGrps.count > 0 {
-//            currentMeetingGroup = sortedMtgGrps[row]
-//        }
-//        var currentMembers = [Member]()
-//        currentMeetingGroup!.memberIDs?.forEach({ id in
-//            entity.members?.forEach({ member in
-//                if member.id == id {
-//                    currentMembers.append(member)
-//                }
-//            })
-//        })
-//        presenter.presentMeetingGroupDetail(name:currentMeetingGroup?.name, members: currentMembers)
-   }
 }

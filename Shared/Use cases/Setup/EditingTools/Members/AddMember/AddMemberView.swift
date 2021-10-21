@@ -30,7 +30,7 @@ struct AddMemberView: View {
     var body: some View {
         Print(">>>>>> AddMemberView body refreshed")
         VStack {
-            Text("Create new member for")
+            Text("Add new member for")
                 .padding(Edge.Set.top, 0).padding(Edge.Set.bottom, 0)
                 .font(Font.system(size: 30))
             Text(entityState.currentEntity!.name!)
@@ -98,8 +98,7 @@ struct AddMemberView: View {
     
     func saveNewMember() {
         print("------ AddMemberView saveMember called")
-        let interactor = AddMemberInteractor()
-        interactor.saveNewMemberToEntity(entityState: entityState, title: memberTitle, first: memberFirstName, last: memberLastName)
+        AddMemberInteractor.saveNewMemberToEntity(entityState: entityState, title: memberTitle, first: memberFirstName, last: memberLastName)
     }
     
 }

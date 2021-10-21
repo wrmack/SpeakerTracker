@@ -39,8 +39,8 @@ struct DisplayMembersView: View {
                 }
                 HStack {
                     Menu {
-                        ForEach(entityState.sortedEntities!.indices, id: \.self) { idx in
-                            Button(entityState.sortedEntities![idx].name!, action: { changeEntity(row: idx)})
+                        ForEach(EntityState.sortedEntities!.indices, id: \.self) { idx in
+                            Button(EntityState.sortedEntities![idx].name!, action: { changeEntity(row: idx)})
                         }
                     } label: {
                         Text("Change entity")
@@ -60,34 +60,33 @@ struct DisplayMembersView: View {
             })
             
             // When user changes selected entity, reset currentMemberIndex
-            .onReceive(entityState.$currentEntityIndex, perform: { newIndex in
-                print("------ DisplayMembersView .onReceive entityState.$currentEntityIndex: \(String(describing: newIndex))")
+                .onChange(of: entityState.currentEntityIndex, perform: { newIndex in
+                print("------ DisplayMembersView .onChange entityState.currentEntityIndex: \(String(describing: newIndex))")
                 if (selectedTab == 1)   {
-                    let interactor = DisplayMembersInteractor()
                     if newIndex == nil {
-                        interactor.initialiseEntities(entityState: entityState)
+                        DisplayMembersInteractor.setCurrentEntityIndex(entityState: entityState)
                     }
-                    interactor.fetchMembersOnEntityChange(entityIndex: newIndex!, presenter: presenter, entityState: entityState)
+                    DisplayMembersInteractor.fetchMembersOnEntityChange(entityIndex: newIndex!, presenter: presenter, entityState: entityState)
                 }
             })
-            .onReceive(entityState.$membersHaveChanged, perform: { val in
-                print("------ DisplayMembersView .onReceive entityState.$membersHaveChanged: \(val)")
+                .onChange(of: entityState.membersHaveChanged, perform: { val in
+                print("------ DisplayMembersView .onChange entityState.membersHaveChanged: \(val)")
                 if (selectedTab == 1) && (val == true)   {
                     entityState.membersHaveChanged = false
-                    let interactor = DisplayMembersInteractor()
-                    interactor.fetchMembers(presenter: presenter, entityState: entityState)
+                    DisplayMembersInteractor.fetchMembers(presenter: presenter, entityState: entityState)
                 }
             })
 
             // When view appears:
             // - set currentEntityIndex
             // - set currentMemberIndex
+            // - fetch members
             .onAppear(perform: {
                 print("------ DisplayMembersView .onAppear")
                 if selectedTab == 1 {
-                    let interactor = DisplayMembersInteractor()
-                    interactor.initialiseEntities(entityState: entityState)
-                    interactor.setSelectedMemberIndex(idx: nil, entityState: entityState)
+                    DisplayMembersInteractor.setCurrentEntityIndex(entityState: entityState)
+                    DisplayMembersInteractor.setCurrentMemberIndex(idx: nil, entityState: entityState)
+                    DisplayMembersInteractor.fetchMembers(presenter: presenter, entityState: entityState)
                 }
             })
             
@@ -101,7 +100,7 @@ struct DisplayMembersView: View {
     
     func changeEntity(row: Int) {
         print("Changed entity: row \(row) selected")
-        guard let entities = DisplayMembersInteractor().getEntities(entityState: entityState) else {return}
+        guard let entities = DisplayMembersInteractor.getEntities() else {return}
         let selectedEntity = entities[row]
         entityState.currentEntityIndex = selectedEntity.idx
     }
@@ -129,8 +128,7 @@ struct MemberListRow: View {
         .onTapGesture {
             // Set local state variable and EntityState's currentMemberIndex
             selectedMemberIdx = rowContent.idx
-            let interactor = DisplayMembersInteractor()
-            interactor.setSelectedMemberIndex(idx: selectedMemberIdx!, entityState: entityState)
+            DisplayMembersInteractor.setCurrentMemberIndex(idx: selectedMemberIdx!, entityState: entityState)
         }
     }
 }

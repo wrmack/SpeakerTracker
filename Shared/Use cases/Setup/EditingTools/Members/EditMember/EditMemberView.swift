@@ -94,14 +94,12 @@ struct EditMemberView: View {
     }
     
     func fetchSelectedMember() {
-        let interactor = EditMemberInteractor()
-        interactor.displaySelectedMember(entityState: entityState, presenter: presenter)
+        EditMemberInteractor.displaySelectedMember(entityState: entityState, presenter: presenter)
     }
     
     func saveMember() {
         print("------ EditMemberView saveMember called")
-        let interactor = EditMemberInteractor()
-        interactor.saveChangedMemberToStore(entityState: entityState, title: memberTitle, first: memberFirstName, last: memberLastName)
+        EditMemberInteractor.saveChangedMemberToStore(entityState: entityState, title: memberTitle, first: memberFirstName, last: memberLastName)
     }
 }
 

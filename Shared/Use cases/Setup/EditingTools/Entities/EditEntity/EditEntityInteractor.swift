@@ -13,7 +13,7 @@ import CoreData
 
 class EditEntityInteractor {
     
-    func displaySelectedEntity(entityState: EntityState, presenter: EditEntityPresenter) {
+    class func displaySelectedEntity(entityState: EntityState, presenter: EditEntityPresenter) {
         guard let entity = entityState.currentEntity else {return}
         presenter.presentViewModel(selectedEntity:entity)
     }
@@ -22,7 +22,7 @@ class EditEntityInteractor {
      Saves entity being edited.  With an entity name change, create a new entity and replace edited entity.
      */
     
-    func saveChangedEntityToStore(entityState: EntityState, entityName: String) {
+    class func saveChangedEntityToStore(entityState: EntityState, entityName: String) {
         
         let viewContext = PersistenceController.shared.container.viewContext
         let currentEntity = entityState.currentEntity
@@ -36,6 +36,6 @@ class EditEntityInteractor {
             let nsError = error as NSError
             fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
         }
-
+        entityState.entitiesHaveChanged = true
     }
 }
