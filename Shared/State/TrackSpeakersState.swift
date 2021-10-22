@@ -23,14 +23,14 @@ class TrackSpeakersState : ObservableObject {
     @Published var timerString = "00:00"
     @Published var amendmentModeSet = false
     var timerSeconds = 0
-    var currentEvent: MeetingEvent?
+    var currentMeetingEvent: MeetingEvent?
     var currentDebate: Debate?
     
     
     init() {
-        let remainingList = SpeakerListWithSections(table: 0, sectionLists: [SectionList(sectionNumber: 0, sectionType: .off, sectionMembers: [ListMember]())])
-        let waitingList = SpeakerListWithSections(table: 1, sectionLists: [SectionList(sectionNumber: 0,  sectionType: .off, sectionMembers: [ListMember]())])
-        let speakingList = SpeakerListWithSections(table: 2, sectionLists: [SectionList(sectionNumber: 0,  sectionType: .mainDebate, sectionMembers: [ListMember]())])
+        let remainingList = TableWithSectionLists(table: 0, sectionLists: [SectionList(sectionNumber: 0, sectionType: .off, sectionMembers: [ListMember]())])
+        let waitingList = TableWithSectionLists(table: 1, sectionLists: [SectionList(sectionNumber: 0,  sectionType: .off, sectionMembers: [ListMember]())])
+        let speakingList = TableWithSectionLists(table: 2, sectionLists: [SectionList(sectionNumber: 0,  sectionType: .mainDebate, sectionMembers: [ListMember]())])
         tableCollection = TableCollection(remainingTable: remainingList, waitingTable: waitingList, speakingTable: speakingList)
         print("++++++ TrackSpeakersState initialised")
     }

@@ -27,9 +27,9 @@ struct Speaker_tracker_multiApp: App {
                 .environmentObject(eventState)
                 .environmentObject(trackSpeakersState)
                 .environmentObject(reportsState)
-#if os(iOS)
-                .environment(\.colorScheme, .light)
-#endif
+//#if os(iOS)
+//                .environment(\.colorScheme, .light)
+//#endif
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
         .onChange(of: scenePhase) { _ in

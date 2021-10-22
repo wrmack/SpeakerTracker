@@ -12,9 +12,9 @@ import Combine
 
 class TrackSpeakersInteractor {
     //    var presenter: TrackSpeakersPresenter?
-    var remainingList: SpeakerListWithSections?
-    var waitingList: SpeakerListWithSections?
-    var speakingList: SpeakerListWithSections?
+    var remainingList: TableWithSectionLists?
+    var waitingList: TableWithSectionLists?
+    var speakingList: TableWithSectionLists?
     private var speakingListNumberOfSections = 1
     
     // MARK: - Class methods
@@ -63,9 +63,9 @@ class TrackSpeakersInteractor {
         }
         
         var tableCollection = TableCollection()
-        tableCollection.remainingTable = SpeakerListWithSections(table: 0, sectionLists: [SectionList(sectionNumber: 0, sectionType: .off, sectionMembers: tempArray)])
-        tableCollection.waitingTable = SpeakerListWithSections(table: 1, sectionLists: [SectionList(sectionNumber: 0, sectionType: .off, sectionMembers: [ListMember]())])
-        tableCollection.speakingTable = SpeakerListWithSections(table: 2, sectionLists: [SectionList(sectionNumber: 0, sectionType: .mainDebate, sectionMembers: [ListMember]())])
+        tableCollection.remainingTable = TableWithSectionLists(table: 0, sectionLists: [SectionList(sectionNumber: 0, sectionType: .off, sectionMembers: tempArray)])
+        tableCollection.waitingTable = TableWithSectionLists(table: 1, sectionLists: [SectionList(sectionNumber: 0, sectionType: .off, sectionMembers: [ListMember]())])
+        tableCollection.speakingTable = TableWithSectionLists(table: 2, sectionLists: [SectionList(sectionNumber: 0, sectionType: .mainDebate, sectionMembers: [ListMember]())])
         trackSpeakersState.tableCollection = tableCollection
         
         presenter.presentMemberNames(tableCollection: trackSpeakersState.tableCollection)
@@ -139,7 +139,7 @@ class TrackSpeakersInteractor {
     ///   - memberTimerAction: Instance of MemberTimerActions
     class func setCurrentMemberTimerState(trackSpeakersState: TrackSpeakersState, memberTimerAction: MemberTimerActions) {
         
-        if trackSpeakersState.currentEvent != nil && memberTimerAction.timerButtonPressed == .stop {
+        if trackSpeakersState.currentMeetingEvent != nil && memberTimerAction.timerButtonPressed == .stop {
             let debate = trackSpeakersState.currentDebate
             let speakerEvent = EventState.createSpeechEvent()
             speakerEvent.member = memberTimerAction.listMember.member
@@ -194,7 +194,7 @@ class TrackSpeakersInteractor {
             
         })
         
-        speakingList = SpeakerListWithSections(table: 2, sectionLists: newSectionLists)
+        speakingList = TableWithSectionLists(table: 2, sectionLists: newSectionLists)
         trackSpeakersState.tableCollection = TableCollection(remainingTable: remainingList, waitingTable: waitingList, speakingTable: speakingList)
     }
     
@@ -213,13 +213,13 @@ class TrackSpeakersInteractor {
             count += 1
         })
         let membersNotIncluding = newRemMbrList.filter {$0 != action.member}
-        remainingList = SpeakerListWithSections(table:0, sectionLists: [SectionList(sectionNumber: 0, sectionType: .off, sectionMembers: membersNotIncluding)])
-        waitingList = SpeakerListWithSections(table: 1, sectionLists:  [SectionList(sectionNumber: 0, sectionType: .off,  sectionMembers: [ListMember]())])
+        remainingList = TableWithSectionLists(table:0, sectionLists: [SectionList(sectionNumber: 0, sectionType: .off, sectionMembers: membersNotIncluding)])
+        waitingList = TableWithSectionLists(table: 1, sectionLists:  [SectionList(sectionNumber: 0, sectionType: .off,  sectionMembers: [ListMember]())])
         var currentSpeakingSectionLists = speakingList!.sectionLists
         let sectionNumberLast = currentSpeakingSectionLists.last!.sectionNumber
         let newSectionList = SectionList(sectionNumber: sectionNumberLast + 1, sectionType: .amendment, sectionMembers: [ListMember]())
         currentSpeakingSectionLists.append(newSectionList)
-        speakingList = SpeakerListWithSections(table: 2, sectionLists: currentSpeakingSectionLists)
+        speakingList = TableWithSectionLists(table: 2, sectionLists: currentSpeakingSectionLists)
         trackSpeakersState.tableCollection = TableCollection(remainingTable: remainingList, waitingTable: waitingList, speakingTable: speakingList)
     }
     
@@ -246,13 +246,13 @@ class TrackSpeakersInteractor {
                 })
             }
         })
-        remainingList = SpeakerListWithSections(table:0, sectionLists: [SectionList(sectionNumber: 0, sectionType: .off, sectionMembers: newRemMbrList)])
-        waitingList = SpeakerListWithSections(table: 1, sectionLists:  [SectionList(sectionNumber: 0, sectionType: .off,  sectionMembers: [ListMember]())])
+        remainingList = TableWithSectionLists(table:0, sectionLists: [SectionList(sectionNumber: 0, sectionType: .off, sectionMembers: newRemMbrList)])
+        waitingList = TableWithSectionLists(table: 1, sectionLists:  [SectionList(sectionNumber: 0, sectionType: .off,  sectionMembers: [ListMember]())])
         var currentSpeakingSectionLists = speakingList!.sectionLists
         let sectionNumberLast = currentSpeakingSectionLists.last!.sectionNumber
         let newSectionList = SectionList(sectionNumber: sectionNumberLast + 1, sectionType: .mainDebate, sectionMembers: [ListMember]())
         currentSpeakingSectionLists.append(newSectionList)
-        speakingList = SpeakerListWithSections(table: 2, sectionLists: currentSpeakingSectionLists)
+        speakingList = TableWithSectionLists(table: 2, sectionLists: currentSpeakingSectionLists)
         trackSpeakersState.tableCollection = TableCollection(remainingTable: remainingList, waitingTable: waitingList, speakingTable: speakingList)
     }
     
@@ -270,9 +270,9 @@ class TrackSpeakersInteractor {
             count += 1
         })
         let sectionLists = [SectionList(sectionNumber: 0,  sectionType: .off, sectionMembers: newRemMbrList)]
-        let remainingList = SpeakerListWithSections(table:0, sectionLists: sectionLists )
-        let waitingList = SpeakerListWithSections(table: 1, sectionLists: [SectionList(sectionNumber: 0,  sectionType: .off, sectionMembers: [ListMember]())])
-        let speakingList = SpeakerListWithSections(table: 2, sectionLists: [SectionList(sectionNumber: 0,  sectionType: .mainDebate, sectionMembers: [ListMember]())])
+        let remainingList = TableWithSectionLists(table:0, sectionLists: sectionLists )
+        let waitingList = TableWithSectionLists(table: 1, sectionLists: [SectionList(sectionNumber: 0,  sectionType: .off, sectionMembers: [ListMember]())])
+        let speakingList = TableWithSectionLists(table: 2, sectionLists: [SectionList(sectionNumber: 0,  sectionType: .mainDebate, sectionMembers: [ListMember]())])
         trackSpeakersState.tableCollection = TableCollection(remainingTable: remainingList, waitingTable: waitingList, speakingTable: speakingList)
     }
     
@@ -357,7 +357,7 @@ class TrackSpeakersInteractor {
         }
     }
     
-    func removeMember(from: SpeakerListWithSections, listMember: ListMember, fromSectionNumber: Int) -> SpeakerListWithSections {
+    func removeMember(from: TableWithSectionLists, listMember: ListMember, fromSectionNumber: Int) -> TableWithSectionLists {
         let memberToRemove = listMember
         let currentSectionLists = from.sectionLists
         var newSectionListMembers = [ListMember]()
@@ -374,11 +374,11 @@ class TrackSpeakersInteractor {
             }
         })
         
-        return SpeakerListWithSections(table: from.table, sectionLists: newSectionLists)
+        return TableWithSectionLists(table: from.table, sectionLists: newSectionLists)
     }
     
     
-    func addMember(to: SpeakerListWithSections, listMember: ListMember, toSectionNumber: Int) -> SpeakerListWithSections {
+    func addMember(to: TableWithSectionLists, listMember: ListMember, toSectionNumber: Int) -> TableWithSectionLists {
         let memberToAdd = listMember
         let currentSectionLists = to.sectionLists
         var newSectionLists = [SectionList]()
@@ -392,7 +392,7 @@ class TrackSpeakersInteractor {
                 newSectionLists.append(sectionList)
             }
         })
-        return SpeakerListWithSections(table: to.table, sectionLists: newSectionLists)
+        return TableWithSectionLists(table: to.table, sectionLists: newSectionLists)
     }
     
     func sortRemainingList() {

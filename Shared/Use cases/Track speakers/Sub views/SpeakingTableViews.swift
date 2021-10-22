@@ -96,6 +96,7 @@ struct SpeakingTableList: View {
                             }
                         }
                     }
+//                    .listSectionSeparator(.visible)
                 }
             }
             .colorScheme(.light)

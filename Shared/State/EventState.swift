@@ -122,6 +122,37 @@ class EventState : ObservableObject {
         return newEvent
     }
     
+    class func createDebateSection() -> DebateSection {
+        let viewContext = PersistenceController.shared.container.viewContext
+        let newDebateSection = DebateSection(context: viewContext)
+        
+        do {
+            try viewContext.save()
+        } catch {
+            // Replace this implementation with code to handle the error appropriately.
+            // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+            let nsError = error as NSError
+            fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
+        }
+        return newDebateSection
+    }
+    
+    class func createDebate() -> Debate {
+        let viewContext = PersistenceController.shared.container.viewContext
+        let newDebate = Debate(context: viewContext)
+        
+        do {
+            try viewContext.save()
+        } catch {
+            // Replace this implementation with code to handle the error appropriately.
+            // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+            let nsError = error as NSError
+            fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
+        }
+        return newDebate
+    }
+    
+    
     static func saveManagedObjectContext() {
         let viewContext = PersistenceController.shared.container.viewContext
         do {

@@ -17,6 +17,26 @@ import Combine
 
 
 
+// MARK: - TableCollection and movements
+
+
+
+// MARK: - Movement of speakers
+enum MoveDirection {
+   case left
+   case right
+}
+
+struct MoveMemberAction : Equatable {
+   var sourceTable = 0
+   var sourceSectionListNumber = 0
+   var listMember = ListMember()
+   var direction = MoveDirection.right
+}
+
+
+// MARK: - Timer related
+
 /**
  Which button to display next to speaker name.
  */
@@ -34,18 +54,39 @@ enum TimerButton {
    case none
 }
 
-struct ListMember : Hashable {
-   var row: Int?
-   var member: Member?
-   var speakingTime = 0
-   var timerButtonMode: TimerButtonMode = .play
+
+struct MemberTimerActions: Equatable {
+   var listMember = ListMember()
+   var timerButtonMode = TimerButtonMode.off
    var timerIsActive = false
+   var speakingTime = 0
+   var timerButtonPressed = TimerButton.none
+//   var playPressed = false
+//   var pausePressed = false
+//   var stopPressed = false
 }
 
-enum SectionType {
-   case mainDebate
-   case amendment
-   case off
+enum LongPressType {
+   case amendmentMover
+   case amendmentFinal
+}
+
+struct LongPressAction: Equatable {
+   var type: LongPressType = .amendmentMover
+   var member = ListMember()
+}
+
+// MARK: - Tables and speakers
+
+struct TableCollection {
+   var remainingTable: TableWithSectionLists?
+   var waitingTable: TableWithSectionLists?
+   var speakingTable: TableWithSectionLists?
+}
+
+struct TableWithSectionLists : Hashable {
+   var table = 2
+   var sectionLists = [SectionList]()
 }
 
 struct SectionList : Hashable {
@@ -69,50 +110,27 @@ struct SectionList : Hashable {
    }
 }
 
-struct SpeakerListWithSections : Hashable {
-   var table = 2
-   var sectionLists = [SectionList]()
-}
-
-struct TableCollection {
-   var remainingTable: SpeakerListWithSections?
-   var waitingTable: SpeakerListWithSections?
-   var speakingTable: SpeakerListWithSections?
-}
-
-
-
-enum MoveDirection {
-   case left
-   case right
-}
-
-struct MoveMemberAction : Equatable {
-   var sourceTable = 0
-   var sourceSectionListNumber = 0
-   var listMember = ListMember()
-   var direction = MoveDirection.right
-}
-
-
-
-struct MemberTimerActions: Equatable {
-   var listMember = ListMember()
-   var timerButtonMode = TimerButtonMode.off
-   var timerIsActive = false
+struct ListMember : Hashable {
+   var row: Int?
+   var member: Member?
    var speakingTime = 0
-   var timerButtonPressed = TimerButton.none
-//   var playPressed = false
-//   var pausePressed = false
-//   var stopPressed = false
+   var timerButtonMode: TimerButtonMode = .play
+   var timerIsActive = false
 }
 
-enum LongPressType {
-   case amendmentMover
-   case amendmentFinal
+enum SectionType {
+   case mainDebate
+   case amendment
+   case off
 }
 
-struct LongPressAction: Equatable {
-   var type: LongPressType = .amendmentMover
-   var member = ListMember()
-}
+
+
+
+
+
+
+
+
+
+

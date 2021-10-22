@@ -33,6 +33,7 @@ struct RemainingTableList: View {
 //                Section(header: HStack{}){
                   ForEach(sectionList.sectionMembers, id: \.self) { listMember in
                      RemainingTableRow(rowContent: listMember, sectionNumber: sectionList.sectionNumber, moveAction: $moveAction)
+//                          .listRowSeparator(.visible)
                   }
 //               }
                 

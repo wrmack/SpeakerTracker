@@ -8,7 +8,28 @@
 
 import SwiftUI
 
-struct MeetingSetupSheetView: View {
+
+struct MyMenuStyle: MenuStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        Menu(configuration)
+            .background(Color(white: 0.65))
+    }
+}
+
+struct MyLabelStyle: LabelStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        Label{
+            configuration.title
+        } icon: {
+//            configuration.icon.frame(maxWidth:1)
+        }
+            .frame(width: 300, height:20)
+            .contentShape(Rectangle())
+    }
+}
+
+
+struct MeetingSetupView: View {
     @EnvironmentObject var entityState: EntityState
     @EnvironmentObject var eventState: EventState
     @EnvironmentObject var trackSpeakersState: TrackSpeakersState
@@ -39,7 +60,6 @@ struct MeetingSetupSheetView: View {
                         Text("Meeting setup")
                             .font(.largeTitle)
                             .fontWeight(.bold)
-                        //                            .foregroundColor(.black)
                             .padding(.top, 20)
                             .padding(.bottom,40)
                         Spacer()
@@ -55,30 +75,35 @@ struct MeetingSetupSheetView: View {
                         }})
                     }
                     .padding(.bottom, 30)
-                
+                    
                     Text("Entity")
                         .fontWeight(.semibold)
                         .padding(.top, 30)
-
-                    Menu(selectedEntityName) {
+                    
+                    Menu {
                         ForEach(entityNames.indices, id: \.self) { idx in
                             Button(entityNames[idx], action: { changeEntity(row: idx)})
                         }
+                    } label: {
+                        Label(selectedEntityName, systemImage:"bolt.fill")
+                        .labelStyle(MyLabelStyle())
                     }
-                    .frame(width: 200)
-
+                    .menuStyle((MyMenuStyle()))
                     
                     Text("Meeting group")
                         .fontWeight(.semibold)
                         .padding(.top, 40)
                     
-                    Menu(selectedMeetingGroupName) {
+                    Menu {
                         ForEach(meetingGroupNames.indices, id: \.self) { idx in
                             Button(meetingGroupNames[idx], action: {
                                 changeMeetingGroup(row: idx)})
                         }
+                    } label: {
+                        Label(selectedMeetingGroupName, systemImage:"bolt.fill")
+                            .labelStyle(MyLabelStyle())
                     }
-                    .frame(width: 200)
+                    .menuStyle(MyMenuStyle())
                     
                     Toggle(isOn: $isRecording) {
                         Text("Create a report")
@@ -97,12 +122,16 @@ struct MeetingSetupSheetView: View {
                             .fontWeight(.semibold)
                             .padding(.top, 40)
                         
-                        Menu(selectedMeetingEventName)  {
+                        Menu  {
                             ForEach(meetingEventNames.indices, id: \.self) { idx in
                                 Button(meetingEventNames[idx], action: {  changeMeetingEvent(row: idx)})
                             }
+                        } label: {
+                            Label(selectedMeetingEventName, systemImage:"bolt.fill")
+                                .labelStyle(MyLabelStyle())
                         }
-                        .frame(width: 200)
+                        .menuStyle(MyMenuStyle())
+
                     }
                     Spacer()
                 }
@@ -110,7 +139,7 @@ struct MeetingSetupSheetView: View {
                 .padding(.leading, 30)
                 .padding(.trailing, 30)
                 //        .background(SETUP_SHEET_BACKGROUND_COLOR)
-                .background(Color(white: 0.4, opacity: 1.0))
+                .background(Color(white: 0.6, opacity: 1.0))
                 .border(Color(white: 0.4), width: 1)
                 .onAppear(perform: {
                     entityNames = MeetingSetupInteractor.fetchEntityNames(entityState: entityState, trackSpeakersState: trackSpeakersState,  presenter: presenter)
@@ -125,11 +154,11 @@ struct MeetingSetupSheetView: View {
                         showReportInfo = false
                     }
                 }
-                    Spacer()
+                Spacer()
             }
             if showSetupInfo {
                 HStack{
-                Text(
+                    Text(
                 """
                 Create entities, their members and \
                 meeting groups in 'Entity setup'.
@@ -137,13 +166,13 @@ struct MeetingSetupSheetView: View {
                 Select an Entity and a Meeting group \
                 in order to display members.
                 """
-                )
-                    .frame(width: 400)
-                    .font(Font.system(size: 14))
-                    .padding(10)
-                    .background(Color.white)
-                    .foregroundColor(Color.black)
-                    .cornerRadius(10.0)
+                    )
+                        .frame(width: 400)
+                        .font(Font.system(size: 14))
+                        .padding(10)
+                        .background(Color.white)
+                        .foregroundColor(Color.black)
+                        .cornerRadius(10.0)
                 }
                 .padding(.leading,30)
             }
@@ -176,7 +205,7 @@ struct MeetingSetupSheetView: View {
             
         }
         .frame(width:500)
-//        .background(Color.orange)
+        
         
     }
     
@@ -184,36 +213,34 @@ struct MeetingSetupSheetView: View {
         let selectedEntity = MeetingSetupInteractor.fetchEntityForRow(entityState: entityState, trackSpeakersState: trackSpeakersState, row: row)
         selectedEntityName = selectedEntity.0
         meetingGroupNames = selectedEntity.1
-        //        meetingGroups = selectedEntity.meetingGroups?.allObjects as? [MeetingGroup]
     }
     
     func changeMeetingGroup(row: Int) {
-        selectedMeetingGroupName = MeetingSetupInteractor.fetchMeetingGroupForRow(trackSpeakersState: trackSpeakersState, row: row)
-        //        self.selectedMeetingGroup = selectedMeetingGroup
-        //        selectedMeetingGroupName = selectedMeetingGroup.name!
-        //        selectedMeetingGroupIndex = row
+        let selectedMeetingGroup = MeetingSetupInteractor.fetchMeetingGroupForRow(trackSpeakersState: trackSpeakersState, row: row)
+        selectedMeetingGroupName = selectedMeetingGroup.0
+        meetingEventNames = selectedMeetingGroup.1
     }
     
     func changeMeetingEvent(row: Int) {
-        //        let interactor = MeetingSetupInteractor()
-        //        let selectedMeetingEvent = interactor.fetchMeetingEventForRow(eventState: eventState, trackSpeakersState: trackSpeakersState, row: row)
-        //        selectedMeetingEventName = selectedMeetingEvent.filename!
-        //        selectedMeetingEventIndex = row
-        //        showMeetingSetupSheet = false
+        MeetingSetupInteractor.setCurrentMeetingEvent(
+            eventState: eventState,
+            trackSpeakersState: trackSpeakersState,
+            row: row
+        )
+        
+        showMeetingSetupSheet = false
     }
 }
 
-struct MeetingSetupSheetView_Previews: PreviewProvider {
+struct MeetingSetupView_Previews: PreviewProvider {
     
     @State static var showSetupInfo = false
     @State static var showMeetingSetupSheet = false
-    @State static var selectedEntityName = ""
-    @State static var selectedMeetingGroupName = ""
     @State static var isRecording = true
     
     
     static var previews: some View {
-        MeetingSetupSheetView(showMeetingSetupSheet: $showMeetingSetupSheet, isRecording: $isRecording)
+        MeetingSetupView(showMeetingSetupSheet: $showMeetingSetupSheet, isRecording: $isRecording)
         //        .previewDevice("iPad Pro (12.9-inch) (4th generation)")
         //        .previewDisplayName("iPad Pro (12.9-inch)")
             .previewLayout(.fixed(width: 600, height: 1024))

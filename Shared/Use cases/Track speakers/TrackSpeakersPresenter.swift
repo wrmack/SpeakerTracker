@@ -11,9 +11,9 @@ import Combine
 
 
 struct TrackSpeakersViewModel {
-    var remainingList = SpeakerListWithSections(table: 0, sectionLists: [SectionList]())
-    var waitingList = SpeakerListWithSections(table: 1, sectionLists: [SectionList]())
-    var speakingList = SpeakerListWithSections(table: 2, sectionLists: [SectionList]())
+    var remainingList = TableWithSectionLists(table: 0, sectionLists: [SectionList]())
+    var waitingList = TableWithSectionLists(table: 1, sectionLists: [SectionList]())
+    var speakingList = TableWithSectionLists(table: 2, sectionLists: [SectionList]())
 }
 
 class TrackSpeakersPresenter : ObservableObject {
@@ -36,7 +36,7 @@ class TrackSpeakersPresenter : ObservableObject {
             tempArray.append(ListMember(row: count, member: member))
             count += 1
         }
-        speakersViewModel.remainingList = SpeakerListWithSections(table: 0, sectionLists: [SectionList(sectionNumber: 0, sectionType: .off, sectionMembers: tempArray)])
+        speakersViewModel.remainingList = TableWithSectionLists(table: 0, sectionLists: [SectionList(sectionNumber: 0, sectionType: .off, sectionMembers: tempArray)])
     }
     
     // Update view model following changes to table collection

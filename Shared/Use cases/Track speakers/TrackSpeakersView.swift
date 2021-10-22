@@ -163,22 +163,20 @@ struct TrackSpeakersView: View {
                             saveDebate()
                         }) {
                             Text("End this debate")
-                                .font(.system(size: 28))
+                                .font(.system(size: 24))
                                 .fontWeight(.semibold)
                                 .foregroundColor(Color.white)
                                 .frame(alignment: .trailing)
                                 .padding(.trailing, 10)
-                                .padding(.top, 40)
+                                .padding(.top, 100)
                         }
                         .buttonStyle(PlainButtonStyle())
-                        .frame(width: 250, height: 80)
-                        
-                        
+
                         Button(action: {
                             saveEvent()
                         }) {
                             Text("End this meeting")
-                                .font(.system(size: 28))
+                                .font(.system(size: 24))
                                 .fontWeight(.semibold)
                                 .foregroundColor(Color.white)
                                 .frame(alignment: .trailing)
@@ -186,30 +184,30 @@ struct TrackSpeakersView: View {
                                 .padding(.top, 40)
                         }
                         .buttonStyle(PlainButtonStyle())
-                        .frame(width: 250, height: 80)
+
                         Image(systemName: "circle.fill")
                             .resizable()
                             .frame(width: 60.0, height: 60.0)
                             .foregroundColor(.red)
-                            .padding(.top, 50)
+                            .padding(.top, 80)
                         Text("Recording on")
                             .foregroundColor(.white)
                     }
                     else {
                         Text("Reset")
-                            .font(.system(size: 28))
+                            .font(.system(size: 24))
                             .fontWeight(.semibold)
                             .foregroundColor(Color.white)
+                            .padding(.top, 100)
                             .onTapGesture {
                                 TrackSpeakersInteractor.reset(trackSpeakersState: trackSpeakersState)
                             }
                         
-                        Spacer().fixedSize(horizontal: true, vertical: true).frame(width: 140, height: 50)
                         Button(action: {withAnimation(.easeInOut(duration: EASEINOUT)) {
                             self.showMeetingSetupSheet.toggle()
                         }}) {
                             Text("Meeting setup")
-                                .font(.system(size: 28))
+                                .font(.system(size: 24))
                                 .fontWeight(.semibold)
                                 .foregroundColor(Color.white)
                                 .frame(alignment: .trailing)
@@ -217,10 +215,9 @@ struct TrackSpeakersView: View {
                                 .padding(.top, 40)
                         }
                         .buttonStyle(PlainButtonStyle())
-                        .frame(width: 250, height: 80)
+
                     }
-                    
-                    Spacer().fixedSize(horizontal: true, vertical: true).frame(width: 200, height: 400)
+                    Spacer().frame(width: 250)
                 }
             }.padding(.leading, 20.0).padding(.bottom, 5).padding(.top,20)
         }
