@@ -17,7 +17,7 @@ class DisplayEventsPresenter : ObservableObject {
     @Published var eventSummaries = [EventSummaryViewModel]()
     
     func presentEventSummaries(events: [MeetingEvent]?) {
-        var tempMeetingEvents = events
+//        var tempMeetingEvents = events
 //        tempMeetingEvents?.sort(by: {
 //            if $0.name! < $1.name! { return true }
 //            return false

@@ -10,11 +10,30 @@ import Foundation
 import Combine
 import CoreData
 
-
+/**
+ Holds the meeting's `currentMeetingEventIndex`
+ 
+ What is tracked in meeting event CoreData model:
+ - a meeting event comprises debates
+ - each debate comprises sections (main debate, amendments)
+ - each section comprises speech events
+ - each speech event contains speaking time and is linked to a debate section and a member
+ 
+ 
+ When events are created:
+ - MeetingEvents are created in setup
+ - a MeetingEvent and starting Debate are created in MeetingSetupInteractor - setCurrentMeetingEvent
+ - a speech event is added to the debate when the user presses Stop button
+ */
 
 class EventState : ObservableObject {
+
+    // Hold indexes only.  The objects are in CoreData.
+    // Use the indexes for retrieving the objects.
+    @Published var currentMeetingEventIndex: UUID?
+    var currentDebateIndex: UUID?
+    var currentDebateSectionIndex: UUID?
     
-    // MARK: - Initialisation
 
     init() {
         print("++++++ EventState intialized")
@@ -23,29 +42,16 @@ class EventState : ObservableObject {
     deinit {
         print("++++++ EventState de-initialized")
     }
+
+    // MARK: - Meeting events
     
-    // MARK: - Published properties
-//    @Published var currentMeetingGroupIndex: UUID?  // Only hold in one place - EntityState
-    @Published var currentMeetingEventIndex: UUID?
-    
-    
-    // MARK: - Methods
-    
-    
-    class func createSpeechEvent() -> SpeechEvent {
+    class func createMeetingEvent() -> MeetingEvent {
         
         let viewContext = PersistenceController.shared.container.viewContext
-        let newSpeech = SpeechEvent(context: viewContext)
+        let newEvent = MeetingEvent(context: viewContext)
+        EventState.saveManagedObjectContext()
         
-        do {
-            try viewContext.save()
-        } catch {
-            // Replace this implementation with code to handle the error appropriately.
-            // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-            let nsError = error as NSError
-            fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
-        }
-        return newSpeech
+        return newEvent
     }
     
     static func meetingEventWithIndex(index: UUID) -> MeetingEvent? {
@@ -106,40 +112,84 @@ class EventState : ObservableObject {
         
     }
     
-    class func createMeetingEvent() -> MeetingEvent {
-        
-        let viewContext = PersistenceController.shared.container.viewContext
-        let newEvent = MeetingEvent(context: viewContext)
-        
-        do {
-            try viewContext.save()
-        } catch {
-            // Replace this implementation with code to handle the error appropriately.
-            // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-            let nsError = error as NSError
-            fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
-        }
-        return newEvent
-    }
-    
-    class func createDebateSection() -> DebateSection {
-        let viewContext = PersistenceController.shared.container.viewContext
-        let newDebateSection = DebateSection(context: viewContext)
-        
-        do {
-            try viewContext.save()
-        } catch {
-            // Replace this implementation with code to handle the error appropriately.
-            // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-            let nsError = error as NSError
-            fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
-        }
-        return newDebateSection
-    }
+    // MARK: - Debates
     
     class func createDebate() -> Debate {
         let viewContext = PersistenceController.shared.container.viewContext
         let newDebate = Debate(context: viewContext)
+        EventState.saveManagedObjectContext()
+
+        return newDebate
+    }
+    
+    static func debateWithIndex(index: UUID) -> Debate {
+        
+        // Setup fetch request
+        let viewContext = PersistenceController.shared.container.viewContext
+        let fetchRequest = NSFetchRequest<Debate>(entityName: "Debate")
+        
+        // Predicate
+        let pred = NSPredicate(format: "%K == %@", "idx", index as CVarArg)
+        fetchRequest.predicate = pred
+        
+        // Fetch
+        var fetchedDebates: [Debate]?
+        do {
+            fetchedDebates = try viewContext.fetch(fetchRequest)
+        }
+        catch {
+            print(error)
+        }
+        
+        let debate = fetchedDebates![0]
+        
+        return debate
+        
+    }
+    
+    
+    // MARK: - Debate sections
+
+    class func createDebateSection() -> DebateSection {
+        let viewContext = PersistenceController.shared.container.viewContext
+        let newDebateSection = DebateSection(context: viewContext)
+        EventState.saveManagedObjectContext()
+        
+        return newDebateSection
+    }
+    
+    static func debateSectionWithIndex(index: UUID) -> DebateSection {
+        
+        // Setup fetch request
+        let viewContext = PersistenceController.shared.container.viewContext
+        let fetchRequest = NSFetchRequest<DebateSection>(entityName: "DebateSection")
+        
+        // Predicate
+        let pred = NSPredicate(format: "%K == %@", "idx", index as CVarArg)
+        fetchRequest.predicate = pred
+        
+        // Fetch
+        var fetchedDebateSections: [DebateSection]?
+        do {
+            fetchedDebateSections = try viewContext.fetch(fetchRequest)
+        }
+        catch {
+            print(error)
+        }
+        
+        let debateSection = fetchedDebateSections![0]
+        
+        return debateSection
+        
+    }
+    
+    
+    // MARK: - Speech events
+    
+    class func createSpeechEvent() -> SpeechEvent {
+        
+        let viewContext = PersistenceController.shared.container.viewContext
+        let newSpeech = SpeechEvent(context: viewContext)
         
         do {
             try viewContext.save()
@@ -149,9 +199,11 @@ class EventState : ObservableObject {
             let nsError = error as NSError
             fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
         }
-        return newDebate
+        return newSpeech
     }
     
+    
+    // MARK: - Managed Object Context
     
     static func saveManagedObjectContext() {
         let viewContext = PersistenceController.shared.container.viewContext
@@ -164,5 +216,29 @@ class EventState : ObservableObject {
             fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
         }
         
+    }
+    
+    // MARK: - Debugging
+    
+    static func getMeetingEventIndices() -> [UUID] {
+        // Setup fetch request
+        let viewContext = PersistenceController.shared.container.viewContext
+        let fetchRequest = NSFetchRequest<MeetingEvent>(entityName: "MeetingEvent")
+        
+        // Fetch
+        var fetchedEvents: [MeetingEvent]?
+        do {
+            fetchedEvents = try viewContext.fetch(fetchRequest)
+        }
+        catch {
+            print(error)
+        }
+
+        var indices = [UUID]()
+        fetchedEvents!.forEach({ event in
+            indices.append(event.idx!)
+        })
+        
+        return indices
     }
 }

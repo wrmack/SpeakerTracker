@@ -15,7 +15,7 @@ class MeetingSetupInteractor {
     ///
     class func fetchEntityForRow(entityState: EntityState, trackSpeakersState: TrackSpeakersState, row: Int) -> (String, [String]) {
         let currentEntity = EntityState.sortedEntities![row]
-        trackSpeakersState.currentEntity = currentEntity
+        entityState.currentEntityIndex = currentEntity.idx
         let entityName = currentEntity.name!
         
         let meetingGroups = EntityState.sortedMeetingGroups(entityIndex: currentEntity.idx!)
@@ -26,14 +26,25 @@ class MeetingSetupInteractor {
         return (entityName, meetingGroupNames)
     }
     
-    class func fetchMeetingGroupForRow(trackSpeakersState: TrackSpeakersState, row: Int) -> (String, [String]) {
+    class func fetchMeetingGroupForRow(entityState: EntityState, trackSpeakersState: TrackSpeakersState, row: Int) -> (String, [String]) {
 
-        let currentMeetingGroup = trackSpeakersState.sortedMeetingGroups()[row]
-        trackSpeakersState.currentMeetingGroup = currentMeetingGroup
+        // Set the current meeting group in EntityState
+        let currentEntityIndex = entityState.currentEntityIndex!
+        let currentMeetingGroup = EntityState.sortedMeetingGroups(entityIndex: currentEntityIndex)![row]
+        entityState.currentMeetingGroupIndex = currentMeetingGroup.idx
         
+        // Set TrackSpeakerState tsSortedMembers property
+        var members = currentMeetingGroup.groupMembers?.allObjects as! [Member]
+        members.sort(by: {
+            if $0.lastName! < $1.lastName! {return true}
+            return false
+        })
+        trackSpeakersState.tsSortedMembers = members
+       
         // Save currentEntity and currentMeetingGroup to CoreData
-        RestorationState.saveTrackSpeakerState(entityIndex: trackSpeakersState.currentEntity!.idx!, meetingGroupIndex: currentMeetingGroup.idx!)
+        RestorationState.saveSpeakerTrackerState(entityIndex: currentEntityIndex, meetingGroupIndex: currentMeetingGroup.idx!)
         
+        // Get meeting events for returning names
         let meetingEvents = EventState.sortedMeetingEvents(meetingGroupIndex: currentMeetingGroup.idx!)
         var meetingEventNames = [String]()
         
@@ -50,36 +61,48 @@ class MeetingSetupInteractor {
             meetingEventNames.append("\(dateString), \(timeString)")
         })
         
+        trackSpeakersState.meetingGroupHasChanged = true
+        
         return (currentMeetingGroup.name!, meetingEventNames)
     }
     
-    class func setCurrentMeetingEvent(eventState: EventState, trackSpeakersState: TrackSpeakersState, row: Int)  {
-        let event = EventState.sortedMeetingEvents(meetingGroupIndex: trackSpeakersState.currentMeetingGroup!.idx!)![row]
+    class func setCurrentMeetingEvent(entityState: EntityState, trackSpeakersState: TrackSpeakersState, eventState: EventState, row: Int)  {
         
-        let speakerEvents = Set<SpeechEvent>()
+        // Get the event from those that have been setup
+        let event = EventState.sortedMeetingEvents(meetingGroupIndex: entityState.currentMeetingGroupIndex!)![row]
         
-        let debateSection = EventState.createDebateSection()
-        debateSection.sectionNumber = 0
-        debateSection.sectionName = "section name??"
-        debateSection.speeches = speakerEvents as NSSet
-        
+        // Create a new debate
         let debate = EventState.createDebate()
+        debate.idx = UUID()
         debate.debateNumber = 0
         debate.note = nil
         debate.debateSections = Set<DebateSection>() as NSSet
+//        debate.debateOfMeeting = event
         
+        // Create a new debate section and add it to the debate
+        let debateSection = EventState.createDebateSection()
+        debateSection.idx = UUID()
+        debateSection.sectionNumber = 0
+        debateSection.sectionName = "Main debate"
+        let speechEvents = Set<SpeechEvent>()
+        debateSection.speeches = speechEvents as NSSet
+        debate.debateSections = debate.debateSections!.adding(debateSection) as NSSet
+
+        // Add the whole debate to the meeting event
         event.debates = Set<Debate>() as NSSet
         event.debates = event.debates?.adding(debate) as NSSet?
         
         EventState.saveManagedObjectContext()
         
-        trackSpeakersState.currentMeetingEvent = event
-        trackSpeakersState.currentDebate = debate
+        eventState.currentMeetingEventIndex = event.idx
+        eventState.currentDebateIndex = debate.idx
+        eventState.currentDebateSectionIndex = debateSection.idx
+        trackSpeakersState.hasMeetingEvent = true
     }
     
-    class func fetchEntityNames(entityState: EntityState, trackSpeakersState: TrackSpeakersState, presenter: MeetingSetupPresenter) -> [String] {
-        let currentEntity = trackSpeakersState.currentEntity
-        let currentMeetingGroup = trackSpeakersState.currentMeetingGroup
+    class func fetchEntityNames(entityState: EntityState, presenter: MeetingSetupPresenter) -> [String] {
+        let currentEntity = entityState.currentEntity
+        let currentMeetingGroup = entityState.currentMeetingGroup
         presenter.presentSetup(currentEntity: currentEntity, currentMeetingGroup:  currentMeetingGroup)
         
         var entityNames = [String]()

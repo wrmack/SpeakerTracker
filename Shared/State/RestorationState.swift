@@ -10,7 +10,7 @@ import CoreData
 
 struct RestorationState {
     
-    static func saveTrackSpeakerState(entityIndex: UUID, meetingGroupIndex: UUID) {
+    static func saveSpeakerTrackerState(entityIndex: UUID, meetingGroupIndex: UUID) {
        
         // Already have a record in CoreData?
         

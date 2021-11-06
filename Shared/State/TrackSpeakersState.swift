@@ -17,14 +17,14 @@ import Combine
  
  */
 class TrackSpeakersState : ObservableObject {
-    @Published var currentEntity: Entity?
-    @Published var currentMeetingGroup: MeetingGroup?
+    
+    @Published var meetingGroupHasChanged = false
     @Published var tableCollection: TableCollection
     @Published var timerString = "00:00"
     @Published var amendmentModeSet = false
     var timerSeconds = 0
-    var currentMeetingEvent: MeetingEvent?
-    var currentDebate: Debate?
+    var hasMeetingEvent = false
+    var tsSortedMembers = [Member]()
     
     
     init() {
@@ -37,19 +37,6 @@ class TrackSpeakersState : ObservableObject {
     
     deinit {
         print("++++++ TrackSpeakersState de-initialised")
-    }
-    
-    func sortedMeetingGroups() -> [MeetingGroup] {
-        var meetingGroups = [MeetingGroup]()
-        guard let entity = currentEntity else { return meetingGroups}
-        guard let entityMeetingGroups = entity.meetingGroups else {return meetingGroups}
-        if entityMeetingGroups.count == 0 {return meetingGroups}
-        meetingGroups = entityMeetingGroups.allObjects as! [MeetingGroup]
-        meetingGroups.sort(by: {
-            if $0.name! < $1.name! { return true }
-            return false
-        })
-        return meetingGroups
     }
     
 }

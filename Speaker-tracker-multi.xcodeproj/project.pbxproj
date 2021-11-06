@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		412CEEA62727170900753923 /* ShareReportRepresentableMacOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 412CEEA52727170900753923 /* ShareReportRepresentableMacOS.swift */; };
 		416A5ED127061AD3006E6CD9 /* Speaker_tracker_multiApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5EC127061AD2006E6CD9 /* Speaker_tracker_multiApp.swift */; };
 		416A5ED227061AD3006E6CD9 /* Speaker_tracker_multiApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5EC127061AD2006E6CD9 /* Speaker_tracker_multiApp.swift */; };
 		416A5ED327061AD3006E6CD9 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5EC227061AD2006E6CD9 /* ContentView.swift */; };
@@ -204,10 +205,12 @@
 		4189C91627111562002F109D /* SetupSheetState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4189C91427111562002F109D /* SetupSheetState.swift */; };
 		41BC60752718B73A00378A0B /* RestorationState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41BC60742718B73A00378A0B /* RestorationState.swift */; };
 		41BC60762718B73A00378A0B /* RestorationState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41BC60742718B73A00378A0B /* RestorationState.swift */; };
+		41D7210C2729B67000D96E90 /* ShareReportRepresentableiOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41D7210B2729B67000D96E90 /* ShareReportRepresentableiOS.swift */; };
 		41E742CB270CD7B400C80021 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41E742CA270CD78100C80021 /* Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		412CEEA52727170900753923 /* ShareReportRepresentableMacOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareReportRepresentableMacOS.swift; sourceTree = "<group>"; };
 		416A5EC127061AD2006E6CD9 /* Speaker_tracker_multiApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Speaker_tracker_multiApp.swift; sourceTree = "<group>"; };
 		416A5EC227061AD2006E6CD9 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		416A5EC327061AD3006E6CD9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -313,6 +316,7 @@
 		416A609127066288006E6CD9 /* PersistenceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceController.swift; sourceTree = "<group>"; };
 		4189C91427111562002F109D /* SetupSheetState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupSheetState.swift; sourceTree = "<group>"; };
 		41BC60742718B73A00378A0B /* RestorationState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestorationState.swift; sourceTree = "<group>"; };
+		41D7210B2729B67000D96E90 /* ShareReportRepresentableiOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareReportRepresentableiOS.swift; sourceTree = "<group>"; };
 		41E742CA270CD78100C80021 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -334,6 +338,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		412CEEA22727168000753923 /* ShareReport */ = {
+			isa = PBXGroup;
+			children = (
+				412CEEA52727170900753923 /* ShareReportRepresentableMacOS.swift */,
+				41D7210B2729B67000D96E90 /* ShareReportRepresentableiOS.swift */,
+			);
+			path = ShareReport;
+			sourceTree = "<group>";
+		};
 		416A5EBB27061AD2006E6CD9 = {
 			isa = PBXGroup;
 			children = (
@@ -740,6 +753,7 @@
 				416A5F5D27062034006E6CD9 /* Master */,
 				416A5F5827062034006E6CD9 /* Detail */,
 				416A5F5227062034006E6CD9 /* ShowReport */,
+				412CEEA22727168000753923 /* ShareReport */,
 			);
 			path = Reports;
 			sourceTree = "<group>";
@@ -1015,6 +1029,7 @@
 				416A601327062288006E6CD9 /* DeleteMemberInteractor.swift in Sources */,
 				416A5FB02706213C006E6CD9 /* TrackSpeakersView.swift in Sources */,
 				416A60112706227D006E6CD9 /* AddEventInteractor.swift in Sources */,
+				41D7210C2729B67000D96E90 /* ShareReportRepresentableiOS.swift in Sources */,
 				416A6029270622AF006E6CD9 /* AddMeetingGroupView.swift in Sources */,
 				416A601C27062294006E6CD9 /* EditMemberPresenter.swift in Sources */,
 				416A5F8E270620EF006E6CD9 /* DisplayEntitiesPresenter.swift in Sources */,
@@ -1057,6 +1072,7 @@
 				416A5F6A27062041006E6CD9 /* EntityState.swift in Sources */,
 				416A5FB927062151006E6CD9 /* MeetingSetupInteractor.swift in Sources */,
 				416A601727062288006E6CD9 /* DeleteMemberView.swift in Sources */,
+				412CEEA62727170900753923 /* ShareReportRepresentableMacOS.swift in Sources */,
 				416A5FAF27062139006E6CD9 /* WaitingTableViews.swift in Sources */,
 				416A5FE227062213006E6CD9 /* DisplaySelectedMemberPresenter.swift in Sources */,
 				416A5FC127062170006E6CD9 /* DisplayMeetingGroupsForReportsInteractor.swift in Sources */,
@@ -1197,7 +1213,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
-				MACOSX_DEPLOYMENT_TARGET = 11.3;
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -1252,7 +1268,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
-				MACOSX_DEPLOYMENT_TARGET = 11.3;
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
@@ -1345,7 +1361,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 11.3;
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.wrmack.Speaker-tracker-multi";
 				PRODUCT_NAME = "Speaker-tracker-multi";
@@ -1375,7 +1391,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 11.3;
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.wrmack.Speaker-tracker-multi";
 				PRODUCT_NAME = "Speaker-tracker-multi";

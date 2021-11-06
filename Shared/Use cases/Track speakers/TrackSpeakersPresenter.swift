@@ -17,7 +17,7 @@ struct TrackSpeakersViewModel {
 }
 
 class TrackSpeakersPresenter : ObservableObject {
-//    @Published var presenterUp = true
+
     @Published var speakersViewModel = TrackSpeakersViewModel()
     
     init() {

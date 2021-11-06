@@ -142,7 +142,7 @@ struct MeetingSetupView: View {
                 .background(Color(white: 0.6, opacity: 1.0))
                 .border(Color(white: 0.4), width: 1)
                 .onAppear(perform: {
-                    entityNames = MeetingSetupInteractor.fetchEntityNames(entityState: entityState, trackSpeakersState: trackSpeakersState,  presenter: presenter)
+                    entityNames = MeetingSetupInteractor.fetchEntityNames(entityState: entityState, presenter: presenter)
                 })
                 .onReceive(presenter.$setupViewModel, perform: { viewModel in
                     selectedEntityName = viewModel.entityName
@@ -216,15 +216,15 @@ struct MeetingSetupView: View {
     }
     
     func changeMeetingGroup(row: Int) {
-        let selectedMeetingGroup = MeetingSetupInteractor.fetchMeetingGroupForRow(trackSpeakersState: trackSpeakersState, row: row)
+        let selectedMeetingGroup = MeetingSetupInteractor.fetchMeetingGroupForRow(entityState: entityState, trackSpeakersState: trackSpeakersState, row: row)
         selectedMeetingGroupName = selectedMeetingGroup.0
         meetingEventNames = selectedMeetingGroup.1
     }
     
     func changeMeetingEvent(row: Int) {
-        MeetingSetupInteractor.setCurrentMeetingEvent(
-            eventState: eventState,
+        MeetingSetupInteractor.setCurrentMeetingEvent(entityState: entityState,
             trackSpeakersState: trackSpeakersState,
+            eventState: eventState,
             row: row
         )
         

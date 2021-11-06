@@ -10,7 +10,7 @@ import Combine
 
 /// The state of the setup sheet that is used for adding, deleting or editing.
 ///
-///`savePressed` - publishes changes
+/// `savePressed` - publishes changes
 ///
 /// `showSheet`  - whether sheet should be presented
 ///

@@ -2,11 +2,13 @@
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="19206" systemVersion="20G165" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Debate" representedClassName="Debate" syncable="YES" codeGenerationType="class">
         <attribute name="debateNumber" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="idx" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="note" optional="YES" attributeType="String"/>
         <relationship name="debateOfMeeting" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="MeetingEvent" inverseName="debates" inverseEntity="MeetingEvent"/>
         <relationship name="debateSections" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="DebateSection" inverseName="sectionOfDebate" inverseEntity="DebateSection"/>
     </entity>
     <entity name="DebateSection" representedClassName="DebateSection" syncable="YES" codeGenerationType="class">
+        <attribute name="idx" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="sectionName" optional="YES" attributeType="String"/>
         <attribute name="sectionNumber" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <relationship name="sectionOfDebate" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Debate" inverseName="debateSections" inverseEntity="Debate"/>
@@ -48,18 +50,19 @@
     <entity name="SpeechEvent" representedClassName="SpeechEvent" syncable="YES" codeGenerationType="class">
         <attribute name="elapsedMinutes" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="elapsedSeconds" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="idx" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="startTime" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <relationship name="member" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Member" inverseName="memberOfSpeechEvent" inverseEntity="Member"/>
         <relationship name="speechOfDebate" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="DebateSection" inverseName="speeches" inverseEntity="DebateSection"/>
     </entity>
     <elements>
-        <element name="Debate" positionX="430.359375" positionY="-433.9296875" width="128" height="103"/>
-        <element name="DebateSection" positionX="441.0703125" positionY="-287.125" width="128" height="103"/>
+        <element name="Debate" positionX="430.359375" positionY="-433.9296875" width="128" height="104"/>
+        <element name="DebateSection" positionX="441.0703125" positionY="-287.125" width="128" height="104"/>
         <element name="Entity" positionX="-202.79296875" positionY="-556.515625" width="112.00390625" height="103"/>
         <element name="MeetingEvent" positionX="414.81640625" positionY="-581.59375" width="128" height="118"/>
         <element name="MeetingGroup" positionX="97.20703125" positionY="-564.12109375" width="128.4921875" height="118"/>
         <element name="Member" positionX="-10" positionY="-178.4609375" width="128" height="148"/>
-        <element name="SpeechEvent" positionX="456.30078125" positionY="-133.60546875" width="128" height="118"/>
         <element name="Restoration" positionX="0" positionY="-423" width="128" height="59"/>
+        <element name="SpeechEvent" positionX="456.30078125" positionY="-133.60546875" width="128" height="119"/>
     </elements>
 </model>

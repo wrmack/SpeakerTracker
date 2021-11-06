@@ -9,15 +9,32 @@
 import SwiftUI
 import Combine
 
+
+/*
+Requirements
+ 
+ - there are three tables
+ - first table: members are sorted alphabetically
+ - second table: members are added to end of list
+ - third table:
+     - comprises one debate
+     - a debate might have amendments
+     - a member might speak in main debate and any amendments
+     - divide table into sections
+     - each section is either part of the main debate or an amendment debate
+     - each section has its own members
+     - each member tracks speaking time
+
+*/
+
+
+
+
 //enum SpeakingStatus {
 //   case notYetSpoken
 //   case isSpeaking
 //   case hasSpoken
 //}
-
-
-
-// MARK: - TableCollection and movements
 
 
 
@@ -66,6 +83,9 @@ struct MemberTimerActions: Equatable {
 //   var stopPressed = false
 }
 
+
+// MARK: - Gesture related
+
 enum LongPressType {
    case amendmentMover
    case amendmentFinal
@@ -73,7 +93,7 @@ enum LongPressType {
 
 struct LongPressAction: Equatable {
    var type: LongPressType = .amendmentMover
-   var member = ListMember()
+   var listMember = ListMember()
 }
 
 // MARK: - Tables and speakers

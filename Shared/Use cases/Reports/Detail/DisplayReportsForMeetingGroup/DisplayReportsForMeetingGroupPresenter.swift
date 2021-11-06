@@ -31,11 +31,12 @@ class DisplayReportsForMeetingGroupPresenter : ObservableObject {
             formatter.dateStyle = .none
             formatter.timeStyle = .short
             let timeStrg = formatter.string(from: event.date!)
-            
-            let rpt = ReportCover(entityName: event.entity.name!, meetingGroupName: event.meetingOfGroup!.name!, eventTime: timeStrg, eventDate: dateStrg, eventID: idx)
+            let entityName = event.meetingOfGroup!.groupOfEntity!.name!
+            let rpt = ReportCover(entityName: entityName, meetingGroupName: event.meetingOfGroup!.name!, eventTime: timeStrg, eventDate: dateStrg, eventID: idx)
             tempReportCovers.append(rpt)
             idx += 1
         })
         reportCovers = tempReportCovers
+
     }
 }

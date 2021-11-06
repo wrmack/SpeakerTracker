@@ -27,7 +27,6 @@ struct SpeakingTableList: View {
     @Binding var memberTimerActions: MemberTimerActions
     @Binding var longPressAction: LongPressAction
     @State var sectionIsCollapsed: [Int : Bool] = [0 : false]
-    @State var currentSectionIsCollapsed = false
     
     
     var body: some View {
@@ -56,18 +55,18 @@ struct SpeakingTableList: View {
                             Spacer()
                             Button(action: {
                                 withAnimation {
+                                    // Check if sectionIsCollapsed contains this section.
+                                    // If not, set to true.  Default is not-collapsed. User must want to collapse.
                                     if sectionIsCollapsed.keys.contains((sectionList as SectionList).sectionNumber) == false {
                                         sectionIsCollapsed[(sectionList as SectionList).sectionNumber] = true
-                                        currentSectionIsCollapsed = true
                                     }
-
+                                    // If collapsed then user must want to expand it
                                     else if sectionIsCollapsed[(sectionList as SectionList).sectionNumber]! == true {
                                         sectionIsCollapsed[(sectionList as SectionList).sectionNumber] = false
-                                        currentSectionIsCollapsed = false
                                     }
+                                    // Otherwise collapse it
                                     else {
                                         sectionIsCollapsed[(sectionList as SectionList).sectionNumber] = true
-                                        currentSectionIsCollapsed = true
                                     }
                                 }
                             })
@@ -81,18 +80,17 @@ struct SpeakingTableList: View {
                         }
                     }) {
 
-                        if currentSectionIsCollapsed == false || (sectionList as SectionList).sectionType == .mainDebate  {
+                        if sectionIsCollapsed[(sectionList as SectionList).sectionNumber] != true || (sectionList as SectionList).sectionType == .mainDebate  {
                             ForEach((sectionList as SectionList).sectionMembers, id: \.self ) { listMember in
-                                Print("SpeakingTableList listMember \(listMember)")
+//                                Print("SpeakingTableList listMember \(listMember)")
                                 SpeakingTableRow(rowContent: listMember,
                                                  sectionNumber: (sectionList as SectionList).sectionNumber,
                                                  sectionType: (sectionList as SectionList).sectionType,
                                                  moveAction: $moveAction,
                                                  memberTimerActions: $memberTimerActions,
                                                  longPressAction: $longPressAction,
-                                                 currentSectionIsCollapsed: $currentSectionIsCollapsed
+                                                 sectionIsCollapsed: $sectionIsCollapsed
                                 )
-
                             }
                         }
                     }
@@ -121,12 +119,8 @@ struct SpeakingTableList: View {
  
  Shows the time held by trackSpeakersState if the current member's timerIsActive property is true, otherwise
  displays the time held by each member.
- 
- 
- 
- 
- 
- */
+*/
+
 struct SpeakingTableRow: View {
     var rowContent: ListMember
     var sectionNumber = 0
@@ -137,7 +131,7 @@ struct SpeakingTableRow: View {
     @State var timerString = "00:00"
     @State var isDragging = false
     @EnvironmentObject var trackSpeakersState: TrackSpeakersState
-    @Binding var currentSectionIsCollapsed: Bool
+    @Binding var sectionIsCollapsed: [Int : Bool]
     
     var drag: some Gesture {
         DragGesture(minimumDistance: 60, coordinateSpace: .local)
@@ -151,7 +145,7 @@ struct SpeakingTableRow: View {
     }
     
     var body: some View {
-        VStack {
+
             HStack {
                 Text("<")
                     .fixedSize(horizontal: true, vertical: true)
@@ -201,7 +195,6 @@ struct SpeakingTableRow: View {
                                 print("Play pressed")
                                 self.timerString = "00:00"
                                 memberTimerActions = MemberTimerActions(listMember: rowContent, timerButtonMode: .pause_stop, timerIsActive: true, speakingTime: 0, timerButtonPressed: .play)
-                                
                             }
                     }
                     
@@ -218,17 +211,17 @@ struct SpeakingTableRow: View {
                         Text(verbatim: "")
                     }
                 }
-            }.animation(.none,value: currentSectionIsCollapsed)
 
-        }
+            }
         .onReceive(trackSpeakersState.$timerString, perform: { timerString in
+            print("------ SpeakingTableRow onReceive $timerString")
             self.timerString = timerString
         })
         .gesture(drag)
         .contextMenu {
             if sectionType == .mainDebate {
                 Button("Moves amendment", action: { 
-                    longPressAction = LongPressAction(type: .amendmentMover, member: rowContent)
+                    longPressAction = LongPressAction(type: .amendmentMover, listMember: rowContent)
                 })
                 Button("Speaks again", action: {
                     print("Action2")
@@ -236,11 +229,12 @@ struct SpeakingTableRow: View {
             }
             if sectionType == .amendment {
                 Button("Final speaker for amendment", action: {
-                    longPressAction = LongPressAction(type: .amendmentFinal, member: rowContent)
+                    longPressAction = LongPressAction(type: .amendmentFinal, listMember: rowContent)
                 })
             }
             
         }
+//        .animation(.none, value: sectionIsCollapsed[sectionNumber])
         
     }
     

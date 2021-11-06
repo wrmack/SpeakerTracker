@@ -71,7 +71,7 @@ struct ContentView: View {
                         selectedMeetingGroup: $selectedMeetingGroup,
                         isRecording: $isRecording
                     )
-                        .frame(maxHeight: geo.size.height - 30)
+                        .frame(maxHeight: geo.size.height > 30 ? geo.size.height - 30 : geo.size.height)
                         .onTapGesture {
                             withAnimation(.easeInOut(duration: EASEINOUT)) {
                                 if showMeetingSetupSheet == true {

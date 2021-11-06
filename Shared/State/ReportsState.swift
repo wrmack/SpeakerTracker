@@ -10,8 +10,11 @@ import Foundation
 
 
 class ReportsState : ObservableObject {
-//    var events: [Event]?
-//    var selectedEvent: Event?
+    var events: [MeetingEvent]?
+    var selectedEvent: MeetingEvent?
+    
+    var eventIndexes: [UUID]?
+    
     
     init() {
         print("++++++ ReportsState initialised")

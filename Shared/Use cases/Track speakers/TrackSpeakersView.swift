@@ -43,6 +43,7 @@ struct StopButtonState {
 ///
 struct TrackSpeakersView: View {
     
+    @EnvironmentObject var entityState: EntityState
     @EnvironmentObject var eventState: EventState
     @EnvironmentObject var trackSpeakersState: TrackSpeakersState
     @StateObject var presenter = TrackSpeakersPresenter()
@@ -69,6 +70,8 @@ struct TrackSpeakersView: View {
         VStack {
             HStack {
                 Spacer().fixedSize(horizontal: true, vertical: false).frame(width:100, height:1)
+                
+                // Committee name, timer display, timer buttons
                 HStack {
                     if let name = selectedMeetingGroupName {
                         Text(name)
@@ -152,10 +155,13 @@ struct TrackSpeakersView: View {
                 
             } 
             
+            // The tables of speakers
             HStack (alignment: .bottom, spacing: 20){
                 RemainingTableList(viewModel: presenter.speakersViewModel.remainingList.sectionLists, moveAction: $moveAction)
                 WaitingTableList(viewModel: presenter.speakersViewModel.waitingList.sectionLists, moveAction: $moveAction)
                 SpeakingTableList(viewModel: presenter.speakersViewModel.speakingList.sectionLists, moveAction: $moveAction, memberTimerActions: $memberTimerActions, longPressAction: $longPressAction)
+                
+                // Controls down right-hand side
                 VStack{
                     if isRecording {
                         
@@ -225,7 +231,11 @@ struct TrackSpeakersView: View {
         .background(Color.gray)
         .onAppear(perform: {
             print("------ TrackSpeakersView .onAppear")
-            TrackSpeakersInteractor.fetchMembers(presenter: presenter, eventState: eventState, trackSpeakersState: trackSpeakersState)
+            TrackSpeakersInteractor.fetchMembers(presenter: presenter, entityState: entityState, eventState: eventState, trackSpeakersState: trackSpeakersState)
+            if entityState.currentMeetingGroupIndex != nil {
+                selectedMeetingGroup = EntityState.meetingGroupWithIndex(index: entityState.currentMeetingGroupIndex!)
+                selectedMeetingGroupName = selectedMeetingGroup!.name
+            }
             viewHasAppeared = true
         })
         .onReceive(self.trackSpeakersState.$tableCollection, perform: { newCollection in
@@ -234,27 +244,28 @@ struct TrackSpeakersView: View {
                 TrackSpeakersInteractor.fetchMembers(presenter: presenter, tableCollection: newCollection)
             }
         })
-        .onReceive(self.trackSpeakersState.$currentMeetingGroup) { meetingGroup in
-            if viewHasAppeared == true {
-                print("------ TrackSpeakersView onReceive trackSpeakersState.$currentMeetingGroup")
+        .onReceive(trackSpeakersState.$meetingGroupHasChanged, perform: { val in
+            if val == true {
+                print("------ TrackSpeakersView onReceive trackSpeakersState.$meetingGroupHasChanged")
+                trackSpeakersState.meetingGroupHasChanged = false
+                let meetingGroup = entityState.currentMeetingGroup!
+                selectedMeetingGroupName = meetingGroup.name
                 TrackSpeakersInteractor.fetchMembers(presenter: presenter, trackSpeakersState: trackSpeakersState, meetingGroupForRemainingTable: meetingGroup)
             }
-            if meetingGroup != nil {
-                selectedMeetingGroupName = meetingGroup!.name
-            }
-        }
+        })
         .onReceive(self.trackSpeakersState.$amendmentModeSet, perform: { set in
             if set == true {
                 //            trackSpeakersState.resetForAmendment()
             }
         })
         .onChange(of: moveAction, perform: { action in
+            print("------ onChange moveAction")
             let interactor = TrackSpeakersInteractor()
             interactor.moveMember(moveAction: action, trackSpeakersState: trackSpeakersState)
         })
         .onChange(of: memberTimerActions, perform: { action in
             print("------ onChange memberTimerActions")
-            TrackSpeakersInteractor.setCurrentMemberTimerState(trackSpeakersState: trackSpeakersState, memberTimerAction: action)
+            TrackSpeakersInteractor.setCurrentMemberTimerState(eventState: eventState, trackSpeakersState: trackSpeakersState, memberTimerAction: action)
             if memberTimerActions.timerButtonPressed == .play {
                 playTimer()
             }
@@ -276,13 +287,11 @@ struct TrackSpeakersView: View {
     }
     
     func saveDebate() {
-        let interactor = TrackSpeakersInteractor()
-        interactor.saveDebateToTrackSpeakersState(trackSpeakersState: trackSpeakersState)
+        TrackSpeakersInteractor.saveDebate(eventState: eventState, trackSpeakersState: trackSpeakersState)
     }
     
     func saveEvent() {
-        let interactor = TrackSpeakersInteractor()
-        interactor.saveEventToDisk(trackSpeakersState: trackSpeakersState)
+        TrackSpeakersInteractor.saveMeetingEvent(eventState: eventState)
         isRecording = false
     }
     
