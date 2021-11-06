@@ -160,11 +160,12 @@ struct MeetingSetupView: View {
                 HStack{
                     Text(
                 """
-                Create entities, their members and \
-                meeting groups in 'Entity setup'.
+                Select an entity and a meeting group \
+                in order to display the meeting group's
+                members.
                 
-                Select an Entity and a Meeting group \
-                in order to display members.
+                To create entities, their members and \
+                meeting groups go to the 'Setup' tab.
                 """
                     )
                         .frame(width: 400)

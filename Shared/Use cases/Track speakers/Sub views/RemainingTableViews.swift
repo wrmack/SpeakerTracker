@@ -40,6 +40,7 @@ struct RemainingTableList: View {
             }
 
          }
+         .listStyle(.plain)
          .colorScheme(.light)
          .environment(\.defaultMinListHeaderHeight, 0)
       }

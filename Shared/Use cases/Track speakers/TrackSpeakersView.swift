@@ -67,7 +67,10 @@ struct TrackSpeakersView: View {
     
     var body: some View {
         Print(">>>>>> TrackSpeakersView body")
+        
+        // VStack has two HStacks
         VStack {
+            // Top row: Box with committee name and clock; timer controls
             HStack {
                 Spacer().fixedSize(horizontal: true, vertical: false).frame(width:100, height:1)
                 
@@ -77,19 +80,20 @@ struct TrackSpeakersView: View {
                         Text(name)
                             .fontWeight(.regular)
                             .foregroundColor(Color.white)
-                            .font(.system(size: 30))
+                            .font(.system(size: 24))
                     }
                     else {
                         Text("No meeting group selected")
                             .fontWeight(.light)
                             .foregroundColor(Color(white: 0.7))
-                            .font(.system(size: 30))
+                            .font(.system(size: 24))
                     }
                     Spacer()
                     Text(self.timerString)
                         .fontWeight(.medium)
                         .foregroundColor(Color.white)
                         .font(.custom("Arial Rounded MT Bold", size: 92))
+                        .frame(minWidth: 300)
                         .onReceive(timer, perform: { input in
                             let secondsSinceStart: Int = abs(Int(startTime.timeIntervalSinceNow)) + self.secondsAtPause
                             let minutes = secondsSinceStart / 60
@@ -99,14 +103,16 @@ struct TrackSpeakersView: View {
                             trackSpeakersState.timerString = timerString
                         })
                 }
-                .frame(minWidth: 600, maxWidth: 700)
+                .frame(maxWidth: 800)
+                .frame(height: 100)
                 .padding(.horizontal, 15.0)
                 .background(Color.init(white: 0.5))
                 .cornerRadius(7.0)
+                .padding(.trailing,50)
 
                 
                 Spacer()
-                    .frame(minWidth:50)
+
                 
                 Group {
                     Button(action: {
@@ -151,7 +157,7 @@ struct TrackSpeakersView: View {
                 }
                 
                 Spacer()
-                    .frame(minWidth:20)
+                    .frame(width:40)
                 
             } 
             
@@ -330,13 +336,17 @@ struct TrackSpeakersView_Previews: PreviewProvider {
     @State static var showMeetingSetupSheet = false
     @State static var selectedEntityName = ""
     @State static var isRecording = true
-    @EnvironmentObject static var trackSpeakersState: TrackSpeakersState
-    static var viewContext = PersistenceController.preview.container.viewContext
+//    @EnvironmentObject static var trackSpeakersState: TrackSpeakersState
+//    static var viewContext = PersistenceController.preview.container.viewContext
     
     static var previews: some View {
-        TrackSpeakersView(
+        let context = PersistenceController.preview.container.viewContext
+        let meetingGroup = MeetingGroup(context: context)
+        meetingGroup.name = "Test meeting group"
+        
+        return TrackSpeakersView(
             showMeetingSetupSheet: $showMeetingSetupSheet,
-            selectedMeetingGroup: .constant(MeetingGroup(context: viewContext)),
+            selectedMeetingGroup: .constant(meetingGroup),
             isRecording: $isRecording
         )
         //        .previewDevice("iPad Pro (12.9-inch) (5th generation)")
@@ -344,6 +354,7 @@ struct TrackSpeakersView_Previews: PreviewProvider {
             .previewLayout(.fixed(width: 1366, height: 1024))
             .environmentObject(EventState())
             .environmentObject(TrackSpeakersState())
+            .environment(\.managedObjectContext, context)
             .environment(\.colorScheme, .light)
     }
 }

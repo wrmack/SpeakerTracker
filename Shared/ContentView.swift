@@ -212,7 +212,7 @@ struct ContentView_Previews: PreviewProvider {
         ContentView(speakers: testData)
             .previewDevice("iPad Pro (12.9-inch) (5th generation)")
         //            .previewDisplayName("iPad Pro (12.9-inch)")
-            .previewLayout(.fixed(width: 1366, height: 1024))
+            .previewLayout(.fixed(width: 1024, height: 768))
             .environmentObject(EntityState())
             .environmentObject(EventState())
             .environmentObject(TrackSpeakersState())

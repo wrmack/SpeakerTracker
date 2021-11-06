@@ -97,8 +97,10 @@ struct SpeakingTableList: View {
 //                    .listSectionSeparator(.visible)
                 }
             }
+            .listStyle(.plain)
             .colorScheme(.light)
         }
+        .background(Color.white)
     }
 }
 

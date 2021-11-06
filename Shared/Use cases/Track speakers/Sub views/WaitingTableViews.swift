@@ -46,8 +46,10 @@ struct WaitingTableList: View {
 
 //         .environment(\.editMode, isEditable ? .constant(.active) : .constant(.inactive))
          }
+         .listStyle(.plain)
          .colorScheme(.light)
       }
+      .background(Color.white)
    }
 }
 

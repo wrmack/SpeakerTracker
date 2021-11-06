@@ -8,7 +8,8 @@
 import Foundation
 import SwiftUI
 import AppKit
-import PDFKit
+import CoreText
+import Quartz
 
 
 struct SharingPicker: NSViewRepresentable {
@@ -26,98 +27,66 @@ struct SharingPicker: NSViewRepresentable {
     func updateNSView(_ nsView: NSView, context: Context) {
         if isPresented {
 
+            // Url
+            let docUrl = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+            let dataURL = docUrl.appendingPathComponent("TmpPdf")
+            let pdfDataURL = dataURL.appendingPathComponent("Meeting.pdf") as CFURL
+            print("Data url: \(dataURL)")
+            
             // Get attributed string
             let attString = NSAttributedString(convertReportContentToAttributedString())
 
-            // Create a NSTextView
-            let viewX = 0
-            let viewY = 0
-            let viewWidth = 612
-            let viewHeight = 791
+            // Get total length of string
+            let stringLength = attString.length
+            print("stringLength \(stringLength)")
 
-            // Create NSTextContainer
-            let containerSize = NSSize(width: viewWidth, height: viewHeight - 60)
-            let textContainer = NSTextContainer(size: containerSize)
-            
-            // Add NSTextContainer to NSTextLayoutManager
-            let textLayoutManager = NSTextLayoutManager()
-            textLayoutManager.textContainer = textContainer
-            
-            // Add NSTextLayoutManager to NSTextStorage
-            let textContentStorage = NSTextContentStorage()
-            textContentStorage.addTextLayoutManager(textLayoutManager)
-            
-            // Calculate height required
-            let rectForAttString = attString.boundingRect(with: CGSize(width: CGFloat(viewWidth), height: CGFloat.greatestFiniteMagnitude), options: [.usesLineFragmentOrigin, .usesFontLeading], context: nil)
-            let pages = Int(ceil(rectForAttString.height / 791))
-            
-            
-            // Create NSTextView with the textContainer
-            let textView = NSTextView(frame: NSRect(x: viewX, y: viewY, width: viewWidth, height: viewHeight), textContainer: textLayoutManager.textContainer)
-            
-            textView.textContainerInset = NSSize(width: 0, height: 30)
-            textView.textContainer!.lineFragmentPadding = 40
-            textView.isEditable = false
-            textView.isSelectable = false
-            textView.backgroundColor = NSColor.white
 
-            textView.textContentStorage?.attributedString = attString    
-          
-            // Generate pdf data to create first page of PDFDocument
-            let pdfData = textView.dataWithPDF(inside: NSRect(x: viewX, y: viewY, width: viewWidth, height: viewHeight))
-            let pdfDocument = PDFDocument(data: pdfData)!
+            // The size of the page
+            // A4 595 x 842
+            // Letter 612 x 792  (8.5in x 11in) x 72 ppi
+            let pageWidth = 595
+            let pageHeight = 842
+            let horizontalMargin = 36 // half an inch, 72 ppi
+            let verticalMargin = 36
+            let printingWidth = pageWidth - (2 * horizontalMargin)
+            let printingHeight = pageHeight - (2 * verticalMargin)
+
+            // Get pdf context
+            var pageBox = CGRect(x: 0, y: 0, width: pageWidth, height: pageHeight)
+            let pdfContext = CGContext(pdfDataURL, mediaBox: &pageBox, nil)
+
+            // Create a framesetter
+            let framesetter = CTFramesetterCreateWithAttributedString(attString)
+
+            // Constants for later use
+            let constraints = CGSize(width: printingWidth, height: printingHeight)
+            let pageRect = CGRect(x: horizontalMargin, y: verticalMargin, width: printingWidth, height: printingHeight)
+            print("constraints \(constraints)")
+            print("pageRect \(pageRect)")
+
+            // Track the text location.  This is the location in the string at the start of a page.
+            var textLocation = 0
             
-            // Debugging
-            // Examining attributes
-            let pdfDocPages = pdfDocument.pageCount
-            print("Page count: \(pdfDocPages)")
-            let firstPage = pdfDocument.page(at: 0)
-            firstPage?.attributedString!.enumerateAttributes(in: NSMakeRange(0, (firstPage?.attributedString!.length)!), options:[], using: { (attributes, range, stop) in
-                print("Attributes: \n\(attributes) \nFor range: \n\(range)\n-----------------------------------------------------------")
-            })
-            
-            let altSize = attString.size()
-            let contOrigin = textView.textContainerOrigin
-            
-            // Counting number of letters in attributed strings
-            let numLettersInPage = ((firstPage?.attributedString!.string)! as String).filter{($0 as Character).isLetter}.count
-            let numLettersInAttString = (attString.string as String).filter{($0 as Character).isLetter}.count
-            
-            for i in 1..<pages {
-                let pdfData = textView.dataWithPDF(inside: NSRect(x: viewX, y: viewY + (viewHeight * i), width: viewWidth, height: viewHeight))
-                let pdfDocumentTmp = PDFDocument(data: pdfData)!
-                let page = pdfDocumentTmp.page(at: 0)!
-                pdfDocument.insert(page, at: 1)
+            // Loop to create separate pages
+            while textLocation < stringLength {
+
+                // Location changes for each page.  Is reset at end of loop, based on stringRange calculated below.
+                let textRange = CFRange(location: textLocation, length: 0)
+
+                // Calculate string range for this page. Constraints are page size less margins
+                var stringRange = CFRange()
+                CTFramesetterSuggestFrameSizeWithConstraints(framesetter, textRange, nil, constraints, &stringRange)
+                
+                // Create frame to use for drawing
+                let framePath = CGPath(rect: pageRect, transform: nil)
+                let frame = CTFramesetterCreateFrame(framesetter, stringRange, framePath, nil)
+
+                pdfContext!.beginPDFPage(nil)
+                CTFrameDraw(frame, pdfContext!)
+                pdfContext!.endPDFPage()
+                textLocation = textLocation + stringRange.length
             }
-            
-            
-//            if (numLettersInPage) < numLettersInAttString {
-//                let textView = NSTextView(frame: NSRect(x: viewX, y: viewY + viewHeight, width: viewWidth, height: viewHeight), textContainer: textLayoutManager.textContainer)
-//                textView.textStorage?.setAttributedString(attString)
-//                pdfData = textView.dataWithPDF(inside: textView.bounds)
-//                let secondPage = PDFDocument(data: pdfData)?.page(at: 0)
-//                pdfDocument.insert(secondPage!, at: 1)
-//            }
-
-//            for i in 1..<pages {
-//                data = documentView.dataWithPDF(inside: NSMakeRect(0.0, CGFloat(i) * height, width, height))
-//                let pdfPage = PDFPage(image: NSImage(data: data)!)!
-//                pdfDocument.insert(pdfPage, at: pdfDocument.pageCount)
-//            }
-            
-            // Write data to files
-            let docUrl = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-            let dataURL = docUrl.appendingPathComponent("TmpPdf")
-            print("Data url: \(dataURL)")
-            
-            let pdfDataURL = dataURL.appendingPathComponent("Meeting.pdf")
-
-            do {
-                try FileManager.default.createDirectory(at: dataURL, withIntermediateDirectories: true, attributes: nil)
-                pdfDocument.write(to: pdfDataURL)
-            } catch {
-                print(error.localizedDescription)
-            }
+            pdfContext!.closePDF()
 
             // Create picker
             let picker = NSSharingServicePicker(items: [pdfDataURL])

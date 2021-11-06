@@ -171,13 +171,24 @@ struct ShowReportView_Previews: PreviewProvider {
     // ancestor view.
     // Create a static version of a ReportsState instance
     // and inject into the preview environment
+    // If preview crashes check Console Crash report:
+    // Application Specific Information: might have error
+    
+    // Not working - suspect presenter not working
     
     static var rs = ReportsState()
     
     static var previews: some View {
+//        let rs = ReportsState()
         let context = PersistenceController.preview.container.viewContext
         let event1 = MeetingEvent(context: context)
+        event1.date = Date()
+        let meetingGroup = MeetingGroup(context: context)
+        meetingGroup.name = "Meeting Group"
+        let meetings = NSSet(array: [event1])
+        meetingGroup.meetings = meetings
         rs.events = [event1]
+        
         
         return ShowReportView(showSheet: .constant(true))
             .environment(\.managedObjectContext, context)
