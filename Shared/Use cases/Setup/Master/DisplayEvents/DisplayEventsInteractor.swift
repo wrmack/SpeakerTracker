@@ -43,23 +43,24 @@ class DisplayEventsInteractor {
     
     /// Sets and returns the `currentEventIndex` of EntityState
     ///
-    /// Called when user selects a member, to store the selected index as `currentEventIndex`.
-    /// If the passed-in idx is nil then sets `currentEventIndex` to the first member.
+    /// Called when user selects a meeting event, to store the selected index as `currentEventIndex`.
+    /// If the passed-in idx is nil then sets `currentEventIndex` to the first meeting event.
     /// - Parameters:
-    ///    - idx: the UUID for the selected meeting group; if nil then selected meeting groups is set to the first meeting group
+    ///    - idx: the UUID for the selected meeting event; if nil then selected meeting event is set to the first meeting event
     ///    - entityState: The EntityState environment object
 
     class func setCurrentEventIndex(idx: UUID?, entityState: EntityState, eventState: EventState) {
-        
-        // Get the meeting group then the events for that meeting group
-        guard let meetingGroupIndex = entityState.currentMeetingGroupIndex else {return}
-        guard let fetchedEventsForMeetingGroup = EventState.sortedMeetingEvents(meetingGroupIndex: meetingGroupIndex) else {return }
-        if fetchedEventsForMeetingGroup.count == 0 {return }
-        
+    
         var eventIdx = idx
         
         // If idx is nil then select the first member
+        // Get the meeting group then the events for that meeting group
+
         if eventIdx == nil {
+            guard let meetingGroupIndex = entityState.currentMeetingGroupIndex else {return}
+            guard let fetchedEventsForMeetingGroup = EventState.sortedMeetingEvents(meetingGroupIndex: meetingGroupIndex) else {return }
+            if fetchedEventsForMeetingGroup.count == 0 {return }
+            
             let firstEvent = fetchedEventsForMeetingGroup[0]
             eventIdx = firstEvent.idx
         }
@@ -70,37 +71,45 @@ class DisplayEventsInteractor {
     
     static func fetchEvents(presenter: DisplayEventsPresenter, eventState: EventState, entityState: EntityState) {
         
-        guard let currentMeetingGroupIndex = entityState.currentMeetingGroupIndex else {return}
-        
-        let fetchedMeetingEventsForMeetingGroup = EventState.sortedMeetingEvents(meetingGroupIndex: currentMeetingGroupIndex)!
         var meetingEvents = [MeetingEvent]()
-        if fetchedMeetingEventsForMeetingGroup.count > 0 {
-            fetchedMeetingEventsForMeetingGroup.forEach({ event in
-                meetingEvents.append(event)
-            })
+        
+        let currentMeetingGroupIndex = entityState.currentMeetingGroupIndex
+        if currentMeetingGroupIndex != nil {
+            let fetchedMeetingEventsForMeetingGroup = EventState.sortedMeetingEvents(meetingGroupIndex: currentMeetingGroupIndex!)!
+            
+            if fetchedMeetingEventsForMeetingGroup.count > 0 {
+                fetchedMeetingEventsForMeetingGroup.forEach({ event in
+                    meetingEvents.append(event)
+                })
+            }
         }
         presenter.presentEventSummaries(events: meetingEvents)
     }
     
-    static func fetchEventsOnMeetingGroupChange(meetingGroupIndex: UUID, presenter: DisplayEventsPresenter, eventState: EventState) {
+    static func fetchEventsOnMeetingGroupChange(meetingGroupIndex: UUID?, presenter: DisplayEventsPresenter, eventState: EventState) {
         
-        let fetchedEventsForMeetingGroup = EventState.sortedMeetingEvents(meetingGroupIndex: meetingGroupIndex)!
         var events = [MeetingEvent]()
-        if fetchedEventsForMeetingGroup.count > 0 {
-            fetchedEventsForMeetingGroup.forEach({ event in
-                events.append(event)
-            })
-            let firstEvent = events[0]
-            eventState.currentMeetingEventIndex = firstEvent.idx
-        }
-        else {
-            eventState.currentMeetingEventIndex = nil
+        
+        if meetingGroupIndex != nil {
+            let fetchedEventsForMeetingGroup = EventState.sortedMeetingEvents(meetingGroupIndex: meetingGroupIndex!)!
+
+            if fetchedEventsForMeetingGroup.count > 0 {
+                fetchedEventsForMeetingGroup.forEach({ event in
+                    events.append(event)
+                })
+                let firstEvent = events[0]
+                eventState.currentMeetingEventIndex = firstEvent.idx
+            }
+            else {
+                eventState.currentMeetingEventIndex = nil
+            }
         }
         
         presenter.presentEventSummaries(events: events)
-        
-        
-        
+    }
+    
+    static func resetMeetingGroupIndex(entityState: EntityState) {
+        entityState.currentMeetingGroupIndex = nil
     }
     
     func fetchMeetingGroupsForEntity(entity: Entity) {

@@ -68,7 +68,7 @@ struct TrackSpeakersView: View {
     var body: some View {
         Print(">>>>>> TrackSpeakersView body")
         
-        // VStack has two HStacks
+        // VStack has two HStacks: top row - controls, second row - speaker tables
         VStack {
             // Top row: Box with committee name and clock; timer controls
             HStack {
@@ -159,7 +159,7 @@ struct TrackSpeakersView: View {
                 Spacer()
                     .frame(width:40)
                 
-            } 
+            }
             
             // The tables of speakers
             HStack (alignment: .bottom, spacing: 20){
@@ -218,23 +218,25 @@ struct TrackSpeakersView: View {
                         Button(action: {withAnimation(.easeInOut(duration: EASEINOUT)) {
                             self.showMeetingSetupSheet.toggle()
                         }}) {
-                            Text("Meeting setup")
+                            Text("Meeting \nsetup")
                                 .font(.system(size: 24))
                                 .fontWeight(.semibold)
                                 .foregroundColor(Color.white)
-                                .frame(alignment: .trailing)
+                                .frame(alignment: .center)
+                                .multilineTextAlignment(.center)
                                 .padding(.trailing, 10)
                                 .padding(.top, 40)
                         }
                         .buttonStyle(PlainButtonStyle())
 
                     }
-                    Spacer().frame(width: 250)
+                    Spacer().frame(width: 150)
                 }
             }.padding(.leading, 20.0).padding(.bottom, 5).padding(.top,20)
         }
         .padding(.top, 15.0)
-        .background(Color.gray)
+//        .preferredColorScheme(.light)
+        .background(Color(white: 0.4))
         .onAppear(perform: {
             print("------ TrackSpeakersView .onAppear")
             TrackSpeakersInteractor.fetchMembers(presenter: presenter, entityState: entityState, eventState: eventState, trackSpeakersState: trackSpeakersState)
@@ -335,7 +337,7 @@ struct TrackSpeakersView: View {
 struct TrackSpeakersView_Previews: PreviewProvider {
     @State static var showMeetingSetupSheet = false
     @State static var selectedEntityName = ""
-    @State static var isRecording = true
+    @State static var isRecording = false
 //    @EnvironmentObject static var trackSpeakersState: TrackSpeakersState
 //    static var viewContext = PersistenceController.preview.container.viewContext
     
@@ -349,10 +351,9 @@ struct TrackSpeakersView_Previews: PreviewProvider {
             selectedMeetingGroup: .constant(meetingGroup),
             isRecording: $isRecording
         )
-        //        .previewDevice("iPad Pro (12.9-inch) (5th generation)")
-        //        .previewDisplayName("iPad Pro (12.9-inch)")
-            .previewLayout(.fixed(width: 1366, height: 1024))
+            .previewInterfaceOrientation(.landscapeRight)
             .environmentObject(EventState())
+            .environmentObject(EntityState())
             .environmentObject(TrackSpeakersState())
             .environment(\.managedObjectContext, context)
             .environment(\.colorScheme, .light)

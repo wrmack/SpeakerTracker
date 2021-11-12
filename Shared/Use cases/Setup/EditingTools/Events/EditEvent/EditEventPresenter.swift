@@ -8,24 +8,25 @@
 
 import Foundation
 
-//struct EditEventViewModel {
+struct EditEventViewModel: Equatable {
 //    var entityName = ""
 //    var meetingGroupName = ""
-//    var eventDate = Date()
-//    var eventTime = Date()
-//}
-//
-//class EditEventPresenter : ObservableObject {
-//    
-//    @Published var viewModel = EditEventViewModel()
-//    
-//    func presentViewModel(selectedEvent: Event) {
-//        let tempModel = EditEventViewModel(
-//            entityName: selectedEvent.entity!.name!,
+    var eventDate = Date()
+    var eventTime = Date()
+}
+
+class EditEventPresenter : ObservableObject {
+    
+    @Published var viewModel = EditEventViewModel()
+    
+    func presentViewModel(selectedEvent: MeetingEvent) {
+        print("Here")
+        let tempModel = EditEventViewModel(
+//            entityName: selectedEvent.entity.name!,
 //            meetingGroupName: selectedEvent.meetingGroup!.name!,
-//            eventDate: selectedEvent.date!,
-//            eventTime: selectedEvent.date!
-//        )
-//        viewModel = tempModel
-//    }
-//}
+            eventDate: selectedEvent.date!,
+            eventTime: selectedEvent.date!
+        )
+        viewModel = tempModel
+    }
+}

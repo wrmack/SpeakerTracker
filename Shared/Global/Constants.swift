@@ -15,4 +15,4 @@ let EASEINOUT = 0.8
 let MASTERVIEW_WIDTH: CGFloat = 350.0
 let SETUP_BAR_COLOR = Color(white: 0.95)
 //let SETUP_FONT_SIZE_2: CGFloat = 24
-let SETUP_SHEET_BACKGROUND_COLOR = Color(white: 0.85)
+//let SETUP_SHEET_BACKGROUND_COLOR = Color(white: 0.85)

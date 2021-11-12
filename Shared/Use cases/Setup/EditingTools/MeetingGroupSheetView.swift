@@ -29,7 +29,7 @@ struct MeetingGroupSheetView: View {
                 }
                 .buttonStyle(PlainButtonStyle())
                 .padding(Edge.Set.leading, 50)
-                .font(.system(size: 24))
+                .font(.system(size: 20))
                 Spacer()
                 Button(action: {withAnimation(.easeInOut(duration: EASEINOUT)) {
                     saveSelectedMembers()
@@ -39,7 +39,7 @@ struct MeetingGroupSheetView: View {
                 }
                 .buttonStyle(PlainButtonStyle())
                 .padding(Edge.Set.trailing, 50)
-                .font(.system(size: 24))
+                .font(.system(size: 20))
             }
             Text("Select the members in this meeting group")
                 .padding(Edge.Set.top, 0).padding(Edge.Set.bottom, 0)
@@ -58,7 +58,9 @@ struct MeetingGroupSheetView: View {
             Spacer()
             
         }
-        .background(Color(white: 0.3, opacity: 1.0))
+            #if os(iOS)
+            .background(Color(uiColor: .systemGray6))
+            #endif
         
     }
     

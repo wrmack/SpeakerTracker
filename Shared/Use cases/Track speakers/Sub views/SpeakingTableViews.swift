@@ -32,6 +32,8 @@ struct SpeakingTableList: View {
     var body: some View {
         Print(">>>>>> SpeakingTableList body")
         VStack(spacing: 0) {
+            
+            // Table heading
             HStack {
                 Spacer()
                 Text(title)
@@ -45,44 +47,9 @@ struct SpeakingTableList: View {
             
             List {
                 ForEach(viewModel, id: \.self){ sectionList in
-                    Section(header: HStack {
-                        Text((sectionList as SectionList).sectionHeader)
-                            .font(.headline)
-                            .foregroundColor(Color.black)
-                            .padding(.vertical, 10.0)
-                        
-                        if ((sectionList as SectionList).sectionType == SectionType.amendment) {
-                            Spacer()
-                            Button(action: {
-                                withAnimation {
-                                    // Check if sectionIsCollapsed contains this section.
-                                    // If not, set to true.  Default is not-collapsed. User must want to collapse.
-                                    if sectionIsCollapsed.keys.contains((sectionList as SectionList).sectionNumber) == false {
-                                        sectionIsCollapsed[(sectionList as SectionList).sectionNumber] = true
-                                    }
-                                    // If collapsed then user must want to expand it
-                                    else if sectionIsCollapsed[(sectionList as SectionList).sectionNumber]! == true {
-                                        sectionIsCollapsed[(sectionList as SectionList).sectionNumber] = false
-                                    }
-                                    // Otherwise collapse it
-                                    else {
-                                        sectionIsCollapsed[(sectionList as SectionList).sectionNumber] = true
-                                    }
-                                }
-                            })
-                            {
-                                Image(systemName: "chevron.right.circle")
-                            }
-                            .buttonStyle(PlainButtonStyle())
-                            .rotationEffect((sectionIsCollapsed[(sectionList as SectionList).sectionNumber] == true) ? .degrees(0) : .degrees(90))
-                            .imageScale(.large)
-
-                        }
-                    }) {
-
+                    Section {
                         if sectionIsCollapsed[(sectionList as SectionList).sectionNumber] != true || (sectionList as SectionList).sectionType == .mainDebate  {
                             ForEach((sectionList as SectionList).sectionMembers, id: \.self ) { listMember in
-//                                Print("SpeakingTableList listMember \(listMember)")
                                 SpeakingTableRow(rowContent: listMember,
                                                  sectionNumber: (sectionList as SectionList).sectionNumber,
                                                  sectionType: (sectionList as SectionList).sectionType,
@@ -94,7 +61,42 @@ struct SpeakingTableList: View {
                             }
                         }
                     }
-//                    .listSectionSeparator(.visible)
+                            
+                    header: {
+                        HStack {
+                            Text((sectionList as SectionList).sectionHeader)
+                                .font(.headline)
+                                .foregroundColor(Color.black)
+                            
+                            if ((sectionList as SectionList).sectionType == SectionType.amendment) {
+                                Spacer()
+                                Button(action: {
+                                    withAnimation {
+                                        // Check if sectionIsCollapsed contains this section.
+                                        // If not, set to true.  Default is not-collapsed. User must want to collapse.
+                                        if sectionIsCollapsed.keys.contains((sectionList as SectionList).sectionNumber) == false {
+                                            sectionIsCollapsed[(sectionList as SectionList).sectionNumber] = true
+                                        }
+                                        // If collapsed then user must want to expand it
+                                        else if sectionIsCollapsed[(sectionList as SectionList).sectionNumber]! == true {
+                                            sectionIsCollapsed[(sectionList as SectionList).sectionNumber] = false
+                                        }
+                                        // Otherwise collapse it
+                                        else {
+                                            sectionIsCollapsed[(sectionList as SectionList).sectionNumber] = true
+                                        }
+                                    }
+                                })
+                                {
+                                    Image(systemName: "chevron.right.circle")
+                                }
+                                .buttonStyle(PlainButtonStyle())
+                                .rotationEffect((sectionIsCollapsed[(sectionList as SectionList).sectionNumber] == true) ? .degrees(0) : .degrees(90))
+                                .imageScale(.large)
+
+                            }
+                        }
+                    }
                 }
             }
             .listStyle(.plain)
@@ -196,7 +198,9 @@ struct SpeakingTableRow: View {
                             .onTapGesture {
                                 print("Play pressed")
                                 self.timerString = "00:00"
-                                memberTimerActions = MemberTimerActions(listMember: rowContent, timerButtonMode: .pause_stop, timerIsActive: true, speakingTime: 0, timerButtonPressed: .play)
+                                var listMember = rowContent
+                                listMember.startTime = Date()
+                                memberTimerActions = MemberTimerActions(listMember: listMember, timerButtonMode: .pause_stop, timerIsActive: true, speakingTime: 0, timerButtonPressed: .play)
                             }
                     }
                     

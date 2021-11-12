@@ -11,7 +11,7 @@ import Foundation
 
 class DisplaySelectedEventInteractor {
     
-    static func fetchEvent(presenter: DisplaySelectedEventPresenter, entityState: EntityState, eventState: EventState, newIndex: UUID?) {
+    static func fetchEvent(presenter: DisplaySelectedEventPresenter, eventState: EventState, entityState: EntityState, newIndex: UUID?) {
         
         print("------ DisplaySelectedEventInteractor.fetchEvent newIndex \(String(describing: newIndex))")
         
@@ -19,57 +19,32 @@ class DisplaySelectedEventInteractor {
 
         // newIndex is nil when method called by .onAppear
         if newIndex == nil {
-            if let currentMeetingEventIndex = eventState.currentMeetingEventIndex {
-                eventIndex = currentMeetingEventIndex
+            // Get entity name from currentEntity
+            var entityName = ""
+            if let entity = entityState.currentEntity {
+                entityName = entity.name!
             }
-            else {
-                presenter.presentMeetingEventDetail(event: nil)
-                return
+            // Get meeting group name from currentMeetingGroup
+            var groupName = ""
+            if let group = entityState.currentMeetingGroup {
+                groupName = group.name!
             }
+            // Get event from currentMeetingEventIndex
+            var event: MeetingEvent?
+            if let eventIdx = eventState.currentMeetingEventIndex {
+                event = EventState.meetingEventWithIndex(index: eventIdx)
+            } else {
+                event = nil
+            }
+            presenter.presentMeetingEventDetail(event: event, entityName: entityName, meetingGroupName: groupName)
+            return
         }
         else {
             eventIndex = newIndex
         }
         let selectedMeetingEvent = EventState.meetingEventWithIndex(index: eventIndex!)
         
-        presenter.presentMeetingEventDetail(event: selectedMeetingEvent)
-        
-        
-//        print("DisplaySelectedEventInteractor.fetchEvent")
-//        var row = forRow
-//        if row == nil { row = 0}
-//        var currentEvent: Event?
-//        var memberString = ""
-//
-//        if entityState.currentMeetingGroup != nil && setupState.sortedEvents!.count > 0 {
-//            var eventsForMeetingGroup = [Event]()
-//            let allEvents = setupState.sortedEvents!
-//            allEvents.forEach({ event in
-//                if event.meetingGroup!.id == entityState.currentMeetingGroup!.id {
-//                    eventsForMeetingGroup.append(event)
-//                }
-//            })
-//            if eventsForMeetingGroup.count > 0 {
-//                currentEvent = eventsForMeetingGroup[row!]
-//                let entity = currentEvent!.entity!
-//
-//                currentEvent!.meetingGroup?.memberIDs?.forEach({ id in
-//                    entity.members?.forEach({ member in
-//                        if member.id == id {
-//                            if memberString.count > 0 {
-//                                memberString.append(", ")
-//                            }
-//                            var fullTitle: String?
-//                            if let title = member.title {
-//                                fullTitle = title + " "
-//                            }
-//                            memberString.append((fullTitle ?? "") + (member.firstName ?? "") + " " + member.lastName!)
-//                        }
-//                    })
-//                })
-//            }
-//        }
-//        presenter.presentEventDetail(event: currentEvent, memberString: memberString)
+        presenter.presentMeetingEventDetail(event: selectedMeetingEvent, entityName: entityState.currentEntity!.name!, meetingGroupName: entityState.currentMeetingGroup!.name!)
         
     }
 }

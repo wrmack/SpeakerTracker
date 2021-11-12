@@ -187,6 +187,7 @@ class TrackSpeakersInteractor {
                         if memberTimerAction.speakingTime != 0 {
                             newListMember.speakingTime = memberTimerAction.speakingTime
                         }
+                        newListMember.startTime = memberTimerAction.listMember.startTime
                     }
                     newSectionListMembers.append(newListMember)
                 })
@@ -220,8 +221,7 @@ class TrackSpeakersInteractor {
             speechEvent.member = memberTimerAction.listMember.member
             speechEvent.elapsedMinutes = Int16(memberTimerAction.speakingTime / 60)
             speechEvent.elapsedSeconds = Int16(memberTimerAction.speakingTime % 60)
-            speechEvent.startTime = nil
-//            speechEvent.speechOfDebate = currentSection
+            speechEvent.startTime = listMember.startTime
 
             // Add speech event to current debate section speeches
             let speechSet = currentDebateSection.speeches!
@@ -366,13 +366,20 @@ class TrackSpeakersInteractor {
         EventState.saveManagedObjectContext()
         
         eventState.currentDebateIndex = newDebate.idx
+        print("currentDebateIndex: \(newDebate.idx!)")
         eventState.currentDebateSectionIndex = debateSection.idx
         
         TrackSpeakersInteractor.reset(trackSpeakersState: trackSpeakersState)
     }
     
     static func saveMeetingEvent(eventState: EventState) {
-        EventState.saveManagedObjectContext()
+        
+        // Check if have a hanging new debate with one section and no speeches
+        let currentDebateSection = EventState.debateSectionWithIndex(index: eventState.currentDebateSectionIndex!)
+        if currentDebateSection.speeches?.count == 0 {
+            EventState.deleteDebateFromCurrentMeeting(meetingIndex: eventState.currentMeetingEventIndex!, debateIndex: eventState.currentDebateIndex!)
+        }
+
     }
     
     

@@ -29,8 +29,12 @@ import CoreData
 class EventState : ObservableObject {
 
     // Hold indexes only.  The objects are in CoreData.
-    // Use the indexes for retrieving the objects.
+    // Use the indices for retrieving the objects from CoreData.
     @Published var currentMeetingEventIndex: UUID?
+    
+    // Additions, deletions, edits
+    @Published var eventsHaveChanged = false
+    
     var currentDebateIndex: UUID?
     var currentDebateSectionIndex: UUID?
     
@@ -148,6 +152,26 @@ class EventState : ObservableObject {
     }
     
     
+    static func deleteDebateFromCurrentMeeting(meetingIndex: UUID, debateIndex: UUID) {
+        
+        let currentMeeting = EventState.meetingEventWithIndex(index: meetingIndex)!
+        
+        // Debugging
+        print("Debate index to remove: \(debateIndex)")
+        currentMeeting.debates!.forEach({ element in
+            let debate = element as! Debate
+            print("Debate index in current meeting: \(debate.idx!)")
+        })
+        
+        let pred = NSPredicate(format: "%K != %@", "idx", debateIndex as CVarArg)
+        let debates = currentMeeting.debates!.filtered(using: pred)
+        currentMeeting.debates = debates as NSSet
+        
+        let viewContext = PersistenceController.shared.container.viewContext
+        viewContext.delete(EventState.debateWithIndex(index: debateIndex))
+        EventState.saveManagedObjectContext()
+    }
+    
     // MARK: - Debate sections
 
     class func createDebateSection() -> DebateSection {
@@ -215,7 +239,6 @@ class EventState : ObservableObject {
             let nsError = error as NSError
             fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
         }
-        
     }
     
     // MARK: - Debugging

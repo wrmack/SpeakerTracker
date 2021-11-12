@@ -97,12 +97,22 @@ class ShowReportPresenter :ObservableObject {
                     
                     // Speaker events
                     var reportSpeakerEvents = [ReportSpeakerEvent]()
-                    eventSection.speeches!.forEach { element in
-                        let speech = element as! SpeechEvent
+                    var speechesArray = eventSection.speeches?.allObjects as! [SpeechEvent]
+                    speechesArray.sort(by:{
+                        if $0.startTime != nil && $1.startTime != nil && $0.startTime! < $1.startTime! {
+                            return true
+                        }
+                        return false
+                    })
+                    speechesArray.forEach { element in
+                        let speech = element
                         var reportSpeakerEvent = ReportSpeakerEvent()
                         reportSpeakerEvent.memberName = speech.member!.lastName!
                         reportSpeakerEvent.elapsedTime = String(format: "%02d:%02d", speech.elapsedMinutes, speech.elapsedSeconds)
-                        reportSpeakerEvent.startTime = "Start"
+                        if speech.startTime != nil {
+                            reportSpeakerEvent.startTime = formatter.string(from: speech.startTime!)
+                        }
+                        else {reportSpeakerEvent.startTime = ""}
                         reportSpeakerEvents.append(reportSpeakerEvent)
                     }
                     reportDebateSection.reportSpeakerEvents = reportSpeakerEvents

@@ -47,7 +47,7 @@ struct SetupSheetView: View {
                 }
                 .buttonStyle(PlainButtonStyle())
                 .padding(Edge.Set.leading, 50)
-                .font(.system(size: 24))
+                .font(.system(size: 20))
                 Spacer()
                 Button(action: {withAnimation(.easeInOut(duration: EASEINOUT)) {
                     setupSheetState.showSheet = false
@@ -66,7 +66,7 @@ struct SetupSheetView: View {
                 }
                 .buttonStyle(PlainButtonStyle())
                 .padding(Edge.Set.trailing, 50)
-                .font(.system(size: 24))
+                .font(.system(size: 20))
             }
             
             switch selectedSetupTab {
@@ -107,10 +107,10 @@ struct SetupSheetView: View {
                     AddEventView(setupSheetState: setupSheetState)
                 }
                 if setupSheetState.editMode == 1 {
-//                    EditEventView(sheetState: self.$sheetState, saveButtonState: self.saveButtonState, selectedMasterRow: self.$selectedMasterRow)
+                    EditEventView(setupSheetState: setupSheetState)
                 }
                 if (setupSheetState.editMode == 2) {
-//                    DeleteEventView(sheetState: self.$sheetState, saveButtonState: self.saveButtonState, selectedMasterRow: self.$selectedMasterRow)
+                    DeleteEventView(setupSheetState: setupSheetState)
                 }
             
             default: AddEntityView(setupSheetState: setupSheetState)
@@ -118,7 +118,12 @@ struct SetupSheetView: View {
             }
             
         }
-        .background(Color(white: 0.3, opacity: 1.0))
+        #if os(iOS)
+        .background(Color(uiColor: .systemGray5))
+        #endif
+        #if os(macOS)
+        .background(Color(nsColor: .windowBackgroundColor))
+        #endif
     }
 }
 

@@ -29,6 +29,9 @@ struct DisplayReportsForMeetingGroupView: View {
                 }
             }.font(.largeTitle)
         }
+        #if os(iOS)
+        .background(Color(uiColor:.systemGray6))
+        #endif
         .onAppear(perform: {
             DisplayReportsForMeetingGroupInteractor.fetchEvents(entityState: entityState, reportsState: reportsState, presenter: presenter, index: nil)
         })
@@ -74,7 +77,6 @@ struct ReportCellView : View {
         .background(Color.white)
         .padding(.top,20)
         .padding(.bottom,20)
-        .border(Color.red)
         .onTapGesture {
             showSheet = true
         }

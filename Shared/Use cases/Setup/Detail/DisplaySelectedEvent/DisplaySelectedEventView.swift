@@ -25,11 +25,14 @@ struct DisplaySelectedEventView: View {
         // Called when different meeting event is selected by user
         .onChange(of: eventState.currentMeetingEventIndex, perform: { newIndex in
             print("------ DisplaySelectedEventView: .onChange currentMeetingEventIndex")
-            DisplaySelectedEventInteractor.fetchEvent(presenter: presenter, entityState: entityState, eventState: eventState, newIndex: newIndex)
+            DisplaySelectedEventInteractor.fetchEvent(presenter: presenter, eventState: eventState, entityState: entityState, newIndex: newIndex)
+        })
+        .onReceive(presenter.$eventViewModel, perform: { viewModel in
+            print("viewModel \(viewModel)")
         })
         // Called when first appears
         .onAppear(perform: {
-            DisplaySelectedEventInteractor.fetchEvent(presenter: presenter, entityState: entityState, eventState: eventState, newIndex: nil)
+            DisplaySelectedEventInteractor.fetchEvent(presenter: presenter, eventState: eventState, entityState: entityState, newIndex: nil)
         })
     }
 }

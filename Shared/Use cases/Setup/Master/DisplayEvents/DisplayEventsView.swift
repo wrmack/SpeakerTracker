@@ -94,6 +94,7 @@ struct DisplayEventsView: View {
                 .onChange(of: entityState.currentEntity, perform: { entity in
                     print("------ DisplayEventsView .onChange entityState.currentEntity")
                     if (selectedTab == 3) {
+                        DisplayEventsInteractor.resetMeetingGroupIndex(entityState: entityState)
                         DisplayEventsInteractor.fetchEvents(presenter: presenter, eventState: eventState, entityState: entityState)
                     }
                 })
@@ -101,7 +102,15 @@ struct DisplayEventsView: View {
                 .onChange(of: entityState.currentMeetingGroupIndex, perform: { newIndex in
                     print("------ DisplayEventsView .onChange entityState.currentMeetingGroupIndex")
                     if (selectedTab == 3) {
-                        DisplayEventsInteractor.fetchEventsOnMeetingGroupChange(meetingGroupIndex: newIndex!, presenter: presenter, eventState: eventState)
+                        DisplayEventsInteractor.fetchEventsOnMeetingGroupChange(meetingGroupIndex: newIndex, presenter: presenter, eventState: eventState)
+                    }
+                })
+                .onChange(of: eventState.eventsHaveChanged, perform: { val in
+                    print("------ DisplayEventsView .onChange eventState.eventsHaveChanged: \(val)")
+                    if (selectedTab == 3) && (val == true) {
+                        eventState.eventsHaveChanged = false
+                        DisplayEventsInteractor.setCurrentEventIndex(idx: nil, entityState: entityState, eventState: eventState)
+                        DisplayEventsInteractor.fetchEvents(presenter: presenter, eventState: eventState, entityState: entityState)
                     }
                 })
             

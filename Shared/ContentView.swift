@@ -6,6 +6,7 @@
 //
 import SwiftUI
 
+
 struct SetupTitle: View {
     @Binding var selectedSetupTab: Int
     
@@ -56,6 +57,8 @@ struct ContentView: View {
     
     var speakers:[Member] = []
     
+
+    
     var body: some View {
         Print(">>>>>> ContentView body refreshed")
         //        VStack(spacing: 0) {
@@ -71,7 +74,7 @@ struct ContentView: View {
                         selectedMeetingGroup: $selectedMeetingGroup,
                         isRecording: $isRecording
                     )
-                        .frame(maxHeight: geo.size.height > 30 ? geo.size.height - 30 : geo.size.height)
+                        .frame(maxHeight: geo.size.height)
                         .onTapGesture {
                             withAnimation(.easeInOut(duration: EASEINOUT)) {
                                 if showMeetingSetupSheet == true {
@@ -91,7 +94,6 @@ struct ContentView: View {
                         .zIndex(1)
                         .transition(.move(edge: .leading))
                         .background(Color.clear)
-//                        .environment(\.colorScheme, .light)
                     }
                 }
             }
@@ -179,22 +181,27 @@ struct ContentView: View {
             .tag(2)
         }
         .opacity(1.0)
-
-        
-        //        }
 #if os(macOS)
         .frame(minWidth: 1100)
 #endif
         .padding(.top,10)
         .onAppear(perform: {
-            print("\nReference ******************************")
-            print(DebugReference.console)
-            guard let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else {
-                print("Error: Document directory not found")
-                return
-            }
-            print("Documents directory:\n \(documentsDirectory)")
-            print("****************************************\n")
+            #if os(iOS)
+            let itemAppearance = UITabBarItemAppearance()
+            itemAppearance.normal.titleTextAttributes = [
+                .foregroundColor: UIColor.systemGray,
+                .font : UIFont.systemFont(ofSize: 20)
+            ]
+            let appearance = UITabBarAppearance()
+            appearance.stackedLayoutAppearance = itemAppearance
+            appearance.inlineLayoutAppearance = itemAppearance
+            appearance.compactInlineLayoutAppearance = itemAppearance
+            
+            UITabBar.appearance().standardAppearance = appearance
+            UITabBar.appearance().backgroundColor = .systemBackground
+            #endif
+            
+            print(DebugReference.consolePrint)
         })
         
     }
@@ -210,9 +217,10 @@ struct ContentView_Previews: PreviewProvider {
      */
     static var previews: some View {
         ContentView(speakers: testData)
-            .previewDevice("iPad Pro (12.9-inch) (5th generation)")
+//            .previewDevice("iPad Pro (12.9-inch) (5th generation)")
         //            .previewDisplayName("iPad Pro (12.9-inch)")
-            .previewLayout(.fixed(width: 1024, height: 768))
+//            .previewLayout(.fixed(width: 1024, height: 768))
+            .previewInterfaceOrientation(.landscapeRight)
             .environmentObject(EntityState())
             .environmentObject(EventState())
             .environmentObject(TrackSpeakersState())

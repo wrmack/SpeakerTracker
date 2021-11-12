@@ -159,6 +159,28 @@ class EntityState : ObservableObject {
     
     // MARK: - Methods
     
+    static func createEntity() -> Entity {
+        let viewContext = PersistenceController.shared.container.viewContext
+        let newEntity = Entity(context: viewContext)
+        saveManagedObjectContext()
+
+        return newEntity
+    }
+    
+    static func createMember() -> Member {
+        let viewContext = PersistenceController.shared.container.viewContext
+        let newMember = Member(context: viewContext)
+        saveManagedObjectContext()
+        return newMember
+    }
+    
+    static func createMeetingGroup() -> MeetingGroup {
+        let viewContext = PersistenceController.shared.container.viewContext
+        let newMeetingGroup = MeetingGroup(context: viewContext)
+        saveManagedObjectContext()
+        return newMeetingGroup
+    }
+    
     static func entityWithIndex(index: UUID) -> Entity? {
         
         // Setup fetch request
@@ -301,6 +323,8 @@ class EntityState : ObservableObject {
         
         return meetingGroups
     }
+ 
+    
     
     static func saveManagedObjectContext() {
         let viewContext = PersistenceController.shared.container.viewContext

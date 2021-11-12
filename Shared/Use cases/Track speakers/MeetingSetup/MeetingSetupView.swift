@@ -9,24 +9,7 @@
 import SwiftUI
 
 
-struct MyMenuStyle: MenuStyle {
-    func makeBody(configuration: Configuration) -> some View {
-        Menu(configuration)
-            .background(Color(white: 0.65))
-    }
-}
 
-struct MyLabelStyle: LabelStyle {
-    func makeBody(configuration: Configuration) -> some View {
-        Label{
-            configuration.title
-        } icon: {
-//            configuration.icon.frame(maxWidth:1)
-        }
-            .frame(width: 300, height:20)
-            .contentShape(Rectangle())
-    }
-}
 
 
 struct MeetingSetupView: View {
@@ -74,11 +57,10 @@ struct MeetingSetupView: View {
                             self.showMeetingSetupSheet = false
                         }})
                     }
-                    .padding(.bottom, 30)
                     
                     Text("Entity")
                         .fontWeight(.semibold)
-                        .padding(.top, 30)
+                        .padding(.top, 40)
                     
                     Menu {
                         ForEach(entityNames.indices, id: \.self) { idx in
@@ -105,22 +87,25 @@ struct MeetingSetupView: View {
                     }
                     .menuStyle(MyMenuStyle())
                     
+                    Image(systemName: "info.circle")
+                        .onTapGesture {
+                            showReportInfo = showReportInfo ? false : true
+                        }
+                        .padding(.top, 40)
+                    
                     Toggle(isOn: $isRecording) {
-                        Text("Create a report")
+                        Text("Record speaking times for this meeting")
                             .fontWeight(.semibold)
                     }
-                    .padding(.top, 40)
+                    .padding(.top, 20)
                     .padding(.trailing, 40)
                     
                     if isRecording == true {
-                        Spacer().fixedSize().frame(height: 40)
-                        Image(systemName: "info.circle")
-                            .onTapGesture {
-                                showReportInfo = showReportInfo ? false : true
-                            }
-                        Text("Meeting")
+//                        Spacer().fixedSize().frame(height: 40)
+
+                        Text("Meeting event")
                             .fontWeight(.semibold)
-                            .padding(.top, 40)
+                            .padding(.top, 20)
                         
                         Menu  {
                             ForEach(meetingEventNames.indices, id: \.self) { idx in
@@ -138,8 +123,13 @@ struct MeetingSetupView: View {
                 .frame(width:300)
                 .padding(.leading, 30)
                 .padding(.trailing, 30)
-                //        .background(SETUP_SHEET_BACKGROUND_COLOR)
-                .background(Color(white: 0.6, opacity: 1.0))
+                #if os(iOS)
+                .background(Color(uiColor: .systemGray4))
+                #endif
+                #if os(macOS)
+                .background(Color(nsColor: NSColor.windowBackgroundColor))
+                #endif
+                .opacity(1.0)
                 .border(Color(white: 0.4), width: 1)
                 .onAppear(perform: {
                     entityNames = MeetingSetupInteractor.fetchEntityNames(entityState: entityState, presenter: presenter)
@@ -160,12 +150,11 @@ struct MeetingSetupView: View {
                 HStack{
                     Text(
                 """
-                Select an entity and a meeting group \
-                in order to display the meeting group's
-                members.
+                Display the members of a meeting group \
+                by selecting the entity and the meeting group.
                 
-                To create entities, their members and \
-                meeting groups go to the 'Setup' tab.
+                To create an entity, its members and \
+                its meeting groups, go to the 'Setup' tab.
                 """
                     )
                         .frame(width: 400)
@@ -181,16 +170,18 @@ struct MeetingSetupView: View {
                 HStack {
                     Text(
                     """
-                    Speaking times for each debate are recorded.
+                    Turn on 'Record speaking times for this meeting' to \
+                    record speaking times for the chosen meeting event.
                     
-                    Create meeting events in Entity setup.
+                    Press 'Save debate'to save the current debate and \
+                    create a new one.
                     
-                    A debate is saved and a new one created after \
-                    'Save debate' is pressed.
                     Press 'End this meeting' to complete the report \
                     and reset.
                     
-                    The report can be viewed in 'Reports'
+                    View the report in 'Reports'.
+                    
+                    To create a meeting event, go to the Setup tab then select Events.
                     """
                     )
                         .frame(width: 400)

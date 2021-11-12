@@ -58,7 +58,7 @@ struct DisplayMembersView: View {
             List(presenter.members, id: \.self, rowContent:  { member in
                 MemberListRow(rowContent: member)
             })
-            
+                .listStyle(PlainListStyle())
             // When user changes selected entity, reset currentMemberIndex
                 .onChange(of: entityState.currentEntityIndex, perform: { newIndex in
                 print("------ DisplayMembersView .onChange entityState.currentEntityIndex: \(String(describing: newIndex))")

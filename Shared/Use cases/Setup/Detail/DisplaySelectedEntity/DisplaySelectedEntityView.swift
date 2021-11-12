@@ -29,11 +29,9 @@ struct DisplaySelectedEntityView: View {
     var body: some View {
         Print(">>>>>> DisplaySelectedEntityView body refreshed")
         List {
-//            Section {
-                ForEach(presenter.entityDetail, id: \.self) { content in
-                    DisplaySelectedEntityListRow(rowContent: content)
-                }
-//            }
+            ForEach(presenter.entityDetail, id: \.self) { content in
+                DisplaySelectedEntityListRow(rowContent: content)
+            }
         }
         // When entityState.currentEntityIndex changes
         .onReceive(entityState.$currentEntityIndex, perform: { newIndex in

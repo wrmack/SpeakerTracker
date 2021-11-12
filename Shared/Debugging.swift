@@ -19,10 +19,34 @@ extension View {
 }
 
 struct DebugReference {
-    static var console = """
+    static var documentsDirectory: URL? {
+        guard let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else {
+            print("Error: Document directory not found")
+            return nil
+        }
+        return dir
+    }
+    
+    static var sqliteDirectory: URL? {
+        guard let dir = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first else {
+            print("Error: Sqlite directory not found")
+            return nil
+        }
+        return dir
+    }
+
+    static var consolePrint = """
+\nReference ******************************
 v:  value of variable in current frame (does not evaluate expressions)
 p:  evaluates an expression
 po: object description
+
+Documents directory:
+\(documentsDirectory!)
+
+Sqlite directory:
+\(sqliteDirectory!)
+****************************************\n
 """
 }
 

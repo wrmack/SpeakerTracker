@@ -27,14 +27,14 @@ struct SharingPicker: NSViewRepresentable {
     func updateNSView(_ nsView: NSView, context: Context) {
         if isPresented {
 
-            // Url
+            // Url to save to
             let docUrl = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
             let dataURL = docUrl.appendingPathComponent("TmpPdf")
             let pdfDataURL = dataURL.appendingPathComponent("Meeting.pdf") as CFURL
             print("Data url: \(dataURL)")
             
             // Get attributed string
-            let attString = NSAttributedString(convertReportContentToAttributedString())
+            let attString = NSAttributedString(SharingPicker.convertReportContentToAttributedString(reportContent: self.reportContent))
 
             // Get total length of string
             let stringLength = attString.length
@@ -42,8 +42,8 @@ struct SharingPicker: NSViewRepresentable {
 
 
             // The size of the page
-            // A4 595 x 842
-            // Letter 612 x 792  (8.5in x 11in) x 72 ppi
+            // A4: 595 x 842 (210 x 297 mm, 8.27 x 11.70 inches) x 72 ppi
+            // Letter: 612 x 792  (8.5in x 11in) x 72 ppi
             let pageWidth = 595
             let pageHeight = 842
             let horizontalMargin = 36 // half an inch, 72 ppi
@@ -94,9 +94,9 @@ struct SharingPicker: NSViewRepresentable {
             context.coordinator.reportContent = reportContent
 
             // Call async, otherwise blocks update
-            DispatchQueue.main.async {
+//            DispatchQueue.main.async {
                 picker.show(relativeTo: .zero, of: nsView, preferredEdge: .minY)
-            }
+//            }
         }
     }
 
@@ -118,7 +118,7 @@ struct SharingPicker: NSViewRepresentable {
 
         func sharingServicePicker(_ sharingServicePicker: NSSharingServicePicker, didChoose service: NSSharingService?) {
 
-            // do here whatever more needed here with selected service
+            // do whatever more needed here with selected service
 
             sharingServicePicker.delegate = nil   // << cleanup
             self.owner.isPresented = false        // << dismiss
@@ -130,10 +130,14 @@ struct SharingPicker: NSViewRepresentable {
 
             var share = proposedServices
             let customService = NSSharingService(title: "Copy Text", image: image, alternateImage: image, handler: {
-                let text = self.reportContent.membersString
+                let attText = SharingPicker.convertReportContentToAttributedString(reportContent: self.reportContent)
+                let attTextNS = NSAttributedString(attText)
+                let documentAttributes = [NSAttributedString.DocumentAttributeKey.documentType: NSAttributedString.DocumentType.rtf]
+                let rtfData = try? attTextNS.data(from: NSMakeRange(0, attTextNS.length), documentAttributes: documentAttributes)
+
                 let clipboard = NSPasteboard.general
                 clipboard.clearContents()
-                clipboard.setString(text, forType: .string)
+                clipboard.setData(rtfData, forType: .rtf)
             })
             share.insert(customService, at: 0)
 
@@ -143,14 +147,14 @@ struct SharingPicker: NSViewRepresentable {
     }
     
     
-    func convertReportContentToAttributedString() -> AttributedString {
+    static func convertReportContentToAttributedString(reportContent: ReportContent) -> AttributedString {
         
         // Attributes
         
         var title1Atts: AttributeContainer {
             let para = NSMutableParagraphStyle()
             para.alignment = .center
-            para.paragraphSpacingBefore = 20
+            para.paragraphSpacingBefore = 0
             
             var cont = AttributeContainer()
             cont.font = NSFont(name: "Arial", size: 40)
@@ -160,21 +164,28 @@ struct SharingPicker: NSViewRepresentable {
         }
         
         var title2Atts: AttributeContainer {
+            let para = NSMutableParagraphStyle()
+            para.alignment = .center
+            para.paragraphSpacingBefore = 12
+            
             var cont = AttributeContainer()
             cont.font = NSFont(name: "Arial", size: 28)
+            cont.paragraphStyle = para
             
-            return title1Atts.merging(cont)
+            return cont
         }
         
         var title3Atts: AttributeContainer {
             var cont = AttributeContainer()
             cont.font = NSFont(name: "Arial", size: 18)
-            return title1Atts.merging(cont)
+            return title2Atts.merging(cont)
         }
         
         var normAtts: AttributeContainer {
             let para = NSMutableParagraphStyle()
             para.alignment = .left
+            para.paragraphSpacingBefore = 6
+            
             var cont = AttributeContainer()
             cont.font = NSFont(name: "Arial", size: 12)
             cont.paragraphStyle = para
@@ -206,7 +217,8 @@ struct SharingPicker: NSViewRepresentable {
         var debateHeading: AttributeContainer {
             let para = NSMutableParagraphStyle()
             para.firstLineHeadIndent = 0
-            para.paragraphSpacingBefore = 20
+//            para.paragraphSpacingBefore =
+            
             var cont = AttributeContainer()
             cont.paragraphStyle = para
             return paraHeading1.merging(cont)
@@ -215,7 +227,8 @@ struct SharingPicker: NSViewRepresentable {
         var sectionHeading: AttributeContainer {
             let para = NSMutableParagraphStyle()
             para.firstLineHeadIndent = 20
-            para.paragraphSpacingBefore = 20
+//            para.paragraphSpacingBefore = 20
+            
             var cont = AttributeContainer()
             cont.paragraphStyle = para
             return paraHeading1.merging(cont)
@@ -231,18 +244,16 @@ struct SharingPicker: NSViewRepresentable {
             cont.paragraphStyle = para
             return normAtts.merging(cont)
         }
-
-        
         
         // Start building the Attributed String
         
-        let reportContent = self.reportContent
+        let reportContent = reportContent
         
         var reportAS = AttributedString()
         
-        let entityNameAS = AttributedString("\u{2029}" + reportContent.entityName + "\n", attributes: title1Atts)
-        let meetingGroupAS = AttributedString("\u{2029}" + reportContent.meetingGroupName + "\n", attributes: title2Atts )
-        let dateTimeAS = AttributedString("\u{2029}" + reportContent.dateTime + "\n\n", attributes: title3Atts)
+        let entityNameAS = AttributedString(reportContent.entityName, attributes: title1Atts)
+        let meetingGroupAS = AttributedString("\u{2029}" + reportContent.meetingGroupName, attributes: title2Atts )
+        let dateTimeAS = AttributedString("\u{2029}" + reportContent.dateTime + "\n", attributes: title3Atts)
         let membersHeading = AttributedString("\u{2029}" + "Members\n", attributes: paraHeading1)
         let membersStringAS = AttributedString(reportContent.membersString + "\n", attributes: normAtts)
         // No debates

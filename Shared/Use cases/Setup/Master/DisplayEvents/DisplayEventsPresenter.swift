@@ -16,6 +16,14 @@ struct EventSummaryViewModel: Hashable {
 class DisplayEventsPresenter : ObservableObject {
     @Published var eventSummaries = [EventSummaryViewModel]()
     
+    init() {
+      print("++++++ DisplayEventsPresenter initialized")
+    }
+   
+    deinit {
+      print("++++++ DisplayEventsPresenter de-initialized")
+    }
+    
     func presentEventSummaries(events: [MeetingEvent]?) {
 //        var tempMeetingEvents = events
 //        tempMeetingEvents?.sort(by: {

@@ -28,7 +28,7 @@ class DisplaySelectedEventPresenter: ObservableObject {
         print("++++++ DisplaySelectedEventPresenter de-initialized")
     }
     
-    func presentMeetingEventDetail(event: MeetingEvent?) {
+    func presentMeetingEventDetail(event: MeetingEvent?, entityName: String?, meetingGroupName: String?) {
         var tempArray = [EventViewModelRecord]()
         if event != nil {
             // Date and time
@@ -41,8 +41,8 @@ class DisplaySelectedEventPresenter: ObservableObject {
             let dateString = formatter.string(from: event!.date!)
             
 
-            tempArray.append(EventViewModelRecord(label: "Entity", value: (event!.entity.name)!))
-            tempArray.append(EventViewModelRecord(label: "Meeting group", value: (event!.meetingOfGroup?.name)!))
+            tempArray.append(EventViewModelRecord(label: "Entity", value: entityName!))
+            tempArray.append(EventViewModelRecord(label: "Meeting group", value: meetingGroupName!))
 //            tempArray.append(EventViewModelRecord(label: "Members", value: memberString ?? ""))
             tempArray.append(EventViewModelRecord(label: "Date", value: dateString))
             tempArray.append(EventViewModelRecord(label: "Time", value: timeString))

@@ -8,105 +8,95 @@
 
 import SwiftUI
 
-//struct DeleteEventView: View {
-//    @EnvironmentObject var eventState: EventState
-//    @EnvironmentObject var setupState: SetupState
-//    @StateObject var presenter = DeleteEventPresenter()
-//    @ObservedObject var saveButtonState: SaveButtonState
-//    @Binding var sheetState: SheetState
-//    @State var entityName: String?
-//    @State var selectedEntityIndex: Int?
-//    @State var selectedMeetingGroupIndex: Int?
-//    @State var meetingGroupName: String?
-//    @State var eventDateString: String?
-//    @Binding var selectedMasterRow: Int
-//    
-//    
-//    init(sheetState: Binding<SheetState>, saveButtonState: SaveButtonState, selectedMasterRow: Binding<Int> ) {
-//        self._sheetState = sheetState
-//        self.saveButtonState = saveButtonState
-//        self._selectedMasterRow = selectedMasterRow
-//    }
-//    
-//    
-//    var body: some View {
-//        Print(">>>>>> DeleteEventView body refreshed")
-//        VStack(alignment: .leading) {
-//            HStack {
-//                Spacer()
-//                Text("Delete this event")
-//                    .padding(Edge.Set.top, 30).padding(Edge.Set.bottom, 30)
-//                    .font(Font.system(size: 30))
-//                Spacer()
-//            }
-//
-//            HStack {
-//                Text("Entity:")
-//                    .frame(width: 200, height: 50, alignment: .leading)
-//                    .padding(Edge.Set.leading, 100)
-//                    .font(Font.system(size: 20))
-////                    .border(Color.black)
-//
-//                Text(entityName ?? "test")
-////                    .frame(width: 300, height: 50, alignment: .leading)
-//                    .padding(EdgeInsets.init(top: 0, leading: 20, bottom: 0, trailing: 0))
-//                    .padding(Edge.Set.trailing,100)
-////                    .border(Color.black)
-//            }
-//            HStack {
-//
-//                Text("Meeting group:")
-//                    .frame(width: 200, height: 50, alignment: .leading)
-//                    .padding(Edge.Set.leading, 100)
-//                    .font(Font.system(size: 20))
-//  
-//                Text(meetingGroupName ?? "test")
-//                    .frame(width: 300, height: 50, alignment: .leading)
-//                    .padding(EdgeInsets.init(top: 0, leading: 20, bottom: 0, trailing: 0))
-//                    .padding(Edge.Set.trailing,100)
-// 
-//            }
-//            Divider()
-//            HStack {
-//                Text("Date and time:")
-//                    .frame(width: 200, height: 50, alignment: .leading)
-//                    .padding(Edge.Set.leading, 100)
-//                    .font(Font.system(size: 20))
-//                Text(eventDateString ?? "test")
-//                    .frame(width: 300, height: 50, alignment: .leading)
-//                    .padding(EdgeInsets.init(top: 0, leading: 20, bottom: 0, trailing: 0))
-//                    .padding(Edge.Set.trailing,100)
-//            }
-//
-//            Spacer()
-//        }
-//        .onAppear(perform: {
-//            fetchSelectedEvent()
-//        })
-//        .onReceive(presenter.$viewModel, perform: { viewModel in
-//            self.entityName = viewModel.entityName
-//            self.meetingGroupName = viewModel.meetingGroupName
-//            self.eventDateString = viewModel.eventDateString
-//        })
-//        .onReceive(self.saveButtonState.$savePressed, perform: { pressed in
-//            print("DeleteEventView onReceive saveButtonState.$savePressed called")
-//            if (pressed == true) && (sheetState.editMode == 2) {
-//                self.saveButtonState.savePressed = false
-//                self.deleteEvent() }
-//        })
-//    }
-//    
-//    func fetchSelectedEvent() {
-//        let interactor = DeleteEventInteractor()
-//        interactor.displaySelectedEvent(setupState: setupState, presenter: presenter, selectedMasterRow: selectedMasterRow)
-//    }
-//    
-//    func deleteEvent() {
-//        let interactor = DeleteEventInteractor()
-//        interactor.deleteSelectedEvent(eventState: eventState, setupState: setupState, selectedMasterRow: selectedMasterRow) 
-//    }
-//    
-//}
+struct DeleteEventView: View {
+    @EnvironmentObject var entityState: EntityState
+    @EnvironmentObject var eventState: EventState
+    @ObservedObject var setupSheetState: SetupSheetState
+    @StateObject var presenter = DeleteEventPresenter()
+    @State var eventDate = Date()
+    @State var eventTime = Date()
+    
+    
+    let dateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .long
+        return formatter
+    }()
+    let timeFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.timeStyle = .short
+        return formatter
+    }()
+    
+    
+    var body: some View {
+        Print(">>>>>> DeleteEventView body refreshed")
+        VStack(alignment: .leading) {
+            HStack {
+                Spacer()
+                Text("Delete this event")
+                    .padding(Edge.Set.top, 30).padding(Edge.Set.bottom, 30)
+                    .font(Font.system(size: 30))
+                Spacer()
+            }
+            
+            Group {
+                HStack {
+                    Text("Entity: ")
+                        .opacity(0.6)
+                    Text(entityState.currentEntity!.name!)
+                }
+                HStack {
+                    Text("Meeting group: ")
+                        .opacity(0.6)
+                    Text("\(entityState.currentMeetingGroup!.name!)")
+                    Spacer()
+                }
+                HStack {
+                    Text("Date: ")
+                        .opacity(0.6)
+                    Text(eventDate,formatter: dateFormatter)
+                }
+                HStack {
+                    Text("Time: ")
+                        .opacity(0.6)
+                    Text(eventTime,formatter: timeFormatter)
+                }
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(.leading, 100)
+            .font(Font.system(size: 18))
+            .padding(.top,10)
+            
+            Spacer()
+        }
+        
+        .onAppear(perform: {
+            self.fetchSelectedEvent()
+        })
+        .onReceive(presenter.$viewModel, perform: { element in
+            let viewModel = element as DeleteEventViewModel
+            self.eventDate = viewModel.eventDate
+            self.eventTime = viewModel.eventTime
+        })
+        .onChange(of: setupSheetState.saveWasPressed, perform: { val in
+            print("------ DeleteEventView .onReceive saveButtonState.$savePressed")
+            if (val == true) && (setupSheetState.editMode == 2) {
+                setupSheetState.saveWasPressed = false
+                self.deleteEvent()
+            }
+        })
+    }
+    
+    func fetchSelectedEvent() {
+        DeleteEventInteractor.displaySelectedEvent(eventState: eventState, presenter: presenter)
+    }
+    
+    func deleteEvent() {
+        DeleteEventInteractor.deleteSelectedEvent(eventState: eventState)
+    }
+    
+}
 
 //struct DeleteEventView_Previews: PreviewProvider {
 //    static var previews: some View {

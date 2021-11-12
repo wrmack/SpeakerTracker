@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="19206" systemVersion="20G165" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="19461" systemVersion="21A559" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Debate" representedClassName="Debate" syncable="YES" codeGenerationType="class">
         <attribute name="debateNumber" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="idx" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
@@ -56,7 +56,7 @@
         <relationship name="speechOfDebate" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="DebateSection" inverseName="speeches" inverseEntity="DebateSection"/>
     </entity>
     <elements>
-        <element name="Debate" positionX="430.359375" positionY="-433.9296875" width="128" height="104"/>
+        <element name="Debate" positionX="430.359375" positionY="-433.9296875" width="128" height="118"/>
         <element name="DebateSection" positionX="441.0703125" positionY="-287.125" width="128" height="104"/>
         <element name="Entity" positionX="-202.79296875" positionY="-556.515625" width="112.00390625" height="103"/>
         <element name="MeetingEvent" positionX="414.81640625" positionY="-581.59375" width="128" height="118"/>

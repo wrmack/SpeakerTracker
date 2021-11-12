@@ -11,16 +11,6 @@ import Foundation
 
 class AddEventInteractor {
     
-//    func fetchEntityForRow(entityState: EntityState, row: Int) -> Entity {
-//        return entityState.entities[row]
-//    }
-//    
-//    func fetchMeetingGroupForRow(entityState: EntityState, selectedEntityIndex: Int, row: Int) -> MeetingGroup {
-//        let entity = entityState.entities[selectedEntityIndex]
-//        return entity.meetingGroups![row]
-//    }
-    
-    
     static func saveEvent(eventState: EventState, entityState: EntityState, date: Date, time: Date) {
 
         let cal = Calendar.current
@@ -32,10 +22,11 @@ class AddEventInteractor {
         let event = EventState.createMeetingEvent()
         event.idx = UUID()
         event.date = newDateWithTime
-        event.meetingOfGroup = entityState.currentMeetingGroup
         event.note = nil
         event.debates = nil
-        EntityState.saveManagedObjectContext()
+        let meetingsSet = entityState.currentMeetingGroup?.meetings
+        entityState.currentMeetingGroup!.meetings = meetingsSet!.adding(event) as NSSet
+        EventState.saveManagedObjectContext()
         
     }
 }

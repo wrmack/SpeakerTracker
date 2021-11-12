@@ -12,14 +12,8 @@ struct AddEventView: View {
         @EnvironmentObject var entityState: EntityState
         @EnvironmentObject var eventState: EventState
         @ObservedObject var setupSheetState: SetupSheetState
-    
-    //    @State var entityName: String?
-    //    @State var selectedEntityIndex: UUID?
-    //    @State var selectedMeetingGroupIndex: UUID?
-    //    @State var meetingGroupName: String?
-    //    @State var meetingGroups: [MeetingGroup]?
-    @State var eventDate = Date()
-    @State var eventTime = Date()
+        @State var eventDate = Date()
+        @State var eventTime = Date()
     
     let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
@@ -37,19 +31,17 @@ struct AddEventView: View {
         VStack(alignment: .leading) {
             
             Group {
-                Text("\(entityState.currentEntity!.name!)\n")
+                Text(entityState.currentEntity!.name!)
+
                 HStack {
                     Text("Adding a new meeting event for: ")
                         .opacity(0.6)
                     Text("\(entityState.currentMeetingGroup!.name!)")
                     Spacer()
                 }
-                .padding(.bottom, 30)
             }
             .padding(.leading, 100)
             .font(Font.system(size: 18))
-            
-            Divider()
             
             HStack {
                 Group {
@@ -75,7 +67,7 @@ struct AddEventView: View {
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(.leading, 100)
             .padding(.top,10)
-            .padding(.bottom,50)
+            .padding(.bottom,40)
             
             HStack {
                 
@@ -115,21 +107,6 @@ struct AddEventView: View {
     
     func saveEvent() {
         AddEventInteractor.saveEvent(eventState: eventState, entityState: entityState, date: eventDate, time: eventTime )
-    }
-    
-    func changeEntity(row: Int) {
-        //        let interactor = AddEventInteractor()
-        //        let selectedEntity = interactor.fetchEntityForRow(entityState: entityState, row: row)
-        //        entityName = selectedEntity.name
-        //        meetingGroups = selectedEntity.meetingGroups
-        //        selectedEntityIndex = row
-    }
-    
-    func changeMeetingGroup(row: Int) {
-        //        let interactor = AddEventInteractor()
-        //        let selectedMeetingGroup = interactor.fetchMeetingGroupForRow(entityState: entityState, selectedEntityIndex: selectedEntityIndex!, row: row)
-        //        meetingGroupName = selectedMeetingGroup.name
-        //        selectedMeetingGroupIndex = row
     }
 }
 

@@ -90,10 +90,8 @@ struct ShowReportView: View {
                         
                         // Debates
                         HStack {
-                            Text("Debate")
-                                .fontWeight(.bold)
-                                .frame(width: 200, alignment: .leading)
-                                .padding(.trailing,20)
+                            Spacer()
+                                .frame(width: 200)
                             Text("Duration")
                                 .fontWeight(.bold)
                                 .frame(width: 150, alignment: .leading)
@@ -106,7 +104,7 @@ struct ShowReportView: View {
                         ForEach(presenter.reportContent.reportDebates, id: \.self, content: { debate in
                             Text("Debate \(debate.reportDebateNumber)")
                                 .fontWeight(.bold)
-                                .padding(.top,25)
+                                .padding(.top,10)
                                 .padding(.bottom,0)
                             if debate.reportNote != "" {
                                 Text("Note: \(debate.reportNote)")

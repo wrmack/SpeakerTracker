@@ -31,17 +31,16 @@ import UIKit
 //
 //    override init(fileURL url: URL) {
 //        super.init(fileURL: url)
-//        print("++++++ EventDocument: initialised")
 //    }
 //
 //
 //    deinit {
-//        print("++++++ EventDocument: de-initialised")
+//        print("EventDocument: deinitialised")
 //    }
-//
-//
+//    
+//    
 //    // MARK: Loading and saving
-//
+//    
 //    /*
 //     Gets the package directory filewrapper.
 //     There is one file in the package, with a key "Event".
@@ -52,7 +51,7 @@ import UIKit
 //        let fileWrappers: Dictionary  = directoryFileWrapper!.fileWrappers!
 //        for (key, filewrapper) in fileWrappers {
 ////            print((key, filewrapper))
-//
+//            
 //            if key == "Event" {
 //                let eventData = filewrapper.regularFileContents
 //                do {
@@ -64,8 +63,8 @@ import UIKit
 //            }
 //        }
 //    }
-//
-//
+//    
+//    
 //    /*
 //     Creates a new filewrapper for the directory package (or, if already exists, removes any existing filewrappers for regular-files).
 //     Adds a regular-file filewrapper for data in event stored property.
@@ -83,7 +82,7 @@ import UIKit
 //                directoryFileWrapper!.removeFileWrapper(myFileWrapper)
 //            }
 //        }
-//
+//        
 //        // Create a filewrapper for the entity data and add it to the directory filewrapper
 //        do {
 //            let eventData = try PropertyListEncoder().encode(event)
@@ -93,6 +92,6 @@ import UIKit
 //        }
 //        return directoryFileWrapper!
 //    }
-//
-//
+//    
+//    
 //}
