@@ -31,70 +31,59 @@ struct EditEventView: View {
     var body: some View {
         Print(">>>>>> EditEventView body refreshed")
         VStack(alignment: .leading) {
-            Group {
-                Text(entityState.currentEntity!.name!)
-                
-                HStack {
-                    Text("Editing meeting event for: ")
-                        .opacity(0.6)
-                    Text("\(entityState.currentMeetingGroup!.name!)")
-                    Spacer()
-                }
-            }
-            .padding(.leading, 100)
-            .font(Font.system(size: 18))
             
-            HStack {
-                Group {
-                    Text("Date: ")
-                        .opacity(0.6)
-                    Text(eventDate,formatter: dateFormatter)
-                }
+            Text("\(entityState.currentEntity!.name!), \(entityState.currentMeetingGroup!.name!)")
                 .font(Font.system(size: 18))
-            }
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .padding(.leading, 100)
-            .padding(.top,30)
-            .padding(.bottom,10)
             
             HStack {
-                Group {
+
                     Text("Time: ")
                         .opacity(0.6)
-                    Text(eventTime,formatter: timeFormatter)
-                }
-                .font(Font.system(size: 18))
+                        .font(Font.system(size: 18))
+
+            
+                    DatePicker(
+                        "",
+                        selection: $eventTime,
+                        displayedComponents: [.hourAndMinute]
+                    )
+                        .datePickerStyle(GraphicalDatePickerStyle())
+                        .font(Font.system(size: 18))
+
             }
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .padding(.leading, 100)
-            .padding(.top,10)
-            .padding(.bottom,50)
+            .frame(width: 200)
+            
+            
             
             HStack {
-                
+                Text("Date: ")
+                    .opacity(0.6)
+                Text(eventDate,formatter: dateFormatter)
+            }
+            .font(Font.system(size: 18))
+            .padding(.top,10)
+            
+            HStack {
                 DatePicker(
                     "",
                     selection: $eventDate,
                     displayedComponents: [.date]
                 )
+                    .font(Font.system(size: 18))
                     .datePickerStyle(GraphicalDatePickerStyle())
-
-                DatePicker(
-                    "",
-                    selection: $eventTime,
-                    displayedComponents: [.hourAndMinute]
-                )
-                    .datePickerStyle(GraphicalDatePickerStyle())
-                
+                    .clipped()
+                    .labelsHidden()
+                    .frame(alignment:.leading)
+              
                 Spacer()
             }
-            .padding(.leading, 100)
-            .padding(.trailing, 100)
-            
+
             Spacer()
+            
         }
-        .padding(.top, 30)
-        .padding(.bottom, 30)
+        .frame(maxWidth:.infinity)
+        .padding(.top, 20)
+        .padding(.leading,100)
         .onAppear(perform: {
             self.fetchSelectedEvent()
         })

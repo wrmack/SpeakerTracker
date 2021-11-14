@@ -37,14 +37,9 @@ struct AddEntityView: View {
                     self.setupSheetState.showSheet = false
                     self.saveNewEntity()
                 }})
-                    .frame(height: 55)
-                    .padding(EdgeInsets.init(top: 0, leading: 20, bottom: 0, trailing: 0))
-                    .padding(Edge.Set.trailing,100)
-                    .overlay(RoundedRectangle(cornerRadius: 16).stroke(Color.gray))
-                    .textFieldStyle(PlainTextFieldStyle())
                     .font(Font.system(size: 18))
-                    .disableAutocorrection(true)
-
+                    .textFieldStyle(MyTextFieldStyle())
+                    .padding(.trailing,100)
             }
             Spacer()
         }

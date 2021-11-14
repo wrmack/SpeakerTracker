@@ -36,16 +36,20 @@ struct DisplayMembersView: View {
                     Text(entityState.currentEntity!.name!)
                         .font(.system(size: 18, weight: .medium))
                         .padding(.top,10)
-                }
-                HStack {
-                    Menu {
-                        ForEach(EntityState.sortedEntities!.indices, id: \.self) { idx in
-                            Button(EntityState.sortedEntities![idx].name!, action: { changeEntity(row: idx)})
-                        }
-                    } label: {
-                        Text("Change entity")
-                    }
 
+                    HStack {
+                        Menu {
+                            ForEach(EntityState.sortedEntities!.indices, id: \.self) { idx in
+                                Button(EntityState.sortedEntities![idx].name!, action: { changeEntity(row: idx)})
+                            }
+                        } label: {
+                            Text("Change entity")
+                        }
+
+                    }
+                }
+                else {
+                    Text("Create an entity first").opacity(0.5)
                 }
             }
             .padding(.leading,20)
@@ -58,7 +62,8 @@ struct DisplayMembersView: View {
             List(presenter.members, id: \.self, rowContent:  { member in
                 MemberListRow(rowContent: member)
             })
-                .listStyle(PlainListStyle())
+                .listStyle(.insetGrouped)
+            
             // When user changes selected entity, reset currentMemberIndex
                 .onChange(of: entityState.currentEntityIndex, perform: { newIndex in
                 print("------ DisplayMembersView .onChange entityState.currentEntityIndex: \(String(describing: newIndex))")

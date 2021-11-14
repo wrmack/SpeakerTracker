@@ -28,74 +28,60 @@ struct AddEventView: View {
     
     var body: some View {
         Print(">>>>>> AddEventView body refreshed")
-        VStack(alignment: .leading) {
+        
+        VStack(alignment:.leading) {
             
-            Group {
-                Text(entityState.currentEntity!.name!)
-
-                HStack {
-                    Text("Adding a new meeting event for: ")
-                        .opacity(0.6)
-                    Text("\(entityState.currentMeetingGroup!.name!)")
-                    Spacer()
-                }
-            }
-            .padding(.leading, 100)
-            .font(Font.system(size: 18))
-            
-            HStack {
-                Group {
-                    Text("Date: ")
-                        .opacity(0.6)
-                    Text(eventDate,formatter: dateFormatter)
-                }
+            Text("\(entityState.currentEntity!.name!), \(entityState.currentMeetingGroup!.name!)")
                 .font(Font.system(size: 18))
-            }
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .padding(.leading, 100)
-            .padding(.top,30)
-            .padding(.bottom,10)
             
             HStack {
-                Group {
+
                     Text("Time: ")
                         .opacity(0.6)
-                    Text(eventTime,formatter: timeFormatter)
-                }
-                .font(Font.system(size: 18))
+                        .font(Font.system(size: 18))
+
+            
+                    DatePicker(
+                        "",
+                        selection: $eventTime,
+                        displayedComponents: [.hourAndMinute]
+                    )
+                        .datePickerStyle(GraphicalDatePickerStyle())
+                        .font(Font.system(size: 18))
+
             }
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .padding(.leading, 100)
-            .padding(.top,10)
-            .padding(.bottom,40)
+            .frame(width: 200)
+
             
             HStack {
-                
+                Text("Date: ")
+                    .opacity(0.6)
+                Text(eventDate,formatter: dateFormatter)
+            }
+            .font(Font.system(size: 18))
+            .padding(.top,10)
+            
+            HStack {
                 DatePicker(
                     "",
                     selection: $eventDate,
                     displayedComponents: [.date]
                 )
+                    .font(Font.system(size: 18))
                     .datePickerStyle(GraphicalDatePickerStyle())
-
-                DatePicker(
-                    "",
-                    selection: $eventTime,
-                    displayedComponents: [.hourAndMinute]
-                )
-                    .datePickerStyle(GraphicalDatePickerStyle())
-                
+                    .clipped()
+                    .labelsHidden()
+                    .frame(alignment:.leading)
+              
                 Spacer()
-                
             }
-            .padding(.leading, 100)
-            .padding(.trailing, 100)
 
-            
             Spacer()
+
         }
-        .padding(.top, 30)
-        .padding(.bottom, 30)
+        .frame(maxWidth:.infinity)
+        .padding(.top, 20)
+        .padding(.leading,100)
         .onReceive(setupSheetState.$saveWasPressed, perform: { pressed in
             print("------ AddEventView .onReceive saveButtonState.$savePressed")
             if (pressed == true) && (setupSheetState.editMode == 0) {
@@ -113,30 +99,31 @@ struct AddEventView: View {
 //struct AddEventView_Previews: PreviewProvider {
 //    //    @ObservedObject static var setupSheetState = SetupSheetState()
 //    @StateObject static var entityState = EntityState()
+//    @StateObject static var setupSheetState = SetupSheetState()
 //
-//    
 //    static var previews: some View {
 //        let viewContext = PersistenceController.preview.container.viewContext
 //        let entity = Entity(context: viewContext)
 //        entity.name = "Entity 1"
 //        entity.idx = UUID()
-//        
+//
 //        let meetingGroup = MeetingGroup(context: viewContext)
 //        meetingGroup.name = "Meeting Group 1"
 //        meetingGroup.idx = UUID()
-//        
+//
 //        try? viewContext.save()
-//        
+//
 //        entityState.currentEntityIndex = entity.idx
 //        entityState.currentMeetingGroupIndex = meetingGroup.idx
-//        
-//        return AddEventView()
+//
+//        return AddEventView(setupSheetState: setupSheetState)
 //        //            .environmentObject(EntityState())
 //        //            .environmentObject(EventState())
-//        
+//
 //        //        .previewDevice("iPad Pro (12.9-inch) (4th generation)")
-//        //        .previewDisplayName("iPad Pro (12.9-inch)")
-//            .previewLayout(.fixed(width: 1322, height: 1024))
-//        
+////        //        .previewDisplayName("iPad Pro (12.9-inch)")
+////            .previewLayout(.fixed(width: 1322, height: 1024))
+//            .previewInterfaceOrientation(.landscapeRight)
+//
 //    }
 //}

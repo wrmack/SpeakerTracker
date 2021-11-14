@@ -24,7 +24,7 @@ import Combine
 struct DisplaySelectedMemberView: View {
     @EnvironmentObject var entityState: EntityState
     @StateObject var presenter = DisplaySelectedMemberPresenter()
-    
+    @StateObject var setupSheetState: SetupSheetState
     
     var body: some View {
         Print(">>>>>> DisplaySelectedMemberView body refreshed")
@@ -33,13 +33,24 @@ struct DisplaySelectedMemberView: View {
                 DisplaySelectedMemberListRow(rowContent: memberDetail)
             }
         }
+        .listStyle(.insetGrouped)
         // User selects different member
         .onChange(of: entityState.currentMemberIndex, perform: { newIndex in
             print("------ DisplaySelectedMemberView: .onChange currentMemberIndex \(String(describing: newIndex))")
-            DisplaySelectedMemberInteractor.fetchMember(presenter: presenter, entityState: entityState, newIndex: newIndex)
+            DisplaySelectedMemberInteractor.fetchMember(
+                presenter: presenter,
+                entityState: entityState,
+                setupSheetState: setupSheetState,
+                newIndex: newIndex
+            )
         })
         .onAppear(perform: {
-            DisplaySelectedMemberInteractor.fetchMember(presenter: presenter, entityState: entityState, newIndex: nil )
+            DisplaySelectedMemberInteractor.fetchMember(
+                presenter: presenter,
+                entityState: entityState,
+                setupSheetState: setupSheetState,
+                newIndex: nil
+            )
         })
     }
 }

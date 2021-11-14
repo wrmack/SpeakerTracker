@@ -33,7 +33,7 @@ struct DisplayEntitiesView: View {
             List(presenter.entities, id: \.self, rowContent:  { entity in
                 EntityListRow(rowContent: entity)
             })
-                .listStyle(PlainListStyle())
+                .listStyle(.insetGrouped)
                 .onChange(of: entityState.entitiesHaveChanged, perform: { val in
                     print("------ DisplayEntitiesView .onChange entityState.entitiesHaveChanged: \(val)")
                     if (selectedTab == 0) && (val == true)   {

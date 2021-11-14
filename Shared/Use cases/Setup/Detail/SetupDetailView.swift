@@ -10,18 +10,18 @@ import SwiftUI
 import Combine
 
 struct SetupDetailView: View {
-
+    @StateObject var setupSheetState: SetupSheetState
     @Binding var selectedSetupTab: Int
 
     
     var body: some View {
         Print(">>>>>> SetupDetailView body refreshed")
         switch selectedSetupTab {
-        case 0: DisplaySelectedEntityView()
-        case 1: DisplaySelectedMemberView()
-        case 2: DisplaySelectedMeetingGroupView()
-        case 3: DisplaySelectedEventView()
-        default: DisplaySelectedEntityView()
+        case 0: DisplaySelectedEntityView(setupSheetState: setupSheetState)
+        case 1: DisplaySelectedMemberView(setupSheetState: setupSheetState)
+        case 2: DisplaySelectedMeetingGroupView(setupSheetState: setupSheetState)
+        case 3: DisplaySelectedEventView(setupSheetState: setupSheetState)
+        default: DisplaySelectedEntityView(setupSheetState: setupSheetState)
         }
     }
 }

@@ -9,9 +9,9 @@ import Foundation
 import AppKit
 
 // Remove blue focus ring around text fields
-extension NSTextField {
-    open override var focusRingType: NSFocusRingType {
-        get { .none }
-        set { }
-    }
-}
+//extension NSTextField {
+//    open override var focusRingType: NSFocusRingType {
+//        get { .none }
+//        set { }
+//    }
+//}

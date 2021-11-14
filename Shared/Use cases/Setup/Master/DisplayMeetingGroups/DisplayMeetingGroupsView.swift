@@ -35,20 +35,21 @@ struct DisplayMeetingGroupsView: View {
                         Text(entityState.currentEntity!.name!)
                             .font(.system(size: 18, weight: .medium))
                             .padding(.top, 10)
-                    }
-                    HStack {
-                        Menu {
-                            ForEach(EntityState.sortedEntities!.indices, id: \.self) { idx in
-                                Button(EntityState.sortedEntities![idx].name!, action: { changeEntity(row: idx)})
-                            }
-                        } label: {
-                            Text("Change entity")
-                        }.padding(.trailing, 20)
-                    }
                     
-                }
-                else {
-                    Text("No entities created")
+                        HStack {
+                            Menu {
+                                ForEach(EntityState.sortedEntities!.indices, id: \.self) { idx in
+                                    Button(EntityState.sortedEntities![idx].name!, action: { changeEntity(row: idx)})
+                                }
+                            } label: {
+                                Text("Change entity")
+                            }.padding(.trailing, 20)
+                        }
+                    }
+                    else {
+                        Text("Create an entity first").opacity(0.5)
+                    }
+
                 }
             }
             .padding(.leading,20)
@@ -59,7 +60,8 @@ struct DisplayMeetingGroupsView: View {
             List(presenter.meetingGroups, id: \.self, rowContent:  { meetingGroup in
                 MeetingGroupListRow(rowContent: meetingGroup)
             })
-                .listStyle(PlainListStyle())
+                .listStyle(.insetGrouped)
+            
             // .onChange preferred to .onReceive because not called when view is first rendered, only when changed
                 .onChange(of: entityState.currentEntityIndex, perform: { newIndex in
                     print("------ DisplayMeetingGroupsView .onChange currentEntityIndex \(String(describing: newIndex))")

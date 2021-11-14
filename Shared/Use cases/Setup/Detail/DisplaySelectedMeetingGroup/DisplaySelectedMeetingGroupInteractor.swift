@@ -11,7 +11,7 @@ import Foundation
 
 class DisplaySelectedMeetingGroupInteractor {
     
-    class func fetchMeetingGroup(presenter: DisplaySelectedMeetingGroupPresenter, entityState: EntityState, newIndex: UUID?) {
+    class func fetchMeetingGroup(presenter: DisplaySelectedMeetingGroupPresenter, entityState: EntityState,setupSheetState:SetupSheetState, newIndex: UUID?) {
         print("------ DisplaySelectedMeetingGroupInteractor.fetchMeetingGroup newIndex \(String(describing: newIndex))")
         
         var meetingGroupIndex: UUID?
@@ -22,6 +22,9 @@ class DisplaySelectedMeetingGroupInteractor {
                 meetingGroupIndex = currentMeetingGroupIndex
             }
             else {
+                if entityState.currentEntityIndex == nil { setupSheetState.addDisabled = true }
+                setupSheetState.editDisabled = true
+                setupSheetState.deleteDisabled = true
                 presenter.presentMeetingGroupDetail(meetingGroup: nil)
                 return
             }
@@ -30,7 +33,8 @@ class DisplaySelectedMeetingGroupInteractor {
             meetingGroupIndex = newIndex
         }
         let selectedMeetingGroup = EntityState.meetingGroupWithIndex(index: meetingGroupIndex!)
-        
+        setupSheetState.deleteDisabled = false
+        setupSheetState.editDisabled = false
         presenter.presentMeetingGroupDetail(meetingGroup: selectedMeetingGroup)
     }
     

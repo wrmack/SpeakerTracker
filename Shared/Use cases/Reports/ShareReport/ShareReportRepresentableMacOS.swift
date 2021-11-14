@@ -32,7 +32,7 @@ struct SharingPicker: NSViewRepresentable {
             let dataURL = docUrl.appendingPathComponent("TmpPdf")
             let pdfDataURL = dataURL.appendingPathComponent("Meeting.pdf") as CFURL
             print("Data url: \(dataURL)")
-            
+
             // Get attributed string
             let attString = NSAttributedString(SharingPicker.convertReportContentToAttributedString(reportContent: self.reportContent))
 
@@ -66,7 +66,7 @@ struct SharingPicker: NSViewRepresentable {
 
             // Track the text location.  This is the location in the string at the start of a page.
             var textLocation = 0
-            
+
             // Loop to create separate pages
             while textLocation < stringLength {
 
@@ -76,7 +76,7 @@ struct SharingPicker: NSViewRepresentable {
                 // Calculate string range for this page. Constraints are page size less margins
                 var stringRange = CFRange()
                 CTFramesetterSuggestFrameSizeWithConstraints(framesetter, textRange, nil, constraints, &stringRange)
-                
+
                 // Create frame to use for drawing
                 let framePath = CGPath(rect: pageRect, transform: nil)
                 let frame = CTFramesetterCreateFrame(framesetter, stringRange, framePath, nil)

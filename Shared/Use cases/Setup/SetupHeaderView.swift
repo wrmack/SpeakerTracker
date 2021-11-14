@@ -16,6 +16,9 @@ import SwiftUI
 struct SetupHeaderView: View {
     @ObservedObject var setupSheetState: SetupSheetState
     @Binding var selectedSetupTab: Int
+    @State var addIsDisabled = true
+    @State var editIsDisabled = true
+    @State var deleteIsDisabled = true
     
     var body: some View {
         HStack {
@@ -39,6 +42,7 @@ struct SetupHeaderView: View {
                         .padding(.trailing, 10)
                 }
                     .buttonStyle(PlainButtonStyle())
+                    .disabled(addIsDisabled == true ? true : false)
             }
                 .frame(width: MASTERVIEW_WIDTH + 80, alignment: .center)
             
@@ -55,7 +59,7 @@ struct SetupHeaderView: View {
                         .foregroundColor(.red)
                 }
                 .buttonStyle(PlainButtonStyle())
-
+                .disabled(deleteIsDisabled == true ? true : false)
                 
                 Spacer().fixedSize().frame(width: 50)
                 Button(action: {withAnimation(.easeInOut(duration: EASEINOUT)) {
@@ -68,11 +72,22 @@ struct SetupHeaderView: View {
                         .padding(.trailing,30)
                 }
                     .buttonStyle(PlainButtonStyle())
+                    .disabled(editIsDisabled == true ? true : false)
             }
             .frame(minWidth: 200, alignment: .trailing)
 
         }
+        .onChange(of: setupSheetState.addDisabled, perform: { val in
+            addIsDisabled = val
+        })
+        .onChange(of: setupSheetState.deleteDisabled, perform: { val in
+            deleteIsDisabled = val
+        })
+        .onChange(of: setupSheetState.editDisabled, perform: { val in
+            editIsDisabled = val
+        })
     }
+     
 }
 
 struct SetupHeaderView_Previews: PreviewProvider {

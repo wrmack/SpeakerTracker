@@ -77,9 +77,13 @@ class EventState : ObservableObject {
             print(error)
         }
         
-        let event = fetchedEvents![0] as! MeetingEvent
-        
-        return event
+        if fetchedEvents!.count > 0 {
+            let event = fetchedEvents![0] as! MeetingEvent
+            return event
+        }
+        else {
+            return nil
+        }
         
     }
     

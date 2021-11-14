@@ -10,8 +10,7 @@ import Foundation
 import Combine
 
 
-struct MemberViewModelRecord: Hashable, Identifiable {
-    var id = UUID()
+struct MemberViewModelRecord: Hashable {
     var label: String
     var value: String
 }

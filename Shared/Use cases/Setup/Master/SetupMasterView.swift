@@ -64,7 +64,7 @@ struct SetupMasterView: View {
 //            itemAppearance.normal.titlePositionAdjustment = UIOffset(horizontal: 20, vertical: 10)
 
             let appearance = UITabBarAppearance()
-            appearance.backgroundColor = UIColor.red
+//            appearance.backgroundColor = UIColor.red
             appearance.stackedLayoutAppearance = itemAppearance
             appearance.inlineLayoutAppearance = itemAppearance
             appearance.compactInlineLayoutAppearance = itemAppearance

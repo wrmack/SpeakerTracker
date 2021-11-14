@@ -7,8 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4125E6BF273EDA1000ECA336 /* Speaker-tracker-multi--iOS--Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4125E6BE273EDA1000ECA336 /* Speaker-tracker-multi--iOS--Info.plist */; };
 		412CEEA62727170900753923 /* ShareReportRepresentableMacOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 412CEEA52727170900753923 /* ShareReportRepresentableMacOS.swift */; };
+		415EF339273F0A4A00DD847A /* Event_OldManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 415EF338273F0A4A00DD847A /* Event_OldManager.swift */; };
+		415EF33B273F556900DD847A /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 415EF33A273F556900DD847A /* Launch Screen.storyboard */; };
 		416A5ED127061AD3006E6CD9 /* Speaker_tracker_multiApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5EC127061AD2006E6CD9 /* Speaker_tracker_multiApp.swift */; };
 		416A5ED227061AD3006E6CD9 /* Speaker_tracker_multiApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5EC127061AD2006E6CD9 /* Speaker_tracker_multiApp.swift */; };
 		416A5ED327061AD3006E6CD9 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416A5EC227061AD2006E6CD9 /* ContentView.swift */; };
@@ -212,6 +213,9 @@
 /* Begin PBXFileReference section */
 		4125E6BE273EDA1000ECA336 /* Speaker-tracker-multi--iOS--Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Speaker-tracker-multi--iOS--Info.plist"; sourceTree = "<group>"; };
 		412CEEA52727170900753923 /* ShareReportRepresentableMacOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareReportRepresentableMacOS.swift; sourceTree = "<group>"; };
+		415EF337273EFB4A00DD847A /* Speaker-tracker-multi--macOS--Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Speaker-tracker-multi--macOS--Info.plist"; sourceTree = "<group>"; };
+		415EF338273F0A4A00DD847A /* Event_OldManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Event_OldManager.swift; sourceTree = "<group>"; };
+		415EF33A273F556900DD847A /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		416A5EC127061AD2006E6CD9 /* Speaker_tracker_multiApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Speaker_tracker_multiApp.swift; sourceTree = "<group>"; };
 		416A5EC227061AD2006E6CD9 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		416A5EC327061AD3006E6CD9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -350,6 +354,7 @@
 		416A5EBB27061AD2006E6CD9 = {
 			isa = PBXGroup;
 			children = (
+				415EF337273EFB4A00DD847A /* Speaker-tracker-multi--macOS--Info.plist */,
 				4125E6BE273EDA1000ECA336 /* Speaker-tracker-multi--iOS--Info.plist */,
 				416A5EE127061F02006E6CD9 /* Design.md */,
 				416A5EC027061AD2006E6CD9 /* Shared */,
@@ -415,6 +420,7 @@
 		416A5EE927062034006E6CD9 /* Setup */ = {
 			isa = PBXGroup;
 			children = (
+				416A5F4127062034006E6CD9 /* SetupHeaderView.swift */,
 				416A5F2F27062034006E6CD9 /* Master */,
 				416A5F1D27062034006E6CD9 /* Detail */,
 				416A5EEA27062034006E6CD9 /* EditingTools */,
@@ -646,7 +652,6 @@
 		416A5F2F27062034006E6CD9 /* Master */ = {
 			isa = PBXGroup;
 			children = (
-				416A5F4127062034006E6CD9 /* SetupHeaderView.swift */,
 				416A5F3C27062034006E6CD9 /* SetupMasterView.swift */,
 				416A5F3D27062034006E6CD9 /* DisplayEntities */,
 				416A5F3827062034006E6CD9 /* DisplayMembers */,
@@ -829,6 +834,7 @@
 			isa = PBXGroup;
 			children = (
 				41CEE8F1273E253200DDE686 /* UpgradeToCoreData */,
+				415EF33A273F556900DD847A /* Launch Screen.storyboard */,
 			);
 			path = iOS;
 			sourceTree = "<group>";
@@ -838,6 +844,7 @@
 			children = (
 				41CEE8EE273E22B900DDE686 /* Upgrade.swift */,
 				41CEE8F6273E27E500DDE686 /* Entity_OldManager.swift */,
+				415EF338273F0A4A00DD847A /* Event_OldManager.swift */,
 				41CEE8F2273E256500DDE686 /* EntityDocument.swift */,
 				41CEE8F4273E257100DDE686 /* EventDocument.swift */,
 			);
@@ -889,7 +896,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1300;
-				LastUpgradeCheck = 1300;
+				LastUpgradeCheck = 1310;
 				TargetAttributes = {
 					416A5EC727061AD3006E6CD9 = {
 						CreatedOnToolsVersion = 13.0;
@@ -923,8 +930,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				415EF33B273F556900DD847A /* Launch Screen.storyboard in Resources */,
 				416A5ED527061AD3006E6CD9 /* Assets.xcassets in Resources */,
-				4125E6BF273EDA1000ECA336 /* Speaker-tracker-multi--iOS--Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1013,6 +1020,7 @@
 				416A5FA627062121006E6CD9 /* DisplayEventsView.swift in Sources */,
 				416A60042706226E006E6CD9 /* DeleteEventPresenter.swift in Sources */,
 				416A5FF227062255006E6CD9 /* AddEntityInteractor.swift in Sources */,
+				415EF339273F0A4A00DD847A /* Event_OldManager.swift in Sources */,
 				416A5F6B27062041006E6CD9 /* ReportsState.swift in Sources */,
 				416A5FEC27062222006E6CD9 /* DisplaySelectedEventInteractor.swift in Sources */,
 				416A600827062275006E6CD9 /* EditEventView.swift in Sources */,
@@ -1279,8 +1287,10 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Speaker-tracker-multi--iOS--Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Speaker Tracker";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = "Launch Screen";
 				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -1311,8 +1321,10 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Speaker-tracker-multi--iOS--Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Speaker Tracker";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = "Launch Screen";
 				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";

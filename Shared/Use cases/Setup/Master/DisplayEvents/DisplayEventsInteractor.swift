@@ -28,6 +28,7 @@ class DisplayEventsInteractor {
             if entities != nil && entities!.count > 0 {
                 entityState.currentEntityIndex = entities![0].idx
             }
+            else {return}
         }
         let meetingGroups = EntityState.sortedMeetingGroups(entityIndex: entityState.currentEntityIndex!)
         if meetingGroups != nil && meetingGroups!.count > 0 {

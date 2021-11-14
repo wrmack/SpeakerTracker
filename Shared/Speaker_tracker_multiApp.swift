@@ -14,7 +14,7 @@ struct Speaker_tracker_multiApp: App {
     @Environment(\.scenePhase) var scenePhase
     
     #if os(iOS)
-    let upgradeSuccess = Upgrade.convertToCoreData()
+    let upgradeSuccess = Upgrade.convertEntityDocumentsToCoreData()
     #endif
     
     let persistenceController = PersistenceController.shared

@@ -28,7 +28,9 @@ class DisplayMembersInteractor {
     class func setCurrentEntityIndex(entityState: EntityState) {
         if entityState.currentEntityIndex == nil {
             let entities = EntityState.sortedEntities!
-            entityState.currentEntityIndex = entities[0].idx
+            if entities.count > 0  {
+                entityState.currentEntityIndex = entities[0].idx
+            }
         }
     }
     
@@ -68,8 +70,8 @@ class DisplayMembersInteractor {
         
         // Get the entity then the members for that entity
         // Return nil if result is nil or there are none
-        let entityIndex = entityState.currentEntityIndex
-        guard let fetchedMembersForEntity = EntityState.sortedMembers(entityIndex: entityIndex!) else {return }
+        guard let entityIndex = entityState.currentEntityIndex else {return }
+        guard let fetchedMembersForEntity = EntityState.sortedMembers(entityIndex: entityIndex) else {return }
         if fetchedMembersForEntity.count == 0 {return }
         
         var memberIdx = idx

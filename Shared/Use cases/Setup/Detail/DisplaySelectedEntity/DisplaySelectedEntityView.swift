@@ -25,6 +25,7 @@ import Combine
 struct DisplaySelectedEntityView: View {
     @EnvironmentObject var entityState: EntityState
     @StateObject var presenter = DisplaySelectedEntityPresenter()
+    @StateObject var setupSheetState: SetupSheetState
     
     var body: some View {
         Print(">>>>>> DisplaySelectedEntityView body refreshed")
@@ -33,10 +34,26 @@ struct DisplaySelectedEntityView: View {
                 DisplaySelectedEntityListRow(rowContent: content)
             }
         }
+        .listStyle(.insetGrouped)
+        
         // When entityState.currentEntityIndex changes
-        .onReceive(entityState.$currentEntityIndex, perform: { newIndex in
-            print("------ DisplaySelectedEntityView: .onReceive $currentEntityIndex val: \(String(describing: newIndex))")
-            DisplaySelectedEntityInteractor.fetchEntity(presenter: presenter, entityState: entityState, newIndex: newIndex)
+        .onChange(of: entityState.currentEntityIndex, perform: { newIndex in
+            print("------ DisplaySelectedEntityView: .onChange currentEntityIndex newIndex: \(String(describing: newIndex))")
+            DisplaySelectedEntityInteractor.fetchEntity(
+                presenter: presenter,
+                entityState: entityState,
+                setupSheetState: setupSheetState,
+                newIndex: newIndex
+            )
+        })
+        .onAppear(perform: {
+            print("------ DisplaySelectedEntityView: .onAppear)")
+            DisplaySelectedEntityInteractor.fetchEntity(
+                presenter: presenter,
+                entityState: entityState,
+                setupSheetState: setupSheetState,
+                newIndex: nil
+            )
         })
     }
 }

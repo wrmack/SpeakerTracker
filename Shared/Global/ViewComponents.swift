@@ -92,3 +92,15 @@ struct TabItemLabelStyle: LabelStyle {
             .contentShape(Rectangle())
     }
 }
+
+struct MyTextFieldStyle: TextFieldStyle {
+    func _body(configuration: TextField<Self._Label>) -> some View {
+        configuration
+            .padding(.all,20)
+            .background(Color.gray.opacity(0.2))
+            .clipShape(RoundedRectangle(cornerRadius: 10))
+            .background(  RoundedRectangle(cornerRadius: 10, style: .continuous).stroke(Color.gray, lineWidth: 2))
+            .disableAutocorrection(true)
+    }
+}
+

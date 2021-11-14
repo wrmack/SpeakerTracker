@@ -11,8 +11,10 @@ import Foundation
 /// `DisplaySelectedMemberInteractor` is responsible for interacting with the data model.
 class DisplaySelectedMemberInteractor {
    
-    class func fetchMember(presenter: DisplaySelectedMemberPresenter, entityState: EntityState, newIndex: UUID?) {
+    class func fetchMember(presenter: DisplaySelectedMemberPresenter, entityState: EntityState, setupSheetState: SetupSheetState,newIndex: UUID?) {
         print("------ DisplaySelectedMemberInteractor.fetchMember")
+        
+        
         var memberIndex: UUID?
         
         // newIndex is nil when method called by .onAppear
@@ -21,6 +23,9 @@ class DisplaySelectedMemberInteractor {
                 memberIndex = currentMemberIndex
             }
             else {
+                if entityState.currentEntityIndex == nil { setupSheetState.addDisabled = true }
+                setupSheetState.editDisabled = true
+                setupSheetState.deleteDisabled = true
                 presenter.presentMemberDetail(member: nil)
                 return
             }
@@ -29,7 +34,8 @@ class DisplaySelectedMemberInteractor {
             memberIndex = newIndex
         }
         let selectedMember = EntityState.memberWithIndex(index: memberIndex!)
-        
+        setupSheetState.deleteDisabled = false
+        setupSheetState.editDisabled = false
         presenter.presentMemberDetail(member: selectedMember)
    }
     

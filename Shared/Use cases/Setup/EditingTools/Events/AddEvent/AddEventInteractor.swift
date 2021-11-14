@@ -28,5 +28,7 @@ class AddEventInteractor {
         entityState.currentMeetingGroup!.meetings = meetingsSet!.adding(event) as NSSet
         EventState.saveManagedObjectContext()
         
+        eventState.currentMeetingEventIndex = event.idx
+        eventState.eventsHaveChanged = true
     }
 }

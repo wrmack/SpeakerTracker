@@ -84,7 +84,7 @@ struct Entity_OldManager {
         var entities = [Entity_Old]()
         let fileManager = FileManager.default
         guard let docDirectory = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first else {
-            print("EntityManager: fetchEntities: error: Document directory not found")
+            print("Entity_OldManager: fetchEntities: error: Document directory not found")
             return
         }
         do {
@@ -104,7 +104,7 @@ struct Entity_OldManager {
                     let entityDoc = EntityDocument(fileURL: entityUrl)
                     entityDoc.open(completionHandler: { success in
                         if !success {
-                            print("EntityManager: fetchEntities: error opening EntityDocument")
+                            print("Entity_OldManager: fetchEntities: error opening EntityDocument")
                         }
                         else {
                             entityDoc.close(completionHandler: { success in

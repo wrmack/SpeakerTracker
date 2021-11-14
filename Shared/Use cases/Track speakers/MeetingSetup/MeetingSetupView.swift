@@ -22,13 +22,10 @@ struct MeetingSetupView: View {
     @State var entityNames = [String]()
     @State var meetingGroupNames = [String]()
     @State var meetingEventNames = [String]()
-    //    @State var selectedMeetingGroupIndex: Int?
     @State var selectedMeetingEventIndex: Int?
-    @State var selectedEntityName = "Change"
-    @State var selectedMeetingGroupName = "Change"
-    @State var selectedMeetingEventName = "Change"
-    //    @State var meetingGroups: [MeetingGroup]?
-    //    @Binding var selectedMeetingGroup: MeetingGroup?
+    @State var selectedEntityName = ""
+    @State var selectedMeetingGroupName = ""
+    @State var selectedMeetingEventName = ""
     @Binding var showMeetingSetupSheet: Bool
     @Binding var isRecording: Bool
     
@@ -99,6 +96,7 @@ struct MeetingSetupView: View {
                     }
                     .padding(.top, 20)
                     .padding(.trailing, 40)
+                    .disabled(selectedEntityName == "None" ? true : false)
                     
                     if isRecording == true {
 //                        Spacer().fixedSize().frame(height: 40)
@@ -170,7 +168,8 @@ struct MeetingSetupView: View {
                 HStack {
                     Text(
                     """
-                    Turn on 'Record speaking times for this meeting' to \
+                    After setting an Entity and Meeting group, \
+                    turn on 'Record speaking times for this meeting' to \
                     record speaking times for the chosen meeting event.
                     
                     Press 'Save debate'to save the current debate and \

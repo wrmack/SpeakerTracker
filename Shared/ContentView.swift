@@ -69,6 +69,7 @@ struct ContentView: View {
             
             GeometryReader { geo in
                 ZStack(alignment:.topLeading) {
+                    // Main track speakers view
                     TrackSpeakersView(
                         showMeetingSetupSheet: $showMeetingSetupSheet,
                         selectedMeetingGroup: $selectedMeetingGroup,
@@ -82,14 +83,14 @@ struct ContentView: View {
                                 }
                             }
                         }
-                    
+                    // Meeting setup
                     if self.showMeetingSetupSheet {
                         HStack {
                             MeetingSetupView(
                                 showMeetingSetupSheet: self.$showMeetingSetupSheet,
                                 isRecording: $isRecording
                             )
-                                .frame(maxWidth:500, maxHeight: geo.size.height - 30)
+                                .frame(maxWidth:500, maxHeight: geo.size.height)
                         }
                         .zIndex(1)
                         .transition(.move(edge: .leading))
@@ -115,14 +116,18 @@ struct ContentView: View {
                 
                 Divider().frame(height: 2).background(Color(white: 0.85, opacity: 1.0))
                 
+                // Master | Detail views
                 HStack(spacing: 0) {
+                    // Master
                     SetupMasterView(selectedSetupTab: $selectedSetupTab)
                         .frame(maxWidth: MASTERVIEW_WIDTH)
                     Divider().frame(width:10)
+                    
+                    // Detail
                     GeometryReader{ geo in
                         ZStack {
-                            SetupDetailView(selectedSetupTab: $selectedSetupTab)
-                            
+                            SetupDetailView(setupSheetState: setupSheetState, selectedSetupTab: $selectedSetupTab)
+                                .frame(width: geo.size.width, height: geo.size.height)
                             if setupSheetState.showSheet {
                                 SetupSheetView(setupSheetState: setupSheetState, presentMembersSheet: self.$presentMembersSheet, selectedSetupTab: $selectedSetupTab)
                                     .zIndex(1)
@@ -140,9 +145,6 @@ struct ContentView: View {
                         .frame(maxWidth:.infinity, maxHeight: .infinity)
                     }
                 }
-                //                    .onReceive(setupSheetState.showSheet, perform: {val in
-                //                        showMeetingSetupSheet = val
-                //                    })
             }
             //                .background(SETUP_BAR_COLOR)
             .edgesIgnoringSafeArea([.top])
@@ -182,7 +184,7 @@ struct ContentView: View {
         }
         .opacity(1.0)
 #if os(macOS)
-        .frame(minWidth: 1100)
+        .frame(minWidth: 1100, minHeight: 600)
 #endif
         .padding(.top,10)
         .onAppear(perform: {

@@ -210,6 +210,8 @@ struct TrackSpeakersView: View {
                             .font(.system(size: 24))
                             .fontWeight(.semibold)
                             .foregroundColor(Color.white)
+                            .frame(width: 150, alignment: .center)
+                            .multilineTextAlignment(.center)
                             .padding(.top, 100)
                             .onTapGesture {
                                 TrackSpeakersInteractor.reset(trackSpeakersState: trackSpeakersState)
@@ -218,11 +220,11 @@ struct TrackSpeakersView: View {
                         Button(action: {withAnimation(.easeInOut(duration: EASEINOUT)) {
                             self.showMeetingSetupSheet.toggle()
                         }}) {
-                            Text("Meeting \nsetup")
+                            Text("Meeting\nsetup")
                                 .font(.system(size: 24))
                                 .fontWeight(.semibold)
                                 .foregroundColor(Color.white)
-                                .frame(alignment: .center)
+                                .frame(width: 150, alignment: .center)
                                 .multilineTextAlignment(.center)
                                 .padding(.trailing, 10)
                                 .padding(.top, 40)

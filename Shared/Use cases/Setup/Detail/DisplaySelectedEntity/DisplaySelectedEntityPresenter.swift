@@ -31,53 +31,10 @@ class DisplaySelectedEntityPresenter: ObservableObject {
     
 
     func presentEntityDetail(entity: Entity?) {
+        var tempArray = [EntityDetailViewModel]()
         if entity != nil {
-            var tempArray = [EntityDetailViewModel]()
             tempArray.append(EntityDetailViewModel(label: "Name", value: entity!.name!))
-            
-            entityDetail = tempArray
         }
-        
-//        if entity != nil {
-//            var tempArray = [EntityViewModelRecord]()
-//                tempArray.append(EntityViewModelRecord(label: "Name", value: entity!.name!))
-//                if entity!.meetingGroups != nil {
-//                var meetingGroupString = String()
-//                    for sub in entity!.meetingGroups! {
-//                    if meetingGroupString.count > 0 {
-//                        meetingGroupString.append(", ")
-//                    }
-//                    meetingGroupString.append(sub.name!)
-//                }
-//                tempArray.append(EntityViewModelRecord(label:"Meeting groups", value: meetingGroupString))
-//            }
-//            if entity!.members != nil {
-//                var members = entity!.members
-//                if members!.count > 0 {
-//                    members!.sort(by: {
-//                        if $0.lastName! < $1.lastName! {
-//                            return true
-//                        }
-//                        return false
-//                    })
-//                }
-//                var memberString = String()
-//                for member in members! {
-//                    if memberString.count > 0 {
-//                        memberString.append(", ")
-//                    }
-//                    var fullTitle: String?
-//                    if let title = member.title {
-//                        fullTitle = title + " "
-//                    }
-//                    memberString.append((fullTitle ?? "") + (member.firstName ?? "") + " " + member.lastName!)
-//                }
-//                tempArray.append(EntityViewModelRecord(label: "Members", value: memberString))
-//            }
-//            entityViewModel = tempArray
-//        }
-//        else {
-//            entityViewModel = [EntityViewModelRecord]()
-//        }
+        entityDetail = tempArray
     }
 }

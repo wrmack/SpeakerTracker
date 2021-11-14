@@ -13,7 +13,7 @@ struct DisplaySelectedEventView: View {
     @EnvironmentObject var entityState: EntityState
     @EnvironmentObject var eventState: EventState
     @StateObject var presenter = DisplaySelectedEventPresenter()
-
+    @StateObject var setupSheetState: SetupSheetState
     
     var body: some View {
         Print(">>>>>> DisplaySelectedEventView body refreshed")
@@ -22,17 +22,31 @@ struct DisplaySelectedEventView: View {
                 DisplaySelectedEventListRow(rowContent: content)
             }
         }
+        .listStyle(.insetGrouped)
+        
         // Called when different meeting event is selected by user
         .onChange(of: eventState.currentMeetingEventIndex, perform: { newIndex in
             print("------ DisplaySelectedEventView: .onChange currentMeetingEventIndex")
-            DisplaySelectedEventInteractor.fetchEvent(presenter: presenter, eventState: eventState, entityState: entityState, newIndex: newIndex)
+            DisplaySelectedEventInteractor.fetchEvent(
+                presenter: presenter,
+                eventState: eventState,
+                entityState: entityState,
+                setupSheetState: setupSheetState,
+                newIndex: newIndex
+            )
         })
         .onReceive(presenter.$eventViewModel, perform: { viewModel in
             print("viewModel \(viewModel)")
         })
         // Called when first appears
         .onAppear(perform: {
-            DisplaySelectedEventInteractor.fetchEvent(presenter: presenter, eventState: eventState, entityState: entityState, newIndex: nil)
+            DisplaySelectedEventInteractor.fetchEvent(
+                presenter: presenter,
+                eventState: eventState,
+                entityState: entityState,
+                setupSheetState: setupSheetState,
+                newIndex: nil
+            )
         })
     }
 }

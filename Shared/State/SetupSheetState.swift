@@ -22,6 +22,10 @@ class SetupSheetState: ObservableObject {
     @Published var showMembersSheet = false
     @Published var selectedMembers: Set<Member>?
     
+    @Published var addDisabled = true
+    @Published var editDisabled = true
+    @Published var deleteDisabled = true
+    
     var editMode = 0  // 0 = add, 1 = edit, 2 = delete
     
     init() {

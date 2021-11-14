@@ -359,7 +359,7 @@ class TrackSpeakersInteractor {
         
         // Add new debate section to the debate
         newDebate.debateSections = newDebate.debateSections!.adding(debateSection) as NSSet
-        
+     
         // Add the debate to the meeting event
         currentEvent.debates = currentEvent.debates?.adding(newDebate) as NSSet?
         

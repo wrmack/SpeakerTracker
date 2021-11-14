@@ -36,20 +36,21 @@ struct DisplayEventsView: View {
                         Text(entityState.currentEntity!.name!)
                             .font(.system(size: 18, weight: .medium))
                             .padding(.top, 10)
+
+                        HStack {
+                            Menu {
+                                ForEach(EntityState.sortedEntities!.indices, id: \.self) { idx in
+                                    Button(EntityState.sortedEntities![idx].name!, action: { changeEntity(row: idx)})
+                                }
+                            } label: {
+                                Text("Change entity")
+                            }.padding(.trailing, 20)
+                        }
                     }
-                    HStack {
-                        Menu {
-                            ForEach(EntityState.sortedEntities!.indices, id: \.self) { idx in
-                                Button(EntityState.sortedEntities![idx].name!, action: { changeEntity(row: idx)})
-                            }
-                        } label: {
-                            Text("Change entity")
-                        }.padding(.trailing, 20)
+                    else {
+                        Text("Create an entity first").opacity(0.5)
                     }
-                    
-                }
-                else {
-                    Text("No entities created")
+
                 }
             }
             .padding(.leading,20)
@@ -59,26 +60,25 @@ struct DisplayEventsView: View {
             
             // Select a meeting group
             VStack(alignment: .leading) {
-                if EntityState.sortedMeetingGroups(entityIndex: entityState.currentEntityIndex!) != nil {
+                if  entityState.currentEntityIndex != nil && EntityState.sortedMeetingGroups(entityIndex: entityState.currentEntityIndex!) != nil {
                     if entityState.currentMeetingGroup != nil {
                         Text(entityState.currentMeetingGroup!.name!)
                             .font(.system(size: 18, weight: .medium))
                             .padding(.top, 10)
+
+                        HStack {
+                            Menu {
+                                ForEach(EntityState.sortedMeetingGroups(entityIndex: entityState.currentEntityIndex!)!.indices, id: \.self) { idx in
+                                    Button(EntityState.sortedMeetingGroups(entityIndex: entityState.currentEntityIndex!)![idx].name!, action: { changeMeetingGroup(row: idx)})
+                                }
+                            } label: {
+                                Text("Change meeting group")
+                            }.padding(.trailing, 20)
+                        }
                     }
-                    HStack {
-                        Menu {
-                            ForEach(EntityState.sortedMeetingGroups(entityIndex: entityState.currentEntityIndex!)!.indices, id: \.self) { idx in
-                                Button(EntityState.sortedMeetingGroups(entityIndex: entityState.currentEntityIndex!)![idx].name!, action: { changeMeetingGroup(row: idx)})
-                            }
-                        } label: {
-                            Text("Change meeting group")
-                        }.padding(.trailing, 20)
-                    }
-                    
+                    else { Text("No meeting groups available").opacity(0.5) }
                 }
-                else {
-                    Text("No meeting groups created")
-                }
+                else { Text("No meeting groups available").opacity(0.5) }
             }
             .padding(.leading,20)
             .padding(.trailing,20)
@@ -89,6 +89,7 @@ struct DisplayEventsView: View {
             List(presenter.eventSummaries, id: \.self, rowContent:  {  eventSummary in
                 EventsListRow(rowContent: eventSummary)
             })
+                .listStyle(.insetGrouped)
             
             // After user changes selected entity
                 .onChange(of: entityState.currentEntity, perform: { entity in

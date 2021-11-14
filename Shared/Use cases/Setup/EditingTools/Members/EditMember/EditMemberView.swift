@@ -34,13 +34,9 @@ struct EditMemberView: View {
                     .padding(Edge.Set.trailing, 30)
                     .font(Font.system(size: 20))
                 TextField("eg Councillor", text: $memberTitle)
-                    .frame(height: 55)
-                    .padding(EdgeInsets.init(top: 0, leading: 20, bottom: 0, trailing: 0))
-                    .padding(Edge.Set.trailing,100)
-                    .overlay(RoundedRectangle(cornerRadius: 16).stroke(Color.gray))
-                    .textFieldStyle(PlainTextFieldStyle())
                     .font(Font.system(size: 18))
-                    .disableAutocorrection(true)
+                    .textFieldStyle(MyTextFieldStyle())
+                    .padding(.trailing,100)
             }
             HStack {
                 Text("First name")
@@ -48,13 +44,9 @@ struct EditMemberView: View {
                     .padding(Edge.Set.trailing, 30)
                     .font(Font.system(size: 20))
                 TextField("eg John", text: $memberFirstName)
-                    .frame(height: 55)
-                    .padding(EdgeInsets.init(top: 0, leading: 20, bottom: 0, trailing: 0))
-                    .padding(Edge.Set.trailing,100)
-                    .overlay(RoundedRectangle(cornerRadius: 16).stroke(Color.gray))
-                    .textFieldStyle(PlainTextFieldStyle())
                     .font(Font.system(size: 18))
-                    .disableAutocorrection(true)
+                    .textFieldStyle(MyTextFieldStyle())
+                    .padding(.trailing,100)
 
             }
             HStack {
@@ -66,13 +58,9 @@ struct EditMemberView: View {
                     setupSheetState.showSheet = false
                     self.saveMember()
                 }})
-                    .frame(height: 55)
-                    .padding(EdgeInsets.init(top: 0, leading: 20, bottom: 0, trailing: 0))
-                    .padding(Edge.Set.trailing,100)
-                    .overlay(RoundedRectangle(cornerRadius: 16).stroke(Color.gray))
-                    .textFieldStyle(PlainTextFieldStyle())
                     .font(Font.system(size: 18))
-                    .disableAutocorrection(true)
+                    .textFieldStyle(MyTextFieldStyle())
+                    .padding(.trailing,100)
             }
             Spacer()
         }

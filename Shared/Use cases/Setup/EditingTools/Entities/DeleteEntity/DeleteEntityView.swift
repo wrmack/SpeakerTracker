@@ -32,13 +32,11 @@ struct DeleteEntityView: View {
                     .font(Font.system(size: 20))
                 TextField("eg Some Council, or Some Board", text: $entityName)
                     .disabled(true)
-                    .frame(height: 55)
-                    .padding(EdgeInsets.init(top: 0, leading: 20, bottom: 0, trailing: 0))
-                    .padding(Edge.Set.trailing,100)
-                    .overlay(RoundedRectangle(cornerRadius: 16).stroke(Color.gray))
-                    .textFieldStyle(PlainTextFieldStyle())
                     .font(Font.system(size: 18))
-                    .disableAutocorrection(true)
+                    .textFieldStyle(MyTextFieldStyle())
+                    .padding(.trailing,100)
+
+
             }
             Spacer()
         }

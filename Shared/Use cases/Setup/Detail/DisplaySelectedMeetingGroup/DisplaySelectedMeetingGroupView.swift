@@ -12,7 +12,7 @@ import Combine
 struct DisplaySelectedMeetingGroupView: View {
     @EnvironmentObject var entityState: EntityState
     @StateObject var presenter = DisplaySelectedMeetingGroupPresenter()
-    
+    @StateObject var setupSheetState: SetupSheetState
     
     var body: some View {
         Print(">>>>>> DisplaySelectedMeetingGroupView body refreshed")
@@ -21,14 +21,26 @@ struct DisplaySelectedMeetingGroupView: View {
                 DisplaySelectedMeetingGroupListRow(rowContent: content)
             }
         }
+        .listStyle(.insetGrouped)
+        
         // Called when meeting group is changed
         .onChange(of: entityState.currentMeetingGroupIndex, perform: { newIndex in
             print("------ DisplaySelectedMeetingGroupView: .onChange currentMeetingGroupIndex")
-            DisplaySelectedMeetingGroupInteractor.fetchMeetingGroup(presenter: presenter, entityState: entityState, newIndex: newIndex)
+            DisplaySelectedMeetingGroupInteractor.fetchMeetingGroup(
+                presenter: presenter,
+                entityState: entityState,
+                setupSheetState: setupSheetState,
+                newIndex: newIndex
+            )
         })
         // Called when first appears
         .onAppear(perform: {
-            DisplaySelectedMeetingGroupInteractor.fetchMeetingGroup(presenter: presenter, entityState: entityState, newIndex: nil)
+            DisplaySelectedMeetingGroupInteractor.fetchMeetingGroup(
+                presenter: presenter,
+                entityState: entityState,
+                setupSheetState: setupSheetState,
+                newIndex: nil
+            )
         })
     }
 }
