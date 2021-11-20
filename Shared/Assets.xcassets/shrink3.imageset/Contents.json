@@ -1,14 +1,18 @@
 {
   "images" : [
     {
-      "filename" : "reordertemplate-1.png",
-      "idiom" : "ipad",
+      "filename" : "shrink3@1x.png",
+      "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "reordertemplate.png",
-      "idiom" : "ipad",
+      "filename" : "shrink3@2x.png",
+      "idiom" : "universal",
       "scale" : "2x"
+    },
+    {
+      "idiom" : "universal",
+      "scale" : "3x"
     }
   ],
   "info" : {

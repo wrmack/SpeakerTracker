@@ -171,9 +171,9 @@ struct Upgrade {
                 coreDataMeetingGroup.meetings = coreDataMeetingGroup.meetings!.adding(newEvent) as NSSet
             })
             EntityState.saveManagedObjectContext()
-            let defaults = UserDefaults.standard
-            defaults.set(true,forKey: "alreadyConverted")
         })
+        let defaults = UserDefaults.standard
+        defaults.set(true,forKey: "alreadyConverted")
         return true
     }
 }

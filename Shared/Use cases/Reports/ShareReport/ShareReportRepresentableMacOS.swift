@@ -93,10 +93,10 @@ struct SharingPicker: NSViewRepresentable {
             picker.delegate = context.coordinator
             context.coordinator.reportContent = reportContent
 
-            // Call async, otherwise blocks update
-//            DispatchQueue.main.async {
+            // Call async, otherwise blocks updateNSView
+            DispatchQueue.main.async {
                 picker.show(relativeTo: .zero, of: nsView, preferredEdge: .minY)
-//            }
+            }
         }
     }
 
@@ -119,9 +119,10 @@ struct SharingPicker: NSViewRepresentable {
         func sharingServicePicker(_ sharingServicePicker: NSSharingServicePicker, didChoose service: NSSharingService?) {
 
             // do whatever more needed here with selected service
-
-            sharingServicePicker.delegate = nil   // << cleanup
-            self.owner.isPresented = false        // << dismiss
+            if service != nil {
+                sharingServicePicker.delegate = nil   // << cleanup
+                self.owner.isPresented = false        // << dismiss
+            }
         }
         
         // Create Copy Text item

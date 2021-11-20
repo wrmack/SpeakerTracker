@@ -72,7 +72,10 @@ class DisplayMembersInteractor {
         // Return nil if result is nil or there are none
         guard let entityIndex = entityState.currentEntityIndex else {return }
         guard let fetchedMembersForEntity = EntityState.sortedMembers(entityIndex: entityIndex) else {return }
-        if fetchedMembersForEntity.count == 0 {return }
+        if fetchedMembersForEntity.count == 0 {
+            entityState.currentMemberIndex = nil
+            return
+        }
         
         var memberIdx = idx
         

@@ -21,7 +21,7 @@ struct DisplaySelectedMeetingGroupView: View {
                 DisplaySelectedMeetingGroupListRow(rowContent: content)
             }
         }
-        .listStyle(.insetGrouped)
+        .listStyle(.automatic)
         
         // Called when meeting group is changed
         .onChange(of: entityState.currentMeetingGroupIndex, perform: { newIndex in

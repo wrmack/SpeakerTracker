@@ -136,7 +136,8 @@ struct SpeakingTableRow: View {
     @State var isDragging = false
     @EnvironmentObject var trackSpeakersState: TrackSpeakersState
     @Binding var sectionIsCollapsed: [Int : Bool]
-    
+
+#if os(iOS)
     var drag: some Gesture {
         DragGesture(minimumDistance: 60, coordinateSpace: .local)
             .onChanged { _ in self.isDragging = true }
@@ -147,10 +148,12 @@ struct SpeakingTableRow: View {
                 }
             }
     }
+#endif
     
     var body: some View {
 
             HStack {
+                if rowContent.startTime == nil  {
                 Text("<")
                     .fixedSize(horizontal: true, vertical: true)
                     .frame(width: 40, height: 30)
@@ -159,7 +162,8 @@ struct SpeakingTableRow: View {
                     .onTapGesture {
                         moveAction = MoveMemberAction(sourceTable: 2, sourceSectionListNumber: 0, listMember: rowContent, direction: .left)
                     }
-                Text("\(rowContent.member!.lastName!) row: \(rowContent.row!)")
+                }
+                Text("\(rowContent.member!.firstName!) \(rowContent.member!.lastName!)")
                 
                 Spacer()
                 Group {
@@ -223,14 +227,16 @@ struct SpeakingTableRow: View {
             print("------ SpeakingTableRow onReceive $timerString")
             self.timerString = timerString
         })
+#if os(iOS)
         .gesture(drag)
+#endif
         .contextMenu {
             if sectionType == .mainDebate {
                 Button("Moves amendment", action: { 
                     longPressAction = LongPressAction(type: .amendmentMover, listMember: rowContent)
                 })
                 Button("Speaks again", action: {
-                    print("Action2")
+                    longPressAction = LongPressAction(type:.speakAgain,listMember: rowContent)
                 })
             }
             if sectionType == .amendment {

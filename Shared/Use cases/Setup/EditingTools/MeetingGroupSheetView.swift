@@ -44,7 +44,11 @@ struct MeetingGroupSheetView: View {
             Text("Select the members in this meeting group")
                 .padding(Edge.Set.top, 0).padding(Edge.Set.bottom, 0)
                 .font(Font.system(size: 24))
-            
+            if (EntityState.sortedMembers(entityIndex: entityState.currentEntityIndex!)!.count == 0) {
+            Text("No members in this group yet")
+                .padding(.top,50)
+                .opacity(0.5)
+            }
             List(EntityState.sortedMembers(entityIndex: entityState.currentEntityIndex!)!, id: \.self, selection: $selectedList) {
                 let title = ($0.title != nil) ? $0.title! : ""
                 let firstName = ($0.firstName != nil) ? $0.firstName! : ""

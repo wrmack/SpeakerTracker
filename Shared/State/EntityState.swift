@@ -69,9 +69,13 @@ class EntityState : ObservableObject {
                 print(error)
             }
             
-            let currentEntity = fetchedEntities![0] as! Entity
-            
-            return currentEntity
+            if fetchedEntities!.count > 0 {
+                let currentEntity = fetchedEntities![0] as! Entity
+                return currentEntity
+            }
+            else {
+                return nil
+            }
         }
     }
     
@@ -121,9 +125,13 @@ class EntityState : ObservableObject {
                 print(error)
             }
             
-            let currentMeetingGroup = fetchedMeetingGroups![0] as! MeetingGroup
-            
-            return currentMeetingGroup
+            if fetchedMeetingGroups!.count > 0 {
+                let currentMeetingGroup = fetchedMeetingGroups![0] as! MeetingGroup
+                return currentMeetingGroup
+            }
+            else {
+                return nil
+            }
         }
     }
     
@@ -284,9 +292,14 @@ class EntityState : ObservableObject {
             print(error)
         }
         
-        let meetingGroup = fetchedMeetingGroups![0] as! MeetingGroup
-        
-        return meetingGroup
+        if fetchedMeetingGroups!.count > 0 {
+            let meetingGroup = fetchedMeetingGroups![0] as! MeetingGroup
+            return meetingGroup
+        }
+        else {
+            return nil
+        }
+
         
     }
     

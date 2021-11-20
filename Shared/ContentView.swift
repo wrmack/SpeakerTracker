@@ -18,18 +18,18 @@ struct SetupTitle: View {
                 .padding(.bottom,2)
                 .padding(.top,10)
         case 1:
-            Text("Setup the members of a selected entity")
+            Text("Setup the members for the selected entity")
                 .font(.title)
                 .padding(.bottom,2)
                 .padding(.top,10)
             
         case 2:
-            Text("Setup the meeting groups of a selected entity")
+            Text("Setup the meeting groups for the selected entity")
                 .font(.title)
                 .padding(.bottom,2)
                 .padding(.top,10)
         case 3:
-            Text("Setup meeting events for a selected meeting group")
+            Text("Setup meeting events for the selected meeting group")
                 .font(.title)
                 .padding(.bottom,2)
                 .padding(.top,10)
@@ -45,6 +45,7 @@ struct SetupTitle: View {
 
 struct ContentView: View {
     @Environment(\.managedObjectContext) var managedObjectContext // TODO: needed??
+
     
     @StateObject var setupSheetState = SetupSheetState()
     @State private var showMeetingSetupSheet = false

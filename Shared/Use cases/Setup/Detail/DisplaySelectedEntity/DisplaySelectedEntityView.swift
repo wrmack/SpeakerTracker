@@ -34,7 +34,7 @@ struct DisplaySelectedEntityView: View {
                 DisplaySelectedEntityListRow(rowContent: content)
             }
         }
-        .listStyle(.insetGrouped)
+        .listStyle(.automatic)
         
         // When entityState.currentEntityIndex changes
         .onChange(of: entityState.currentEntityIndex, perform: { newIndex in

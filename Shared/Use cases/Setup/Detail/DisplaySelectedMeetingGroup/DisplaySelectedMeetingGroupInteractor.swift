@@ -22,7 +22,11 @@ class DisplaySelectedMeetingGroupInteractor {
                 meetingGroupIndex = currentMeetingGroupIndex
             }
             else {
-                if entityState.currentEntityIndex == nil { setupSheetState.addDisabled = true }
+                if entityState.currentEntityIndex == nil {
+                    setupSheetState.addDisabled = true
+                } else {
+                    setupSheetState.addDisabled = false
+                }
                 setupSheetState.editDisabled = true
                 setupSheetState.deleteDisabled = true
                 presenter.presentMeetingGroupDetail(meetingGroup: nil)
@@ -33,6 +37,7 @@ class DisplaySelectedMeetingGroupInteractor {
             meetingGroupIndex = newIndex
         }
         let selectedMeetingGroup = EntityState.meetingGroupWithIndex(index: meetingGroupIndex!)
+        setupSheetState.addDisabled = false
         setupSheetState.deleteDisabled = false
         setupSheetState.editDisabled = false
         presenter.presentMeetingGroupDetail(meetingGroup: selectedMeetingGroup)

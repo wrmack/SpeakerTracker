@@ -30,12 +30,12 @@ struct AddMemberView: View {
     var body: some View {
         Print(">>>>>> AddMemberView body refreshed")
         VStack {
-            Text("Add new member for")
+            Text("Add a new member for")
                 .padding(Edge.Set.top, 0).padding(Edge.Set.bottom, 0)
-                .font(Font.system(size: 30))
+                .font(Font.system(size: 24))
             Text(entityState.currentEntity!.name!)
                 .padding(Edge.Set.top, 0).padding(Edge.Set.bottom, 30)
-                .font(Font.system(size: 30))
+                .font(Font.system(size: 24))
             HStack {
                 Text("Title")
                     .frame(width: 120, height: 100, alignment: .trailing)

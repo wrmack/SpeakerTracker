@@ -33,7 +33,7 @@ struct MasterListRowModifier: ViewModifier {
     private var selectionBackground: some View {
         if isSelected {
             RoundedRectangle(cornerRadius: 8)
-                .fill(.selection)
+                .fill(Color.accentColor)
         }
     }
 }

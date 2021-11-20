@@ -22,7 +22,7 @@ struct EditMeetingGroupView: View {
         VStack {
             Text("Edit meeting group")
                 .padding(Edge.Set.top, 30).padding(Edge.Set.bottom, 30)
-                .font(Font.system(size: 30))
+                .font(Font.system(size: 24))
             HStack {
                 Text("Name")
                     .frame(width: 120, height: 100, alignment: .trailing)

@@ -27,7 +27,7 @@ struct EditMemberView: View {
         VStack {
             Text("Edit member")
                 .padding(.top, 30)
-                .font(Font.system(size: 30))
+                .font(Font.system(size: 24))
             HStack {
                 Text("Title")
                     .frame(width: 120, height: 100, alignment: .trailing)

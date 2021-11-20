@@ -60,7 +60,10 @@ class DisplayEventsInteractor {
         if eventIdx == nil {
             guard let meetingGroupIndex = entityState.currentMeetingGroupIndex else {return}
             guard let fetchedEventsForMeetingGroup = EventState.sortedMeetingEvents(meetingGroupIndex: meetingGroupIndex) else {return }
-            if fetchedEventsForMeetingGroup.count == 0 {return }
+            if fetchedEventsForMeetingGroup.count == 0 {
+                eventState.currentMeetingEventIndex = nil
+                return
+            }
             
             let firstEvent = fetchedEventsForMeetingGroup[0]
             eventIdx = firstEvent.idx

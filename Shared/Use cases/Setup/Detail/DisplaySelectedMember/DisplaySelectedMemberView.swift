@@ -33,7 +33,7 @@ struct DisplaySelectedMemberView: View {
                 DisplaySelectedMemberListRow(rowContent: memberDetail)
             }
         }
-        .listStyle(.insetGrouped)
+        .listStyle(.automatic)
         // User selects different member
         .onChange(of: entityState.currentMemberIndex, perform: { newIndex in
             print("------ DisplaySelectedMemberView: .onChange currentMemberIndex \(String(describing: newIndex))")
@@ -45,6 +45,7 @@ struct DisplaySelectedMemberView: View {
             )
         })
         .onAppear(perform: {
+            print("------ DisplaySelectedMemberView: .onAppear")
             DisplaySelectedMemberInteractor.fetchMember(
                 presenter: presenter,
                 entityState: entityState,

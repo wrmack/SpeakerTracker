@@ -89,7 +89,7 @@ struct DisplayEventsView: View {
             List(presenter.eventSummaries, id: \.self, rowContent:  {  eventSummary in
                 EventsListRow(rowContent: eventSummary)
             })
-                .listStyle(.insetGrouped)
+                .listStyle(.automatic)
             
             // After user changes selected entity
                 .onChange(of: entityState.currentEntity, perform: { entity in

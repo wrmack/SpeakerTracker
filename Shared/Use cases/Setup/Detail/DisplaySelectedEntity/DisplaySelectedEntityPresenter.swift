@@ -34,6 +34,32 @@ class DisplaySelectedEntityPresenter: ObservableObject {
         var tempArray = [EntityDetailViewModel]()
         if entity != nil {
             tempArray.append(EntityDetailViewModel(label: "Name", value: entity!.name!))
+            if entity!.entityMembers != nil {
+                var mbrString = ""
+                (entity!.entityMembers!.allObjects as! [Member]).forEach({ val in
+                    let member = val
+                    if (mbrString.count > 0) {
+                       mbrString.append(", ")
+                    }
+                    var fullTitle: String?
+                    if let title = member.title {
+                       fullTitle = title + " "
+                    }
+                    mbrString.append((fullTitle ?? "") + (member.firstName ?? "") + " " + member.lastName!)
+                })
+                tempArray.append(EntityDetailViewModel(label: "Members", value: mbrString))
+            }
+            if entity!.meetingGroups != nil {
+                var mgString = ""
+                (entity!.meetingGroups!.allObjects as! [MeetingGroup]).forEach({ val in
+                    let  mtGp = val
+                    if mgString.count > 0 {
+                        mgString.append(", ")
+                    }
+                    mgString = mgString + mtGp.name!
+                })
+                tempArray.append(EntityDetailViewModel(label: "Meeting groups", value: mgString))
+            }
         }
         entityDetail = tempArray
     }

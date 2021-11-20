@@ -62,7 +62,7 @@ struct DisplayMembersView: View {
             List(presenter.members, id: \.self, rowContent:  { member in
                 MemberListRow(rowContent: member)
             })
-                .listStyle(.insetGrouped)
+                .listStyle(.automatic)
             
             // When user changes selected entity, reset currentMemberIndex
                 .onChange(of: entityState.currentEntityIndex, perform: { newIndex in

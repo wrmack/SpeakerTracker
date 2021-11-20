@@ -22,7 +22,7 @@ struct DisplaySelectedEventView: View {
                 DisplaySelectedEventListRow(rowContent: content)
             }
         }
-        .listStyle(.insetGrouped)
+        .listStyle(.automatic)
         
         // Called when different meeting event is selected by user
         .onChange(of: eventState.currentMeetingEventIndex, perform: { newIndex in

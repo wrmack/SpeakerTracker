@@ -60,7 +60,7 @@ struct DisplayMeetingGroupsView: View {
             List(presenter.meetingGroups, id: \.self, rowContent:  { meetingGroup in
                 MeetingGroupListRow(rowContent: meetingGroup)
             })
-                .listStyle(.insetGrouped)
+                .listStyle(.automatic)
             
             // .onChange preferred to .onReceive because not called when view is first rendered, only when changed
                 .onChange(of: entityState.currentEntityIndex, perform: { newIndex in

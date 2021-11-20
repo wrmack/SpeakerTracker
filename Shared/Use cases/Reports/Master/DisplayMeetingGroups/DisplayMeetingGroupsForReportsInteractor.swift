@@ -14,8 +14,11 @@ class DisplayMeetingGroupsForReportsInteractor {
     ///
     class func initialiseEntities(entityState: EntityState) {
         if entityState.currentEntityIndex == nil {
-            let entities = EntityState.sortedEntities!
-            entityState.currentEntityIndex = entities[0].idx
+            if let entities = EntityState.sortedEntities {
+                if entities.count > 0 {
+                    entityState.currentEntityIndex = entities[0].idx
+                }
+            }
         }
     }
     
@@ -70,9 +73,12 @@ class DisplayMeetingGroupsForReportsInteractor {
         
         // Get the entity then the meeting groups for that entity
         // Return nil if result is nil or there are none
-        let entityIndex = entityState.currentEntityIndex
-        guard let fetchedMeetingGroupsForEntity = EntityState.sortedMeetingGroups(entityIndex: entityIndex!) else {return }
-        if fetchedMeetingGroupsForEntity.count == 0 {return }
+        guard let entityIndex = entityState.currentEntityIndex else { return}
+        guard let fetchedMeetingGroupsForEntity = EntityState.sortedMeetingGroups(entityIndex: entityIndex) else {return }
+        if fetchedMeetingGroupsForEntity.count == 0 {
+            entityState.currentMeetingGroupIndex = nil
+            return
+        }
         
         var meetingGroupIdx = idx
         

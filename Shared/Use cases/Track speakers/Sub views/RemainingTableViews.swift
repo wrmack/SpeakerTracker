@@ -56,7 +56,7 @@ struct RemainingTableRow: View {
    @Binding var moveAction: MoveMemberAction
    @EnvironmentObject var trackSpeakersState: TrackSpeakersState
 
-   
+#if os(iOS)
    var drag: some Gesture {
       DragGesture(minimumDistance: 60, coordinateSpace: .local)
          .onChanged { _ in self.isDragging = true }
@@ -67,11 +67,12 @@ struct RemainingTableRow: View {
             }
          }
    }
-   
+#endif
+    
    var body: some View {
       VStack {
          HStack {
-            Text("\(rowContent.member!.lastName!) row: \(rowContent.row!)")
+            Text("\(rowContent.member!.firstName!) \(rowContent.member!.lastName!)")
             Spacer()
             Text(">")
                .fixedSize(horizontal: true, vertical: true)
@@ -84,8 +85,9 @@ struct RemainingTableRow: View {
 
          }
       }
+#if os(iOS)
       .gesture(drag)
-
+#endif
    }
 }
 

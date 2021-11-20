@@ -36,6 +36,11 @@ import Combine
 //   case hasSpoken
 //}
 
+// MARK: - Reorder waiting table
+struct ReorderAction : Equatable {
+    var source = IndexSet()
+    var destination = 0
+}
 
 
 // MARK: - Movement of speakers
@@ -89,6 +94,7 @@ struct MemberTimerActions: Equatable {
 enum LongPressType {
     case amendmentMover
     case amendmentFinal
+    case speakAgain
 }
 
 struct LongPressAction: Equatable {
@@ -145,7 +151,31 @@ enum SectionType {
     case off
 }
 
+// MARK: - Undo
 
+// A stack of speaker movements
+struct UndoStack {
+    var speakerMovements: [SpeakerMovement]
+}
+
+// What we need to record when a speaker moves from one table to another.  These are stored in the UndoStack.
+struct SpeakerMovement {
+    var sourceTablePosition: TablePosition?
+    var destinationTablePosition: TablePosition?
+    var member: Member?
+}
+
+// Used in speaker movements.
+struct TablePosition {
+    var tableIndex: Int?
+    var tableSection: Int?
+    var tableRow: Int?
+    init(tableIndex: Int?, tableSection: Int?, tableRow: Int?) {
+        self.tableIndex = tableIndex
+        self.tableSection = tableSection
+        self.tableRow = tableRow
+    }
+}
 
 
 

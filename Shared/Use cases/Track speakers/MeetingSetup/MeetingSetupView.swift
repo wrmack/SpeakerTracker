@@ -135,6 +135,19 @@ struct MeetingSetupView: View {
                 .onReceive(presenter.$setupViewModel, perform: { viewModel in
                     selectedEntityName = viewModel.entityName
                     selectedMeetingGroupName = viewModel.meetingGroupName
+                    if (selectedEntityName != "") && (selectedMeetingGroupName != "") {
+                        entityNames.enumerated().forEach{idx, entityName in
+                            if entityName == selectedEntityName {
+                                let selectedEntity = MeetingSetupInteractor.fetchEntityForRow(entityState: entityState, trackSpeakersState: trackSpeakersState, row: idx)
+                                let mtgGroupNames = selectedEntity.1
+                                mtgGroupNames.enumerated().forEach({ idx, mtgGpName in
+                                    if mtgGpName == selectedMeetingGroupName {
+                                        changeMeetingGroup(row: idx)
+                                    }
+                                })
+                            }
+                        }
+                    }
                 })
                 .onTapGesture {
                     withAnimation(.easeInOut(duration: EASEINOUT)) {
@@ -192,12 +205,8 @@ struct MeetingSetupView: View {
                 }
                 .padding(.leading,30)
             }
-            
-            
         }
         .frame(width:500)
-        
-        
     }
     
     func changeEntity(row: Int) {

@@ -71,7 +71,10 @@ class DisplayMeetingGroupsInteractor {
         // Return nil if result is nil or there are none
         guard let entityIndex = entityState.currentEntityIndex else {return }
         guard let fetchedMeetingGroupsForEntity = EntityState.sortedMeetingGroups(entityIndex: entityIndex) else {return }
-        if fetchedMeetingGroupsForEntity.count == 0 {return }
+        if fetchedMeetingGroupsForEntity.count == 0 {
+            entityState.currentMeetingGroupIndex = nil
+            return
+        }
         
         var meetingGroupIdx = idx
         

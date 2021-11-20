@@ -77,7 +77,6 @@ class MeetingSetupInteractor {
         debate.debateNumber = 0
         debate.note = nil
         debate.debateSections = Set<DebateSection>() as NSSet
-//        debate.debateOfMeeting = event
         
         // Create a new debate section and add it to the debate
         let debateSection = EventState.createDebateSection()

@@ -23,7 +23,11 @@ class DisplaySelectedMemberInteractor {
                 memberIndex = currentMemberIndex
             }
             else {
-                if entityState.currentEntityIndex == nil { setupSheetState.addDisabled = true }
+                if entityState.currentEntityIndex == nil {
+                    setupSheetState.addDisabled = true
+                } else {
+                    setupSheetState.addDisabled = false
+                }
                 setupSheetState.editDisabled = true
                 setupSheetState.deleteDisabled = true
                 presenter.presentMemberDetail(member: nil)
@@ -34,6 +38,7 @@ class DisplaySelectedMemberInteractor {
             memberIndex = newIndex
         }
         let selectedMember = EntityState.memberWithIndex(index: memberIndex!)
+        setupSheetState.addDisabled = false
         setupSheetState.deleteDisabled = false
         setupSheetState.editDisabled = false
         presenter.presentMemberDetail(member: selectedMember)

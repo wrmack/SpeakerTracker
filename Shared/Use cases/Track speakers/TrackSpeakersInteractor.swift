@@ -39,10 +39,10 @@ class TrackSpeakersInteractor {
             if savedStateIndices.0 != nil && savedStateIndices.1 != nil {
                 entityState.currentEntityIndex = savedStateIndices.0
                 entityState.currentMeetingGroupIndex = savedStateIndices.1
-                let meetingGroup = EntityState.meetingGroupWithIndex(index: savedStateIndices.1!)
+                guard let meetingGroup = EntityState.meetingGroupWithIndex(index: savedStateIndices.1!) else {return}
                 
                 // Set TrackSpeakerState tsSortedMembers property
-                var members = meetingGroup!.groupMembers?.allObjects as! [Member]
+                var members = meetingGroup.groupMembers?.allObjects as! [Member]
                 members.sort(by: {
                     if $0.lastName! < $1.lastName! {return true}
                     return false
@@ -181,7 +181,8 @@ class TrackSpeakersInteractor {
                 // Iterate through them and update current member's timer
                 currentSpeakingListMembers.forEach({ listMbr in
                     var newListMember = listMbr
-                    if newListMember.member!.id == listMember.member!.id {
+//                    if newListMember.member!.id == listMember.member!.id {
+                    if newListMember.row == listMember.row {
                         newListMember.timerButtonMode = mode
                         newListMember.timerIsActive = timerIsActive
                         if memberTimerAction.speakingTime != 0 {
@@ -334,6 +335,7 @@ class TrackSpeakersInteractor {
     /// - Parameter trackSpeakersState: TrackSpeakersState
     static func saveDebate(eventState: EventState, trackSpeakersState: TrackSpeakersState) {
         
+        if eventState.currentDebateIndex == nil { return}
         // Add debate to meeting event and save to CoreData
         let debate = EventState.debateWithIndex(index: eventState.currentDebateIndex!)
         let currentEvent = EventState.meetingEventWithIndex(index: eventState.currentMeetingEventIndex!)!
@@ -374,6 +376,8 @@ class TrackSpeakersInteractor {
     
     static func saveMeetingEvent(eventState: EventState) {
         
+        if eventState.currentDebateSectionIndex == nil { return}
+        
         // Check if have a hanging new debate with one section and no speeches
         let currentDebateSection = EventState.debateSectionWithIndex(index: eventState.currentDebateSectionIndex!)
         if currentDebateSection.speeches?.count == 0 {
@@ -382,7 +386,19 @@ class TrackSpeakersInteractor {
 
     }
     
+    static func reorderWaitingTable(reorderAction: ReorderAction, trackSpeakersState: TrackSpeakersState) {
+        
+        var waitingTable = trackSpeakersState.tableCollection.waitingTable!
+        let sectionList = waitingTable.sectionLists[0]
+        var sectionMembers = sectionList.sectionMembers
+        sectionMembers.move(fromOffsets: reorderAction.source, toOffset: reorderAction.destination)
+        
+        waitingTable.sectionLists[0].sectionMembers = sectionMembers
+        
+        trackSpeakersState.tableCollection = TableCollection(remainingTable: trackSpeakersState.tableCollection.remainingTable, waitingTable: waitingTable, speakingTable: trackSpeakersState.tableCollection.speakingTable)
+    }
     
+
     
     // MARK: - Instance methods
     
@@ -400,6 +416,26 @@ class TrackSpeakersInteractor {
         trackSpeakersState.tableCollection = TableCollection(remainingTable: remainingList, waitingTable: waitingList, speakingTable: speakingList)
         
     }
+    
+    
+    func copyMemberToListEnd(trackSpeakersState: TrackSpeakersState, action: LongPressAction) {
+        self.remainingList = trackSpeakersState.tableCollection.remainingTable
+        self.waitingList = trackSpeakersState.tableCollection.waitingTable
+        self.speakingList = trackSpeakersState.tableCollection.speakingTable
+        
+        let sectionNumber = speakingList!.sectionLists.count - 1
+        var mbrCopy = ListMember()
+        mbrCopy.row = 100
+        mbrCopy.member = action.listMember.member
+        mbrCopy.startTime = nil
+        mbrCopy.speakingTime = 0
+        mbrCopy.timerButtonMode = .play
+        mbrCopy.timerIsActive = false
+        self.speakingList = addMember(to: speakingList!, listMember: mbrCopy, toSectionNumber: sectionNumber)
+        trackSpeakersState.tableCollection = TableCollection(remainingTable: remainingList, waitingTable: waitingList, speakingTable: speakingList)
+        
+    }
+
     
     
     // MARK: Helper methods
@@ -453,12 +489,13 @@ class TrackSpeakersInteractor {
     
     
     func addMember(to: TableWithSectionLists, listMember: ListMember, toSectionNumber: Int) -> TableWithSectionLists {
-        let memberToAdd = listMember
+        var memberToAdd = listMember
         let currentSectionLists = to.sectionLists
         var newSectionLists = [SectionList]()
         currentSectionLists.forEach({ sectionList in
             if sectionList.sectionNumber == toSectionNumber {
                 var newSectionList = sectionList
+                memberToAdd.row = newSectionList.sectionMembers.count
                 newSectionList.sectionMembers.append(memberToAdd)
                 newSectionLists.append(SectionList(sectionNumber: toSectionNumber, sectionType: sectionList.sectionType, sectionMembers: newSectionList.sectionMembers))
             }

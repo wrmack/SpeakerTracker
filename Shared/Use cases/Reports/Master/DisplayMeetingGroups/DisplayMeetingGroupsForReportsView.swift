@@ -20,7 +20,7 @@ struct DisplayMeetingGroupsForReportsView: View {
         Print(">>>>>> DisplayMeetingGroupsForReportsView body refreshed")
         VStack(alignment: .leading) {
             VStack(alignment: .leading) {
-                if EntityState.sortedEntities != nil {
+                if EntityState.sortedEntities != nil && EntityState.sortedEntities!.count > 0 {
                     if entityState.currentEntity != nil {
                         Text(entityState.currentEntity!.name!)
                             .font(.system(size: 18, weight: .medium))
@@ -38,7 +38,7 @@ struct DisplayMeetingGroupsForReportsView: View {
 
                 }
                 else {
-                    Text("No entities created")
+                    Text("No entities with meeting groups created").opacity(0.5)
                 }
             }
             .padding(.leading,20)

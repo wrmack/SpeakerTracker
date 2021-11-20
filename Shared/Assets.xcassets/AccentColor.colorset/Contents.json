@@ -1,7 +1,11 @@
 {
   "colors" : [
     {
-      "idiom" : "universal"
+      "color" : {
+        "platform" : "ios",
+        "reference" : "systemBlueColor"
+      },
+      "idiom" : "ipad"
     }
   ],
   "info" : {

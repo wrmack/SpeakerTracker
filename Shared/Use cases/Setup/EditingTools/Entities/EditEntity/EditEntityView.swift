@@ -25,7 +25,7 @@ struct EditEntityView: View {
         VStack {
             Text("Edit entity name")
                 .padding(Edge.Set.top, 30).padding(Edge.Set.bottom, 30)
-                .font(Font.system(size: 30))
+                .font(Font.system(size: 24))
             HStack {
                 Text("Name")
                     .padding(Edge.Set.trailing, 20).padding(Edge.Set.leading, 50)

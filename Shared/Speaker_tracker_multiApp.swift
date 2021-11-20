@@ -10,6 +10,7 @@ import SwiftUI
 @main
 struct Speaker_tracker_multiApp: App {
     
+    @State var showHelp = false
     
     @Environment(\.scenePhase) var scenePhase
     
@@ -36,5 +37,11 @@ struct Speaker_tracker_multiApp: App {
         .onChange(of: scenePhase) { _ in
             persistenceController.save()
         }
+        #if os(macOS)
+        WindowGroup("Help") { // other scene
+            ShowHelpViewMacOS(showHelp: $showHelp)
+        }
+        .handlesExternalEvents(matching: Set(arrayLiteral: "*"))
+        #endif
     }
 }

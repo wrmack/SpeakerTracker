@@ -36,7 +36,7 @@ class DisplaySelectedEventInteractor {
                 event = EventState.meetingEventWithIndex(index: eventIdx)
             } else {
                 if entityState.currentEntityIndex == nil { setupSheetState.addDisabled = true }
-                if entityState.currentMeetingGroupIndex == nil { setupSheetState.addDisabled = true }
+                if entityState.currentMeetingGroupIndex == nil { setupSheetState.addDisabled = true } else { setupSheetState.addDisabled = false}
                 setupSheetState.editDisabled = true
                 setupSheetState.deleteDisabled = true
                 event = nil
