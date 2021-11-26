@@ -66,7 +66,7 @@ struct AddMemberView: View {
                     .frame(width: 120, height: 100, alignment: .trailing)
                     .padding(Edge.Set.trailing, 30)
                     .font(Font.system(size: 20))
-//                TextField("eg Smith", text: $memberLastName, onCommit: {withAnimation(.easeInOut(duration: EASEINOUT)){
+
                 TextField("eg Smith", text: $memberLastName)
                     .font(Font.system(size: 18))
                     .textFieldStyle(MyTextFieldStyle())

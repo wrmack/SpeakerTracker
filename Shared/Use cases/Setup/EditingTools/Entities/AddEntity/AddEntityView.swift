@@ -33,13 +33,15 @@ struct AddEntityView: View {
                 Text("Name")
                     .padding(Edge.Set.trailing, 20).padding(Edge.Set.leading, 50)
                     .font(Font.system(size: 20))
-                TextField("eg Some Council, or Some Board", text: $entityName, onCommit: {withAnimation(.easeInOut(duration: EASEINOUT)){
-                    self.setupSheetState.showSheet = false
-                    self.saveNewEntity()
-                }})
+                TextField("eg Some Council, or Some Board", text: $entityName)
                     .font(Font.system(size: 18))
                     .textFieldStyle(MyTextFieldStyle())
                     .padding(.trailing,100)
+                    .onSubmit { withAnimation(.easeInOut(duration: EASEINOUT)){
+                            self.setupSheetState.showSheet = false
+                            self.saveNewEntity()
+                        }
+                    }
             }
             Spacer()
         }

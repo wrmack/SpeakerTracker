@@ -54,13 +54,15 @@ struct EditMemberView: View {
                     .frame(width: 120, height: 100, alignment: .trailing)
                     .padding(Edge.Set.trailing, 30)
                     .font(Font.system(size: 20))
-                TextField("eg Smith", text: $memberLastName, onCommit: {withAnimation(.easeInOut(duration: EASEINOUT)){
-                    setupSheetState.showSheet = false
-                    self.saveMember()
-                }})
+                TextField("eg Smith", text: $memberLastName)
                     .font(Font.system(size: 18))
                     .textFieldStyle(MyTextFieldStyle())
                     .padding(.trailing,100)
+                    .onSubmit { withAnimation(.easeInOut(duration: EASEINOUT)){
+                            self.setupSheetState.showSheet = false
+                            self.saveMember()
+                        }
+                    }
             }
             Spacer()
         }

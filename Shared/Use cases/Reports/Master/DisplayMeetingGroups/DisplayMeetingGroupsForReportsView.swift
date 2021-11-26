@@ -12,7 +12,6 @@ struct DisplayMeetingGroupsForReportsView: View {
     @EnvironmentObject var entityState: EntityState
     @StateObject var presenter = DisplayMeetingGroupsForReportsPresenter()
     @State var selectedIndex = 0
-//    @Binding var selectedMasterRow: Int
     @Binding var selectedTab: Int
     
     
