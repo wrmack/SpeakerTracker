@@ -241,7 +241,7 @@ struct TrackSpeakersView: View {
                                         .font(.system(size: 24))
                                         .fontWeight(.semibold)
                                         .foregroundColor(Color.white)
-                                        .frame(alignment: .center)
+                                        .fixedSize(horizontal: false, vertical: true)
                                         .multilineTextAlignment(.center)
                                         .padding(.top, 40)
                                 }
