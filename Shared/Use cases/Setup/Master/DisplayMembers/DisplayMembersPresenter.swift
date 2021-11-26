@@ -37,10 +37,10 @@ class DisplayMembersPresenter: ObservableObject {
            return false
        })
       var tempMemberVMs = [MemberViewModel]()
-      if members != nil {
-         for member in members! {
-             let memberName = member.lastName == "" ? "test" : member.lastName
-             tempMemberVMs.append(MemberViewModel(name:memberName!, idx: member.idx!))
+      if tempMembers != nil {
+         for member in tempMembers! {
+             let memberName = (member.title ?? "") + " " + (member.firstName ?? "") + " " + (member.lastName ?? "")
+             tempMemberVMs.append(MemberViewModel(name:memberName, idx: member.idx!))
          }
 
       }

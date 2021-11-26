@@ -19,20 +19,10 @@ struct DebugSheetView {
 struct SetupSheetView: View {
     
     @EnvironmentObject var entityState: EntityState
-//    @EnvironmentObject var setupState: SetupState
     @ObservedObject var setupSheetState: SetupSheetState
     @Binding var presentMembersSheet: Bool
     @Binding var selectedSetupTab: Int
-//    @Binding var selectedMasterRow: Int
-//    @State var saveWasPressed = false
-    
-//    init(setupSheetState: Binding<SetupSheetState>, presentMembersSheet: Binding<Bool>, selectedSetupTab: Binding<Int>) {
-//        self._setupSheetState = setupSheetState
-//        self._presentMembersSheet = presentMembersSheet
-//        self._selectedSetupTab = selectedSetupTab
-////        self._selectedMasterRow = selectedMasterRow
-////        DebugSheetView().printMe()
-//    }
+
     
     var body: some View {
         

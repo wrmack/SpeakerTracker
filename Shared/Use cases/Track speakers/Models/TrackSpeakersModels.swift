@@ -153,6 +153,8 @@ enum SectionType {
 
 // MARK: - Undo
 
+// Not implemented yet
+
 // A stack of speaker movements
 struct UndoStack {
     var speakerMovements: [SpeakerMovement]

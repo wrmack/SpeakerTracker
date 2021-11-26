@@ -8,6 +8,10 @@
 import Foundation
 import CoreData
 
+/// For CoreData
+///
+/// Provides a singleton which holds the container to which CoreData stores have been loaded and which
+/// provides the managed object context (viewContext).
 struct PersistenceController {
     // A singleton for our entire app to use
     static let shared = PersistenceController()

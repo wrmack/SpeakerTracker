@@ -8,11 +8,11 @@
 
 import Foundation
 
-
+/// Holds state associated with the display of meeting event reports
+///
 class ReportsState : ObservableObject {
     var events: [MeetingEvent]?
     var selectedEvent: MeetingEvent?
-    
     var eventIndexes: [UUID]?
     
     

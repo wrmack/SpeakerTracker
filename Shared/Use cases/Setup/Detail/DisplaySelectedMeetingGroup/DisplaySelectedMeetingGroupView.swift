@@ -23,7 +23,7 @@ struct DisplaySelectedMeetingGroupView: View {
         }
         .listStyle(.automatic)
         
-        // Called when meeting group is changed
+        // Called when different meeting group selected
         .onChange(of: entityState.currentMeetingGroupIndex, perform: { newIndex in
             print("------ DisplaySelectedMeetingGroupView: .onChange currentMeetingGroupIndex")
             DisplaySelectedMeetingGroupInteractor.fetchMeetingGroup(
@@ -31,6 +31,14 @@ struct DisplaySelectedMeetingGroupView: View {
                 entityState: entityState,
                 setupSheetState: setupSheetState,
                 newIndex: newIndex
+            )
+        })
+        .onChange(of: entityState.meetingGroupsHaveChanged, perform: { val in
+            DisplaySelectedMeetingGroupInteractor.fetchMeetingGroup(
+                presenter: presenter,
+                entityState: entityState,
+                setupSheetState: setupSheetState,
+                newIndex: nil
             )
         })
         // Called when first appears

@@ -1,27 +1,78 @@
 #  Design
 
-## User interface
+## Overall structure
 
-The user interface comprises:
+### Use cases
+- what a user wants to do with the app
+- a View-Interactor-Presenter (VIP) pattern is used for separating concerns
 
-- a main tab view with tabs for 
-     - tracking speakers 
-     - setup 
-     - reports
-- the setup interface comprises a secondary tab view for setting up and editing 
-     - entities
-     - members
-     - meeting groups 
-     - events
+### Persistent storage
+- data that is retained between sessions
+- CoreData framework used
+
+### State
+- data that is held in memory
+- changes to state are published
+
+--- 
+
+## VIP pattern
+- `View` 
+    - provides the user interface 
+    - listens for changes caused by user interaction and calls on `Interactor` to get or set data
+    - listens for changes to the view model published by `Presenter` and refreshes the display
+- `Interactor` 
+    - gets or sets data by interacting with state or persistent storage
+    - passes data to `Presenter`
+- `Presenter`
+    - formats data from `Interactor` into a view model
+    - publishes the view model
+
+Process flow is:
+
+View --> Interactor --> Presenter --> View
+
+---
+
+## Data model
+
+```
+Entity
+   - Members
+   - Meeting groups
+      - Members (subset of an entity's members)
+      - Meeting events
+
+Meeting event
+   - Debates
+      - Debate sections
+         - Speech events
+
+```    
+
+---
+
+## State
+
+### EntityState
+- state associated with the Entity model
+
+### EventState
+- state associated with the Event model
+
+### TrackSpeakersState
+- state associated with the TrackSpeakers use-case
+
+### SetupSheetState
+- state associated with editing use-cases
+
+### ReportsState
+- state associated with the display of meeting event reports
+
+---
 
 
-## Setup flow
 
-- user selects an item in the master list
-- this changes the published property for currentIndex (in relevant EntityState or EventState)
-- the detail view listens for changes to currentIndex and displays the selected item
-
-## Model data
 
 
 

@@ -46,6 +46,14 @@ struct DisplaySelectedEntityView: View {
                 newIndex: newIndex
             )
         })
+        .onChange(of: entityState.entitiesHaveChanged, perform: { val in
+            DisplaySelectedEntityInteractor.fetchEntity(
+                presenter: presenter,
+                entityState: entityState,
+                setupSheetState: setupSheetState,
+                newIndex: nil
+            )
+        })
         .onAppear(perform: {
             print("------ DisplaySelectedEntityView: .onAppear)")
             DisplaySelectedEntityInteractor.fetchEntity(

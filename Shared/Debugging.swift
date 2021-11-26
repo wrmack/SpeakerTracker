@@ -10,7 +10,7 @@ import Foundation
 import SwiftUI
 
 
-
+// Used for printing in SwiftUI views
 extension View {
    func Print(_ vars: Any...) -> some View {
       for v in vars { print(v) }
@@ -18,6 +18,7 @@ extension View {
    }
 }
 
+// ContentView prints this info to console
 struct DebugReference {
     static var documentsDirectory: URL? {
         guard let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else {

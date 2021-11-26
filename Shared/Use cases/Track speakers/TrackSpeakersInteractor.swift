@@ -31,7 +31,15 @@ class TrackSpeakersInteractor {
     /// and, if so, sends to `fetchMembers(presenter:, trackSpeakersState:, meetingGroupForRemainingTable:)`. Otherwise
     /// does nothing.
     class func fetchMembers(presenter: TrackSpeakersPresenter, entityState: EntityState, eventState: EventState, trackSpeakersState: TrackSpeakersState) {
-        if trackSpeakersState.tableCollection.remainingTable?.sectionLists[0].sectionMembers.count == 0 &&
+        
+        // If app is just opened then there won't be a currentEntity or currentMeetingGroup so get meetingGroup from RestorationState.
+        // If app has been operating there will be a currentEntity and currentMeetingGroup
+        if entityState.currentEntityIndex != nil && entityState.currentMeetingGroupIndex != nil {
+            let meetingGroup = EntityState.meetingGroupWithIndex(index: entityState.currentMeetingGroupIndex!)
+            fetchMembers(presenter: presenter, trackSpeakersState: trackSpeakersState, meetingGroupForRemainingTable: meetingGroup)
+        }
+        
+        else if trackSpeakersState.tableCollection.remainingTable?.sectionLists[0].sectionMembers.count == 0 &&
             trackSpeakersState.tableCollection.waitingTable?.sectionLists[0].sectionMembers.count == 0 &&
             trackSpeakersState.tableCollection.speakingTable?.sectionLists[0].sectionMembers.count == 0  {
             
@@ -398,6 +406,12 @@ class TrackSpeakersInteractor {
         trackSpeakersState.tableCollection = TableCollection(remainingTable: trackSpeakersState.tableCollection.remainingTable, waitingTable: waitingTable, speakingTable: trackSpeakersState.tableCollection.speakingTable)
     }
     
+    static func addNoteToDebate(eventState: EventState, note: String) {
+        
+        let currentDebate = EventState.debateWithIndex(index: eventState.currentDebateIndex!)
+        currentDebate.note = note
+        EventState.saveManagedObjectContext()
+    }
 
     
     // MARK: - Instance methods
@@ -495,7 +509,9 @@ class TrackSpeakersInteractor {
         currentSectionLists.forEach({ sectionList in
             if sectionList.sectionNumber == toSectionNumber {
                 var newSectionList = sectionList
-                memberToAdd.row = newSectionList.sectionMembers.count
+                // Scheme for row: Row 2 in section 0 is 02, in section 1 is 102, in section 2 is 202
+                // Row acts as id in SpeakingTableList
+                memberToAdd.row = (sectionList.sectionNumber * 100) + newSectionList.sectionMembers.count
                 newSectionList.sectionMembers.append(memberToAdd)
                 newSectionLists.append(SectionList(sectionNumber: toSectionNumber, sectionType: sectionList.sectionType, sectionMembers: newSectionList.sectionMembers))
             }

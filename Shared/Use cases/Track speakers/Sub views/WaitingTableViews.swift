@@ -38,7 +38,12 @@ struct WaitingTableList: View {
             List {
                 ForEach(viewModel, id: \.self) { sectionList in
                     ForEach(sectionList.sectionMembers, id: \.self) { listMember in
-                        WaitingTableRow(rowContent: listMember, sectionNumber: sectionList.sectionNumber, moveAction: $moveAction)
+                        WaitingTableRow(
+                            rowContent: listMember,
+                            sectionNumber: sectionList.sectionNumber,
+                            moveAction: $moveAction,
+                            isEditable: $isEditable
+                        )
                     }
                     .onMove(perform: { (indexSet, index) in
                         print("Moving: indexSet \(indexSet), index: \(index)")
@@ -64,6 +69,7 @@ struct WaitingTableRow: View {
     var sectionNumber = 0
     @State var isDragging = false
     @Binding var moveAction: MoveMemberAction
+    @Binding var isEditable: Bool
     @EnvironmentObject var trackSpeakersState: TrackSpeakersState
     
 #if os (iOS)
@@ -86,6 +92,7 @@ struct WaitingTableRow: View {
     var body: some View {
         VStack {
             HStack {
+                if isEditable == false {
                 Text("<")
                     .fixedSize(horizontal: true, vertical: true)
                     .frame(width: 40, height: 30)
@@ -94,8 +101,10 @@ struct WaitingTableRow: View {
                     .onTapGesture {
                         moveAction = MoveMemberAction(sourceTable: 1, sourceSectionListNumber: 0, listMember: rowContent, direction: .left)
                     }
+                }
                 Text("\(rowContent.member!.firstName!) \(rowContent.member!.lastName!)")
                 Spacer()
+                if isEditable == false {
                 Text(">")
                     .fixedSize(horizontal: true, vertical: true)
                     .frame(width: 40, height: 30)
@@ -104,6 +113,7 @@ struct WaitingTableRow: View {
                     .onTapGesture {
                         moveAction = MoveMemberAction(sourceTable: 1, sourceSectionListNumber: 0, listMember: rowContent, direction: .right)
                     }
+                }
             }
         }
         #if os(iOS)

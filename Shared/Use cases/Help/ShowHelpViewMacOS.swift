@@ -37,7 +37,7 @@ struct ShowHelpViewMacOS: View {
                     Text("The lists")
                         .font(.title2)
                         .foregroundColor(Color(red: 0.33, green: 0.55, blue: 0.8))
-                    Text("**Remaing list**")
+                    Text("**Remaining list**")
                     Text("All members start here, in alphabetical order of last name.")
                     Text("**Waiting list**")
                     Text(
@@ -133,7 +133,7 @@ struct ShowHelpViewMacOS: View {
                         • Select the 'Events' tab
                         • Select the 'Entity'
                         • Select the 'Meeting group'
-                        • Press the '+' button
+                        • Press the 'Add' button
                         • Set the date and time, press 'Save'
 
                         """
@@ -162,6 +162,7 @@ struct ShowHelpViewMacOS: View {
                         for example to identify which item in the agenda the debate relates to.
                         After each debate is completed, press the 'Save debate' button to save the debate and start a new one.
                         When the meeting event is over, save the final debate and end the meeting.
+                        View the record of the meeting event's speaking times in 'Reports'.
                         """
                     )
                     Text("Setup")
@@ -170,7 +171,7 @@ struct ShowHelpViewMacOS: View {
                     Text("**Entities**")
                     Text(
                         """
-                        Add an entity and give it a name.  You can also edit the name of an existing entity.\n
+                        Add an entity and give it a name.  You can also edit the name of an existing entity.
                         """
                     )
                     Text("**Members**")
@@ -197,9 +198,11 @@ struct ShowHelpViewMacOS: View {
                         .foregroundColor(Color(red: 0.12, green: 0.28, blue: 0.49))
                     Text(
                         """
+                        Reports display the data held in events.
                         Select an entity and meeting group to view reports of meeting events that have been recorded. \
                         Select a report to view it.  You are able to airdrop it, email it, save it, print it or open \
                         it in another app.
+                        To delete a report, delete its meeting event in Setup.
                         """
                     )
                     Text("Deletions")
@@ -208,9 +211,9 @@ struct ShowHelpViewMacOS: View {
                     Text(
                         """
                         Deleting:
-                        • an entity: also deletes its members, meeting groups, events and reports
-                        • a meeting group: also deletes its meeting events and reports
-                        • an event: also deletes its reports
+                        • an entity also deletes its members, meeting groups, events and reports
+                        • a meeting group also deletes its meeting events and reports
+                        • an event also deletes its reports
                         To keep a long-lasting archive of meeting event reports make a regular practice of \
                         sharing / exporting each report.
                         """
@@ -229,7 +232,7 @@ struct ShowHelpViewMacOS: View {
                         """
                         The app does not use personal information for any purpose other than the purpose of tracking speakers \
                         at meetings and keeping a record of this. \
-                        The personal information used for tacking speakers comprises members' names and speaking times.\n
+                        The personal information used for tracking speakers comprises members' names and speaking times.\n
                         """
                     )
                 }

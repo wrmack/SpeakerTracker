@@ -9,13 +9,15 @@
 import Foundation
 import Combine
 
-/**
- Holds state relating to the Speakers tab.
- 
- Publishes:
- - changes to the table collection
- 
- */
+
+/// Holds state associated with the TrackSpeakers use case
+///
+/// Publishes changes to:
+/// -  the table collection
+/// - meeting groups
+/// - the timer string
+/// - amendment mode
+///
 class TrackSpeakersState : ObservableObject {
     
     @Published var meetingGroupHasChanged = false

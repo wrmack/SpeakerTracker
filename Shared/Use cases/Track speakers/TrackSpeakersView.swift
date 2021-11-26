@@ -70,6 +70,8 @@ struct TrackSpeakersView: View {
     @Binding var selectedMeetingGroup: MeetingGroup?
     @Binding var isRecording: Bool
     @State var showClock = false
+    @State var showNote = false
+    @State var noteText = ""
     
     
     var body: some View {
@@ -173,7 +175,14 @@ struct TrackSpeakersView: View {
                     HStack (alignment: .bottom, spacing: 20){
                         RemainingTableList(viewModel: presenter.speakersViewModel.remainingList.sectionLists, moveAction: $moveAction)
                         WaitingTableList(viewModel: presenter.speakersViewModel.waitingList.sectionLists, moveAction: $moveAction, reorderAction: $reorderAction)
-                        SpeakingTableList(viewModel: presenter.speakersViewModel.speakingList.sectionLists, moveAction: $moveAction, memberTimerActions: $memberTimerActions, longPressAction: $longPressAction)
+                        SpeakingTableList(
+                            viewModel: presenter.speakersViewModel.speakingList.sectionLists,
+                            moveAction: $moveAction,
+                            memberTimerActions: $memberTimerActions,
+                            longPressAction: $longPressAction,
+                            showNote: $showNote,
+                            isRecording: $isRecording
+                        )
                         
                         // Controls down right-hand side
                         VStack{
@@ -182,9 +191,10 @@ struct TrackSpeakersView: View {
                                 Button(action:  {
                                     saveDebate()
                                 }) {
-                                    Text("End this\ndebate")
+                                    Text("Save this\ndebate")
                                         .font(.system(size: 24))
                                         .fontWeight(.semibold)
+                                        .foregroundColor(.white)
                                         .multilineTextAlignment(.center)
                                         .frame(alignment: .center)
                                         .padding(.top, 50)
@@ -353,6 +363,31 @@ struct TrackSpeakersView: View {
                                         .background(Color(white: 0.3, opacity: 0.98))
                         )
                         .offset(x: 10, y: 140)
+                }
+                
+                if self.showNote {
+                    VStack(spacing:0){
+                        HStack {
+                            Spacer()
+                            Text("Add a note")
+                            Spacer()
+                        }
+                        .background(.gray)
+                        
+                        TextEditor(text: $noteText)
+                            .disableAutocorrection(true)
+                    }
+                    .frame(width: 300, height:200)
+                    .clipShape(RoundedRectangle(cornerRadius: 10))
+                    .background(RoundedRectangle(cornerRadius: 10, style: .continuous).stroke(Color.gray, lineWidth: 2))
+                    .position(x: geo.size.width / 2, y: geo.size.height / 2)
+                    .onAppear(perform: {
+                        noteText = ""
+                    })
+                    .onDisappear(perform: {
+                        TrackSpeakersInteractor.addNoteToDebate(eventState: eventState, note: noteText)
+                    })
+                    
                 }
             }
         }

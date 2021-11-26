@@ -8,13 +8,8 @@
 import Foundation
 import Combine
 
-/// The state of the setup sheet that is used for adding, deleting or editing.
+/// Holds state associated with editing use-cases
 ///
-/// `savePressed` - publishes changes
-///
-/// `showSheet`  - whether sheet should be presented
-///
-/// `editMode` - whether adding, editing or deleting
 class SetupSheetState: ObservableObject {
     
     @Published var saveWasPressed = false

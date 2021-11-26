@@ -24,5 +24,6 @@ class EditMeetingGroupInteractor {
         currentMeetingGroup?.name = meetingGroupName
         currentMeetingGroup?.groupMembers = members as NSSet?
         EntityState.saveManagedObjectContext()
+        entityState.meetingGroupsHaveChanged = true
     }
 }

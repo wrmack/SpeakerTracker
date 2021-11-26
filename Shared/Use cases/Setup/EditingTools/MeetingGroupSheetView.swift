@@ -64,6 +64,8 @@ struct MeetingGroupSheetView: View {
         }
             #if os(iOS)
             .background(Color(uiColor: .systemGray6))
+        #elseif os(macOS)
+            .background(Color(nsColor: .windowBackgroundColor))
             #endif
         
     }

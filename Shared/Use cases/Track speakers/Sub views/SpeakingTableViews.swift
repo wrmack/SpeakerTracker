@@ -26,6 +26,8 @@ struct SpeakingTableList: View {
     @Binding var moveAction: MoveMemberAction
     @Binding var memberTimerActions: MemberTimerActions
     @Binding var longPressAction: LongPressAction
+    @Binding var showNote: Bool
+    @Binding var isRecording: Bool
     @State var sectionIsCollapsed: [Int : Bool] = [0 : false]
     
     
@@ -45,62 +47,96 @@ struct SpeakingTableList: View {
             .frame(height:44)
             .background(Color.black)
             
-            List {
-                ForEach(viewModel, id: \.self){ sectionList in
-                    Section {
-                        if sectionIsCollapsed[(sectionList as SectionList).sectionNumber] != true || (sectionList as SectionList).sectionType == .mainDebate  {
-                            ForEach((sectionList as SectionList).sectionMembers, id: \.self ) { listMember in
-                                SpeakingTableRow(rowContent: listMember,
-                                                 sectionNumber: (sectionList as SectionList).sectionNumber,
-                                                 sectionType: (sectionList as SectionList).sectionType,
-                                                 moveAction: $moveAction,
-                                                 memberTimerActions: $memberTimerActions,
-                                                 longPressAction: $longPressAction,
-                                                 sectionIsCollapsed: $sectionIsCollapsed
-                                )
-                            }
-                        }
-                    }
-                            
-                    header: {
-                        HStack {
-                            Text((sectionList as SectionList).sectionHeader)
-                                .font(.headline)
-                                .foregroundColor(Color.black)
-                            
-                            if ((sectionList as SectionList).sectionType == SectionType.amendment) {
-                                Spacer()
-                                Button(action: {
-                                    withAnimation {
-                                        // Check if sectionIsCollapsed contains this section.
-                                        // If not, set to true.  Default is not-collapsed. User must want to collapse.
-                                        if sectionIsCollapsed.keys.contains((sectionList as SectionList).sectionNumber) == false {
-                                            sectionIsCollapsed[(sectionList as SectionList).sectionNumber] = true
+            ScrollViewReader { proxy in
+                ScrollView {
+                    VStack(alignment:.leading, spacing:0) {
+                        ForEach(viewModel, id: \.self){ sectionList in
+                            Section {
+                                if sectionIsCollapsed[(sectionList as SectionList).sectionNumber] != true || (sectionList as SectionList).sectionType == .mainDebate  {
+                                        ForEach((sectionList as SectionList).sectionMembers, id: \.row) { listMember in
+                                            SpeakingTableRow(rowContent: listMember,
+                                                             sectionNumber: (sectionList as SectionList).sectionNumber,
+                                                             sectionType: (sectionList as SectionList).sectionType,
+                                                             moveAction: $moveAction,
+                                                             memberTimerActions: $memberTimerActions,
+                                                             longPressAction: $longPressAction,
+                                                             sectionIsCollapsed: $sectionIsCollapsed
+                                            )
                                         }
-                                        // If collapsed then user must want to expand it
-                                        else if sectionIsCollapsed[(sectionList as SectionList).sectionNumber]! == true {
-                                            sectionIsCollapsed[(sectionList as SectionList).sectionNumber] = false
-                                        }
-                                        // Otherwise collapse it
-                                        else {
-                                            sectionIsCollapsed[(sectionList as SectionList).sectionNumber] = true
-                                        }
-                                    }
-                                })
-                                {
-                                    Image(systemName: "chevron.right.circle")
-                                }
-                                .buttonStyle(PlainButtonStyle())
-                                .rotationEffect((sectionIsCollapsed[(sectionList as SectionList).sectionNumber] == true) ? .degrees(0) : .degrees(90))
-                                .imageScale(.large)
 
+                                }
+                            }
+                                    
+                            header: {
+                                VStack(spacing:0) {
+                                    Spacer()
+                                    HStack {
+                                        Text((sectionList as SectionList).sectionHeader)
+                                            .font(.headline)
+                                            .foregroundColor(Color.black)
+
+                                        Spacer()
+                                        if (isRecording == true) &&
+                                            ((sectionList as SectionList).sectionType == SectionType.mainDebate) &&
+                                            ((sectionList as SectionList).sectionNumber  == 0) {
+                                            Spacer()
+                                            Button(action: {
+                                                showNote.toggle()
+                                            })
+                                            {
+                                                Image(systemName: "square.and.pencil")
+                                            }
+                                        }
+                                        
+                                        if ((sectionList as SectionList).sectionType == SectionType.amendment) {
+                                            Spacer()
+                                            Button(action: {
+                                                withAnimation {
+                                                    // Check if sectionIsCollapsed contains this section.
+                                                    // If not, set to true.  Default is not-collapsed. User must want to collapse.
+                                                    if sectionIsCollapsed.keys.contains((sectionList as SectionList).sectionNumber) == false {
+                                                        sectionIsCollapsed[(sectionList as SectionList).sectionNumber] = true
+                                                    }
+                                                    // If collapsed then user must want to expand it
+                                                    else if sectionIsCollapsed[(sectionList as SectionList).sectionNumber]! == true {
+                                                        sectionIsCollapsed[(sectionList as SectionList).sectionNumber] = false
+                                                    }
+                                                    // Otherwise collapse it
+                                                    else {
+                                                        sectionIsCollapsed[(sectionList as SectionList).sectionNumber] = true
+                                                    }
+                                                }
+                                            })
+                                            {
+                                                Image(systemName: "chevron.right.circle")
+                                            }
+                                            .buttonStyle(PlainButtonStyle())
+                                            .rotationEffect((sectionIsCollapsed[(sectionList as SectionList).sectionNumber] == true) ? .degrees(0) : .degrees(90))
+                                            .imageScale(.large)
+
+                                        }
+
+                                    }
+                                    Spacer()
+                                    Divider()
+                                }
+                                .frame(height:44)
+                                .padding(.horizontal,10)
                             }
                         }
                     }
                 }
+//                .listStyle(.plain)
+                .colorScheme(.light)
+                .onChange(of: viewModel, perform: { val in
+                    if val.count > 0 {
+                        if (val as [SectionList]).last!.sectionMembers.count > 0 {
+                            let lastSectionMember = (val as [SectionList]).last!.sectionMembers.last!
+                            proxy.scrollTo(lastSectionMember.row, anchor: .bottom)
+                        }
+                    }
+                })
             }
-            .listStyle(.plain)
-            .colorScheme(.light)
         }
         .background(Color.white)
     }
@@ -151,7 +187,8 @@ struct SpeakingTableRow: View {
 #endif
     
     var body: some View {
-
+        VStack(spacing:0) {
+            Spacer()
             HStack {
                 if rowContent.startTime == nil  {
                 Text("<")
@@ -223,6 +260,11 @@ struct SpeakingTableRow: View {
                 }
 
             }
+            .padding(.horizontal,10)
+            Spacer()
+            Divider()
+        }
+        .frame(height:44)
         .onReceive(trackSpeakersState.$timerString, perform: { timerString in
             print("------ SpeakingTableRow onReceive $timerString")
             self.timerString = timerString

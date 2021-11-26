@@ -26,6 +26,7 @@ struct MeetingSetupView: View {
     @State var selectedEntityName = ""
     @State var selectedMeetingGroupName = ""
     @State var selectedMeetingEventName = ""
+    @State var showEvents = false
     @Binding var showMeetingSetupSheet: Bool
     @Binding var isRecording: Bool
     
@@ -90,7 +91,7 @@ struct MeetingSetupView: View {
                         }
                         .padding(.top, 40)
                     
-                    Toggle(isOn: $isRecording) {
+                    Toggle(isOn: $showEvents) {
                         Text("Record speaking times for this meeting")
                             .fontWeight(.semibold)
                     }
@@ -98,7 +99,7 @@ struct MeetingSetupView: View {
                     .padding(.trailing, 40)
                     .disabled(selectedEntityName == "None" ? true : false)
                     
-                    if isRecording == true {
+                    if showEvents == true {
 //                        Spacer().fixedSize().frame(height: 40)
 
                         Text("Meeting event")
@@ -227,7 +228,7 @@ struct MeetingSetupView: View {
             eventState: eventState,
             row: row
         )
-        
+        isRecording = true
         showMeetingSetupSheet = false
     }
 }

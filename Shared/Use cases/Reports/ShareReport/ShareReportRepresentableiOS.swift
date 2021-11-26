@@ -206,7 +206,8 @@ class ShareUtility: UIPrintPageRenderer  {
         let debatesHeadingAS = AttributedString("\n\n\tDuration\tStart time\n", attributes:tableHeading)
         var debatesAS = AttributedString()
         reportContent.reportDebates.forEach { debate in
-            let debateHeadingAS = AttributedString("\u{2029}Debate \(debate.reportDebateNumber)\n", attributes: debateHeading)
+            let debateHeadingAS = AttributedString("\u{2029}Debate \(debate.reportDebateNumber)", attributes: debateHeading)
+            let debateNoteAS = AttributedString("\u{2029}\(debate.reportNote)\n", attributes: normAttsItalics)
             var sectionsAS = AttributedString()
             debate.reportDebateSections.forEach({section in
                 let sectionNameAS = AttributedString("\u{2029}" + section.sectionName + "\n", attributes: sectionHeading)
@@ -217,7 +218,7 @@ class ShareUtility: UIPrintPageRenderer  {
                 })
                 sectionsAS.append(sectionNameAS + speakersAS)
             })
-            debatesAS.append(debateHeadingAS + sectionsAS)
+            debatesAS.append(debateHeadingAS + debateNoteAS + sectionsAS)
         }
         
         reportAS.append(entityNameAS + meetingGroupAS + dateTimeAS + membersHeading + membersStringAS + debatesHeadingAS + debatesAS)

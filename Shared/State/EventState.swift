@@ -10,22 +10,10 @@ import Foundation
 import Combine
 import CoreData
 
-/**
- Holds the meeting's `currentMeetingEventIndex`
- 
- What is tracked in meeting event CoreData model:
- - a meeting event comprises debates
- - each debate comprises sections (main debate, amendments)
- - each section comprises speech events
- - each speech event contains speaking time and is linked to a debate section and a member
- 
- 
- When events are created:
- - MeetingEvents are created in setup
- - a MeetingEvent and starting Debate are created in MeetingSetupInteractor - setCurrentMeetingEvent
- - a speech event is added to the debate when the user presses Stop button
- */
 
+/// Holds state associated with the Event model.
+///
+/// 
 class EventState : ObservableObject {
 
     // Hold indexes only.  The objects are in CoreData.

@@ -91,7 +91,7 @@ struct ShowReportView: View {
                         // Debates
                         HStack {
                             Spacer()
-                                .frame(width: 200)
+                                .frame(width: 210)
                             Text("Duration")
                                 .fontWeight(.bold)
                                 .frame(width: 150, alignment: .leading)
@@ -107,7 +107,7 @@ struct ShowReportView: View {
                                 .padding(.top,10)
                                 .padding(.bottom,0)
                             if debate.reportNote != "" {
-                                Text("Note: \(debate.reportNote)")
+                                Text("*\(debate.reportNote)*")
                                     .padding(0)
                             }
                             ForEach(debate.reportDebateSections, id: \.self, content: { section in

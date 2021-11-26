@@ -44,6 +44,14 @@ struct DisplaySelectedMemberView: View {
                 newIndex: newIndex
             )
         })
+        .onChange(of: entityState.membersHaveChanged, perform: { val in
+            DisplaySelectedMemberInteractor.fetchMember(
+                presenter: presenter,
+                entityState: entityState,
+                setupSheetState: setupSheetState,
+                newIndex: nil
+            )
+        })
         .onAppear(perform: {
             print("------ DisplaySelectedMemberView: .onAppear")
             DisplaySelectedMemberInteractor.fetchMember(

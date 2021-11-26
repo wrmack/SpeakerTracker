@@ -8,6 +8,9 @@
 import Foundation
 import CoreData
 
+/// Saves and fetches currentEntityIndex and currentMeetingGroupIndex to CoreData.
+///
+/// State is saved by MeetingSetupInteractor and fetched when TrackSpeakersView appears.
 struct RestorationState {
     
     static func saveSpeakerTrackerState(entityIndex: UUID, meetingGroupIndex: UUID) {

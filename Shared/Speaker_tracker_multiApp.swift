@@ -10,19 +10,24 @@ import SwiftUI
 @main
 struct Speaker_tracker_multiApp: App {
     
-    @State var showHelp = false
-    
     @Environment(\.scenePhase) var scenePhase
     
+    // On iOS apps convert UIDocument data from previous app to CoreData
     #if os(iOS)
     let upgradeSuccess = Upgrade.convertEntityDocumentsToCoreData()
     #endif
     
+    // CoreData persistence controller singleton
     let persistenceController = PersistenceController.shared
+    
+    // Creating EnvironmentObjects
     @StateObject var entityState = EntityState()
     @StateObject var eventState = EventState()
     @StateObject var reportsState = ReportsState()
     @StateObject var trackSpeakersState = TrackSpeakersState()
+    
+    // Flag which causes help to show
+    @State var showHelp = false
     
     
     var body: some Scene {
@@ -37,8 +42,9 @@ struct Speaker_tracker_multiApp: App {
         .onChange(of: scenePhase) { _ in
             persistenceController.save()
         }
+        // In MacOS Help opens in separate window
         #if os(macOS)
-        WindowGroup("Help") { // other scene
+        WindowGroup("Help") {
             ShowHelpViewMacOS(showHelp: $showHelp)
         }
         .handlesExternalEvents(matching: Set(arrayLiteral: "*"))

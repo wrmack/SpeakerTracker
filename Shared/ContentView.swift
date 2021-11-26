@@ -42,11 +42,12 @@ struct SetupTitle: View {
     }
 }
 
-
+/// The main parent view
+///
+/// Is a `TabView` with tabs for "Speakers", "Setup" and "Reports".
 struct ContentView: View {
-    @Environment(\.managedObjectContext) var managedObjectContext // TODO: needed??
+//    @Environment(\.managedObjectContext) var managedObjectContext // TODO: needed??
 
-    
     @StateObject var setupSheetState = SetupSheetState()
     @State private var showMeetingSetupSheet = false
     @State private var presentMembersSheet = false
@@ -55,14 +56,11 @@ struct ContentView: View {
     @State private var selectedSetupTab = 0
     @State private var selectedTab = 0
     
-    
     var speakers:[Member] = []
     
-
     
     var body: some View {
         Print(">>>>>> ContentView body refreshed")
-        //        VStack(spacing: 0) {
         
         TabView(selection: $selectedTab) {
             
@@ -129,17 +127,18 @@ struct ContentView: View {
                         ZStack {
                             SetupDetailView(setupSheetState: setupSheetState, selectedSetupTab: $selectedSetupTab)
                                 .frame(width: geo.size.width, height: geo.size.height)
+                            Print("Detailview geo height: \(geo.size.height)")
                             if setupSheetState.showSheet {
+                                Print("setupSheetView geo height: \(geo.size.height)")
                                 SetupSheetView(setupSheetState: setupSheetState, presentMembersSheet: self.$presentMembersSheet, selectedSetupTab: $selectedSetupTab)
                                     .zIndex(1)
                                     .transition(.move(edge: .trailing))
-                                    .frame(minWidth:geo.size.width, minHeight:geo.size.height)
+                                    .frame(idealWidth:geo.size.width, idealHeight:geo.size.height)
                             }
                             if setupSheetState.showMembersSheet {
                                 MeetingGroupSheetView(setupSheetState: setupSheetState)
                                     .transition(.move(edge: .trailing))
-                                    .frame(minWidth:geo.size.width, minHeight:geo.size.height)
-                                //                                        .background(Color.white)
+                                    .frame(idealWidth:geo.size.width, idealHeight:geo.size.height)
                                     .zIndex(1)  // In order to see animation on close, zindex must be set or view goes to back.
                             }
                         }
@@ -147,7 +146,6 @@ struct ContentView: View {
                     }
                 }
             }
-            //                .background(SETUP_BAR_COLOR)
             .edgesIgnoringSafeArea([.top])
             .tabItem {
                 Text("Setup")
@@ -162,7 +160,6 @@ struct ContentView: View {
                         .font(.title)
                         .padding(.bottom,2)
                         .padding(.top,10)
-                    //                            .background(SETUP_BAR_COLOR)
                     Spacer()
                 }
                 ReportsHeaderView()
@@ -176,7 +173,6 @@ struct ContentView: View {
                     }
                 }
             }
-            //                .background(SETUP_BAR_COLOR)
             .edgesIgnoringSafeArea([.top])
             .tabItem {
                 Text("Reports")
@@ -189,6 +185,7 @@ struct ContentView: View {
 #endif
         .padding(.top,10)
         .onAppear(perform: {
+            // Customise UITabBarItems on iOS
             #if os(iOS)
             let itemAppearance = UITabBarItemAppearance()
             itemAppearance.normal.titleTextAttributes = [
@@ -204,6 +201,7 @@ struct ContentView: View {
             UITabBar.appearance().backgroundColor = .systemBackground
             #endif
             
+            // Print debugging info
             print(DebugReference.consolePrint)
         })
         

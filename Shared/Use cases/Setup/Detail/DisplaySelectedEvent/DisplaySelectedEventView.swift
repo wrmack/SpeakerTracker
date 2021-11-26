@@ -35,6 +35,15 @@ struct DisplaySelectedEventView: View {
                 newIndex: newIndex
             )
         })
+        .onChange(of: eventState.eventsHaveChanged, perform: { val in
+            DisplaySelectedEventInteractor.fetchEvent(
+                presenter: presenter,
+                eventState: eventState,
+                entityState: entityState,
+                setupSheetState: setupSheetState,
+                newIndex: nil
+            )
+        })
         .onReceive(presenter.$eventViewModel, perform: { viewModel in
             print("viewModel \(viewModel)")
         })

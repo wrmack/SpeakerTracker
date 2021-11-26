@@ -17,7 +17,7 @@ import Foundation
 import Combine
 import CoreData
 
-/// Holds state of organisational entities, members and meeting groups
+/// Holds state associated with the Entity model.
 ///
 /// Organisational entities, members and meeting groups are CoreData managed objects
 /// setup in Main.xcdatmodeld.  Each has a unique UUID index (idx) property which is used
@@ -208,10 +208,13 @@ class EntityState : ObservableObject {
             print(error)
         }
         
-        let entity = fetchedEntities![0] as! Entity
-        
-        return entity
-        
+        if fetchedEntities!.count > 0 {
+            let entity = fetchedEntities![0] as! Entity
+            return entity
+        }
+        else {
+            return nil
+        }
     }
     
     static func memberWithIndex(index: UUID) -> Member? {

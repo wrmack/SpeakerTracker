@@ -110,7 +110,7 @@ struct DisplayEventsView: View {
                     print("------ DisplayEventsView .onChange eventState.eventsHaveChanged: \(val)")
                     if (selectedTab == 3) && (val == true) {
                         eventState.eventsHaveChanged = false
-                        DisplayEventsInteractor.setCurrentEventIndex(idx: nil, entityState: entityState, eventState: eventState)
+//                        DisplayEventsInteractor.setCurrentEventIndex(idx: nil, entityState: entityState, eventState: eventState)
                         DisplayEventsInteractor.fetchEvents(presenter: presenter, eventState: eventState, entityState: entityState)
                     }
                 })

@@ -23,6 +23,7 @@ struct AddMemberView: View {
     @State var memberTitle = ""
     @State var memberFirstName = ""
     @State var memberLastName = ""
+    @FocusState var isFocused: Bool
     @ObservedObject var setupSheetState: SetupSheetState
     
     
@@ -43,6 +44,7 @@ struct AddMemberView: View {
                     .font(Font.system(size: 20))
 
                 TextField("eg Councillor", text: $memberTitle)
+                    .focused($isFocused)
                     .font(Font.system(size: 18))
                     .textFieldStyle(MyTextFieldStyle())
                     .padding(.trailing,100)
@@ -64,14 +66,23 @@ struct AddMemberView: View {
                     .frame(width: 120, height: 100, alignment: .trailing)
                     .padding(Edge.Set.trailing, 30)
                     .font(Font.system(size: 20))
-                TextField("eg Smith", text: $memberLastName, onCommit: {withAnimation(.easeInOut(duration: EASEINOUT)){
-                    self.setupSheetState.showSheet = false
-                    self.saveNewMember()
-                }})
+//                TextField("eg Smith", text: $memberLastName, onCommit: {withAnimation(.easeInOut(duration: EASEINOUT)){
+                TextField("eg Smith", text: $memberLastName)
                     .font(Font.system(size: 18))
                     .textFieldStyle(MyTextFieldStyle())
                     .padding(.trailing,100)
+                    .onSubmit {
+                        self.saveNewMember()
+                    }
             }
+            Text(
+            """
+            To continue entering members press Return after entering the Last name.
+            This saves the current member and does not close the form.
+            """
+            )
+                .font(Font.system(size: 12))
+            
             Spacer()
         }
         .onReceive(setupSheetState.$saveWasPressed, perform: { pressed in
@@ -86,7 +97,17 @@ struct AddMemberView: View {
     
     func saveNewMember() {
         print("------ AddMemberView saveMember called")
-        AddMemberInteractor.saveNewMemberToEntity(entityState: entityState, title: memberTitle, first: memberFirstName, last: memberLastName)
+        if memberLastName == "" { return}
+        AddMemberInteractor.saveNewMemberToEntity(
+            entityState: entityState,
+            title: memberTitle,
+            first: memberFirstName,
+            last: memberLastName
+        )
+        memberTitle = ""
+        memberFirstName = ""
+        memberLastName = ""
+        isFocused = true
     }
     
 }
