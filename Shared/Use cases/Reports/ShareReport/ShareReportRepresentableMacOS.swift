@@ -53,7 +53,7 @@ struct SharingPicker: NSViewRepresentable {
 
             // Get pdf context
             var pageBox = CGRect(x: 0, y: 0, width: pageWidth, height: pageHeight)
-            let pdfContext = CGContext(pdfDataURL, mediaBox: &pageBox, nil)
+            guard let pdfContext = CGContext(pdfDataURL, mediaBox: &pageBox, nil) else {return}
 
             // Create a framesetter
             let framesetter = CTFramesetterCreateWithAttributedString(attString)
@@ -81,12 +81,12 @@ struct SharingPicker: NSViewRepresentable {
                 let framePath = CGPath(rect: pageRect, transform: nil)
                 let frame = CTFramesetterCreateFrame(framesetter, stringRange, framePath, nil)
 
-                pdfContext!.beginPDFPage(nil)
-                CTFrameDraw(frame, pdfContext!)
-                pdfContext!.endPDFPage()
+                pdfContext.beginPDFPage(nil)
+                CTFrameDraw(frame, pdfContext)
+                pdfContext.endPDFPage()
                 textLocation = textLocation + stringRange.length
             }
-            pdfContext!.closePDF()
+            pdfContext.closePDF()
 
             // Create picker
             let picker = NSSharingServicePicker(items: [pdfDataURL])
