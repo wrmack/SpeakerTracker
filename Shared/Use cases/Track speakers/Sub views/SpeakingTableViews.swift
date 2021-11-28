@@ -265,6 +265,7 @@ struct SpeakingTableRow: View {
             Divider()
         }
         .frame(height:44)
+        .contentShape(Rectangle())
         .onReceive(trackSpeakersState.$timerString, perform: { timerString in
             print("------ SpeakingTableRow onReceive $timerString")
             self.timerString = timerString

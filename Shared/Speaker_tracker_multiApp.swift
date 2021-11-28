@@ -40,29 +40,10 @@ struct Speaker_tracker_multiApp: App {
                 .environmentObject(reportsState)
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
-//        .commands(content: {
-//            CommandGroup(replacing: .help) {
-//                     Button(action: {
-//                         if let url = URL(string: "speakertracker://help") {
-//                             openURL(url)
-//                         }
-//                     }) {
-//                         Text("MyApp Help")
-//                     }
-//            }
-//        })
         .onChange(of: scenePhase) { _ in
             persistenceController.save()
         }
         
-//        // In MacOS Help opens in separate window
-//        #if os(macOS)
-//        WindowGroup("Help") {
-//            ShowHelpViewMacOS(showHelp: $showHelp)
-//        }
-//        .handlesExternalEvents(matching: Set(arrayLiteral: "Help"))
-//        .windowStyle(.hiddenTitleBar)
-//
-//        #endif
+
     }
 }
