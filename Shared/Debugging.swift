@@ -41,6 +41,7 @@ struct DebugReference {
 v:  value of variable in current frame (does not evaluate expressions)
 p:  evaluates an expression
 po: object description
+help: help
 
 Documents directory:
 \(documentsDirectory!)
@@ -51,6 +52,8 @@ Sqlite directory:
 """
 }
 
+// Prints environment to console
+// Use like: DumpingEnvironment(content: Text("qwerqwer"))
 struct DumpingEnvironment<V: View>: View {
    @Environment(\.self) var env
    let content: V

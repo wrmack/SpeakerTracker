@@ -15,8 +15,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "416A5ECD27061AD3006E6CD9"
-               BuildableName = "Speaker-tracker-multi.app"
-               BlueprintName = "Speaker-tracker-multi (macOS)"
+               BuildableName = "SpeakerTracker.app"
+               BlueprintName = "SpeakerTracker (macOS)"
                ReferencedContainer = "container:SpeakerTracker.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -55,8 +55,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "416A5ECD27061AD3006E6CD9"
-            BuildableName = "Speaker-tracker-multi.app"
-            BlueprintName = "Speaker-tracker-multi (macOS)"
+            BuildableName = "SpeakerTracker.app"
+            BlueprintName = "SpeakerTracker (macOS)"
             ReferencedContainer = "container:SpeakerTracker.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -72,8 +72,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "416A5ECD27061AD3006E6CD9"
-            BuildableName = "Speaker-tracker-multi.app"
-            BlueprintName = "Speaker-tracker-multi (macOS)"
+            BuildableName = "SpeakerTracker.app"
+            BlueprintName = "SpeakerTracker (macOS)"
             ReferencedContainer = "container:SpeakerTracker.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>

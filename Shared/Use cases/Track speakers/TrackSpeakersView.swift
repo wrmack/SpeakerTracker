@@ -270,15 +270,26 @@ struct TrackSpeakersView: View {
                                         ShowHelpViewiOS(showHelp: $showHelp)
                                     })
 #endif
+                                //#if os(macOS)
+                                //                                Button{
+                                //                                    if let url = URL(string: "speakertracker://help") {
+                                //                                        openURL(url)
+                                //                                    }
+                                //                                } label: {
+                                //                                    Label("",systemImage: "info.circle").font(Font.system(size: 24))
+                                //                                }
+                                //                                .buttonStyle(PlainButtonStyle())
+                                //#endif
 #if os(macOS)
-                                Button{
-                                    if let url = URL(string: "speakertracker://help") {
-                                        openURL(url)
+                                Image(systemName: "info.circle")
+                                    .font(Font.system(size: 24))
+                                    .foregroundColor(.white)
+                                    .onTapGesture {
+                                        showHelp.toggle()
                                     }
-                                } label: {
-                                    Label("",systemImage: "info.circle").font(Font.system(size: 24))
-                                }
-                                .buttonStyle(PlainButtonStyle())
+                                    .sheet(isPresented: $showHelp, content: {
+                                        ShowHelpViewMacOS(showHelp: $showHelp)
+                                    })
 #endif
                             }
                             

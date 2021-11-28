@@ -13,8 +13,17 @@ struct ShowHelpViewMacOS: View {
     @Binding var showHelp: Bool
     
     var body: some View {
+        HStack {
+            Spacer()
+            Button("Dismiss", action: {
+                showHelp = false
+            })
+        }
+        .padding(.vertical,10)
+        .padding(.horizontal, 20)
         ScrollView {
             VStack(alignment: .leading) {
+
                 Group {
                     Text("Help")
                         .font(.largeTitle)

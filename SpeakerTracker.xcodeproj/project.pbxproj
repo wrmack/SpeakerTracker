@@ -926,9 +926,9 @@
 			productReference = 416A5EC827061AD3006E6CD9 /* Speaker-tracker-multi.app */;
 			productType = "com.apple.product-type.application";
 		};
-		416A5ECD27061AD3006E6CD9 /* Speaker-tracker-multi (macOS) */ = {
+		416A5ECD27061AD3006E6CD9 /* SpeakerTracker (macOS) */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 416A5EDC27061AD3006E6CD9 /* Build configuration list for PBXNativeTarget "Speaker-tracker-multi (macOS)" */;
+			buildConfigurationList = 416A5EDC27061AD3006E6CD9 /* Build configuration list for PBXNativeTarget "SpeakerTracker (macOS)" */;
 			buildPhases = (
 				416A5ECA27061AD3006E6CD9 /* Sources */,
 				416A5ECB27061AD3006E6CD9 /* Frameworks */,
@@ -938,7 +938,7 @@
 			);
 			dependencies = (
 			);
-			name = "Speaker-tracker-multi (macOS)";
+			name = "SpeakerTracker (macOS)";
 			productName = "Speaker-tracker-multi (macOS)";
 			productReference = 416A5ECE27061AD3006E6CD9 /* Speaker-tracker-multi.app */;
 			productType = "com.apple.product-type.application";
@@ -997,7 +997,7 @@
 			projectRoot = "";
 			targets = (
 				416A5EC727061AD3006E6CD9 /* Speaker-tracker-multi (iOS) */,
-				416A5ECD27061AD3006E6CD9 /* Speaker-tracker-multi (macOS) */,
+				416A5ECD27061AD3006E6CD9 /* SpeakerTracker (macOS) */,
 				41BF1ADC2749D2BA00556132 /* Speaker-tracker-multiTests */,
 			);
 		};
@@ -1263,7 +1263,7 @@
 /* Begin PBXTargetDependency section */
 		41BF1AE22749D2BA00556132 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 416A5ECD27061AD3006E6CD9 /* Speaker-tracker-multi (macOS) */;
+			target = 416A5ECD27061AD3006E6CD9 /* SpeakerTracker (macOS) */;
 			targetProxy = 41BF1AE12749D2BA00556132 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -1463,7 +1463,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = C4XR3G25JL;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
@@ -1495,7 +1495,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = C4XR3G25JL;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
@@ -1510,7 +1510,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 12.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.wm.SpeakerTracker;
-				PRODUCT_NAME = "Speaker-tracker-multi";
+				PRODUCT_NAME = SpeakerTracker;
 				SDKROOT = macosx;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -1586,7 +1586,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		416A5EDC27061AD3006E6CD9 /* Build configuration list for PBXNativeTarget "Speaker-tracker-multi (macOS)" */ = {
+		416A5EDC27061AD3006E6CD9 /* Build configuration list for PBXNativeTarget "SpeakerTracker (macOS)" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				416A5EDD27061AD3006E6CD9 /* Debug */,
