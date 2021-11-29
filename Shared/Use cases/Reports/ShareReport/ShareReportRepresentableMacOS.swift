@@ -29,9 +29,9 @@ struct SharingPicker: NSViewRepresentable {
 
             // Url to save to
             let docUrl = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-            let dataURL = docUrl.appendingPathComponent("TmpPdf")
-            let pdfDataURL = dataURL.appendingPathComponent("Meeting.pdf") as CFURL
-            print("Data url: \(dataURL)")
+//            let dataURL = docUrl.appendingPathComponent("TmpPdf")
+            let pdfDataURL = docUrl.appendingPathComponent("Meeting.pdf") as CFURL
+            print("Data url: \(pdfDataURL)")
 
             // Get attributed string
             let attString = NSAttributedString(SharingPicker.convertReportContentToAttributedString(reportContent: self.reportContent))

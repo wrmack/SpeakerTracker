@@ -107,7 +107,7 @@ class ShowReportPresenter :ObservableObject {
                     speechesArray.forEach { element in
                         let speech = element
                         var reportSpeakerEvent = ReportSpeakerEvent()
-                        reportSpeakerEvent.memberName = speech.member!.lastName!
+                        reportSpeakerEvent.memberName = (speech.member!.firstName ?? "") + " " + speech.member!.lastName!
                         reportSpeakerEvent.elapsedTime = String(format: "%02d:%02d", speech.elapsedMinutes, speech.elapsedSeconds)
                         if speech.startTime != nil {
                             reportSpeakerEvent.startTime = formatter.string(from: speech.startTime!)

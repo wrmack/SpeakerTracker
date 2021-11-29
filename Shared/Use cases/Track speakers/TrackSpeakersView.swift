@@ -186,16 +186,27 @@ struct TrackSpeakersView: View {
                         
                         // Controls down right-hand side
                         VStack{
+                            
+                            Image(showClock == false ? "expand3" : "shrink3")
+                                .resizable()
+                                .frame(width:50, height: 50)
+                                .padding(.top,40)
+                                .foregroundColor(.white)
+                                .onTapGesture(perform: {
+                                    showClock.toggle()
+                                })
+                            
                             if isRecording {
                                 
                                 Button(action:  {
                                     saveDebate()
                                 }) {
                                     Text("Save this\ndebate")
-                                        .font(.system(size: 24))
+                                        .font(.system(size: 22))
                                         .fontWeight(.semibold)
                                         .foregroundColor(.white)
                                         .multilineTextAlignment(.center)
+                                        .fixedSize(horizontal: false, vertical: true)
                                         .frame(alignment: .center)
                                         .padding(.top, 50)
                                 }
@@ -205,10 +216,11 @@ struct TrackSpeakersView: View {
                                     saveEvent()
                                 }) {
                                     Text("End this\nmeeting")
-                                        .font(.system(size: 24))
+                                        .font(.system(size: 22))
                                         .fontWeight(.semibold)
                                         .foregroundColor(Color.white)
                                         .multilineTextAlignment(.center)
+                                        .fixedSize(horizontal: false, vertical: true)
                                         .frame(alignment: .center)
                                         .padding(.top, 40)
                                 }
@@ -216,7 +228,7 @@ struct TrackSpeakersView: View {
                                 
                                 Image(systemName: "circle.fill")
                                     .resizable()
-                                    .frame(width: 60.0, height: 60.0)
+                                    .frame(width: 50.0, height: 50.0)
                                     .foregroundColor(.red)
                                     .padding(.top, 80)
                                 Text("Recording on")
@@ -246,17 +258,8 @@ struct TrackSpeakersView: View {
                                         .padding(.top, 40)
                                 }
                                 .buttonStyle(PlainButtonStyle())
-                                
-                                Image(showClock == false ? "expand3" : "shrink3")
-                                    .resizable()
-                                    .frame(width:50, height: 50)
-                                    .padding(.top,40)
-                                    .foregroundColor(.white)
-                                    .onTapGesture(perform: {
-                                        showClock.toggle()
-                                    })
-                                
-                                
+
+                                                                
                                 Spacer().frame(height:100)
                                 
 #if os(iOS)
@@ -292,6 +295,7 @@ struct TrackSpeakersView: View {
                                     })
 #endif
                             }
+                            
                             
                             // Determines width of right-sidebar
                             Spacer().frame(width:130)
