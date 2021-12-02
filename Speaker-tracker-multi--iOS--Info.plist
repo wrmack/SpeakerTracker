@@ -30,6 +30,8 @@
 		<key>UIApplicationSupportsMultipleScenes</key>
 		<false/>
 	</dict>
+	<key>UIMainStoryboardFile~ipad</key>
+	<string>Launch Screen</string>
 	<key>UTExportedTypeDeclarations</key>
 	<array>
 		<dict>
