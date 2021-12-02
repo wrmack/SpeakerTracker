@@ -243,6 +243,8 @@ struct TrackSpeakersView: View {
                                     .multilineTextAlignment(.center)
                                     .padding(.top, 50)
                                     .onTapGesture {
+                                        stopTimer()
+                                        timerString = "00:00"
                                         TrackSpeakersInteractor.reset(trackSpeakersState: trackSpeakersState)
                                     }
                                 

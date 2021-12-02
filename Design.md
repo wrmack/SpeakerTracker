@@ -2,7 +2,9 @@
 
 ## Overall structure
 
-### Use cases
+The key elements of the structure are the following.
+
+### Use-cases
 - what a user wants to do with the app
 - a View-Interactor-Presenter (VIP) pattern is used for separating concerns
 
@@ -27,6 +29,8 @@
 - `Presenter`
     - formats data from `Interactor` into a view model
     - publishes the view model
+
+Used for use-cases.
 
 Process flow is:
 

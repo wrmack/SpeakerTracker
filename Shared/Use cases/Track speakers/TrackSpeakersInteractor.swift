@@ -321,6 +321,9 @@ class TrackSpeakersInteractor {
     
     
     class func reset(trackSpeakersState: TrackSpeakersState) {
+        
+        trackSpeakersState.timerString = "00:00"
+        
         let mbrs = trackSpeakersState.tsSortedMembers
         
         var newRemMbrList = [ListMember]()

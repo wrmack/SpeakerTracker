@@ -340,6 +340,7 @@
 		41BF1ADF2749D2BA00556132 /* Speaker_tracker_multiTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Speaker_tracker_multiTests.swift; sourceTree = "<group>"; };
 		41C803FB2742168800B18D2A /* AttributesMacOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributesMacOS.swift; sourceTree = "<group>"; };
 		41C803FE274216E800B18D2A /* AttributesiOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributesiOS.swift; sourceTree = "<group>"; };
+		41CE2A7A27553E0C007AF51C /* SpeakerTracker (macOS)Release.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "SpeakerTracker (macOS)Release.entitlements"; sourceTree = "<group>"; };
 		41CEE8EE273E22B900DDE686 /* Upgrade.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Upgrade.swift; sourceTree = "<group>"; };
 		41CEE8F2273E256500DDE686 /* EntityDocument.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EntityDocument.swift; sourceTree = "<group>"; };
 		41CEE8F4273E257100DDE686 /* EventDocument.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventDocument.swift; sourceTree = "<group>"; };
@@ -386,6 +387,7 @@
 		416A5EBB27061AD2006E6CD9 = {
 			isa = PBXGroup;
 			children = (
+				41CE2A7A27553E0C007AF51C /* SpeakerTracker (macOS)Release.entitlements */,
 				415EF337273EFB4A00DD847A /* Speaker-tracker-multi--macOS--Info.plist */,
 				4125E6BE273EDA1000ECA336 /* Speaker-tracker-multi--iOS--Info.plist */,
 				416A5EE127061F02006E6CD9 /* Design.md */,
@@ -1390,7 +1392,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = C4XR3G25JL;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1425,7 +1427,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = C4XR3G25JL;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1465,7 +1467,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 6;
+				CURRENT_PROJECT_VERSION = 7;
 				DEVELOPMENT_TEAM = C4XR3G25JL;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
@@ -1493,11 +1495,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
-				CODE_SIGN_ENTITLEMENTS = macOS/macOS.entitlements;
+				CODE_SIGN_ENTITLEMENTS = "SpeakerTracker (macOS)Release.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 6;
+				CURRENT_PROJECT_VERSION = 7;
 				DEVELOPMENT_TEAM = C4XR3G25JL;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
