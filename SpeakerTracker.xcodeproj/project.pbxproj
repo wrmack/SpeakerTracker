@@ -333,6 +333,7 @@
 		416A608E27064203006E6CD9 /* Main.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Main.xcdatamodel; sourceTree = "<group>"; };
 		416A609127066288006E6CD9 /* PersistenceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceController.swift; sourceTree = "<group>"; };
 		4189C91427111562002F109D /* SetupSheetState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupSheetState.swift; sourceTree = "<group>"; };
+		419920AA275965FF00659788 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		41B9A15027440C4100A112D3 /* ShowHelpViewMacOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowHelpViewMacOS.swift; sourceTree = "<group>"; };
 		41BC60742718B73A00378A0B /* RestorationState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestorationState.swift; sourceTree = "<group>"; };
 		41BF1AD62749D27000556132 /* CoreDataTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataTest.swift; sourceTree = "<group>"; };
@@ -387,6 +388,7 @@
 		416A5EBB27061AD2006E6CD9 = {
 			isa = PBXGroup;
 			children = (
+				419920AA275965FF00659788 /* README.md */,
 				41CE2A7A27553E0C007AF51C /* SpeakerTracker (macOS)Release.entitlements */,
 				415EF337273EFB4A00DD847A /* Speaker-tracker-multi--macOS--Info.plist */,
 				4125E6BE273EDA1000ECA336 /* Speaker-tracker-multi--iOS--Info.plist */,
