@@ -389,10 +389,10 @@
 			isa = PBXGroup;
 			children = (
 				419920AA275965FF00659788 /* README.md */,
+				416A5EE127061F02006E6CD9 /* Design.md */,
 				41CE2A7A27553E0C007AF51C /* SpeakerTracker (macOS)Release.entitlements */,
 				415EF337273EFB4A00DD847A /* Speaker-tracker-multi--macOS--Info.plist */,
 				4125E6BE273EDA1000ECA336 /* Speaker-tracker-multi--iOS--Info.plist */,
-				416A5EE127061F02006E6CD9 /* Design.md */,
 				416A5EC027061AD2006E6CD9 /* Shared */,
 				41CC1BBD2708BA2E00B40255 /* iOS */,
 				416A5ECF27061AD3006E6CD9 /* macOS */,
