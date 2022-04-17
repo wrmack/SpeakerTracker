@@ -20,3 +20,7 @@ An easy way to try the code is to download it as a zip file then open it in Xcod
 
 ### Mac version
 <a href="https://apps.apple.com/us/app/speaker-tracker/id1141784629?itsct=apps_box_badge&amp;itscg=30200" style="display: inline-block; overflow: hidden; border-top-left-radius: 13px; border-top-right-radius: 13px; border-bottom-right-radius: 13px; border-bottom-left-radius: 13px; width: 250px; height: 83px;"><img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-us?size=250x83&amp;releaseDate=1499040000&h=e0b1354f7b57181cc6a58fd4b7e0b3e4" alt="Download on the App Store" style="border-top-left-radius: 13px; border-top-right-radius: 13px; border-bottom-right-radius: 13px; border-bottom-left-radius: 13px; width: 250px; height: 83px;"></a>
+
+---
+### Windows version: [Github](https://github.com/wrmack/SpeakerTracker-Electron)
+
