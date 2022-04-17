@@ -250,7 +250,7 @@ class TrackSpeakersInteractor {
         trackSpeakersState.tableCollection = TableCollection(remainingTable: remainingList, waitingTable: waitingList, speakingTable: speakingList)
     }
     
-    class func addAmendment(trackSpeakersState: TrackSpeakersState, action: LongPressAction) {
+    class func addAmendment(trackSpeakersState: TrackSpeakersState, entityState: EntityState, action: LongPressAction) {
         
         // Get tables
         var remainingList = trackSpeakersState.tableCollection.remainingTable
@@ -258,7 +258,21 @@ class TrackSpeakersInteractor {
         var speakingList = trackSpeakersState.tableCollection.speakingTable
         
         // Build list of members for remaining table, not including the mover
-        let mbrs = trackSpeakersState.tsSortedMembers
+        var mbrs = trackSpeakersState.tsSortedMembers
+        
+        if mbrs.count == 0 {
+
+            let currentMeetingGroup = EntityState.meetingGroupWithIndex(index: entityState.currentMeetingGroupIndex!)!
+            
+            var members = currentMeetingGroup.groupMembers?.allObjects as! [Member]
+            members.sort(by: {
+                if $0.lastName! < $1.lastName! {return true}
+                return false
+            })
+            trackSpeakersState.tsSortedMembers = members
+            mbrs = members
+        }
+        
         var newRemMbrList = [ListMember]()
         var count = 0
         mbrs.forEach({ member in

@@ -362,7 +362,7 @@ struct TrackSpeakersView: View {
                 })
                 .onChange(of: longPressAction, perform: { action in
                     if action.type == .amendmentMover {
-                        TrackSpeakersInteractor.addAmendment(trackSpeakersState: trackSpeakersState, action: action)
+                        TrackSpeakersInteractor.addAmendment(trackSpeakersState: trackSpeakersState, entityState: entityState, action: action)
                     }
                     if action.type == .amendmentFinal {
                         TrackSpeakersInteractor.finaliseAmendment(trackSpeakersState: trackSpeakersState, action: action)

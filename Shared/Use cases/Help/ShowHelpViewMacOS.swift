@@ -40,7 +40,7 @@ struct ShowHelpViewMacOS: View {
                         Meeting groups:  Full council, Committee One, Committee Two
                         """)
 
-                    Text("Main sreen")
+                    Text("Main screen")
                         .font(.title)
                         .foregroundColor(Color(red: 0.12, green: 0.28, blue: 0.49))
                     Text("The lists")
