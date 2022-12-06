@@ -19,6 +19,7 @@ struct MeetingSetupView: View {
     @StateObject var presenter = MeetingSetupPresenter()
     @State var showSetupInfo = false
     @State var showReportInfo = false
+    @State var showIndividualInfo = false
     @State var entityNames = [String]()
     @State var meetingGroupNames = [String]()
     @State var meetingEventNames = [String]()
@@ -27,6 +28,7 @@ struct MeetingSetupView: View {
     @State var selectedMeetingGroupName = ""
     @State var selectedMeetingEventName = ""
     @State var showEvents = false
+    @State var showIndividualTime = UserDefaults.standard.bool(forKey: "showIndividualTime")
     @Binding var showMeetingSetupSheet: Bool
     @Binding var isRecording: Bool
     
@@ -36,88 +38,110 @@ struct MeetingSetupView: View {
         ZStack(alignment: .topLeading) {
             HStack {
                 VStack(alignment:.leading) {
-                    HStack {
-                        Spacer()
-                        Text("Meeting setup")
-                            .font(.largeTitle)
-                            .fontWeight(.bold)
-                            .padding(.top, 20)
-                            .padding(.bottom,40)
-                        Spacer()
-                    }
-                    HStack {
-                        Image(systemName: "info.circle")
-                            .onTapGesture {
-                                showSetupInfo = showSetupInfo ? false : true
-                            }
-                        Spacer()
-                        Button("Done", action: {withAnimation(.easeInOut(duration: EASEINOUT)) {
-                            self.showMeetingSetupSheet = false
-                        }})
-                    }
-                    
-                    Text("Entity")
-                        .fontWeight(.semibold)
-                        .padding(.top, 40)
-                    
-                    Menu {
-                        ForEach(entityNames.indices, id: \.self) { idx in
-                            Button(entityNames[idx], action: { changeEntity(row: idx)})
+                    Group {
+                        HStack {
+                            Spacer()
+                            Text("Meeting setup")
+                                .font(.largeTitle)
+                                .fontWeight(.bold)
+                                .padding(.top, 20)
+                                .padding(.bottom,40)
+                            Spacer()
                         }
-                    } label: {
-                        Label(selectedEntityName, systemImage:"bolt.fill")
-                        .labelStyle(MyLabelStyle())
-                    }
-                    .menuStyle((MyMenuStyle()))
-                    
-                    Text("Meeting group")
-                        .fontWeight(.semibold)
-                        .padding(.top, 40)
-                    
-                    Menu {
-                        ForEach(meetingGroupNames.indices, id: \.self) { idx in
-                            Button(meetingGroupNames[idx], action: {
-                                changeMeetingGroup(row: idx)})
+                        HStack {
+                            Image(systemName: "info.circle")
+                                .onTapGesture {
+                                    showSetupInfo = showSetupInfo ? false : true
+                                }
+                            Spacer()
+                            Button("Done", action: {withAnimation(.easeInOut(duration: EASEINOUT)) {
+                                self.showMeetingSetupSheet = false
+                            }})
                         }
-                    } label: {
-                        Label(selectedMeetingGroupName, systemImage:"bolt.fill")
-                            .labelStyle(MyLabelStyle())
-                    }
-                    .menuStyle(MyMenuStyle())
-                    
-                    Image(systemName: "info.circle")
-                        .onTapGesture {
-                            showReportInfo = showReportInfo ? false : true
-                        }
-                        .padding(.top, 40)
-                    
-                    Toggle(isOn: $showEvents) {
-                        Text("Record speaking times for this meeting")
-                            .fontWeight(.semibold)
-                    }
-                    .padding(.top, 20)
-                    .padding(.trailing, 40)
-                    .disabled(selectedEntityName == "None" ? true : false)
-                    
-                    if showEvents == true {
-//                        Spacer().fixedSize().frame(height: 40)
-
-                        Text("Meeting event")
-                            .fontWeight(.semibold)
-                            .padding(.top, 20)
                         
-                        Menu  {
-                            ForEach(meetingEventNames.indices, id: \.self) { idx in
-                                Button(meetingEventNames[idx], action: {  changeMeetingEvent(row: idx)})
+                        Text("Entity")
+                            .fontWeight(.semibold)
+                            .padding(.top, 40)
+                        
+                        Menu {
+                            ForEach(entityNames.indices, id: \.self) { idx in
+                                Button(entityNames[idx], action: { changeEntity(row: idx)})
                             }
                         } label: {
-                            Label(selectedMeetingEventName, systemImage:"bolt.fill")
+                            Label(selectedEntityName, systemImage:"bolt.fill")
+                                .labelStyle(MyLabelStyle())
+                        }
+                        .menuStyle((MyMenuStyle()))
+                        
+                        Text("Meeting group")
+                            .fontWeight(.semibold)
+                            .padding(.top, 40)
+                        
+                        Menu {
+                            ForEach(meetingGroupNames.indices, id: \.self) { idx in
+                                Button(meetingGroupNames[idx], action: {
+                                    changeMeetingGroup(row: idx)})
+                            }
+                        } label: {
+                            Label(selectedMeetingGroupName, systemImage:"bolt.fill")
                                 .labelStyle(MyLabelStyle())
                         }
                         .menuStyle(MyMenuStyle())
-
                     }
-                    Spacer()
+                    Group {
+                        Image(systemName: "info.circle")
+                            .onTapGesture {
+                                showIndividualInfo = showIndividualInfo ? false : true
+                            }
+                            .padding(.top, 40)
+                        
+                        Toggle(isOn: $showIndividualTime) {
+                            Text("Show individual member times")
+                                .fontWeight(.semibold)
+                        }
+                        .padding(.top, 20)
+                        .padding(.trailing, 40)
+                        .disabled(selectedEntityName == "None" ? true : false)
+                        .onChange(of: showIndividualTime, perform: { newValue in
+                            UserDefaults.standard.set(newValue, forKey:"showIndividualTime")
+                            trackSpeakersState.showMemberTimer = newValue
+                        }
+                        )
+                        
+                        Image(systemName: "info.circle")
+                            .onTapGesture {
+                                showReportInfo = showReportInfo ? false : true
+                            }
+                            .padding(.top, 40)
+                        
+                        Toggle(isOn: $showEvents) {
+                            Text("Create a record of speaking times for this meeting")
+                                .fontWeight(.semibold)
+                        }
+                        .padding(.top, 20)
+                        .padding(.trailing, 40)
+                        .disabled(selectedEntityName == "None" || selectedMeetingGroupName == "None"  || showIndividualTime == false ? true : false)
+                        
+                        if showEvents == true {
+                            //                        Spacer().fixedSize().frame(height: 40)
+                            
+                            Text("Meeting event")
+                                .fontWeight(.semibold)
+                                .padding(.top, 20)
+                            
+                            Menu  {
+                                ForEach(meetingEventNames.indices, id: \.self) { idx in
+                                    Button(meetingEventNames[idx], action: {  changeMeetingEvent(row: idx)})
+                                }
+                            } label: {
+                                Label(selectedMeetingEventName, systemImage:"bolt.fill")
+                                    .labelStyle(MyLabelStyle())
+                            }
+                            .menuStyle(MyMenuStyle())
+                            
+                        }
+                        Spacer()
+                    }
                 }
                 .frame(width:300)
                 .padding(.leading, 30)
@@ -132,6 +156,7 @@ struct MeetingSetupView: View {
                 .border(Color(white: 0.4), width: 1)
                 .onAppear(perform: {
                     entityNames = MeetingSetupInteractor.fetchEntityNames(entityState: entityState, presenter: presenter)
+                    showIndividualTime = trackSpeakersState.showMemberTimer
                 })
                 .onReceive(presenter.$setupViewModel, perform: { viewModel in
                     selectedEntityName = viewModel.entityName
@@ -154,6 +179,7 @@ struct MeetingSetupView: View {
                     withAnimation(.easeInOut(duration: EASEINOUT)) {
                         showSetupInfo = false
                         showReportInfo = false
+                        showIndividualInfo = false
                     }
                 }
                 Spacer()
@@ -178,13 +204,38 @@ struct MeetingSetupView: View {
                 }
                 .padding(.leading,30)
             }
-            if showReportInfo {
+            if showIndividualInfo {
                 HStack {
                     Text(
                     """
                     After setting an Entity and Meeting group, \
-                    turn on 'Record speaking times for this meeting' to \
-                    record speaking times for the chosen meeting event.
+                    turn on 'Show individual member times' to \
+                    display each member's time alongside the member's \
+                    name.
+                    
+                    Use the Play, Pause and Stop controls alongside \
+                    the member's name to control the member's speaking time.
+                    """
+                    )
+                        .frame(width: 400)
+                        .font(Font.system(size: 14))
+                        .padding(10)
+                        .background(Color.white)
+                        .foregroundColor(Color.black)
+                        .cornerRadius(10.0)
+                }
+                .padding(.leading,30)
+            }
+            if showReportInfo {
+                HStack {
+                    Text(
+                    """
+                    'Create a record of speaking times for this meeting' \
+                    saves speaking times to the chosen meeting event \
+                    (meeting events are created separately in Setup).
+                    
+                    The Entity and Meeting group must have been selected \
+                    and 'Show individual member times' must be turned on .
                     
                     Press 'Save debate'to save the current debate and \
                     create a new one.
@@ -209,6 +260,7 @@ struct MeetingSetupView: View {
         }
         .frame(width:500)
     }
+
     
     func changeEntity(row: Int) {
         let selectedEntity = MeetingSetupInteractor.fetchEntityForRow(entityState: entityState, trackSpeakersState: trackSpeakersState, row: row)

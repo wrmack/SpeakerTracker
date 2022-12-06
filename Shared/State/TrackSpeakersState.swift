@@ -22,6 +22,8 @@ class TrackSpeakersState : ObservableObject {
     
     @Published var meetingGroupHasChanged = false
     @Published var tableCollection: TableCollection
+    @Published var showMemberTimer = UserDefaults.standard.bool(forKey: "showIndividualTime")
+    @Published var memberTimerIsActive = false
     @Published var timerString = "00:00"
     @Published var amendmentModeSet = false
     var timerSeconds = 0

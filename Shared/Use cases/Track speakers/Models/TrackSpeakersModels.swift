@@ -117,7 +117,7 @@ struct TableWithSectionLists : Hashable {
 
 struct SectionList : Hashable {
     var sectionNumber = 0
-    var sectionType: SectionType = .mainDebate
+    var sectionType = SectionType.mainDebate
     var sectionHeader = "Main debate"
     var sectionMembers = [ListMember]()
     

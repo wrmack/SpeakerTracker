@@ -371,6 +371,14 @@ struct TrackSpeakersView: View {
                         TrackSpeakersInteractor().copyMemberToListEnd(trackSpeakersState: trackSpeakersState, action: action)
                     }
                 })
+                .onChange(of: trackSpeakersState.memberTimerIsActive, perform: {newValue in
+                    if newValue == true {
+                        playButton.disabled = true
+                        pauseButton.disabled = true
+                        stopButton.disabled = true
+                    }
+                   
+                 })
                 
                 if self.showClock {
                     ClockOverlayView(timerString: $timerString)
@@ -417,6 +425,7 @@ struct TrackSpeakersView: View {
     func saveEvent() {
         TrackSpeakersInteractor.saveMeetingEvent(eventState: eventState)
         isRecording = false
+        trackSpeakersState.hasMeetingEvent = false
     }
     
     func playTimer() {

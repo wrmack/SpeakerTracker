@@ -30,7 +30,7 @@ struct ShowHelpViewiOS: View {
                         Meeting groups:  Full council, Committee One, Committee Two
                         """)
 
-                    Text("Main sreen")
+                    Text("Main screen")
                         .font(.title)
                         .foregroundColor(Color(red: 0.12, green: 0.28, blue: 0.49))
                     Text("The lists")
@@ -100,15 +100,13 @@ struct ShowHelpViewiOS: View {
                     Text(
                         """
                         There is a clock at the top of the screen.  Pressing the full screen button shows a larger clock.  \
-                        Both clocks are synced.  They display the same timing action.  When you press the play button next \
-                        to a speaker's name, the play button is replaced by a clock.
-                        To time a speaker you have options.
-                        Press the play button for the top clock when the speaker commences.  The stop button stops the timer \
-                        and when the play button is pressed again it starts from zero.  The pause button pauses the timer and \
+                        Both clock displays are synced.  They display the same timing action.
+                        To time a speaker you have options.  You can use the clock controls at the top of the screen.  Alternatively \
+                        you can display a timer for each person on the speaking list.  You turn this feature on in Meeting Setup by \
+                        selecting 'Show individual member times'.
+                        In each case,  press the play button when the speaker commences.  The stop button stops the timer \
+                        and when the play button is pressed again the timer starts from zero.  The pause button pauses the timer and \
                         when the play button is pressed again it resumes from where it was paused.
-                        To retain a display of each speaker's time, press the play button next to the speaker's name.  \
-                        The play button will be replaced by the time.  \
-                        Press the clock next to speaker again to stop the timer, or press the stop button of the top clock.  \
                         The clock next to the speaker's name retains the time and is disabled so it cannot be restarted.
                         """
                     )
@@ -143,7 +141,8 @@ struct ShowHelpViewiOS: View {
                         • Go to 'Speakers' (the main window for tracking speakers at a meeting)
                         • Open the slide-out panel by pressing 'Meeting setup'
                         • Ensure 'Entity' and 'Meeting group' are correct
-                        • Enable 'Create a record of this meeting'
+                        • Enable 'Show individual member times'
+                        • Enable 'Create a record of speaking times for this meeting'
                         • Select the 'Meeting event' from the pop-up
                         • Press 'Done'
                         Note: the pop-up will display only the meeting events for the selected Entity / Meeting group

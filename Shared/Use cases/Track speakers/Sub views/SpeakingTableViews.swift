@@ -50,23 +50,22 @@ struct SpeakingTableList: View {
             ScrollViewReader { proxy in
                 ScrollView {
                     VStack(alignment:.leading, spacing:0) {
-                        ForEach(viewModel, id: \.self){ sectionList in
+                        ForEach(viewModel, id: \.self){ item in
+                            let sectionList = item as SectionList
                             Section {
-                                if sectionIsCollapsed[(sectionList as SectionList).sectionNumber] != true || (sectionList as SectionList).sectionType == .mainDebate  {
-                                        ForEach((sectionList as SectionList).sectionMembers, id: \.row) { listMember in
+                                if sectionIsCollapsed[sectionList.sectionNumber] != true || sectionList.sectionType == .mainDebate  {
+                                        ForEach(sectionList.sectionMembers, id: \.row) { listMember in
                                             SpeakingTableRow(rowContent: listMember,
-                                                             sectionNumber: (sectionList as SectionList).sectionNumber,
-                                                             sectionType: (sectionList as SectionList).sectionType,
+                                                             sectionNumber: sectionList.sectionNumber,
+                                                             sectionType: sectionList.sectionType,
                                                              moveAction: $moveAction,
                                                              memberTimerActions: $memberTimerActions,
                                                              longPressAction: $longPressAction,
                                                              sectionIsCollapsed: $sectionIsCollapsed
                                             )
                                         }
-
                                 }
                             }
-                                    
                             header: {
                                 VStack(spacing:0) {
                                     Spacer()
@@ -88,22 +87,22 @@ struct SpeakingTableList: View {
                                             }
                                         }
                                         
-                                        if ((sectionList as SectionList).sectionType == SectionType.amendment) {
+                                        if (sectionList.sectionType == SectionType.amendment) {
                                             Spacer()
                                             Button(action: {
                                                 withAnimation {
                                                     // Check if sectionIsCollapsed contains this section.
                                                     // If not, set to true.  Default is not-collapsed. User must want to collapse.
-                                                    if sectionIsCollapsed.keys.contains((sectionList as SectionList).sectionNumber) == false {
-                                                        sectionIsCollapsed[(sectionList as SectionList).sectionNumber] = true
+                                                    if sectionIsCollapsed.keys.contains(sectionList.sectionNumber) == false {
+                                                        sectionIsCollapsed[sectionList.sectionNumber] = true
                                                     }
                                                     // If collapsed then user must want to expand it
-                                                    else if sectionIsCollapsed[(sectionList as SectionList).sectionNumber]! == true {
-                                                        sectionIsCollapsed[(sectionList as SectionList).sectionNumber] = false
+                                                    else if sectionIsCollapsed[sectionList.sectionNumber]! == true {
+                                                        sectionIsCollapsed[sectionList.sectionNumber] = false
                                                     }
                                                     // Otherwise collapse it
                                                     else {
-                                                        sectionIsCollapsed[(sectionList as SectionList).sectionNumber] = true
+                                                        sectionIsCollapsed[sectionList.sectionNumber] = true
                                                     }
                                                 }
                                             })
@@ -111,7 +110,7 @@ struct SpeakingTableList: View {
                                                 Image(systemName: "chevron.right.circle")
                                             }
                                             .buttonStyle(PlainButtonStyle())
-                                            .rotationEffect((sectionIsCollapsed[(sectionList as SectionList).sectionNumber] == true) ? .degrees(0) : .degrees(90))
+                                            .rotationEffect((sectionIsCollapsed[sectionList.sectionNumber] == true) ? .degrees(0) : .degrees(90))
                                             .imageScale(.large)
 
                                         }
@@ -203,59 +202,65 @@ struct SpeakingTableRow: View {
                 Text("\(rowContent.member!.firstName!) \(rowContent.member!.lastName!)")
                 
                 Spacer()
-                Group {
-                    // Display pause button before time
-                    if rowContent.timerButtonMode == .pause_stop {
-                        Image(systemName: "pause.fill")
-                            .foregroundColor(.blue)
-                            .onTapGesture {
-                                print("Pause pressed")
-                                memberTimerActions = MemberTimerActions(listMember: rowContent, timerButtonMode: .play_stop, timerIsActive: true, speakingTime: trackSpeakersState.timerSeconds, timerButtonPressed: .pause)
-                            }
-                    }
-                    
-                    // Display play button before time
-                    if rowContent.timerButtonMode == .play_stop {
-                        Image(systemName: "play.fill")
-                            .foregroundColor(.blue)
-                            .onTapGesture {
-                                print("Play pressed")
-                                memberTimerActions = MemberTimerActions(listMember: rowContent, timerButtonMode: .pause_stop, timerIsActive: true, speakingTime: trackSpeakersState.timerSeconds, timerButtonPressed: .play)
-                            }
-                    }
-                    
-                    // Display time
-                    if rowContent.timerIsActive == true {
-                        Text(self.timerString)
-                    }
-                    else {
-                        Text(String(format: "%02d:%02d", (rowContent.speakingTime / 60), (rowContent.speakingTime % 60)))
-                    }
-                    
-                    // Display play button after time
-                    if rowContent.timerButtonMode == .play {
-                        Image(systemName: "play.fill")
-                            .foregroundColor(.blue)
-                            .onTapGesture {
-                                print("Play pressed")
-                                self.timerString = "00:00"
-                                var listMember = rowContent
-                                listMember.startTime = Date()
-                                memberTimerActions = MemberTimerActions(listMember: listMember, timerButtonMode: .pause_stop, timerIsActive: true, speakingTime: 0, timerButtonPressed: .play)
-                            }
-                    }
-                    
-                    // Display stop button after time
-                    if (rowContent.timerButtonMode == .pause_stop) || (rowContent.timerButtonMode == .play_stop) {
-                        Image(systemName: "stop.fill")
-                            .foregroundColor(.blue)
-                            .onTapGesture {
-                                print("Stop pressed")
-                                memberTimerActions = MemberTimerActions(listMember: rowContent, timerButtonMode: .off, timerIsActive: false, speakingTime: trackSpeakersState.timerSeconds,  timerButtonPressed: .stop)
-                            }
-                    }
-                    if rowContent.timerButtonMode == .off {
-                        Text(verbatim: "")
+                if trackSpeakersState.showMemberTimer == true {
+                    Group {
+                        // Display pause button before time
+                        if rowContent.timerButtonMode == .pause_stop {
+                            Image(systemName: "pause.fill")
+                                .foregroundColor(.blue)
+                                .onTapGesture {
+                                    print("Pause pressed")
+                                    trackSpeakersState.memberTimerIsActive = false
+                                    memberTimerActions = MemberTimerActions(listMember: rowContent, timerButtonMode: .play_stop, timerIsActive: true, speakingTime: trackSpeakersState.timerSeconds, timerButtonPressed: .pause)
+                                }
+                        }
+                        
+                        // Display play button before time
+                        if rowContent.timerButtonMode == .play_stop {
+                            Image(systemName: "play.fill")
+                                .foregroundColor(.blue)
+                                .onTapGesture {
+                                    print("Play pressed")
+                                    trackSpeakersState.memberTimerIsActive = true
+                                    memberTimerActions = MemberTimerActions(listMember: rowContent, timerButtonMode: .pause_stop, timerIsActive: true, speakingTime: trackSpeakersState.timerSeconds, timerButtonPressed: .play)
+                                }
+                        }
+                        
+                        // Display time
+                        if rowContent.timerIsActive == true {
+                            Text(self.timerString)
+                        }
+                        else {
+                            Text(String(format: "%02d:%02d", (rowContent.speakingTime / 60), (rowContent.speakingTime % 60)))
+                        }
+                        
+                        // Display play button after time
+                        if rowContent.timerButtonMode == .play {
+                            Image(systemName: "play.fill")
+                                .foregroundColor(.blue)
+                                .onTapGesture {
+                                    print("Play pressed")
+                                    trackSpeakersState.memberTimerIsActive = true
+                                    self.timerString = "00:00"
+                                    var listMember = rowContent
+                                    listMember.startTime = Date()
+                                    memberTimerActions = MemberTimerActions(listMember: listMember, timerButtonMode: .pause_stop, timerIsActive: true, speakingTime: 0, timerButtonPressed: .play)
+                                }
+                        }
+                        
+                        // Display stop button after time
+                        if (rowContent.timerButtonMode == .pause_stop) || (rowContent.timerButtonMode == .play_stop) {
+                            Image(systemName: "stop.fill")
+                                .foregroundColor(.blue)
+                                .onTapGesture {
+                                    print("Stop pressed")
+                                    trackSpeakersState.memberTimerIsActive = false
+                                    memberTimerActions = MemberTimerActions(listMember: rowContent, timerButtonMode: .off, timerIsActive: false, speakingTime: trackSpeakersState.timerSeconds,  timerButtonPressed: .stop)
+                                }
+                        }
+                        if rowContent.timerButtonMode == .off {
+                            Text(verbatim: "")
+                        }
                     }
                 }
 

@@ -174,6 +174,9 @@ class TrackSpeakersInteractor {
         
         var newSectionLists = [SectionList]()
         
+        // In case there is a prior member still active
+        var priorActiveMember: ListMember?
+        
         // Iterate through all sectionLists in the Speaking table
         speakingList?.sectionLists.forEach({ sectionList in
             // If not the last section, simply use as is
@@ -186,10 +189,18 @@ class TrackSpeakersInteractor {
                 var newSectionListMembers = [ListMember]()
                 let currentSpeakingListMembers = speakingList!.sectionLists.last!.sectionMembers
                 
+                // Get timerseconds in case need to stop a prior timer
+                let timerSeconds = trackSpeakersState.timerSeconds
+                
                 // Iterate through them and update current member's timer
                 currentSpeakingListMembers.forEach({ listMbr in
                     var newListMember = listMbr
-//                    if newListMember.member!.id == listMember.member!.id {
+                    if newListMember.row! < listMember.row! && newListMember.timerIsActive == true {
+                        newListMember.timerIsActive = false
+                        newListMember.timerButtonMode = .off
+                        newListMember.speakingTime = timerSeconds
+                        priorActiveMember = newListMember
+                    }
                     if newListMember.row == listMember.row {
                         newListMember.timerButtonMode = mode
                         newListMember.timerIsActive = timerIsActive
@@ -204,46 +215,14 @@ class TrackSpeakersInteractor {
                 newSectionLists.append(newSectionList)
             }
         })
+        // If recording a meeting event and there is a prior active member
+        if trackSpeakersState.hasMeetingEvent == true && priorActiveMember != nil {
+            recordSpeech(eventState: eventState, newSectionLists: newSectionLists, speakingTime: priorActiveMember!.speakingTime, listMember: priorActiveMember!)
+        }
         
         // If recording a meeting event and the Stop button was pressed, handle recording the speech
         if trackSpeakersState.hasMeetingEvent == true && memberTimerAction.timerButtonPressed == .stop {
-            
-            // Get current debate
-            let debate = EventState.debateWithIndex(index: eventState.currentDebateIndex!)
-            
-            // Get current debate section and compare with speaking table section number.
-            // If different, create new debate section.
-            var currentDebateSection = EventState.debateSectionWithIndex(index: eventState.currentDebateSectionIndex!)
-            
-            if currentDebateSection.sectionNumber < newSectionLists.last!.sectionNumber {
-                // Create a new debate section
-                let debateSection = EventState.createDebateSection()
-                debateSection.idx = UUID()
-                debateSection.sectionNumber = Int16(newSectionLists.last!.sectionNumber)
-                debateSection.sectionName = newSectionLists.last!.sectionHeader
-                currentDebateSection = debateSection
-                eventState.currentDebateSectionIndex = debateSection.idx
-            }
-            
-            // Create a speech event
-            let speechEvent = EventState.createSpeechEvent()
-            speechEvent.member = memberTimerAction.listMember.member
-            speechEvent.elapsedMinutes = Int16(memberTimerAction.speakingTime / 60)
-            speechEvent.elapsedSeconds = Int16(memberTimerAction.speakingTime % 60)
-            speechEvent.startTime = listMember.startTime
-
-            // Add speech event to current debate section speeches
-            let speechSet = currentDebateSection.speeches!
-            currentDebateSection.speeches = speechSet.adding(speechEvent) as NSSet
-            
-            // Add back the current debate section, now containing the new speech event
-            debate.debateSections = debate.debateSections!.adding(currentDebateSection) as NSSet
-            
-            // Update current event
-            let event = EventState.meetingEventWithIndex(index: eventState.currentMeetingEventIndex!)!
-            event.debates = event.debates!.adding(debate) as NSSet
-            
-            EventState.saveManagedObjectContext()
+            recordSpeech(eventState: eventState, newSectionLists: newSectionLists, speakingTime: memberTimerAction.speakingTime, listMember: memberTimerAction.listMember)
         }
         
         speakingList = TableWithSectionLists(table: 2, sectionLists: newSectionLists)
@@ -353,7 +332,47 @@ class TrackSpeakersInteractor {
         trackSpeakersState.tableCollection = TableCollection(remainingTable: remainingList, waitingTable: waitingList, speakingTable: speakingList)
     }
     
-    
+    static func recordSpeech(eventState: EventState, newSectionLists: [SectionList], speakingTime: Int, listMember: ListMember) {
+        
+        // Get current debate
+        let debate = EventState.debateWithIndex(index: eventState.currentDebateIndex!)
+        
+        // Get current debate section and compare with speaking table section number.
+        // If different, create new debate section.
+        var currentDebateSection = EventState.debateSectionWithIndex(index: eventState.currentDebateSectionIndex!)
+        
+        if currentDebateSection.sectionNumber < newSectionLists.last!.sectionNumber {
+            // Create a new debate section
+            let debateSection = EventState.createDebateSection()
+            debateSection.idx = UUID()
+            debateSection.sectionNumber = Int16(newSectionLists.last!.sectionNumber)
+            debateSection.sectionName = newSectionLists.last!.sectionHeader
+            currentDebateSection = debateSection
+            eventState.currentDebateSectionIndex = debateSection.idx
+        }
+
+        // Create a speech event
+        let speechEvent = EventState.createSpeechEvent()
+        speechEvent.member = listMember.member
+        speechEvent.elapsedMinutes = Int16(speakingTime / 60)
+        speechEvent.elapsedSeconds = Int16(speakingTime % 60)
+        speechEvent.startTime = listMember.startTime
+        
+        // Add speech event to current debate section speeches
+        let speechSet = currentDebateSection.speeches!
+        currentDebateSection.speeches = speechSet.adding(speechEvent) as NSSet
+        
+        // Add back the current debate section, now containing the new speech event
+        debate.debateSections = debate.debateSections!.adding(currentDebateSection) as NSSet
+        
+        // Update current event
+        let event = EventState.meetingEventWithIndex(index: eventState.currentMeetingEventIndex!)!
+        event.debates = event.debates!.adding(debate) as NSSet
+        
+        EventState.saveManagedObjectContext()
+    }
+        
+        
     /// Saves current debate to TrackSpeakersState current event.
     ///
     /// Note that speaker events are saved when Stop is pressed by setCurrentMemberTimerState.
@@ -504,8 +523,12 @@ class TrackSpeakersInteractor {
         var newSectionListMembers = [ListMember]()
         let currentSectionListMembers = from.sectionLists[fromSectionNumber].sectionMembers
         currentSectionListMembers.forEach { listMember in
+            var newListMember = listMember
+            if listMember.row! > memberToRemove.row! {
+                newListMember.row! -= 1
+            }
             if listMember.member?.id != memberToRemove.member?.id {
-                newSectionListMembers.append(listMember)
+                newSectionListMembers.append(newListMember)
             }
         }
         var newSectionLists = [SectionList]()
