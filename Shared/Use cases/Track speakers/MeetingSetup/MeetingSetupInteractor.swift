@@ -13,17 +13,27 @@ class MeetingSetupInteractor {
     
     /// Returns a tuple of `entityName`and an array of `meetingGroupNames`
     ///
-    class func fetchEntityForRow(entityState: EntityState, trackSpeakersState: TrackSpeakersState, row: Int) -> (String, [String]) {
+//    class func fetchEntityForRow(entityState: EntityState, trackSpeakersState: TrackSpeakersState, row: Int) -> (String, [String]) {
+    class func fetchEntityForRow(entityState: EntityState, trackSpeakersState: TrackSpeakersState, row: Int) -> (String, [(String,UUID)]) {
         let currentEntity = EntityState.sortedEntities![row]
         entityState.currentEntityIndex = currentEntity.idx
         let entityName = currentEntity.name!
         
         let meetingGroups = EntityState.sortedMeetingGroups(entityIndex: currentEntity.idx!)
-        var meetingGroupNames = [String]()
+//        var meetingGroupNames = [String]()
+//        meetingGroups?.forEach({ meetingGroup in
+//            meetingGroupNames.append(meetingGroup.name!)
+//        })
+//        
+        // New
+        var meetingGroupNamesWithId = [(String,UUID)]()
         meetingGroups?.forEach({ meetingGroup in
-            meetingGroupNames.append(meetingGroup.name!)
+            meetingGroupNamesWithId.append((meetingGroup.name!,meetingGroup.idx!))
         })
-        return (entityName, meetingGroupNames)
+        
+        
+//        return (entityName, meetingGroupNames)
+        return (entityName, meetingGroupNamesWithId)
     }
     
     class func fetchMeetingGroupForRow(entityState: EntityState, trackSpeakersState: TrackSpeakersState, row: Int) -> (String, [String]) {

@@ -30,7 +30,7 @@ The key elements of the structure are the following.
     - formats data from `Interactor` into a view model
     - publishes the view model
 
-Used for use-cases.
+The VIP pattern is used for each use-case.
 
 Process flow is:
 

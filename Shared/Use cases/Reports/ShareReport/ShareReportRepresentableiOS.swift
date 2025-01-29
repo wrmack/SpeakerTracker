@@ -96,9 +96,9 @@ class ShareUtility: UIPrintPageRenderer  {
             para.alignment = .center
             para.paragraphSpacingBefore = 0
             
-            var cont = AttributeContainer()
+            var cont = AttributeContainer([.paragraphStyle: para])
             cont.font = UIFont(name: "Arial", size: 40)
-            cont.paragraphStyle = para
+//            cont.paragraphStyle = para
             
             return cont
         }
@@ -108,9 +108,9 @@ class ShareUtility: UIPrintPageRenderer  {
             para.alignment = .center
             para.paragraphSpacingBefore = 12
             
-            var cont = AttributeContainer()
+            var cont = AttributeContainer([.paragraphStyle: para])
             cont.font = UIFont(name: "Arial", size: 28)
-            cont.paragraphStyle = para
+//            cont.paragraphStyle = para
             
             return cont
         }
@@ -126,9 +126,9 @@ class ShareUtility: UIPrintPageRenderer  {
             para.alignment = .left
             para.paragraphSpacingBefore = 6
             
-            var cont = AttributeContainer()
+            var cont = AttributeContainer([.paragraphStyle: para])
             cont.font = UIFont(name: "Arial", size: 12)
-            cont.paragraphStyle = para
+//            cont.paragraphStyle = para
             return cont
         }
         
@@ -149,8 +149,8 @@ class ShareUtility: UIPrintPageRenderer  {
             para.tabStops = [NSTextTab]()
             para.tabStops.append(NSTextTab(textAlignment: .left, location: 180, options: [:]))
             para.tabStops.append(NSTextTab(textAlignment: .left, location: 260, options: [:]))
-            var cont = AttributeContainer()
-            cont.paragraphStyle = para
+            let cont = AttributeContainer([.paragraphStyle: para])
+//            cont.paragraphStyle = para
             return paraHeading1.merging(cont)
         }
         
@@ -159,8 +159,8 @@ class ShareUtility: UIPrintPageRenderer  {
             para.firstLineHeadIndent = 0
 //            para.paragraphSpacingBefore =
             
-            var cont = AttributeContainer()
-            cont.paragraphStyle = para
+            let cont = AttributeContainer([.paragraphStyle: para])
+//            cont.paragraphStyle = para
             return paraHeading1.merging(cont)
         }
         
@@ -169,8 +169,8 @@ class ShareUtility: UIPrintPageRenderer  {
             para.firstLineHeadIndent = 20
 //            para.paragraphSpacingBefore = 20
             
-            var cont = AttributeContainer()
-            cont.paragraphStyle = para
+            let cont = AttributeContainer([.paragraphStyle: para])
+//            cont.paragraphStyle = para
             return paraHeading1.merging(cont)
         }
         
@@ -180,8 +180,8 @@ class ShareUtility: UIPrintPageRenderer  {
             para.tabStops.append(NSTextTab(textAlignment: .left, location: 180, options: [:]))
             para.tabStops.append(NSTextTab(textAlignment: .left, location: 260, options: [:]))
             para.firstLineHeadIndent = 20
-            var cont = AttributeContainer()
-            cont.paragraphStyle = para
+            let cont = AttributeContainer([.paragraphStyle: para])
+//            cont.paragraphStyle = para
             return normAtts.merging(cont)
         }
         

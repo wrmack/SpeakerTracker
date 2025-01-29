@@ -13,6 +13,10 @@ class AddMeetingGroupInteractor {
     
     class func saveMeetingGroupToEntity(entityState: EntityState, setupSheetState: SetupSheetState, meetingGroupName: String, members: Set<Member>?) {
         
+        // Existing meeting groups
+        let currentEntity = entityState.currentEntity!
+        let meetingGroupSet = currentEntity.meetingGroups
+        
         let viewContext = PersistenceController.shared.container.viewContext
         let newMeetingGroup = MeetingGroup(context: viewContext)
         newMeetingGroup.name = meetingGroupName
@@ -21,8 +25,6 @@ class AddMeetingGroupInteractor {
         
         entityState.currentMeetingGroupIndex = newMeetingGroup.idx
         
-        let currentEntity = entityState.currentEntity!
-        let meetingGroupSet = currentEntity.meetingGroups
         currentEntity.meetingGroups = meetingGroupSet!.adding(newMeetingGroup) as NSSet
         
         do {

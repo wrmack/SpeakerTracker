@@ -10,7 +10,8 @@ import Foundation
 
 struct MeetingSetupViewModel {
     var entityName = ""
-    var meetingGroupName = ""
+//    var meetingGroupName = ""
+    var meetingGroupNameWithId = ("", UUID()) 
 }
 
 class MeetingSetupPresenter : ObservableObject {
@@ -27,10 +28,11 @@ class MeetingSetupPresenter : ObservableObject {
     
     // Initial presentation
     func presentSetup(currentEntity: Entity?, currentMeetingGroup: MeetingGroup?) {
+        print("presentSetup called")
         let entityName = currentEntity?.name ?? "None"
-        let meetingGroupName = currentMeetingGroup?.name ?? "None"
-        
-        setupViewModel = MeetingSetupViewModel(entityName: entityName,  meetingGroupName: meetingGroupName)
+//        let meetingGroupName = currentMeetingGroup?.name ?? "None"
+        let meetingGroupNameWithId = (currentMeetingGroup?.name ?? "None", currentMeetingGroup?.idx ?? UUID())
+        setupViewModel = MeetingSetupViewModel(entityName: entityName, meetingGroupNameWithId: meetingGroupNameWithId)
     }
     
 

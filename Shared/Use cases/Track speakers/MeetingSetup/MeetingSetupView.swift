@@ -65,7 +65,7 @@ struct MeetingSetupView: View {
                         
                         Menu {
                             ForEach(entityNames.indices, id: \.self) { idx in
-                                Button(entityNames[idx], action: { changeEntity(row: idx)})
+                                Button(entityNames[idx], action: { onChangeOfEntity(row: idx)})
                             }
                         } label: {
                             Label(selectedEntityName, systemImage:"bolt.fill")
@@ -80,7 +80,7 @@ struct MeetingSetupView: View {
                         Menu {
                             ForEach(meetingGroupNames.indices, id: \.self) { idx in
                                 Button(meetingGroupNames[idx], action: {
-                                    changeMeetingGroup(row: idx)})
+                                    onChangeOfMeetingGroup(row: idx)})
                             }
                         } label: {
                             Label(selectedMeetingGroupName, systemImage:"bolt.fill")
@@ -131,7 +131,7 @@ struct MeetingSetupView: View {
                             
                             Menu  {
                                 ForEach(meetingEventNames.indices, id: \.self) { idx in
-                                    Button(meetingEventNames[idx], action: {  changeMeetingEvent(row: idx)})
+                                    Button(meetingEventNames[idx], action: {  onChangeOfMeetingEvent(row: idx)})
                                 }
                             } label: {
                                 Label(selectedMeetingEventName, systemImage:"bolt.fill")
@@ -160,16 +160,21 @@ struct MeetingSetupView: View {
                 })
                 .onReceive(presenter.$setupViewModel, perform: { viewModel in
                     selectedEntityName = viewModel.entityName
-                    selectedMeetingGroupName = viewModel.meetingGroupName
+                    let selectedMeetingGroupNameWithId = viewModel.meetingGroupNameWithId
+                    selectedMeetingGroupName = selectedMeetingGroupNameWithId.0
                     if (selectedEntityName != "") && (selectedMeetingGroupName != "") {
                         entityNames.enumerated().forEach{idx, entityName in
                             if entityName == selectedEntityName {
                                 let selectedEntity = MeetingSetupInteractor.fetchEntityForRow(entityState: entityState, trackSpeakersState: trackSpeakersState, row: idx)
-                                let mtgGroupNames = selectedEntity.1
-                                mtgGroupNames.enumerated().forEach({ idx, mtgGpName in
-                                    if mtgGpName == selectedMeetingGroupName {
-                                        changeMeetingGroup(row: idx)
+                                setMeetingGroupNames(selectedEntity: selectedEntity)
+                                let mtgGroupNameIds = selectedEntity.1
+                                mtgGroupNameIds.enumerated().forEach({ idx, mtgGpId in
+                                    let name = mtgGpId.0
+                                    let id = mtgGpId.1
+                                    if (name == selectedMeetingGroupName) && (id == selectedMeetingGroupNameWithId.1) {
+                                        onChangeOfMeetingGroup(row: idx)
                                     }
+                                    
                                 })
                             }
                         }
@@ -261,20 +266,29 @@ struct MeetingSetupView: View {
         .frame(width:500)
     }
 
-    
-    func changeEntity(row: Int) {
-        let selectedEntity = MeetingSetupInteractor.fetchEntityForRow(entityState: entityState, trackSpeakersState: trackSpeakersState, row: row)
-        selectedEntityName = selectedEntity.0
-        meetingGroupNames = selectedEntity.1
+    func setMeetingGroupNames(selectedEntity: (String, [(String, UUID)])) {
+        let mtgGpNamesWithIds = selectedEntity.1
+        var mtgGroupNames = [String]()
+        mtgGpNamesWithIds.forEach { (nameWithId) in
+            let name = nameWithId.0
+            mtgGroupNames.append(name)
+        }
+        meetingGroupNames = mtgGroupNames
     }
     
-    func changeMeetingGroup(row: Int) {
+    func onChangeOfEntity(row: Int) {
+        let selectedEntity = MeetingSetupInteractor.fetchEntityForRow(entityState: entityState, trackSpeakersState: trackSpeakersState, row: row)
+        selectedEntityName = selectedEntity.0
+        setMeetingGroupNames(selectedEntity: selectedEntity)
+    }
+    
+    func onChangeOfMeetingGroup(row: Int) {
         let selectedMeetingGroup = MeetingSetupInteractor.fetchMeetingGroupForRow(entityState: entityState, trackSpeakersState: trackSpeakersState, row: row)
         selectedMeetingGroupName = selectedMeetingGroup.0
         meetingEventNames = selectedMeetingGroup.1
     }
     
-    func changeMeetingEvent(row: Int) {
+    func onChangeOfMeetingEvent(row: Int) {
         MeetingSetupInteractor.setCurrentMeetingEvent(entityState: entityState,
             trackSpeakersState: trackSpeakersState,
             eventState: eventState,

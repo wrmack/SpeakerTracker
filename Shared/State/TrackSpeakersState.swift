@@ -13,7 +13,7 @@ import Combine
 /// Holds state associated with the TrackSpeakers use case
 ///
 /// Publishes changes to:
-/// -  the table collection
+/// - the table collection
 /// - meeting groups
 /// - the timer string
 /// - amendment mode
